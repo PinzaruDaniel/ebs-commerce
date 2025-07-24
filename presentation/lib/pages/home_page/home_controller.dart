@@ -2,14 +2,22 @@ import 'package:domain/modules/products/use_cases/get_all_products_use_case.dart
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
+import 'package:presentation/util/widgets/horizontal_products_list_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
+
+import '../../view/base_view_model.dart';
 
 
 class HomeController extends GetxController {
   final GetAllProductsUseCase getAllProductsUseCase= GetIt.instance<GetAllProductsUseCase>();
 
 
-  RxList<BaseViewModel> items = RxList([]);
+  RxList<BaseViewModel> items = RxList([
+    AdBannerViewModel(),
+    HorizontalProductListViewModel(products: newProducts, type: ProductType.newProducts),
+    HorizontalProductListViewModel(products: saleProducts, type: ProductType.saleProducts),
+    ...products,
+  ]);
   RxList<ProductViewModel> products = RxList([]);
   RxBool isLoading=true.obs;
   List<ProductViewModel> newProducts = [];

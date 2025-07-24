@@ -3,6 +3,7 @@ import 'package:di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/home_page.dart';
+import 'package:presentation/product_screen.dart';
 
 import 'controllers/bindings/root_bindings_controllers.dart';
 

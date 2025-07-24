@@ -1,3 +1,4 @@
+import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/category_view_model.dart';
 class Specification {
   final String title;
@@ -8,7 +9,7 @@ class Specification {
     required this.value,
   });
 }
-class ProductViewModel {
+class ProductViewModel extends BaseViewModel {
   final int id;
   final String title;
   final String? company;

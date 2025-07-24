@@ -1,3 +1,4 @@
+/*
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'home_products_item_widget.dart';
 
 
-
-class AllProductsViewItem extends BaseViewModel{
+class AllProductsViewItem extends BaseViewModel {
   final List<ProductViewModel> items;
+
   AllProductsViewItem({required this.items});
 }
 
@@ -49,4 +50,4 @@ class _AllProductsListWidgetState extends State<AllProductsListWidget> {
       ],
     );
   }
-}
+}*/
