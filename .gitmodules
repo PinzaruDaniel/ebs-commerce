@@ -6,7 +6,7 @@
 	url = git@github.com:PinzaruDaniel/data.git
 [submodule "e-commerce-ebs/domain"]
 	path = e-commerce-ebs/domain
-	url = git@github.com:PinzaruDaniel/data.git
+	url = git@github.com:PinzaruDaniel/domain.git
 [submodule "e-commerce-ebs/presentation"]
 	path = e-commerce-ebs/presentation
-	url = git@github.com:PinzaruDaniel/data.git
+	url = git@github.com:PinzaruDaniel/presentation.git
