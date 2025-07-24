@@ -38,10 +38,11 @@ class _HomePageState extends State<HomePage> {
 
   void _onRefresh() async {
     await Future.delayed(Duration(seconds: 1));
+
     _refreshController.refreshCompleted();
-   if (mounted) {
+    if (mounted) {
       setState(() {});
-  }
+    }
   }
 
   void _onLoading() async {
@@ -62,10 +63,12 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircularProgressIndicator(color: AppColors.secondary, strokeWidth: 1, constraints: BoxConstraints(
-                  minHeight: 100, maxHeight: 100, minWidth: 100, maxWidth: 100
-                ),),
-                Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade300)),
+                CircularProgressIndicator(
+                  color: AppColors.primary,
+                  strokeWidth: 3,
+                  constraints: BoxConstraints(minWidth: 75, minHeight:75 ),
+                ),
+                Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500)),
               ],
             ),
           ),
@@ -104,35 +107,20 @@ class _HomePageState extends State<HomePage> {
 
           child: SafeArea(
             child: ListView.builder(
-                itemCount: homeController.items.length,
-                itemBuilder: (context, index){
-                  final item=homeController.items[index];
-                  if(item is AdBannerViewModel){
-                    return HomeAdBannerWidget();
-                  }
-                  else if(item is HorizontalProductListViewModel){
-                    return HorizontalProductsListWidget(items: item.products, type: item.type);
-                  }
-                  else if(item is AllProductsViewItem){
-                    return AllProductsListWidget(item: item,);
-                  }
-                })/*SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  HomeAdBannerWidget(),
-                  HorizontalProductsListWidget(items: homeController.newProducts, type: ProductType.newProducts),
-
-                  HorizontalProductsListWidget(items: homeController.saleProducts, type: ProductType.saleProducts),
-
-                  Obx(() => AllProductsListWidget(item: homeController.products.value)),
-                ],
-              ),
-            ),*/
-
-
-
-          )
+              itemCount: homeController.items.length,
+              itemBuilder: (context, index) {
+                final item = homeController.items[index];
+                if (item is AdBannerViewModel) {
+                  return HomeAdBannerWidget();
+                } else if (item is HorizontalProductListViewModel) {
+                  return HorizontalProductsListWidget(items: item.products, type: item.type);
+                } else if (item is AllProductsViewItem) {
+                  return AllProductsListWidget(item: item);
+                }
+                return null;
+              },
+            ),
+          ),
         ),
       );
     });

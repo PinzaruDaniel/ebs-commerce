@@ -34,7 +34,7 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(24),
                 child: Image(
-                  image: AssetImage(widget.item.imageUrl?[0] ?? 'assets/products/headphones.jpeg'),
+                  image: AssetImage(widget.item.imageUrl?[0] ?? 'assets/products/noimage.png'),
                   height: 150,
                   width: widget.width,
                   fit: BoxFit.cover,

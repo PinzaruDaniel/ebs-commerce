@@ -29,9 +29,9 @@ class _AllProductsListWidgetState extends State<AllProductsListWidget> {
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.75),
             padding: EdgeInsets.only(left: 8.0, top: 16),
-            itemCount: widget.item.length,
+            itemCount: widget.item.items.length,
             itemBuilder: (context, index) {
-              var itemProducts = widget.item[index];
+              var itemProducts = widget.item.items[index];
               return HomeProductsItemWidget(item: itemProducts, width: 180);
             },
           ),

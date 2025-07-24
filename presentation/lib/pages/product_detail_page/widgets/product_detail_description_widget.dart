@@ -30,7 +30,6 @@ class _ProductDetailDescriptionWidgetState extends State<ProductDetailDescriptio
             trimExpandedText: 'Show less',
             moreStyle: AppTextsStyle.bold.copyWith(color: Color(0xff003bd1), fontSize: 12),
           ),
-          Text('${widget.item.stock}'),
         ],
       ),
     );

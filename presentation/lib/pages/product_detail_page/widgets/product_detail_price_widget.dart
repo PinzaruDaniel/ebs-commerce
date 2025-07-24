@@ -29,7 +29,7 @@ class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
         children: [
           (widget.item.sale == 0 || !widget.showDiscount)
               ? Text(
-            '\$ ${widget.item.price}',
+            '\$ ${widget.item.price ?? '-'}',
             style: AppTextsStyle.bold.copyWith(fontSize: 21),
           )
               : Row(

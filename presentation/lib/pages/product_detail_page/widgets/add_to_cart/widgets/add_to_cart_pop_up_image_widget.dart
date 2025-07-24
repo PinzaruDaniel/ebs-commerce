@@ -12,7 +12,7 @@ class AddToCartPopUpImageWidget extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(16),
-          child: Image.asset(item.imageUrl![0], height: 100, width: 100, fit: BoxFit.cover),
+          child: Image.asset(item.imageUrl?[0] ?? 'assets/products/headphones.jpeg', height: 100, width: 100, fit: BoxFit.cover),
         ),
       ],
     );

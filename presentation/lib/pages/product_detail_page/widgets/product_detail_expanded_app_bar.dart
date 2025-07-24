@@ -28,13 +28,14 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
           itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
             final image = widget.item.imageUrl?[itemIndex];
             return Image.asset(
-              image ?? 'assets/products/headphones.jpeg',
+              image ?? 'assets/products/noimage.png',
               fit: BoxFit.cover,
               width: double.infinity,
               height: 400,
             );
           },
           options: CarouselOptions(
+            enableInfiniteScroll: false,
             viewportFraction: 1,
             height: 400,
             onPageChanged: (index, reason) => setState(() => activeIndex = index),
@@ -47,14 +48,14 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
             padding:  EdgeInsets.only(bottom: 24),
             child: AnimatedSmoothIndicator(
               activeIndex: activeIndex,
-              count: widget.item.imageUrl?.length?? 1,
+              count: widget.item.imageUrl?.length ?? 1,
               effect: WormEffect(
                 type: WormType.thin,
                 dotHeight: 8,
                 dotWidth: 8,
-                dotColor: AppColors.primary,
+                dotColor: widget.item.imageUrl?.length != null? AppColors.primary: Colors.transparent,
                 paintStyle: PaintingStyle.stroke,
-                activeDotColor: AppColors.primary,
+                activeDotColor:widget.item.imageUrl?.length != null? AppColors.primary: Colors.transparent,
               ),
             ),
           ),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:input_quantity/input_quantity.dart';
 
@@ -14,11 +16,16 @@ class ProductInputQuantityWidget extends StatelessWidget {
 
   final int initialValue;
   final int minValue;
-  final int? maxValue;
+  final dynamic maxValue;
   final Function(int) onChanged;
 
   @override
   Widget build(BuildContext context) {
+    final bool isOutOfStock = maxValue == null;
+    final int adjustMax = isOutOfStock ? 0 : maxValue;
+    final int adjustMin = isOutOfStock ? 0 : minValue;
+    final int initialVal=initialValue.clamp(adjustMin, adjustMax);
+
     return InputQty.int(
       qtyFormProps: QtyFormProps(enableTyping: false),
       decoration: QtyDecorationProps(
@@ -28,9 +35,9 @@ class ProductInputQuantityWidget extends StatelessWidget {
         width: 8,
         borderShape: BorderShapeBtn.roundedRect,
       ),
-      initVal: initialValue,
-      minVal: minValue,
-      maxVal: 2,
+      initVal: initialVal,
+      minVal: adjustMin,
+      maxVal: adjustMax,
       onQtyChanged: (val) {
         print('Quantity changed to $val');
         onChanged(val);

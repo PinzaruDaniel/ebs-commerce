@@ -4,6 +4,7 @@ import 'package:presentation/view/product_view_model.dart';
 abstract class BaseViewModel{}
 
 class AdBannerViewModel extends BaseViewModel{}
+
 class HorizontalProductListViewModel extends BaseViewModel{
   final List<ProductViewModel> products;
   final ProductType type;
