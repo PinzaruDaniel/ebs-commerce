@@ -7,6 +7,8 @@ import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart'
 import 'package:presentation/pages/home_page/widgets/home_all_products_list_widget.dart';
 import 'package:presentation/themes/app_colors.dart';
 import 'package:presentation/themes/app_text_styles.dart';
+import 'package:presentation/view/base_view_model.dart';
+import 'package:presentation/view/product_view_model.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../../util/widgets/horizontal_products_list_widget.dart';
 import '../shopping_cart_page/shopping_cart_page.dart';
@@ -101,7 +103,20 @@ class _HomePageState extends State<HomePage> {
           onLoading: _onLoading,
 
           child: SafeArea(
-            child: Container()/*SingleChildScrollView(
+            child: ListView.builder(
+                itemCount: homeController.items.length,
+                itemBuilder: (context, index){
+                  final item=homeController.items[index];
+                  if(item is AdBannerViewModel){
+                    return HomeAdBannerWidget();
+                  }
+                  else if(item is HorizontalProductListViewModel){
+                    return HorizontalProductsListWidget(items: item.products, type: item.type);
+                  }
+                  else if(item is AllProductsViewItem){
+                    return AllProductsListWidget(item: item,);
+                  }
+                })/*SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

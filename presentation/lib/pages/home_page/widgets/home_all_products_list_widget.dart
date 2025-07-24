@@ -1,22 +1,13 @@
-/*
 import 'package:presentation/util/widgets/header_title_widget.dart';
-import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../view/base_view_model.dart';
 import 'home_products_item_widget.dart';
-
-
-class AllProductsViewItem extends BaseViewModel {
-  final List<ProductViewModel> items;
-
-  AllProductsViewItem({required this.items});
-}
 
 class AllProductsListWidget extends StatefulWidget {
   const AllProductsListWidget({super.key, required this.item});
 
-  final  AllProductsViewItem item;
-
+  final AllProductsViewItem item;
 
   @override
   State<AllProductsListWidget> createState() => _AllProductsListWidgetState();
@@ -28,26 +19,24 @@ class _AllProductsListWidgetState extends State<AllProductsListWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-    Padding(padding: EdgeInsets.only(top:24, bottom:8, left: 16),
-        child: HeaderTitleWidget(title: 'ALL PRODUCTS', showDivider: true, ),
-    ),
+        Padding(
+          padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
+          child: HeaderTitleWidget(title: 'ALL PRODUCTS', showDivider: true),
+        ),
         SizedBox(
           child: GridView.builder(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.75,
-            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.75),
             padding: EdgeInsets.only(left: 8.0, top: 16),
             itemCount: widget.item.length,
             itemBuilder: (context, index) {
-              var itemProducts=widget.item[index];
-              return HomeProductsItemWidget(item: itemProducts, width: 180,);
+              var itemProducts = widget.item[index];
+              return HomeProductsItemWidget(item: itemProducts, width: 180);
             },
           ),
         ),
       ],
     );
   }
-}*/
+}
