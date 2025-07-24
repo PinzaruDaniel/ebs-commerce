@@ -1,0 +1,24 @@
+import 'package:get/get.dart';
+
+import '../../../../view/cart_products_view_model.dart';
+import '../../../../view/product_view_model.dart';
+
+class AddToCartController extends GetxController {
+  RxList<CartItem> cartItems = RxList([]);
+  Rxn<CartItem> cartItem = Rxn<CartItem>();
+
+  CartItem initCartItem(ProductViewModel item) {
+    final itemToAdd = CartItem(
+      id: item.id,
+      title: item.title,
+      imageUrl: item.imageUrl != null? item.imageUrl![0] : 'assets/banner/banner.png',
+      price: item.price,
+      stock: item.stock,
+      specification: item.specification.isNotEmpty ? item.specification.first : null,
+      quantity: 1,
+    );
+    cartItem.value = itemToAdd;
+    cartItem.refresh();
+    return itemToAdd;
+  }
+}

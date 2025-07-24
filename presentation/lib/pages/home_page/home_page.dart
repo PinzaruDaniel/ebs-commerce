@@ -1,0 +1,125 @@
+// ignore_for_file: invalid_use_of_protected_member
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
+import 'package:presentation/pages/home_page/widgets/home_all_products_list_widget.dart';
+import 'package:presentation/themes/app_colors.dart';
+import 'package:presentation/themes/app_text_styles.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import '../../util/widgets/horizontal_products_list_widget.dart';
+import '../shopping_cart_page/shopping_cart_page.dart';
+import 'home_controller.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  HomeController get homeController => Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    Get.put(HomeController());
+    homeController.getProducts();
+    homeController.getSaleProducts();
+    homeController.getNewProducts();
+    homeController.isLoading;
+  }
+
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    _refreshController.refreshCompleted();
+   if (mounted) {
+      setState(() {});
+  }
+  }
+
+  void _onLoading() async {
+    await Future.delayed(Duration(seconds: 1));
+    if (mounted) {
+      setState(() {});
+    }
+    _refreshController.loadComplete();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      if (homeController.isLoading.value) {
+        return Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(color: AppColors.secondary, strokeWidth: 1, constraints: BoxConstraints(
+                  minHeight: 100, maxHeight: 100, minWidth: 100, maxWidth: 100
+                ),),
+                Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade300)),
+              ],
+            ),
+          ),
+        );
+      }
+
+      return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          shape: Border(bottom: BorderSide(color: Colors.black12)),
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          actions: [
+            Image.asset('assets/icons/icon.png'),
+            Spacer(),
+            IconButton(onPressed: () {}, icon: SvgPicture.asset('assets/icons/filters.svg')),
+            IconButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartPage()));
+              },
+              icon: SvgPicture.asset('assets/icons/Cart icon.svg'),
+            ),
+          ],
+        ),
+        body: SmartRefresher(
+          enablePullDown: true,
+          enablePullUp: true,
+          header: WaterDropMaterialHeader(
+            distance: 50,
+            color: AppColors.primary,
+            backgroundColor: Colors.grey.shade100,
+          ),
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          onLoading: _onLoading,
+
+          child: SafeArea(
+            child: Container()/*SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HomeAdBannerWidget(),
+                  HorizontalProductsListWidget(items: homeController.newProducts, type: ProductType.newProducts),
+
+                  HorizontalProductsListWidget(items: homeController.saleProducts, type: ProductType.saleProducts),
+
+                  Obx(() => AllProductsListWidget(item: homeController.products.value)),
+                ],
+              ),
+            ),*/
+
+
+
+          )
+        ),
+      );
+    });
+  }
+}
