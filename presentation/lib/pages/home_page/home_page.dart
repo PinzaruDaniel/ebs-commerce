@@ -36,14 +36,7 @@ class _HomePageState extends State<HomePage> {
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  void _onRefresh() async {
-    await Future.delayed(Duration(seconds: 1));
-
-    _refreshController.refreshCompleted();
-    if (mounted) {
-      setState(() {});
-    }
-  }
+  /* void _onRefresh*/
 
   void _onLoading() async {
     await Future.delayed(Duration(seconds: 1));
@@ -55,74 +48,85 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (homeController.isLoading.value) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Obx(() {
+        if (homeController.isLoading.value) {
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    color: AppColors.primary,
+                    strokeWidth: 3,
+                    constraints: BoxConstraints(minWidth: 75, minHeight: 75),
+                  ),
+                  Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500)),
+                ],
+              ),
+            ),
+          );
+        }
+
         return Scaffold(
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            shape: Border(bottom: BorderSide(color: Colors.black12)),
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+            actions: [
+              Image.asset('assets/icons/icon.png'),
+              Spacer(),
+              IconButton(onPressed: () {}, icon: SvgPicture.asset('assets/icons/filters.svg')),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartPage()));
+                },
+                icon: SvgPicture.asset('assets/icons/Cart icon.svg'),
+              ),
+            ],
+          ),
+          body: SafeArea(
+              child: SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: true,
+                header: WaterDropMaterialHeader(
+                  distance: 50,
                   color: AppColors.primary,
-                  strokeWidth: 3,
-                  constraints: BoxConstraints(minWidth: 75, minHeight:75 ),
+                  backgroundColor: Colors.grey.shade100,
                 ),
-                Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500)),
-              ],
+                controller: _refreshController,
+                onRefresh: () async {
+                  await Future.delayed(Duration(seconds: 1));
+                  _refreshController.refreshCompleted();
+                  if (mounted) {
+                    setState(() {});
+                  }
+                },
+                onLoading: _onLoading,
+
+                child: Container(
+                  child: ListView.builder(
+                  itemCount: homeController.items.length,
+                  itemBuilder: (context, index) {
+                    final item = homeController.items[index];
+                    if (item is AdBannerViewModel) {
+                      return HomeAdBannerWidget();
+                    } else if (item is HorizontalProductListViewModel) {
+                      return HorizontalProductsListWidget(items: item.products, type: item.type);
+                    } else if (item is AllProductsViewItem) {
+                      return AllProductsListWidget(item: item);
+                    }
+                    return null;
+                  },
+                                ),
+                ),
             ),
           ),
         );
-      }
-
-      return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          shape: Border(bottom: BorderSide(color: Colors.black12)),
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
-          actions: [
-            Image.asset('assets/icons/icon.png'),
-            Spacer(),
-            IconButton(onPressed: () {}, icon: SvgPicture.asset('assets/icons/filters.svg')),
-            IconButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartPage()));
-              },
-              icon: SvgPicture.asset('assets/icons/Cart icon.svg'),
-            ),
-          ],
-        ),
-        body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: true,
-          header: WaterDropMaterialHeader(
-            distance: 50,
-            color: AppColors.primary,
-            backgroundColor: Colors.grey.shade100,
-          ),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          onLoading: _onLoading,
-
-          child: SafeArea(
-            child: ListView.builder(
-              itemCount: homeController.items.length,
-              itemBuilder: (context, index) {
-                final item = homeController.items[index];
-                if (item is AdBannerViewModel) {
-                  return HomeAdBannerWidget();
-                } else if (item is HorizontalProductListViewModel) {
-                  return HorizontalProductsListWidget(items: item.products, type: item.type);
-                } else if (item is AllProductsViewItem) {
-                  return AllProductsListWidget(item: item);
-                }
-                return null;
-              },
-            ),
-          ),
-        ),
-      );
-    });
+      }),
+    );
   }
 }
