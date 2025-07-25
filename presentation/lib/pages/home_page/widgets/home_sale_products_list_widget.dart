@@ -3,9 +3,9 @@ import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'home_products_item_widget.dart';
 
-
 class SaleProductsListWidget extends StatefulWidget {
   const SaleProductsListWidget({super.key, required this.products});
+
   final List<ProductViewModel> products;
 
   @override
@@ -20,7 +20,7 @@ class _SaleProductsListWidgetState extends State<SaleProductsListWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        HeaderTitleWidget(title: 'SALE PRODUCTS', showDivider: true,),
+        HeaderTitleWidget(title: 'SALE PRODUCTS', showDivider: true),
         Container(
           height: 280,
           child: ListView.builder(
@@ -29,7 +29,7 @@ class _SaleProductsListWidgetState extends State<SaleProductsListWidget> {
             itemCount: discountedProducts.length,
             itemBuilder: (context, index) {
               final product = discountedProducts[index];
-              return HomeProductsItemWidget(item: product, width: 180,);
+              return HomeProductsItemWidget(item: product, width: 180);
             },
           ),
         ),

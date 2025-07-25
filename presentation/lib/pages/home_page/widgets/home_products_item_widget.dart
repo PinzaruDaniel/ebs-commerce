@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class HomeProductsItemWidget extends StatefulWidget {
   const HomeProductsItemWidget({super.key, required this.item, this.width});
+
   final ProductViewModel item;
   final double? width;
 
@@ -21,12 +22,10 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
       highlightColor: Colors.transparent,
       onTap: () {
         AppRouter.openDetailsPage(item: widget.item);
-
       },
       child: Padding(
         padding: EdgeInsets.only(left: 8, right: 8),
         child: SizedBox(
-
           width: widget.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,9 +41,8 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
               ),
 
               Text(widget.item.title, style: AppTextsStyle.medium),
-              Text(widget.item.company?? '', style: AppTextsStyle.medium),
-              Text('\$ ${widget.item.price ?? '-'}', style: AppTextsStyle.boldBig.copyWith(fontSize: 16),)
-
+              Text(widget.item.company ?? '', style: AppTextsStyle.medium),
+              Text('\$ ${widget.item.price ?? '-'}', style: AppTextsStyle.boldBig.copyWith(fontSize: 16)),
             ],
           ),
         ),

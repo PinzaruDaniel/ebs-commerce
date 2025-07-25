@@ -51,25 +51,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Obx(() {
-        if (homeController.isLoading.value) {
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(
-                    color: AppColors.primary,
-                    strokeWidth: 3,
-                    constraints: BoxConstraints(minWidth: 75, minHeight: 75),
-                  ),
-                  Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500)),
-                ],
-              ),
-            ),
-          );
-        }
-
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -89,40 +70,53 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           body: SafeArea(
-              child: SmartRefresher(
-                enablePullDown: true,
-                enablePullUp: true,
-                header: WaterDropMaterialHeader(
-                  distance: 50,
-                  color: AppColors.primary,
-                  backgroundColor: Colors.grey.shade100,
-                ),
-                controller: _refreshController,
-                onRefresh: () async {
-                  await Future.delayed(Duration(seconds: 1));
-                  _refreshController.refreshCompleted();
-                  if (mounted) {
-                    setState(() {});
-                  }
-                },
-                onLoading: _onLoading,
+            child: SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: true,
+              header: WaterDropMaterialHeader(
+                distance: 50,
+                color: AppColors.primary,
+                backgroundColor: Colors.grey.shade100,
+              ),
+              controller: _refreshController,
+              onRefresh: () async {
+                await Future.delayed(Duration(seconds: 1));
+                _refreshController.refreshCompleted();
+                if (mounted) {
+                  setState(() {});
+                }
+              },
+              onLoading: _onLoading,
 
-                child: Container(
-                  child: ListView.builder(
-                  itemCount: homeController.items.length,
-                  itemBuilder: (context, index) {
-                    final item = homeController.items[index];
-                    if (item is AdBannerViewModel) {
-                      return HomeAdBannerWidget();
-                    } else if (item is HorizontalProductListViewModel) {
-                      return HorizontalProductsListWidget(items: item.products, type: item.type);
-                    } else if (item is AllProductsViewItem) {
-                      return AllProductsListWidget(item: item);
-                    }
-                    return null;
-                  },
-                                ),
-                ),
+              child: homeController.isLoading.value
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(
+                            color: AppColors.primary,
+                            strokeWidth: 3,
+                            constraints: BoxConstraints(minWidth: 75, minHeight: 75),
+                          ),
+                          Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500)),
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: homeController.items.length,
+                      itemBuilder: (context, index) {
+                        final item = homeController.items[index];
+                        if (item is AdBannerViewModel) {
+                          return HomeAdBannerWidget();
+                        } else if (item is HorizontalProductListViewModel) {
+                          return HorizontalProductsListWidget(items: item.products, type: item.type);
+                        } else if (item is AllProductsViewItem) {
+                          return AllProductsListWidget(item: item);
+                        }
+                        return null;
+                      },
+                    ),
             ),
           ),
         );

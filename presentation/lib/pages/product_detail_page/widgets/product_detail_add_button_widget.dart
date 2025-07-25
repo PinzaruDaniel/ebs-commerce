@@ -15,21 +15,17 @@ class _ProductDetailAddButtonWidgetState extends State<ProductDetailAddButtonWid
     return Stack(
       children: [
         Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
+          decoration: BoxDecoration(color: Colors.white),
           child: Column(
             children: [
               TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    elevation: 2
-                  ),
-                  onPressed: (){}, child:
-              Text('add to cart', style: TextStyle(color: Colors.white),))
+                style: TextButton.styleFrom(backgroundColor: AppColors.primary, elevation: 2),
+                onPressed: () {},
+                child: Text('add to cart', style: TextStyle(color: Colors.white)),
+              ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

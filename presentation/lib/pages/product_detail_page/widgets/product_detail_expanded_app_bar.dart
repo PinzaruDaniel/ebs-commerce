@@ -17,14 +17,12 @@ class ProductDetailExpandedAppBar extends StatefulWidget {
 class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBar> {
   int activeIndex = 0;
 
-  //final CarouselController _controller=CarouselController();
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         CarouselSlider.builder(
           itemCount: widget.item.imageUrl?.length ?? 1,
-          //carouselController: _controller,
           itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
             final image = widget.item.imageUrl?[itemIndex];
             return Image.asset(
@@ -42,10 +40,9 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
           ),
         ),
         Align(
-         // heightFactor: 38,
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding:  EdgeInsets.only(bottom: 24),
+            padding: EdgeInsets.only(bottom: 24),
             child: AnimatedSmoothIndicator(
               activeIndex: activeIndex,
               count: widget.item.imageUrl?.length ?? 1,
@@ -53,9 +50,9 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
                 type: WormType.thin,
                 dotHeight: 8,
                 dotWidth: 8,
-                dotColor: widget.item.imageUrl?.length != null? AppColors.primary: Colors.transparent,
+                dotColor: widget.item.imageUrl?.length != null ? AppColors.primary : Colors.transparent,
                 paintStyle: PaintingStyle.stroke,
-                activeDotColor:widget.item.imageUrl?.length != null? AppColors.primary: Colors.transparent,
+                activeDotColor: widget.item.imageUrl?.length != null ? AppColors.primary : Colors.transparent,
               ),
             ),
           ),
@@ -64,14 +61,3 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
     );
   }
 }
-
-/*AppBar(
-            backgroundColor: Colors.transparent,
-            toolbarHeight: 80,
-            leading: IconButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xff003bd1), size: 20,)),
-            actions: [IconButton(onPressed: () {}, icon: SvgPicture.asset('assets/icons/Cart icon.svg'))],
-          ),*/

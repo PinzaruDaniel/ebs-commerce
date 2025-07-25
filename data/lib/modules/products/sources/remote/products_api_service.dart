@@ -11,5 +11,16 @@ abstract class ProductsApiService {
 
 
   @GET('/products')
-  Future<ProductResponseApiDto> getProducts();
+  Future<ProductResponseApiDto> getProducts(
+      //queries list
+      );
+/*
+  @GET('/products?marks=sale')
+  Future<ProductResponseApiDto> getSaleProducts();
+
+
+  @GET('/products?marks=new')
+  Future<ProductResponseApiDto> getNewProducts();*/
+
+
 }

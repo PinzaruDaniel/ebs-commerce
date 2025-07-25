@@ -7,7 +7,9 @@ import '../../../themes/app_text_styles.dart';
 
 class ProductDetailDescriptionWidget extends StatefulWidget {
   const ProductDetailDescriptionWidget({super.key, required this.item});
+
   final ProductViewModel item;
+
   @override
   State<ProductDetailDescriptionWidget> createState() => _ProductDetailDescriptionWidgetState();
 }
@@ -16,14 +18,14 @@ class _ProductDetailDescriptionWidgetState extends State<ProductDetailDescriptio
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 36, left:8, right: 24),
+      padding: const EdgeInsets.only(top: 36, left: 8, right: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HeaderTitleWidget( title: 'PRODUCT DESCRIPTION', showDivider: false),
-          SizedBox(height: 12,),
+          HeaderTitleWidget(title: 'PRODUCT DESCRIPTION', showDivider: false),
+          SizedBox(height: 12),
           ReadMoreText(
-            widget.item.description?? 'No description',
+            widget.item.description ?? 'No description',
             trimMode: TrimMode.Length,
             trimLength: 240,
             trimCollapsedText: 'Read more',

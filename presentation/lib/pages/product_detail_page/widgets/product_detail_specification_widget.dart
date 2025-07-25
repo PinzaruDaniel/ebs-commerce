@@ -21,7 +21,7 @@ class _ProductDetailSpecificationWidgetState extends State<ProductDetailSpecific
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HeaderTitleWidget(title: 'PRODUCT SPECIFICATIONS', showDivider: false,),
+          HeaderTitleWidget(title: 'PRODUCT SPECIFICATIONS', showDivider: false),
 
           GridView.builder(
             shrinkWrap: true,
@@ -30,16 +30,21 @@ class _ProductDetailSpecificationWidgetState extends State<ProductDetailSpecific
             padding: EdgeInsets.symmetric(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 8),
             itemBuilder: (context, index) {
-              final spec=widget.item.specification[index];
+              final spec = widget.item.specification[index];
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(child: Text(spec.title, style: AppTextsStyle.bold.copyWith(fontSize: 14), textAlign: TextAlign.start,)),
+                  Expanded(
+                    child: Text(
+                      spec.title,
+                      style: AppTextsStyle.bold.copyWith(fontSize: 14),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
 
                   Expanded(child: Text(spec.value)),
                 ],
               );
-
             },
           ),
         ],

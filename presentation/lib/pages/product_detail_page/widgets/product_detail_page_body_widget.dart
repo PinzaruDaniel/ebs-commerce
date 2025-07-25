@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 class ProductDetailPageBodyWidget extends StatefulWidget {
   const ProductDetailPageBodyWidget({super.key, required this.item});
+
   final ProductViewModel item;
 
   @override
@@ -18,22 +19,21 @@ class _ProductDetailPageBodyWidgetState extends State<ProductDetailPageBodyWidge
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ProductDetailTitleWidget(item: widget.item),
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ProductDetailTitleWidget(item: widget.item),
 
-            ProductDetailPriceWidget(item: widget.item, showDiscount: true,),
+          ProductDetailPriceWidget(item: widget.item, showDiscount: true),
 
-            ProductDetailTagsWidget(item: widget.item),
+          ProductDetailTagsWidget(item: widget.item),
 
-            ProductDetailDescriptionWidget(item: widget.item),
+          ProductDetailDescriptionWidget(item: widget.item),
 
-            ProductDetailSpecificationWidget(item: widget.item),
-
-          ],
-        ),
-      );
+          ProductDetailSpecificationWidget(item: widget.item),
+        ],
+      ),
+    );
   }
 }

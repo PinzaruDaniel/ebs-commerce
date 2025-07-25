@@ -20,8 +20,6 @@ class ProductDetailPriceWidget extends StatefulWidget {
 class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
   @override
   Widget build(BuildContext context) {
-    /*double discountPrice =
-        widget.item.price - (widget.item.price! * (widget.item.sale / 100));*/
 
     return Padding(
       padding: const EdgeInsets.only(left: 12),

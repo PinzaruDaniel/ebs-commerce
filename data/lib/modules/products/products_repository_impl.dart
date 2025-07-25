@@ -16,9 +16,34 @@ class ProductsRepositoryImpl implements ProductsRepository {
     try {
       final response = await apiService.getProducts();
       final entities = response.map((dto) => dto.toEntity()).toList();
-
       return entities;
     } catch (e) {
+      rethrow;
+    }
+  }
+
+
+  @override
+  Future<List<ProductEntity>> getSaleProduct() async {
+    try{
+      final response=await apiService.getSaleProducts();
+      final entities=response.map((dto)=>dto.toEntity()).toList();
+      return entities;
+    }
+    catch (e){
+      rethrow;
+    }
+  }
+
+
+  @override
+  Future<List<ProductEntity>> getNewProduct() async {
+    try {
+      final response = await apiService.getNewProducts();
+      final entities = response.map((dto) => dto.toEntity()).toList();
+      return entities;
+    }
+    catch (e) {
       rethrow;
     }
   }

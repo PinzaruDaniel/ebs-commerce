@@ -6,6 +6,7 @@ import '../../product_detail_price_widget.dart';
 
 class AddToCartPopUpTitleWidget extends StatefulWidget {
   const AddToCartPopUpTitleWidget({super.key, required this.item});
+
   final ProductViewModel item;
 
   @override
@@ -26,16 +27,17 @@ class _AddToCartPopUpTitleWidgetState extends State<AddToCartPopUpTitleWidget> {
               text: TextSpan(
                 style: AppTextsStyle.bold.copyWith(color: Colors.black),
                 children: [
-                  TextSpan(text: '${widget.item.title} From ${widget.item.company} '),
+                  TextSpan(
+                    text: widget.item.company != null
+                        ? '${widget.item.title} From ${widget.item.company}'
+                        : widget.item.title,
+                  ),
                   if (widget.item.sale! > 0)
                     WidgetSpan(
                       alignment: PlaceholderAlignment.middle,
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 3, horizontal: 4),
-                        decoration: BoxDecoration(
-                          color: Color(0xfff8dcde),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
+                        decoration: BoxDecoration(color: Color(0xfff8dcde), borderRadius: BorderRadius.circular(4)),
                         child: Text(
                           '${widget.item.sale}%',
                           style: AppTextsStyle.boldSmall.copyWith(color: Color(0xffcf1c0c)),

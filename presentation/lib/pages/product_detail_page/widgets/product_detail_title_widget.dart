@@ -14,7 +14,6 @@ class ProductDetailTitleWidget extends StatefulWidget {
 class _ProductDetailTitleWidgetState extends State<ProductDetailTitleWidget> {
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -23,7 +22,7 @@ class _ProductDetailTitleWidgetState extends State<ProductDetailTitleWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.item.company?? '', style: AppTextsStyle.boldSmall),
+              Text(widget.item.company ?? '', style: AppTextsStyle.boldSmall),
               Text(widget.item.title, style: AppTextsStyle.bold),
             ],
           ),
