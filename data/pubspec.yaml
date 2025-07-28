@@ -15,6 +15,7 @@ dependencies:
     path: ../domain
   dio: ^5.8.0+1
 
+  dartz: ^0.10.1
   freezed_annotation: ^3.1.0
   retrofit: ^4.6.0
   logger: ^2.6.0

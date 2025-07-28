@@ -14,7 +14,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<List<ProductEntity>> getAllProduct() async {
     try {
-      final response = await apiService.getProducts();
+      final response = await apiService.getProducts(null, null,null);
       final entities = response.map((dto) => dto.toEntity()).toList();
       return entities;
     } catch (e) {
@@ -26,7 +26,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<List<ProductEntity>> getSaleProduct() async {
     try{
-      final response=await apiService.getSaleProducts();
+      final response=await apiService.getProducts('sale', null, null);
       final entities=response.map((dto)=>dto.toEntity()).toList();
       return entities;
     }
@@ -39,7 +39,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<List<ProductEntity>> getNewProduct() async {
     try {
-      final response = await apiService.getNewProducts();
+      final response = await apiService.getProducts('new', null, null);
       final entities = response.map((dto) => dto.toEntity()).toList();
       return entities;
     }

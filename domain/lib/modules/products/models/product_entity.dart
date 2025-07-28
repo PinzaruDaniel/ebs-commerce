@@ -1,5 +1,9 @@
 // Freezed cu ajutorul lui
 
+import 'package:presentation/util/mapper/category_mapper.dart';
+import 'package:presentation/util/mapper/specification_mapper.dart';
+import 'package:presentation/view/product_view_model.dart';
+
 import 'specification_entity.dart';
 
 import 'category_entity.dart';
