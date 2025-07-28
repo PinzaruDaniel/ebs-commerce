@@ -25,7 +25,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
 
   @override
   Widget build(BuildContext context) {
-    final cartItems = cartController.cartItems;
     return Scaffold(
       appBar: AppBar(
         leading: Row(
@@ -42,14 +41,14 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       ),
       body: Column(
         children: [
-          if (cartItems.isEmpty) Container(color: Colors.lightGreen),
+          if (cartController.cartItems.isEmpty) Container(color: Colors.lightGreen),
           Expanded(
             child: Obx(
               () => ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: cartItems.length,
+                itemCount: cartController.cartItems.length,
                 itemBuilder: (context, index) {
-                  final item = cartItems[index];
+                  final item = cartController.cartItems[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                     child: Row(
@@ -70,7 +69,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                               onChanged: (val) {
                                 item.quantity = val;
                                 cartController.cartItems.refresh();
-                              }, maxValue: item.quantity,
+                              }, maxValue: item.stock,
                             ),
                           ],
                         ),

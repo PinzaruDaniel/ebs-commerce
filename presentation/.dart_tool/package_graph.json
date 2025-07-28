@@ -179,7 +179,10 @@
     {
       "name": "domain",
       "version": "1.0.0",
-      "dependencies": []
+      "dependencies": [
+        "common",
+        "dartz"
+      ]
     },
     {
       "name": "lints",
@@ -439,6 +442,7 @@
       "version": "1.0.0",
       "dependencies": [
         "common",
+        "dartz",
         "dio",
         "domain",
         "freezed_annotation",
@@ -446,6 +450,11 @@
         "logger",
         "retrofit"
       ]
+    },
+    {
+      "name": "dartz",
+      "version": "0.10.1",
+      "dependencies": []
     },
     {
       "name": "yaml",

@@ -1,17 +1,11 @@
-import 'package:data/modules/products/models/remote/specification_api_dto.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'category_api_dto.dart';
-
-part 'product_api_dto.freezed.dart';
-
-part 'product_api_dto.g.dart';
+part of 'index.dart';
 
 @freezed
 abstract class ProductApiDto with _$ProductApiDto {
   const factory ProductApiDto({
     required int id,
     required String name,
-    @JsonKey(name: 'brand') required Map<String, dynamic>? brandMap,
+     required Map<String, dynamic>? brand,
     required String? price,
     required List<String>? imageUrl,
     required List<String>? marks,

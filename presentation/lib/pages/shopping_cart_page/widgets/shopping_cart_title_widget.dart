@@ -17,16 +17,16 @@ class ShoppingCartTitleWidget extends StatelessWidget {
           Text(item.title, style: AppTextsStyle.medium),
           SizedBox(height: 4),
           Text(
-            '${item.specification?.title} - ${item.specification?.value}',
+            '${item.specification?.title??''} - ${item.specification?.value??''}',
             style: AppTextsStyle.medium.copyWith(fontSize: 11, fontWeight: FontWeight.w400),
           ),
           Text(
-            '\$${item.price}',
+            '\$${item.price??'-'}',
             style: AppTextsStyle.bold.copyWith(fontSize: 14, color: Colors.grey.shade500),
           ),
           SizedBox(height: 4),
           Text(
-            'Total: \${item.price * item.quantity}',
+            'Total: ${item.price!}',
             style: AppTextsStyle.bold.copyWith(fontSize: 14),
           ),
         ],

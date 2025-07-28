@@ -1,11 +1,12 @@
-import 'package:domain/modules/products/models/product_entity.dart';
+import 'package:common/constants/failure_class.dart';
+import 'package:dartz/dartz.dart';
+
+import 'models/index.dart';
 
 abstract class ProductsRepository {
-  Future<List<ProductEntity>> getAllProduct();
+  Future<Either<Failure, List<ProductEntity>>> getAllProduct();
 
-  Future<List<ProductEntity>> getSaleProduct();
+  Future<Either<Failure, List<ProductEntity>>> getSaleProduct();
 
-  Future<List<ProductEntity>> getNewProduct();
-
-
+  Future<Either<Failure, List<ProductEntity>>> getNewProducts();
 }

@@ -1,9 +1,9 @@
-
-import 'package:data/modules/products/mapper/product_response_mapper.dart';
-import 'package:data/modules/products/models/remote/product_response_api_dto.dart';
-
+import 'package:data/mapper/product_response_mapper.dart';
+import 'package:data/modules/products/models/remote/index.dart';
+import 'package:common/constants/failure_class.dart';
+import 'package:dartz/dartz.dart';
 import 'package:data/modules/products/sources/remote/products_api_service.dart';
-import 'package:domain/modules/products/models/product_entity.dart';
+import 'package:domain/modules/products/models/index.dart';
 import 'package:domain/modules/products/products_repository.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
@@ -12,39 +12,38 @@ class ProductsRepositoryImpl implements ProductsRepository {
   ProductsRepositoryImpl({required this.apiService});
 
   @override
-  Future<List<ProductEntity>> getAllProduct() async {
+  Future<Either<Failure,List<ProductEntity>>> getAllProduct() async {
     try {
-      final response = await apiService.getProducts();
+      final response = await apiService.getProducts(null, null, null);
       final entities = response.map((dto) => dto.toEntity()).toList();
-      return entities;
+      return Right(entities);
     } catch (e) {
-      rethrow;
+      print('getNewProductsError ${e.runtimeType}');
+      return Left(ServerFailure(' ${e.runtimeType}'));
     }
   }
 
-
   @override
-  Future<List<ProductEntity>> getSaleProduct() async {
-    try{
-      final response=await apiService.getSaleProducts();
-      final entities=response.map((dto)=>dto.toEntity()).toList();
-      return entities;
-    }
-    catch (e){
-      rethrow;
-    }
-  }
-
-
-  @override
-  Future<List<ProductEntity>> getNewProduct() async {
+  Future<Either<Failure,List<ProductEntity>>> getSaleProduct() async {
     try {
-      final response = await apiService.getNewProducts();
+      final response = await apiService.getProducts('sale', null, null);
       final entities = response.map((dto) => dto.toEntity()).toList();
-      return entities;
+      return Right(entities);
+    } catch (e) {
+      print('getNewProductsError ${e.runtimeType}');
+      return Left(ServerFailure(' ${e.runtimeType}'));
     }
-    catch (e) {
-      rethrow;
+  }
+
+  @override
+  Future<Either<Failure, List<ProductEntity>>> getNewProducts() async {
+    try {
+      final response = await apiService.getProducts('news', null, null);
+      final entities = response.map((dto) => dto.toEntity()).toList();
+      return Right(entities);
+    } catch (e) {
+      print('getNewProdutsError ${e.runtimeType}');
+      return Left(ServerFailure(' ${e.runtimeType}'));
     }
   }
 }

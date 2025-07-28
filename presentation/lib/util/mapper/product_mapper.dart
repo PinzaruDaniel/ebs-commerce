@@ -1,4 +1,4 @@
-import 'package:domain/modules/products/models/product_entity.dart';
+import 'package:domain/modules/products/models/index.dart';
 import 'package:presentation/util/mapper/category_mapper.dart';
 import 'package:presentation/util/mapper/specification_mapper.dart';
 import 'package:presentation/view/product_view_model.dart';
@@ -15,8 +15,8 @@ extension ProductViewModelMapper on ProductEntity {
       stock: stock,
       sale: discount,
       description: description,
-      specification: specification.map((e) => e.toModel).toList(),
-      category: category.map((e) => e.toModel).toList(),
+      specification: specification!.map((e) => e.toModel).toList(),
+      category: category!.map((e) => e.toModel).toList(),
     );
   }
 }

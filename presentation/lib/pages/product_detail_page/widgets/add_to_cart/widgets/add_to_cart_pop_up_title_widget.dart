@@ -28,8 +28,8 @@ class _AddToCartPopUpTitleWidgetState extends State<AddToCartPopUpTitleWidget> {
                 style: AppTextsStyle.bold.copyWith(color: Colors.black),
                 children: [
                   TextSpan(
-                    text: widget.item.company != null
-                        ? '${widget.item.title} From ${widget.item.company}'
+                    text: widget.item.company?['brand'] != null
+                        ? '${widget.item.title} From ${widget.item.company?['brand'] as String? ?? ''}'
                         : widget.item.title,
                   ),
                   if (widget.item.sale! > 0)

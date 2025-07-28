@@ -1,12 +1,16 @@
-import 'package:domain/modules/products/models/product_entity.dart';
+import 'package:common/constants/failure_class.dart';
 import 'package:domain/modules/products/products_repository.dart';
+import 'package:dartz/dartz.dart';
+
+import '../models/index.dart';
+
 
 class GetAllProductsUseCase {
   final ProductsRepository productsRepository;
 
   GetAllProductsUseCase({required this.productsRepository});
 
-  Future<List<ProductEntity>> getAll()async {
+  Future<Either<Failure,List<ProductEntity>>> getAll()async {
     return productsRepository.getAllProduct();
   }
 }

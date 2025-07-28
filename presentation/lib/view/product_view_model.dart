@@ -12,7 +12,7 @@ class Specification {
 class ProductViewModel extends BaseViewModel {
   final int id;
   final String title;
-  final String? company;
+  final Map<String, dynamic>? company;
   final List<String>? imageUrl;
   final List<String>? marks;
   final String? price;

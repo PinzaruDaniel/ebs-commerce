@@ -3,7 +3,6 @@ import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:presentation/pages/home_page/widgets/home_all_products_list_widget.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/util/widgets/horizontal_products_list_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
@@ -22,27 +21,52 @@ class HomeController extends GetxController {
 
   void getProducts() async {
     isLoading.value = true;
-    await getAllProductsUseCase.getAll().then((products) async {
-      this.products.value = products.map((e) => e.toModel).toList();
-      getNewProducts();
-      await getSaleProducts();
-      items.value = [
-        AdBannerViewModel(),
-        HorizontalProductListViewModel(products: newProducts, type: ProductType.newProducts),
-        HorizontalProductListViewModel(products: saleProducts, type: ProductType.saleProducts),
-        AllProductsViewItem(items: products.map((e) => e.toModel).toList()),
-      ];
-      isLoading.value = false;
+    await getAllProductsUseCase.getAll().then((either) async {
+      either.fold(
+        (failure) {
+          isLoading.value = false;
+        },
+
+        (products) async {
+          this.products.value = products.map((e) => e.toModel).toList();
+          getNewProducts();
+          await getSaleProducts();
+          items.value = [
+            AdBannerViewModel(),
+            HorizontalProductListViewModel(products: newProducts, type: ProductType.newProducts),
+            HorizontalProductListViewModel(products: saleProducts, type: ProductType.saleProducts),
+            AllProductsViewItem(items: products.map((e) => e.toModel).toList()),
+          ];
+          isLoading.value = false;
+        },
+      );
     });
   }
 
   Future<void> getNewProducts() async {
-    final result = await getNewProductsUseCase.getNew();
-    newProducts = result.map((e) => e.toModel).toList();
-  }
+    await getNewProductsUseCase.getNew().then((either) async {
+      either.fold(
+        (failure) {
+          isLoading.value = false;
+        },
 
+        (products) async {
+          newProducts = products.map((e) => e.toModel).toList();
+        },
+      );
+    });
+  }
   Future<void> getSaleProducts() async {
-    final result = await getSaleProductsUseCase.getSale();
-    saleProducts = result.map((e) => e.toModel).toList();
+    await getSaleProductsUseCase.getSale().then((either) async {
+      either.fold(
+        (failure) {
+          isLoading.value = false;
+        },
+
+        (products) async {
+          saleProducts = products.map((e) => e.toModel).toList();
+        },
+      );
+    });
   }
 }
