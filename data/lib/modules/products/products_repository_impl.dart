@@ -33,6 +33,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
       print('getNewProductsError ${e.runtimeType}');
       return Left(ServerFailure(' ${e.runtimeType}'));
     }
+
   }
 
   @override
