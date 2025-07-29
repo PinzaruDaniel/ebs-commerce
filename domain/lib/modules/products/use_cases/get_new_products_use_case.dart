@@ -1,16 +1,17 @@
 import 'package:common/constants/failure_class.dart';
 import 'package:dartz/dartz.dart';
+import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/products/products_repository.dart';
 
 import '../models/index.dart';
 
-
-class GetNewProductsUseCase{
+class GetNewProductsUseCase extends UseCase<List<ProductEntity>> {
   final ProductsRepository productsRepository;
+
   GetNewProductsUseCase({required this.productsRepository});
 
-  Future<Either<Failure,List<ProductEntity>>> getNew()async {
+  @override
+  Future<Either<Failure, List<ProductEntity>>> call() async {
     return productsRepository.getNewProducts();
   }
-
 }

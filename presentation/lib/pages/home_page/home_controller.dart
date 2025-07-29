@@ -1,3 +1,4 @@
+import 'package:domain/modules/products/models/product_entity.dart';
 import 'package:domain/modules/products/use_cases/get_all_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
@@ -21,7 +22,7 @@ class HomeController extends GetxController {
 
   void getProducts() async {
     isLoading.value = true;
-    await getAllProductsUseCase.call(NoParams()).then((either) async {
+    await getAllProductsUseCase.call().then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;
@@ -44,7 +45,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getNewProducts() async {
-    await getNewProductsUseCase.getNew().then((either) async {
+    await getNewProductsUseCase.call().then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;
@@ -57,7 +58,7 @@ class HomeController extends GetxController {
     });
   }
   Future<void> getSaleProducts() async {
-    await getSaleProductsUseCase.getSale().then((either) async {
+    await getSaleProductsUseCase.call().then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;
@@ -70,3 +71,5 @@ class HomeController extends GetxController {
     });
   }
 }
+
+
