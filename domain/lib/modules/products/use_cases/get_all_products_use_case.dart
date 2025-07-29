@@ -14,6 +14,7 @@ class GetAllProductsUseCase extends UseCaseNoParams<List<ProductEntity>>{
   Future<Either<Failure,List<ProductEntity>>> call()async {
     return productsRepository.getAllProducts();
   }
+
 }
 
 
