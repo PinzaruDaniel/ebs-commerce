@@ -33,7 +33,9 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(24),
                 child: Image(
-                  image: AssetImage(widget.item.imageUrl?[0] ?? 'assets/products/noimage.png'),
+                  image: widget.item.imageUrl!.isNotEmpty
+                      ? NetworkImage(widget.item.imageUrl![0])
+                      : AssetImage('assets/products/noimage.png') as ImageProvider,
                   height: 150,
                   width: widget.width,
                   fit: BoxFit.cover,

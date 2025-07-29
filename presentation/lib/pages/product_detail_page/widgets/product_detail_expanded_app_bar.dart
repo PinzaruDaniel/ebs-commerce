@@ -25,8 +25,9 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
           itemCount: widget.item.imageUrl?.length ?? 1,
           itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
             final image = widget.item.imageUrl?[itemIndex];
-            return Image.asset(
-              image ?? 'assets/products/noimage.png',
+            return Image(
+              image: image!.isNotEmpty ?
+                  NetworkImage(image): AssetImage('assets/products/noimage.png') as ImageProvider,
               fit: BoxFit.cover,
               width: double.infinity,
               height: 400,
