@@ -1,4 +1,3 @@
-// Freezed cu ajutorul lui
 
 part of 'index.dart';
 

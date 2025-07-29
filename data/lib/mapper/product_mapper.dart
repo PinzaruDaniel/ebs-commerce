@@ -1,6 +1,7 @@
 
 import 'package:data/mapper/category_mapper.dart';
 import 'package:data/mapper/specification_mapper.dart';
+import 'package:data/modules/categories/models/remote/index.dart';
 import 'package:domain/modules/products/models/index.dart';
 import '../modules/products/models/remote/index.dart';
 
@@ -21,3 +22,5 @@ extension ProductApiDtoMapper on ProductApiDto {
     );
   }
 }
+
+

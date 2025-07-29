@@ -13,7 +13,7 @@ abstract class ProductApiDto with _$ProductApiDto {
     @JsonKey(name: 'discount', defaultValue: 0) int? discount,
     required String? description,
     required List<SpecificationApiDto>? specification,
-    required List<CategoryApiDto>? category,
+     required List<CategoryApiDto>? category,
   }) = _ProductApiDto;
 
   factory ProductApiDto.fromJson(Map<String, dynamic> json) => _$ProductApiDtoFromJson(json);
