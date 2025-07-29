@@ -1,6 +1,6 @@
+import 'package:presentation/themes/app_colors.dart';
 import 'package:presentation/themes/app_text_styles.dart';
 import 'package:presentation/util/routing/app_router.dart';
-import 'package:presentation/view/category_view_model.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -38,15 +38,14 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
                       ? NetworkImage(widget.item.imageUrl![0])
                       : AssetImage('assets/products/noimage.png') as ImageProvider,
 
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
+                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Center(
                       heightFactor: 4,
                       child: CircularProgressIndicator(
+                        color: AppColors.primary,
                         value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
+                            ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
                             : null,
                       ),
                     );
@@ -57,10 +56,12 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
                 ),
               ),
 
-              Text(widget.item.title, style: AppTextsStyle.medium),
+              Padding(
+                padding: const EdgeInsets.only(top:4),
+                child: Text(widget.item.title, style: AppTextsStyle.medium),
+              ),
               Text(widget.item.company?['brand'] as String? ?? '', style: AppTextsStyle.medium),
-              Text('\$ ${widget.item.price ?? '-'}', style: AppTextsStyle.boldBig.copyWith(fontSize: 16)),
-              //Text(widget.item.category[0].name)
+              Text('\$ ${widget.item.price ?? '-'} ', style: AppTextsStyle.boldBig.copyWith(fontSize: 16)),
             ],
           ),
         ),

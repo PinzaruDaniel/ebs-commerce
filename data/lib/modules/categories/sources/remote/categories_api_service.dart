@@ -9,5 +9,7 @@ abstract class CategoriesApiService {
   factory CategoriesApiService(Dio dio, {String baseUrl}) = _CategoriesApiService;
 
   @GET('/categories')
-  Future<CategoryResponseApiDto> getCategories();
+  Future<CategoryResponseApiDto> getCategories(
+      @Query('per_page') int? limit
+      );
 }

@@ -15,7 +15,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<Either<Failure, List<ProductEntity>>> getAllProduct() async {
     try {
-      final response = await apiService.getProducts(null, null, null);
+      final response = await apiService.getProducts(null, null, 20);
       final entities = response.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {

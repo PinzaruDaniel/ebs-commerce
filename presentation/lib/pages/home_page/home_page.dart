@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/filtered_page/filter_page.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
 import 'package:presentation/pages/home_page/widgets/home_all_products_list_widget.dart';
 import 'package:presentation/themes/app_colors.dart';
@@ -36,7 +37,6 @@ class _HomePageState extends State<HomePage> {
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-
   void _onLoading() async {
     await Future.delayed(Duration(seconds: 1));
     if (mounted) {
@@ -59,7 +59,12 @@ class _HomePageState extends State<HomePage> {
             actions: [
               Image.asset('assets/icons/icon.png'),
               Spacer(),
-              IconButton(onPressed: () {}, icon: SvgPicture.asset('assets/icons/filters.svg')),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => FilterPage()));
+                },
+                icon: SvgPicture.asset('assets/icons/filters.svg'),
+              ),
               IconButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartPage()));

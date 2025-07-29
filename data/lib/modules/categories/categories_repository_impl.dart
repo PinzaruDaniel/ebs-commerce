@@ -15,7 +15,7 @@ class CategoriesRepositoryImpl implements CategoriesRepository{
   @override
   Future<Either<Failure, List<CategoryEntity>>> getAllCategories() async {
     try {
-      final response = await apiService.getCategories();
+      final response = await apiService.getCategories(266);
       final entities = response.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {

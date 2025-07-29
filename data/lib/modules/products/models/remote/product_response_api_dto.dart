@@ -3,9 +3,9 @@ part of 'index.dart';
 abstract class ProductResponseApiDto with _$ProductResponseApiDto{
   const factory ProductResponseApiDto({
     required int count,
-    required int? totalPages,
-    required int? perPage,
-    required int? currentPage,
+    @JsonKey(name: 'total_pages')  required int? totalPages,
+    @JsonKey(name: 'par_page') required int? perPage,
+    @JsonKey(name: 'current_page')required int? currentPage,
     required List<ProductApiDto> results,
 }) = _ProductResponseApiDto;
   factory ProductResponseApiDto.fromJson(Map<String, dynamic>json)=>_$ProductResponseApiDtoFromJson(json);

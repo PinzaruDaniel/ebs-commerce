@@ -16,7 +16,7 @@ extension ProductViewModelMapper on ProductEntity {
       sale: discount,
       description: description,
       specification: specification!.map((e) => e.toModel).toList(),
-      category: category!.map((e) => e.toModel).toList(),
+      category: category?.map((e) => e.toModel).toList() ?? [],
     );
   }
 }

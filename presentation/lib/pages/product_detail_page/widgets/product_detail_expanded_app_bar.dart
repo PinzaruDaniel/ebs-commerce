@@ -28,6 +28,20 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
             return Image(
               image: image!.isNotEmpty ?
                   NetworkImage(image): AssetImage('assets/products/noimage.png') as ImageProvider,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  heightFactor: 4,
+                  child: CircularProgressIndicator(
+                    color: AppColors.primary,
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
               fit: BoxFit.cover,
               width: double.infinity,
               height: 400,
@@ -44,9 +58,9 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
           alignment: Alignment.bottomCenter,
           child: Padding(
             padding: EdgeInsets.only(bottom: 24),
-            child: AnimatedSmoothIndicator(
+            child: widget.item.imageUrl!.isNotEmpty ? AnimatedSmoothIndicator(
               activeIndex: activeIndex,
-              count: widget.item.imageUrl?.length ?? 1,
+              count: widget.item.imageUrl?.length ?? 0,
               effect: WormEffect(
                 type: WormType.thin,
                 dotHeight: 8,
@@ -55,7 +69,7 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
                 paintStyle: PaintingStyle.stroke,
                 activeDotColor: widget.item.imageUrl?.length != null ? AppColors.primary : Colors.transparent,
               ),
-            ),
+            ): SizedBox.shrink(),
           ),
         ),
       ],

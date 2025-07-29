@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/home_page.dart';
 import 'package:presentation/product_screen.dart';
+import 'package:presentation/themes/app_colors.dart';
 
 import 'controllers/bindings/root_bindings_controllers.dart';
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'Food Recipe App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+
         bottomSheetTheme: BottomSheetThemeData(dragHandleColor: Colors.grey.shade300),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Nunito-sans',
