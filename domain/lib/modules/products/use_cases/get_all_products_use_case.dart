@@ -17,7 +17,6 @@ class GetAllProductsUseCase extends UseCase<List<ProductEntity>, NoParams>{
     return productsRepository.getAllProduct();
   }
 }
-
 class NoParams {
 }
 
