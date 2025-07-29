@@ -7,7 +7,7 @@ abstract class ProductApiDto with _$ProductApiDto {
     required String name,
      required Map<String, dynamic>? brand,
     required String? price,
-    required List<String>? imageUrl,
+    @JsonKey(name: 'attachments') required List<String>? imageUrl,
     required List<String>? marks,
     required int? stock,
     @JsonKey(name: 'discount', defaultValue: 0) int? discount,

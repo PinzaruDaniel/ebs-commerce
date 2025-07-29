@@ -21,7 +21,7 @@ class HomeController extends GetxController {
 
   void getProducts() async {
     isLoading.value = true;
-    await getAllProductsUseCase.getAll().then((either) async {
+    await getAllProductsUseCase.call(NoParams()).then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;

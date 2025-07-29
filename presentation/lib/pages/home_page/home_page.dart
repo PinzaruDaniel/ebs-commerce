@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  /* void _onRefresh*/
 
   void _onLoading() async {
     await Future.delayed(Duration(seconds: 1));

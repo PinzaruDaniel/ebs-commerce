@@ -12,6 +12,9 @@
       <excludeFolder url="file://$MODULE_DIR$/e-commerce-ebs/presentation/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/e-commerce-ebs/presentation/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/e-commerce-ebs/presentation/build" />
+      <excludeFolder url="file://$MODULE_DIR$/common/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/common/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/common/build" />
       <excludeFolder url="file://$MODULE_DIR$/data/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/data/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/data/build" />
