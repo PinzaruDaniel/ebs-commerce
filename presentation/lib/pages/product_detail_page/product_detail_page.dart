@@ -91,13 +91,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ),
         ],
       ),
+
       bottomNavigationBar: BottomNavigationBarWidget(
+        addToCart: widget.item.price!=null && widget.item.stock!=null,
         item: widget.item,
-        title: 'title',
-        router: () {
-          AppRouter.openShoppingCartPage();
-        },
-        showIcon: true,
+        title: widget.item.price!=null && widget.item.stock!=null ? 'add to cart': 'this item can\'t be added' ,
+        showIcon: widget.item.price!=null && widget.item.stock!=null,
       ),
     );
   }

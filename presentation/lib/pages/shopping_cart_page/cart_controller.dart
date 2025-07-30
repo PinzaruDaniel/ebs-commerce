@@ -1,5 +1,4 @@
 import 'package:presentation/controllers/controller_imports.dart';
-import 'package:presentation/controllers/main_app_controller.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
 
 import 'package:get/get.dart';

@@ -34,6 +34,7 @@ class _ProductDetailSpecificationWidgetState extends State<ProductDetailSpecific
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+
                   Expanded(
                     child: Text(
                       spec.title,

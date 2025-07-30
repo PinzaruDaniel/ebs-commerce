@@ -1,12 +1,12 @@
-import 'package:presentation/view/product_view_model.dart';
+import 'package:presentation/view/specification_view_model.dart';
 
 class CartItem {
   final int id;
   final String title;
-  final String imageUrl;
+  final String? imageUrl;
   final String? price;
   final int? stock;
-  final Specification? specification;
+  final SpecificationViewModel? specification;
   int quantity;
   bool isSelected;
 

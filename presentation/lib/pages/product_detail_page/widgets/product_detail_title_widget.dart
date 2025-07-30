@@ -22,6 +22,7 @@ class _ProductDetailTitleWidgetState extends State<ProductDetailTitleWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               Text(widget.item.company?['brand'] as String? ?? '', style: AppTextsStyle.boldSmall),
               Text(widget.item.title, style: AppTextsStyle.bold),
             ],

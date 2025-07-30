@@ -1,12 +1,12 @@
-
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/add_to_cart_controller.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_image_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_title_widget.dart';
-import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/product_input_quantity_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
+import '../../../../util/routing/app_router.dart';
 import '../../../../util/widgets/header_title_widget.dart';
 import 'package:get/get.dart';
 
@@ -57,13 +57,26 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
                 onChanged: (val) {
                   addCartController.cartItem.value?.quantity = val;
                   addCartController.cartItem.refresh();
-                }, maxValue: addCartController.cartItem.value?.stock,
+                },
+                maxValue: addCartController.cartItem.value?.stock,
               ),
             ],
           ),
         ),
         Spacer(),
-      BottomNavigationBarWidget(item: widget.item ,title: 'Add to cart' , showIcon: true),
+        BottomNavigationBarWidget(
+          item: widget.item,
+          title: 'Add to cart',
+          addToCart: true,
+          router: () {
+            final item=addCartController.cartItem.value;
+            if(item !=null){
+              mainAppController.addToCart(item);
+              AppRouter.openShoppingCartPage();
+            }
+          },
+          showIcon: true,
+        ),
       ],
     );
   }

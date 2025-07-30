@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/view/product_view_model.dart';
 
-import '../../../../../themes/app_colors.dart';
+import '../../../../../util/widgets/circular_progress_indicator_page_widget.dart';
 
 class AddToCartPopUpImageWidget extends StatelessWidget {
   const AddToCartPopUpImageWidget({super.key, required this.item});
@@ -21,14 +21,9 @@ class AddToCartPopUpImageWidget extends StatelessWidget {
 
             loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) return child;
-              return Center(
-                heightFactor: 4,
-                child: CircularProgressIndicator(
-                  color: AppColors.primary,
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                      : null,
-                ),
+              return  CircularProgressIndicatorPageWidget(
+                boxConstraints: BoxConstraints(minWidth:40, minHeight: 40),
+                heightFactor: 2.5,
               );
             },
             height: 100,
