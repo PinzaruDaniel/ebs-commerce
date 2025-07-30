@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/themes/app_colors.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import '../../themes/app_text_styles.dart';
+import 'package:get/get.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -13,11 +16,19 @@ class FilterPage extends StatefulWidget {
   State<FilterPage> createState() => _FilterPageState();
 }
 
-SfRangeValues _values = SfRangeValues(40.0, 80.0);
-double start = 30.0;
-double end = 50.0;
-
 class _FilterPageState extends State<FilterPage> {
+
+  FilterController get filterController => Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    Get.put(FilterController());
+    filterController.priceRange;
+    filterController.maxPrice;
+    filterController.minPrice;
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,50 +49,49 @@ class _FilterPageState extends State<FilterPage> {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top:16, left: 16, bottom: 5),
-            child: HeaderTitleWidget(title: 'Price', showDivider: false),
-          ),
-
-          Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: SfRangeSliderTheme(
-              data: SfRangeSliderThemeData(
-
-                activeTrackHeight: 4,
-                inactiveTrackHeight: 2,
-                tooltipBackgroundColor: AppColors.primary,
-              ),
-              child: SfRangeSlider(
-                min: 2,
-                max: 20000,
-                activeColor: AppColors.primary,
-                inactiveColor: Colors.grey.shade300,
-                showLabels: true,
-                enableTooltip: true,
-                tooltipShape: SfPaddleTooltipShape(),
-                values: _values,
-
-                numberFormat: NumberFormat("\$"),
-                onChanged: (dynamic newValue) {
-                  setState(() {
-                    _values = newValue;
-                  });
-                },
-              ),
+      body: Obx(() {
+        final min = filterController.minPrice.value;
+        final max = filterController.maxPrice.value;
+        final range = filterController.priceRange.value;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
+              child: HeaderTitleWidget(title: 'Price', showDivider: false),
             ),
-          ),
+            Text('$min $max $range'),
+            /*Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: SfRangeSliderTheme(
+                data: SfRangeSliderThemeData(
+                  activeTrackHeight: 4,
+                  inactiveTrackHeight: 2,
+                  tooltipBackgroundColor: AppColors.primary,
+                ),
+                child: SfRangeSlider(
+                  min: min,
+                  max: max,
+                  activeColor: AppColors.primary,
+                  inactiveColor: Colors.grey.shade300,
+                  showLabels: true,
+                  enableTooltip: true,
+                  tooltipShape: SfPaddleTooltipShape(),
+                  values: range,
+                  numberFormat: NumberFormat("\$"),
+                  onChanged: filterController.onRangeChanged,
+                  onChangeEnd: filterController.onRangeChangeEnd,
+                ),
+              ),
+            ),*/
 
-          Padding(
-            padding: const EdgeInsets.only(top:24, left: 16, bottom: 5),
-            child: HeaderTitleWidget(title: 'Categories selected', showDivider: false),
-          ),
-          
-        ],
-      ),
+            Padding(
+              padding: const EdgeInsets.only(top: 24, left: 16, bottom: 5),
+              child: HeaderTitleWidget(title: 'Categories selected', showDivider: false),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

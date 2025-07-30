@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
+import 'package:presentation/pages/filtered_page/category_controller.dart';
+import 'package:presentation/pages/filtered_page/filter_controller.dart';
+import 'package:presentation/view/category_view_model.dart';
 
 import '../main_app_controller.dart';
-
 
 class RootBinding extends Bindings {
   @override
@@ -13,5 +15,8 @@ class RootBinding extends Bindings {
     );*/
 
     await Get.putAsync<MainAppController>(() async => MainAppController(), permanent: true);
+
+    /*await Get.putAsync<FilterController>(() async => FilterController(), permanent: true);
+    await Get.putAsync<CategoryController>(() async => CategoryController(), permanent: true);*/
   }
 }

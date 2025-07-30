@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
               Spacer(),
               IconButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => FilterPage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>  FilterPage()));
                 },
                 icon: SvgPicture.asset('assets/icons/filters.svg'),
               ),
