@@ -7,11 +7,17 @@ class FilterController extends GetxController {
   final RxList<ProductViewModel> products = RxList<ProductViewModel>();
   final RxList<ProductViewModel> filteredProducts = RxList([]);
 
-  final RxSet<int> selectedCategoryId = RxSet<int>();
+  final RxSet<int> selectedCategoryId = <int>{}.obs;
 
-  final RxDouble minPrice = RxDouble(0.0);
-  final RxDouble maxPrice = RxDouble(0.0);
-  final Rx<SfRangeValues> priceRange = Rx(SfRangeValues(0.0, 0.0));
+  final RxDouble minPrice = 0.0.obs;
+  final RxDouble maxPrice = 0.0.obs;
+  final Rx<SfRangeValues> priceRange = SfRangeValues(0.0, 0.0).obs;
+  @override
+  void onInit(){
+    super.onInit();
+    ever<SfRangeValues>(priceRange, (_)=>_applyFilters());
+    ever<Set<int>>(selectedCategoryId, (_)=>_applyFilters());
+  }
 
   void setProducts(List<ProductViewModel> items) {
     products.assignAll(items);
@@ -65,10 +71,11 @@ class FilterController extends GetxController {
 
   double? _priceToDouble(ProductViewModel p) {
     final dynamic price=p.price;
+    print('iaca pret $price and ${p.id}');
     if(price==null)return null;
     if(price is num) return price.toDouble();
     if(price is String){
-      print('iaca pret $price');
+
       final cleaned=price.replaceAll(RegExp(r'[^0-9\.\,]'), '').replaceAll(',', '.');
       return double.tryParse(cleaned);
     }
