@@ -1,6 +1,7 @@
 import 'package:presentation/themes/app_colors.dart';
 import 'package:presentation/themes/app_text_styles.dart';
 import 'package:presentation/util/routing/app_router.dart';
+import 'package:presentation/util/widgets/circular_progress_indicator_page_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -40,14 +41,9 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
 
                   loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                     if (loadingProgress == null) return child;
-                    return Center(
-                      heightFactor: 4,
-                      child: CircularProgressIndicator(
-                        color: AppColors.primary,
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                            : null,
-                      ),
+                    return CircularProgressIndicatorPageWidget(
+                      boxConstraints: BoxConstraints(minWidth:40, minHeight: 40),
+                      heightFactor: 2.5,
                     );
                   },
                   height: 150,
@@ -57,7 +53,7 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
               ),
 
               Padding(
-                padding: const EdgeInsets.only(top:4),
+                padding: const EdgeInsets.only(top: 4),
                 child: Text(widget.item.title, style: AppTextsStyle.medium),
               ),
               Text(widget.item.company?['brand'] as String? ?? '', style: AppTextsStyle.medium),

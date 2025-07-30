@@ -6,17 +6,14 @@ import '../../pages/shopping_cart_page/shopping_cart_page.dart';
 import '../../view/product_view_model.dart';
 
 class AppRouter {
-  static void openDetailsPage({required ProductViewModel item }){
-    if(Get.context!=null) {
-      Navigator.push(
-        Get.context!,
-        MaterialPageRoute(builder: (context) => ProductDetailPage(item: item)),
-      );
+  static void openDetailsPage({required ProductViewModel item}) {
+    if (Get.context != null) {
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ProductDetailPage(item: item)));
     }
   }
 
-  static void openShoppingCartPage(){
-    if(Get.context!=null){
+  static void openShoppingCartPage() {
+    if (Get.context != null) {
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ShoppingCartPage()));
     }
   }

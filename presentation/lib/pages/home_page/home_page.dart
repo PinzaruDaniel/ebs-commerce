@@ -8,6 +8,7 @@ import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart'
 import 'package:presentation/pages/home_page/widgets/home_all_products_list_widget.dart';
 import 'package:presentation/themes/app_colors.dart';
 import 'package:presentation/themes/app_text_styles.dart';
+import 'package:presentation/util/widgets/circular_progress_indicator_page_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     homeController.getProducts();
     homeController.getSaleProducts();
     homeController.getNewProducts();
-    homeController.isLoading;
+
   }
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
@@ -90,23 +91,12 @@ class _HomePageState extends State<HomePage> {
                   setState(() {});
                 }
               },
-              onLoading: _onLoading,
+              onLoading:() {
+                _onLoading.call();
+              },
 
               child: homeController.isLoading.value
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(
-                            color: AppColors.primary,
-                            strokeWidth: 3,
-                            constraints: BoxConstraints(minWidth: 75, minHeight: 75),
-                          ),
-                          Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500)),
-                        ],
-                      ),
-                    )
+                  ? CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
                   : ListView.builder(
                       itemCount: homeController.items.length,
                       itemBuilder: (context, index) {

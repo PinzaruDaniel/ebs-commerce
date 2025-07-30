@@ -2,6 +2,8 @@ import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/produ
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_collapsed_app_bar_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_expanded_app_bar.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_page_body_widget.dart';
+import 'package:presentation/util/routing/app_router.dart';
+import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -89,47 +91,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: 12)],
-        ),
-        padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 28),
-        child: TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            elevation: 2,
-          ),
-          onPressed: () {
-            showModalBottomSheet(
-              backgroundColor: Colors.white,
-              showDragHandle: true,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
-              ),
-              context: context,
-              builder: (context) => Container(
-                height: MediaQuery.of(context).size.height * 0.35,
-                child: Column(
-                  children: [Expanded(child: ProductDetailAddToCartBottomSheetWidget(item: widget.item))],
-                ),
-              ),
-            );
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset('assets/icons/Union.svg', height: 14),
-              SizedBox(width: 6),
-              Text(
-                'Add to cart',
-                style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        item: widget.item,
+        title: 'title',
+        router: () {
+          AppRouter.openShoppingCartPage();
+        },
+        showIcon: true,
       ),
     );
   }

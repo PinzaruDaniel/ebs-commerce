@@ -63,7 +63,7 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
           ),
         ),
         Spacer(),
-      BottomNavigationBarWidget(item: widget.item ,title: 'Add to cart', router: widget.AppRouter.openShoppingCartPage(), showIcon: true),
+      BottomNavigationBarWidget(item: widget.item ,title: 'Add to cart' , showIcon: true),
       ],
     );
   }

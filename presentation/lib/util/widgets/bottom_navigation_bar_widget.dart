@@ -1,28 +1,26 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/view/product_view_model.dart';
 
-import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
   final ProductViewModel item;
   final String title;
-  final AppRouter router;
+  final Function? router;
   final bool showIcon;
 
   const BottomNavigationBarWidget({
     super.key,
     required this.item,
     required this.title,
-    required this.router,
+     this.router,
     required this.showIcon,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return    Container(
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -36,7 +34,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
           elevation: 2,
         ),
         onPressed: () {
-          showModalBottomSheet(
+          router?.call();
+          /*showModalBottomSheet(
             backgroundColor: Colors.white,
             showDragHandle: true,
             shape: RoundedRectangleBorder(
@@ -49,7 +48,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
                 children: [Expanded(child: ProductDetailAddToCartBottomSheetWidget(item: item))],
               ),
             ),
-          );
+          );*/
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -65,4 +64,5 @@ class BottomNavigationBarWidget extends StatelessWidget {
       ),
     );
   }
+
 }
