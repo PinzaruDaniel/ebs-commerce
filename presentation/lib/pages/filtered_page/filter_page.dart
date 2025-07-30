@@ -4,7 +4,6 @@ import 'package:presentation/themes/app_colors.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-
 import '../../themes/app_text_styles.dart';
 
 class FilterPage extends StatefulWidget {

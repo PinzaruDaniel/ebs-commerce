@@ -5,6 +5,7 @@ import 'package:presentation/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../themes/app_colors.dart';
+import '../../util/widgets/circular_progress_indicator_page_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
 
 class ShoppingCartPage extends StatefulWidget {
@@ -56,22 +57,36 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                         ShoppingCartCheckboxWidget(item: item),
                         ClipRRect(
                           borderRadius: BorderRadiusGeometry.circular(16),
-                          child: Image.asset(item.imageUrl, width: 80, height: 80, fit: BoxFit.cover),
+                          child: Image(
+                            image: (item.imageUrl != null && item.imageUrl!.isNotEmpty)
+                                ? NetworkImage(item.imageUrl!)
+                                : const AssetImage('assets/products/noimage.png') as ImageProvider,
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return CircularProgressIndicatorPageWidget(
+                                boxConstraints: BoxConstraints(minHeight: 40, minWidth: 40),
+                                heightFactor: 2.5,
+                              );
+                            },
+                          ),
                         ),
-                        ShoppingCartTitleWidget(item: item),
-                        Spacer(),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            ProductInputQuantityWidget(
-                              initialValue: item.quantity,
-                              onChanged: (val) {
-                                item.quantity = val;
-                                cartController.cartItems.refresh();
-                              }, maxValue: item.stock,
-                            ),
-                          ],
+                        Expanded(child: ShoppingCartTitleWidget(item: item)),
+
+                           Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              ProductInputQuantityWidget(
+                                initialValue: item.quantity,
+                                onChanged: (val) {
+                                  item.quantity = val;
+                                  cartController.cartItems.refresh();
+                                }, maxValue: item.stock,
+                              ),
+                            ],
                         ),
                       ],
                     ),

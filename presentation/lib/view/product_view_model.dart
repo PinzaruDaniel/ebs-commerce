@@ -1,14 +1,6 @@
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/category_view_model.dart';
-class Specification {
-  final String title;
-  final String value;
-
-  Specification({
-    required this.title,
-    required this.value,
-  });
-}
+import 'package:presentation/view/specification_view_model.dart';
 class ProductViewModel extends BaseViewModel {
   final int id;
   final String title;
@@ -19,7 +11,7 @@ class ProductViewModel extends BaseViewModel {
   final int? stock;
   final int? sale;
   final String? description;
-  final List<Specification> specification;
+  final List<SpecificationViewModel> specification;
   final List<CategoryViewModel> category;
 
   ProductViewModel({

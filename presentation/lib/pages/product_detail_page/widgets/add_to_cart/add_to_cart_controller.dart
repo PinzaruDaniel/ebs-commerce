@@ -11,7 +11,9 @@ class AddToCartController extends GetxController {
     final itemToAdd = CartItem(
       id: item.id,
       title: item.title,
-      imageUrl: item.imageUrl != null? item.imageUrl![0] : 'assets/products/noimage.png',
+      imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty
+          ? item.imageUrl!.first
+          : null,
       price: item.price,
       stock: item.stock,
       specification: item.specification.isNotEmpty ? item.specification.first : null,

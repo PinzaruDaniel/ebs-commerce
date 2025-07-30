@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:presentation/util/widgets/circular_progress_indicator_page_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -22,24 +23,23 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
     return Stack(
       children: [
         CarouselSlider.builder(
-          itemCount: widget.item.imageUrl?.length ?? 1,
+          itemCount: (widget.item.imageUrl != null && widget.item.imageUrl!.isNotEmpty)
+              ? widget.item.imageUrl!.length
+              : 1,
           itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-            final image = widget.item.imageUrl?[itemIndex];
+            final image = (widget.item.imageUrl != null && widget.item.imageUrl!.isNotEmpty)
+                ? widget.item.imageUrl![itemIndex]
+                : null;
+
             return Image(
-              image: image!.isNotEmpty ?
-                  NetworkImage(image): AssetImage('assets/products/noimage.png') as ImageProvider,
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent? loadingProgress) {
+              image: (image != null && image.isNotEmpty)
+                  ? NetworkImage(image)
+                  : const AssetImage('assets/products/noimage.png') as ImageProvider,
+              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) return child;
-                return Center(
-                  heightFactor: 4,
-                  child: CircularProgressIndicator(
-                    color: AppColors.primary,
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
+                return CircularProgressIndicatorPageWidget(
+                  boxConstraints: BoxConstraints(minHeight: 40, minWidth: 40),
+                  heightFactor: 2.5,
                 );
               },
               fit: BoxFit.cover,
@@ -58,18 +58,20 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
           alignment: Alignment.bottomCenter,
           child: Padding(
             padding: EdgeInsets.only(bottom: 24),
-            child: widget.item.imageUrl!.isNotEmpty ? AnimatedSmoothIndicator(
-              activeIndex: activeIndex,
-              count: widget.item.imageUrl?.length ?? 0,
-              effect: WormEffect(
-                type: WormType.thin,
-                dotHeight: 8,
-                dotWidth: 8,
-                dotColor: widget.item.imageUrl?.length != null ? AppColors.primary : Colors.transparent,
-                paintStyle: PaintingStyle.stroke,
-                activeDotColor: widget.item.imageUrl?.length != null ? AppColors.primary : Colors.transparent,
-              ),
-            ): SizedBox.shrink(),
+            child: widget.item.imageUrl!.isNotEmpty
+                ? AnimatedSmoothIndicator(
+                    activeIndex: activeIndex,
+                    count: widget.item.imageUrl?.length ?? 1,
+                    effect: WormEffect(
+                      type: WormType.thin,
+                      dotHeight: 8,
+                      dotWidth: 8,
+                      dotColor: widget.item.imageUrl?.length== 1 ? Colors.transparent : AppColors.primary,
+                      paintStyle: PaintingStyle.stroke,
+                      activeDotColor: widget.item.imageUrl?.length == 1 ? Colors.transparent : AppColors.primary,
+                    ),
+                  )
+                : SizedBox.shrink(),
           ),
         ),
       ],
