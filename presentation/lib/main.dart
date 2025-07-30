@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
       title: 'Food Recipe App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-
         bottomSheetTheme: BottomSheetThemeData(dragHandleColor: Colors.grey.shade300),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Nunito-sans',

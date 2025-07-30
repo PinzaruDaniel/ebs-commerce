@@ -1,13 +1,12 @@
-import 'package:presentation/controllers/controller_imports.dart';
+
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/add_to_cart_controller.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_image_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_title_widget.dart';
 import 'package:presentation/util/routing/app_router.dart';
+import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/product_input_quantity_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import '../../../../themes/app_colors.dart';
 import '../../../../util/widgets/header_title_widget.dart';
 import 'package:get/get.dart';
 
@@ -64,39 +63,7 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
           ),
         ),
         Spacer(),
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: 12)],
-          ),
-          padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 28),
-          child: TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              elevation: 2,
-            ),
-            onPressed: () {
-              final item = addCartController.cartItem.value;
-              if (item != null) {
-                mainAppController.addToCart(item);
-                AppRouter.openShoppingCartPage();
-              }
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset('assets/icons/Union.svg', height: 14),
-                SizedBox(width: 6),
-                Text(
-                  'Add to cart',
-                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-        ),
+      BottomNavigationBarWidget(item: widget.item ,title: 'Add to cart', router: widget.AppRouter.openShoppingCartPage(), showIcon: true),
       ],
     );
   }

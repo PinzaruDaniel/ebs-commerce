@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:presentation/themes/app_colors.dart';
+import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
-
+import 'package:syncfusion_flutter_core/theme.dart';
 
 import '../../themes/app_text_styles.dart';
-import 'category_controller.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -19,8 +19,6 @@ double start = 30.0;
 double end = 50.0;
 
 class _FilterPageState extends State<FilterPage> {
-  double _value = 4.0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,37 +42,45 @@ class _FilterPageState extends State<FilterPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 50),
-          SfSlider(
-            min: 2.0,
-            max: 10.0,
-            activeColor: AppColors.primary,
-            inactiveColor: Colors.grey.shade300,
-            showLabels: true,
-            enableTooltip: true,
-            tooltipTextFormatterCallback: (actualValue, formattedText) {
-              return 'Value: ${actualValue.toStringAsFixed(1)}';
-            },
-            value: _value,
-            onChanged: (dynamic newValue) {
-              setState(() {
-                _value = newValue;
-              });
-            },
+          Padding(
+            padding: const EdgeInsets.only(top:16, left: 16, bottom: 5),
+            child: HeaderTitleWidget(title: 'Price', showDivider: false),
           ),
-          SizedBox(height: 20),
-          RangeSlider(
-            values: RangeValues(start, end),
-            labels: RangeLabels(start.toString(), end.toString()),
-            onChanged: (value) {
-              setState(() {
-                start = value.start;
-                end = value.end;
-              });
-            },
-            min: 10.0,
-            max: 80.0,
+
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: SfRangeSliderTheme(
+              data: SfRangeSliderThemeData(
+
+                activeTrackHeight: 4,
+                inactiveTrackHeight: 2,
+                tooltipBackgroundColor: AppColors.primary,
+              ),
+              child: SfRangeSlider(
+                min: 2,
+                max: 20000,
+                activeColor: AppColors.primary,
+                inactiveColor: Colors.grey.shade300,
+                showLabels: true,
+                enableTooltip: true,
+                tooltipShape: SfPaddleTooltipShape(),
+                values: _values,
+
+                numberFormat: NumberFormat("\$"),
+                onChanged: (dynamic newValue) {
+                  setState(() {
+                    _values = newValue;
+                  });
+                },
+              ),
+            ),
           ),
+
+          Padding(
+            padding: const EdgeInsets.only(top:24, left: 16, bottom: 5),
+            child: HeaderTitleWidget(title: 'Categories selected', showDivider: false),
+          ),
+          
         ],
       ),
     );
