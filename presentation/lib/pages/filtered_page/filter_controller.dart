@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:presentation/view/category_view_model.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -71,13 +70,9 @@ class FilterController extends GetxController {
 
   double? _priceToDouble(ProductViewModel p) {
     final dynamic price=p.price;
-    print('iaca pret $price and ${p.id}');
     if(price==null)return null;
-    if(price is num) return price.toDouble();
     if(price is String){
-
-      final cleaned=price.replaceAll(RegExp(r'[^0-9\.\,]'), '').replaceAll(',', '.');
-      return double.tryParse(cleaned);
+      return double.tryParse(price);
     }
     return null;
   }

@@ -16,7 +16,7 @@ class RootBinding extends Bindings {
 
     await Get.putAsync<MainAppController>(() async => MainAppController(), permanent: true);
 
-    /*await Get.putAsync<FilterController>(() async => FilterController(), permanent: true);
-    await Get.putAsync<CategoryController>(() async => CategoryController(), permanent: true);*/
+    await Get.putAsync<FilterController>(() async => FilterController(), permanent: true);
+    await Get.putAsync<CategoryController>(() async => CategoryController(), permanent: true);
   }
 }
