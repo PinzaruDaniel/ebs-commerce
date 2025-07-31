@@ -18,19 +18,14 @@ class FilterPage extends StatefulWidget {
 
 class _FilterPageState extends State<FilterPage> {
 
-  FilterController get filterController => Get.find();
-
   @override
   void initState() {
     super.initState();
-    Get.put(FilterController());
-    filterController.priceRange;
-    filterController.maxPrice;
-    filterController.minPrice;
-
   }
   @override
   Widget build(BuildContext context) {
+    bool _isFilterSelected = false;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -60,8 +55,8 @@ class _FilterPageState extends State<FilterPage> {
               padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
               child: HeaderTitleWidget(title: 'Price', showDivider: false),
             ),
-            Text('$min $max $range'),
-            /*Container(
+
+            Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: SfRangeSliderTheme(
                 data: SfRangeSliderThemeData(
@@ -83,12 +78,13 @@ class _FilterPageState extends State<FilterPage> {
                   onChangeEnd: filterController.onRangeChangeEnd,
                 ),
               ),
-            ),*/
-
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 24, left: 16, bottom: 5),
               child: HeaderTitleWidget(title: 'Categories selected', showDivider: false),
             ),
+
+
           ],
         );
       }),

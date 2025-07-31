@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/filtered_page/filter_page.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
 import 'package:presentation/pages/home_page/widgets/home_all_products_list_widget.dart';
@@ -62,12 +63,14 @@ class _HomePageState extends State<HomePage> {
               Spacer(),
               IconButton(
                 onPressed: () {
+                  filterController.setProducts(homeController.products);
                   Navigator.push(context, MaterialPageRoute(builder: (context) =>  FilterPage()));
                 },
                 icon: SvgPicture.asset('assets/icons/filters.svg'),
               ),
               IconButton(
                 onPressed: () {
+
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartPage()));
                 },
                 icon: SvgPicture.asset('assets/icons/Cart icon.svg'),
