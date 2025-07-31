@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:presentation/controllers/controller_imports.dart';
-import 'package:presentation/pages/filtered_page/filter_controller.dart';
-import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'package:presentation/themes/app_colors.dart';
 import 'package:presentation/util/routing/app_router.dart';
+import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/util/widgets/selected_chip_widget.dart';
+import 'package:presentation/view/product_view_model.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import '../../themes/app_text_styles.dart';
@@ -45,6 +45,7 @@ class _FilterPageState extends State<FilterPage> {
         ],
       ),
       body: Obx(() {
+
         final min = filterController.minPrice.value;
         final max = filterController.maxPrice.value;
         final range = filterController.priceRange.value;
@@ -118,7 +119,14 @@ class _FilterPageState extends State<FilterPage> {
           ],
         );
       }),
-
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBarWidget(
+          item: dummyProduct,
+          title: 'Show results(${filterController.filteredProducts.length})',
+          showIcon: false,
+          addToCart: null,
+        ),
+      ),
     );
   }
 

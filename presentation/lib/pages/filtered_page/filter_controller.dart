@@ -14,8 +14,8 @@ class FilterController extends GetxController {
   @override
   void onInit(){
     super.onInit();
-    ever<SfRangeValues>(priceRange, (_)=>_applyFilters());
-    ever<Set<int>>(selectedCategoryId, (_)=>_applyFilters());
+    ever<SfRangeValues>(priceRange, (_)=>applyFilters());
+    ever<Set<int>>(selectedCategoryId, (_)=>applyFilters());
   }
 
   void setProducts(List<ProductViewModel> items) {
@@ -52,7 +52,7 @@ class FilterController extends GetxController {
 
   void clearCategories() => selectedCategoryId.clear();
 
-  void _applyFilters(){
+  void applyFilters(){
     final min=(priceRange.value.start as num).toDouble();
     final max=(priceRange.value.end as num).toDouble();
     final selected=selectedCategoryId;
@@ -71,7 +71,7 @@ class FilterController extends GetxController {
   void resetFilters() {
     selectedCategoryId.clear();
     priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
-    _applyFilters();
+    applyFilters();
   }
 
   double? _priceToDouble(ProductViewModel p) {
