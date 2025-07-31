@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/filtered_page/filter_controller.dart';
+import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'package:presentation/themes/app_colors.dart';
+import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
+import 'package:presentation/util/widgets/selected_chip_widget.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import '../../themes/app_text_styles.dart';
 import 'package:get/get.dart';
+
+import 'category_picker_page/category_controller.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -17,15 +22,8 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
-    bool _isFilterSelected = false;
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -39,7 +37,9 @@ class _FilterPageState extends State<FilterPage> {
         actions: [
           TextButton(
             style: TextButton.styleFrom(foregroundColor: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              filterController.resetFilters();
+            },
             child: Text('Reset', style: AppTextsStyle.bold),
           ),
         ],
@@ -84,10 +84,46 @@ class _FilterPageState extends State<FilterPage> {
               child: HeaderTitleWidget(title: 'Categories selected', showDivider: false),
             ),
 
+            Obx(() {
+              final selected = filterController.selectedCategoryId.toList();
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Wrap(
+                  spacing: 4,
+                  runSpacing: 4,
+                  children: [
+                    for (final id in selected)
+                      SelectedChipWidget(
+                        id: id,
+                        name: _nameFor(categoryController, id),
+                        onRemove: () => filterController.toggleCategory(id, false),
+                      ),
 
+                    Chip(
+                      backgroundColor: Colors.white,
+                      label: Text(
+                        'Add Category',
+                        style: AppTextsStyle.medium.copyWith(color: Color(0xff6b6d81), fontWeight: FontWeight.bold),
+                      ),
+                      deleteIcon: Icon(Icons.add, size: 20, color: Color(0xff6b6d81)),
+                      side: BorderSide(color: Colors.grey.shade300),
+                      onDeleted: () async {
+                        AppRouter.openCategoryPickerPage();
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }),
           ],
         );
       }),
+
     );
+  }
+
+  String _nameFor(CategoryController categoryController, int id) {
+    final c = categoryController.categories.firstWhereOrNull((e) => e.id == id);
+    return c?.name ?? 'Category $id';
   }
 }

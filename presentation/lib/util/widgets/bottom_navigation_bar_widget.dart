@@ -2,7 +2,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:presentation/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
-import 'package:presentation/util/widgets/circular_progress_indicator_page_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
@@ -18,7 +17,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
     required this.title,
     this.router,
     required this.showIcon,
-    this.addToCart
+    this.addToCart,
   });
 
   @override
@@ -32,19 +31,18 @@ class BottomNavigationBarWidget extends StatelessWidget {
       padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 28),
       child: TextButton(
         style: TextButton.styleFrom(
-          backgroundColor: addToCart! ? AppColors.primary: Colors.grey,
+          backgroundColor: (addToCart ?? true) ? AppColors.primary : Colors.grey,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           elevation: 2,
         ),
         onPressed: () {
-          if(addToCart==true){
+          if (addToCart == true) {
             if (router != null) {
               router?.call();
             } else {
               AppPopUp.showBottomSheet(context, item: item);
             }
-          }
-          else{
+          } else if(addToCart == false) {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -54,17 +52,20 @@ class BottomNavigationBarWidget extends StatelessWidget {
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text('OK', style: TextStyle(color: AppColors.primary),),
+                    child: Text('OK', style: TextStyle(color: AppColors.primary)),
                   ),
                 ],
               ),
             );
           }
+          else{
+            router?.call();
+          }
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            showIcon? SvgPicture.asset('assets/icons/Union.svg', height: 14): SizedBox.shrink(),
+            showIcon ? SvgPicture.asset('assets/icons/Union.svg', height: 14) : SizedBox.shrink(),
             SizedBox(width: 6),
             Text(
               title,

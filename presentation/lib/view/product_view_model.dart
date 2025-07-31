@@ -1,6 +1,7 @@
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/category_view_model.dart';
 import 'package:presentation/view/specification_view_model.dart';
+
 class ProductViewModel extends BaseViewModel {
   final int id;
   final String title;
@@ -28,3 +29,17 @@ class ProductViewModel extends BaseViewModel {
     required this.category,
   });
 }
+
+ProductViewModel get dummyProduct => ProductViewModel(
+  id: -1,
+  title: 'dummy',
+  company: {},
+  imageUrl: [],
+  marks: [],
+  price: null,
+  stock: null,
+  sale: null,
+  description: '',
+  specification: [],
+  category: [],
+);

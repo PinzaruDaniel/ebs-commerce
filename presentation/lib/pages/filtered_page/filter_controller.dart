@@ -68,6 +68,12 @@ class FilterController extends GetxController {
     filteredProducts.assignAll(result);
   }
 
+  void resetFilters() {
+    selectedCategoryId.clear();
+    priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
+    _applyFilters();
+  }
+
   double? _priceToDouble(ProductViewModel p) {
     final dynamic price=p.price;
     if(price==null)return null;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/filtered_page/category_picker_page/category_picker_page.dart';
 
 import '../../pages/product_detail_page/product_detail_page.dart';
 import '../../pages/shopping_cart_page/shopping_cart_page.dart';
@@ -15,6 +16,12 @@ class AppRouter {
   static void openShoppingCartPage() {
     if (Get.context != null) {
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ShoppingCartPage()));
+    }
+  }
+
+  static void openCategoryPickerPage(){
+    if(Get.context != null){
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> CategoryPickerPage()));
     }
   }
 }
