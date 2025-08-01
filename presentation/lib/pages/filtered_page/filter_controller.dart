@@ -1,11 +1,18 @@
+import 'package:domain/modules/products/use_cases/get_all_products_use_case.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class FilterController extends GetxController {
-  final RxList<ProductViewModel> products = RxList<ProductViewModel>();
-  final RxList<ProductViewModel> filteredProducts = RxList([]);
+  final GetAllProductsUseCase getAllProductsUseCase = GetIt.instance<GetAllProductsUseCase>();
 
+
+
+  RxList<ProductViewModel> products = RxList<ProductViewModel>();
+  final RxList<ProductViewModel> filteredProducts = RxList([]);
+  RxBool isLoading=true.obs;
   final RxSet<int> selectedCategoryId = <int>{}.obs;
 
   final RxDouble minPrice = 0.0.obs;
@@ -17,6 +24,27 @@ class FilterController extends GetxController {
     ever<SfRangeValues>(priceRange, (_)=>applyFilters());
     ever<Set<int>>(selectedCategoryId, (_)=>applyFilters());
   }
+
+  Future<void> getAllProducts() async {
+    isLoading.value = true;
+
+    await getAllProductsUseCase.call().then((either) async {
+      either.fold(
+            (failure) {
+          isLoading.value = false;
+        },
+
+            (list) async {
+          products.assignAll(list.map((e)=>e.toModel).toList());
+          setProducts(products);
+          isLoading.value=false;
+        },
+      );
+    });
+  }
+
+
+
 
   void setProducts(List<ProductViewModel> items) {
     products.assignAll(items);
@@ -32,8 +60,12 @@ class FilterController extends GetxController {
     minPrice.value = prices.first;
     maxPrice.value = prices.last;
     priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
+    final valid = products.where((p){
+      final price=_priceToDouble(p);
+      return price!=null;
+    }).toList();
 
-    filteredProducts.assignAll(products);
+    filteredProducts.assignAll(valid);
   }
 
   void onRangeChanged(SfRangeValues v) => priceRange.value = v;

@@ -1,9 +1,8 @@
-import 'package:domain/modules/categories/categories_repository.dart';
 import 'package:domain/modules/products/products_repository.dart';
 import 'package:domain/modules/products/use_cases/get_all_products_use_case.dart';
-import 'package:domain/modules/categories/use_cases/get_all_categories_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
+import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> init() async {
@@ -19,6 +18,10 @@ Future<void> init() async {
 
   dataDi.registerLazySingleton<GetNewProductsUseCase>(
     () => GetNewProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
+  );
+
+  dataDi.registerLazySingleton<GetProductsUseCase>(
+    () => GetProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
 
 

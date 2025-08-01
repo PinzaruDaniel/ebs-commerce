@@ -13,7 +13,24 @@ class ProductsRepositoryImpl implements ProductsRepository {
   ProductsRepositoryImpl({required this.apiService});
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getAllProduct() async {
+  Future<Either<Failure, List<ProductEntity>>> getAllProducts() async {
+    try {
+      final response = await apiService.getProducts(null, null, 451);
+      final entities = response.map((dto) => dto.toEntity()).toList();
+      return Right(entities);
+    } catch (e, stackTrace) {
+      if (e is DioException) {
+        return Left(Failure.dio(e));
+      } else if (e is Exception) {
+        return Left(Failure.exception(e, stackTrace));
+      } else {
+        return Left(Failure.error(e, stackTrace));
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductEntity>>> getProducts() async {
     try {
       final response = await apiService.getProducts(null, null, 20);
       final entities = response.map((dto) => dto.toEntity()).toList();
@@ -30,7 +47,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getSaleProduct() async {
+  Future<Either<Failure, List<ProductEntity>>> getSaleProducts() async {
     try {
       final response = await apiService.getProducts('sale', null, null);
       final entities = response.map((dto) => dto.toEntity()).toList();

@@ -12,7 +12,7 @@ class GetSaleProductsUseCase extends UseCase<List<ProductEntity>>{
 
   @override
   Future<Either<Failure, List<ProductEntity>>> call()async {
-    return productsRepository.getSaleProduct();
+    return productsRepository.getSaleProducts();
   }
 
 }

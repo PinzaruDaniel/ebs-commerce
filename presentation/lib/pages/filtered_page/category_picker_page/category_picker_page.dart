@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/filtered_page/category_picker_page/category_controller.dart';
+import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../../../themes/app_colors.dart';
 import '../../../themes/app_text_styles.dart';
 import '../../../util/routing/app_router.dart';
-import '../filter_controller.dart';
-import 'category_controller.dart';
 
 class CategoryPickerPage extends StatefulWidget {
   const CategoryPickerPage({super.key});
@@ -18,9 +18,20 @@ class CategoryPickerPage extends StatefulWidget {
 }
 
 class _CategoryPickerPageState extends State<CategoryPickerPage> {
+  CategoryController get catController=>Get.find();
+  FilterController get filController=>Get.find();
+
+  @override
+  void initState(){
+    super.initState();
+    Get.put(CategoryController());
+    Get.put(FilterController());
+  }
+
   @override
   Widget build(BuildContext context) {
-    final categories = categoryController.categories;
+    //TODO: de chemat aici controllerul
+    //final categories = categoryController.categories;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -41,18 +52,18 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
         ],
       ),
       body: ListView.builder(
-        itemCount: categories.length,
+        itemCount: catController.categories.length,
         itemBuilder: (_, i) {
-          final category = categories[i];
+          final category = catController.categories[i];
           return Obx(() {
-            final selected = filterController.selectedCategoryId.contains(category.id);
+            final selected = filController.selectedCategoryId.contains(category.id);
             return Row(
               children: [
                 Checkbox(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                   side: BorderSide(color: Colors.grey.shade300, width: 2),
                   value: selected,
-                  onChanged: (v) => filterController.toggleCategory(category.id, v ?? false),
+                  onChanged: (v) => filController.toggleCategory(category.id, v ?? false),
                   activeColor: AppColors.primary,
                 ),
                 Text(category.name, style: AppTextsStyle.bold),
@@ -61,7 +72,13 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
           });
         },
       ),
-      bottomNavigationBar: BottomNavigationBarWidget(item:dummyProduct,  title: 'Apply', showIcon: false,router: Get.back, addToCart: null,),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        item: dummyProduct,
+        title: 'Apply',
+        showIcon: false,
+        router: Get.back,
+        addToCart: null,
+      ),
     );
   }
 }

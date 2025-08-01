@@ -1,8 +1,6 @@
-// ignore_for_file: invalid_use_of_protected_member
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/filtered_page/filter_page.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
 import 'package:presentation/pages/home_page/widgets/home_all_products_list_widget.dart';
@@ -12,6 +10,7 @@ import 'package:presentation/view/base_view_model.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../../util/routing/app_router.dart';
 import '../../util/widgets/horizontal_products_list_widget.dart';
+import '../filtered_page/filter_controller.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,12 +22,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomeController get homeController => Get.find();
+  FilterController get filController=>Get.find();
 
   @override
   void initState() {
     super.initState();
     Get.put(HomeController());
-    homeController.getProducts();
+    Get.put(FilterController());
+    homeController.initItems();
     homeController.getSaleProducts();
     homeController.getNewProducts();
 
@@ -60,7 +61,6 @@ class _HomePageState extends State<HomePage> {
               Spacer(),
               IconButton(
                 onPressed: () {
-                  filterController.setProducts(homeController.products);
                   Navigator.push(context, MaterialPageRoute(builder: (context) =>  FilterPage()));
                 },
                 icon: SvgPicture.asset('assets/icons/filters.svg'),

@@ -13,7 +13,7 @@ import '../shopping_cart_page/shopping_cart_page.dart';
 class ProductDetailPage extends StatefulWidget {
   const ProductDetailPage({super.key, required this.item});
 
-  final ProductViewModel item;
+  final ProductViewModel? item;
 
   @override
   State<ProductDetailPage> createState() => _ProductDetailPageState();
@@ -39,9 +39,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   @override
   void dispose() {
+    super.dispose();
+
     scrollController.removeListener(_scrollListener);
     scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -60,7 +61,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               curve: Curves.easeOut,
               opacity: isCollapsed ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 500),
-              child: isCollapsed ? ProductDetailCollapsedAppBarWidget(item: widget.item) : const SizedBox.shrink(),
+              child: isCollapsed ? ProductDetailCollapsedAppBarWidget(item: widget.item!) : const SizedBox.shrink(),
             ),
             backgroundColor: isCollapsed ? Colors.white : Colors.transparent,
             surfaceTintColor: Colors.white,
@@ -77,7 +78,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 icon: SvgPicture.asset('assets/icons/Cart icon.svg'),
               ),
             ],
-            flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item)),
+            flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),
           ),
           SliverToBoxAdapter(
             child: ConstrainedBox(
@@ -85,7 +86,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               child: Material(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                 elevation: 0,
-                child: ProductDetailPageBodyWidget(item: widget.item),
+                child: ProductDetailPageBodyWidget(item: widget.item!),
               ),
             ),
           ),
@@ -93,10 +94,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       ),
 
       bottomNavigationBar: BottomNavigationBarWidget(
-        addToCart: widget.item.price!=null && widget.item.stock!=null,
-        item: widget.item,
-        title: widget.item.price!=null && widget.item.stock!=null ? 'add to cart': 'this item can\'t be added' ,
-        showIcon: widget.item.price!=null && widget.item.stock!=null,
+        addToCart: widget.item?.price!=null && widget.item?.stock!=null,
+        item: widget.item!,
+        title: widget.item?.price!=null && widget.item?.stock!=null ? 'add to cart': 'this item can\'t be added' ,
+        showIcon: widget.item?.price!=null && widget.item?.stock!=null,
       ),
     );
   }

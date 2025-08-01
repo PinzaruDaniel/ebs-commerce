@@ -9,7 +9,7 @@ Future<void> init() async {
   var apiClientOption = BaseOptions(
     baseUrl: ApiConstants.baseUrl,
     headers: ApiConstants.saasAppToken,
-    receiveTimeout: Duration(seconds: 10),
+    receiveTimeout: Duration(seconds: 30),
     connectTimeout: Duration(seconds: 8),
 
   );
