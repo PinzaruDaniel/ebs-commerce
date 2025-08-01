@@ -26,6 +26,11 @@ class FilterController extends GetxController {
   }
 
   Future<void> getAllProducts() async {
+    if(products.isNotEmpty){
+      isLoading.value=false;
+      return resetFilters();
+    }
+
     isLoading.value = true;
 
     await getAllProductsUseCase.call().then((either) async {
@@ -35,7 +40,8 @@ class FilterController extends GetxController {
         },
 
             (list) async {
-          products.assignAll(list.map((e)=>e.toModel).toList());
+
+              products.assignAll(list.map((e)=>e.toModel).toList());
           setProducts(products);
           isLoading.value=false;
         },
@@ -47,8 +53,11 @@ class FilterController extends GetxController {
 
 
   void setProducts(List<ProductViewModel> items) {
-    products.assignAll(items);
-    final prices = products.map(_priceToDouble).whereType<double>().toList()..sort();
+    for (final p in items) {
+    }
+
+    final valid=items.where((p)=>_priceToDouble(p)!=null && p.stock!=null).toList();
+    final prices = valid.map(_priceToDouble).whereType<double>().toList()..sort();
     if (prices.isEmpty) {
       minPrice.value = 0;
       maxPrice.value = 1;
@@ -60,11 +69,8 @@ class FilterController extends GetxController {
     minPrice.value = prices.first;
     maxPrice.value = prices.last;
     priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
-    final valid = products.where((p){
-      final price=_priceToDouble(p);
-      return price!=null;
-    }).toList();
 
+    products.assignAll(valid);
     filteredProducts.assignAll(valid);
   }
 
@@ -103,15 +109,17 @@ class FilterController extends GetxController {
   void resetFilters() {
     selectedCategoryId.clear();
     priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
-    applyFilters();
+    setProducts(products);
   }
 
   double? _priceToDouble(ProductViewModel p) {
-    final dynamic price=p.price;
-    if(price==null)return null;
-    if(price is String){
-      return double.tryParse(price);
-    }
+    final dynamic price = p.price;
+    if (price == null) return null;
+
+    if (price is double) return price;
+    if (price is int) return price.toDouble();
+    if (price is String) return double.tryParse(price);
     return null;
   }
+
 }

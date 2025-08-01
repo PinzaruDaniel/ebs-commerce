@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:presentation/pages/filtered_products_page/filtered_products_page.dart';
 import 'package:presentation/themes/app_colors.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
@@ -12,7 +13,7 @@ import '../../themes/app_text_styles.dart';
 import 'package:get/get.dart';
 
 import '../../util/widgets/circular_progress_indicator_page_widget.dart';
-import 'category_picker_page/category_controller.dart';
+import '../category_picker_page/category_controller.dart';
 import 'filter_controller.dart';
 
 class FilterPage extends StatefulWidget {
@@ -31,13 +32,14 @@ class _FilterPageState extends State<FilterPage> {
   void initState() {
     super.initState();
     Get.put(CategoryController());
-    Get.put(FilterController());
     filController.getAllProducts();
+    filController.filteredProducts;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xff003bd1), size: 20),
@@ -57,91 +59,116 @@ class _FilterPageState extends State<FilterPage> {
           ),
         ],
       ),
-      body: filController.isLoading.value
-          ? CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
-          : Obx(() {
-              final min = filController.minPrice.value;
-              final max = filController.maxPrice.value;
-              final range = filController.priceRange.value;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
-                    child: HeaderTitleWidget(title: 'Price', showDivider: false),
-                  ),
+      body: SafeArea(
+        child: Obx(() {
+          if (filController.isLoading.value) {
+            return CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75));
+          }
 
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: SfRangeSliderTheme(
-                      data: SfRangeSliderThemeData(
-                        activeTrackHeight: 4,
-                        inactiveTrackHeight: 2,
-                        tooltipBackgroundColor: AppColors.primary,
-                      ),
-                      child: SfRangeSlider(
-                        min: min,
-                        max: max,
-                        activeColor: AppColors.primary,
-                        inactiveColor: Colors.grey.shade300,
-                        showLabels: true,
-                        enableTooltip: true,
-                        tooltipShape: SfPaddleTooltipShape(),
-                        values: range,
-                        numberFormat: NumberFormat("\$"),
-                        onChanged: filController.onRangeChanged,
-                        onChangeEnd: filController.onRangeChangeEnd,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24, left: 16, bottom: 5),
-                    child: HeaderTitleWidget(title: 'Categories selected', showDivider: false),
-                  ),
+          final min = filController.minPrice.value;
+          final max = filController.maxPrice.value;
+          final range = filController.priceRange.value;
 
-                  Obx(() {
-                    final selected = filController.selectedCategoryId.toList();
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Wrap(
-                        spacing: 4,
-                        runSpacing: 4,
-                        children: [
-                          for (final id in selected)
-                            SelectedChipWidget(
-                              id: id,
-                              name: _nameFor(catController, id),
-                              onRemove: () => filController.toggleCategory(id, false),
-                            ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
+                child: HeaderTitleWidget(title: 'Price', showDivider: false),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: SfRangeSliderTheme(
+                  data: SfRangeSliderThemeData(
+                    activeTrackHeight: 4,
+                    inactiveTrackHeight: 2,
+                    tooltipBackgroundColor: AppColors.primary,
+                  ),
+                  child: SfRangeSlider(
+                    min: min,
+                    max: max,
+                    activeColor: AppColors.primary,
+                    inactiveColor: Colors.grey.shade300,
+                    showLabels: true,
+                    enableTooltip: true,
+                    tooltipShape: SfPaddleTooltipShape(),
+                    values: range,
+                    numberFormat: NumberFormat("\$"),
+                    onChanged: filController.onRangeChanged,
+                    onChangeEnd: filController.onRangeChangeEnd,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 24, left: 16, bottom: 5),
+                child: HeaderTitleWidget(title: 'Categories selected', showDivider: false),
+              ),
+              Obx(() {
+                final selected = filController.selectedCategoryId.toList();
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      for (final id in selected)
+                        SelectedChipWidget(
+                          id: id,
+                          name: _nameFor(catController, id),
+                          onRemove: () => filController.toggleCategory(id, false),
+                        ),
 
-                          Chip(
-                            backgroundColor: Colors.white,
-                            label: Text(
-                              'Add Category',
-                              style: AppTextsStyle.medium.copyWith(
-                                color: Color(0xff6b6d81),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            deleteIcon: Icon(Icons.add, size: 20, color: Color(0xff6b6d81)),
-                            side: BorderSide(color: Colors.grey.shade300),
-                            onDeleted: () async {
-                              AppRouter.openCategoryPickerPage();
-                            },
+
+                      InkWell(
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        onTap: () async {
+                          AppRouter.openCategoryPickerPage();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey.shade300),
                           ),
-                        ],
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min ,
+                            children: [
+                              Text(
+                                'Add Category',
+                                style: AppTextsStyle.medium.copyWith(
+                                  color: Color(0xff6b6d81),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(width: 4),
+                              Icon(Icons.add, size: 20, color: Color(0xff6b6d81)),
+                            ],
+                          ),
+                        ),
                       ),
-                    );
-                  }),
-                ],
-              );
-            }),
+                    ],
+                  ),
+                );
+              }),
+            ],
+          );
+        }),
+      ),
+
       bottomNavigationBar: Obx(
-            () => BottomNavigationBarWidget(
+        () => BottomNavigationBarWidget(
           item: dummyProduct,
           title: 'Show results(${filController.filteredProducts.length})',
           showIcon: false,
           addToCart: null,
+          router: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FilteredProductsPage(items: filController.filteredProducts)),
+            );
+          },
         ),
       ),
     );

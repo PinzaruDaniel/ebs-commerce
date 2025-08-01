@@ -37,6 +37,7 @@ dependencies:
 
   syncfusion_flutter_sliders: ^30.1.42
   get_it: ^8.0.3
+  cached_network_image: ^3.4.1
   pull_to_refresh_flutter3: ^2.0.2
   smooth_page_indicator: ^1.2.1
   flutter_hooks: ^0.21.2

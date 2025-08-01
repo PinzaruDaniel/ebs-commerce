@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:presentation/themes/app_colors.dart';
 import 'package:presentation/themes/app_text_styles.dart';
 import 'package:presentation/util/routing/app_router.dart';
@@ -34,18 +35,15 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(24),
-                child: Image(
-                  image: widget.item.imageUrl!.isNotEmpty
-                      ? NetworkImage(widget.item.imageUrl![0])
-                      : AssetImage('assets/products/noimage.png') as ImageProvider,
+                child: CachedNetworkImage(
+                  imageUrl: widget.item.imageUrl!.isNotEmpty ? widget.item.imageUrl![0] : 'assets/products/noimage.png',
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
 
-                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return CircularProgressIndicatorPageWidget(
-                      boxConstraints: BoxConstraints(minWidth:40, minHeight: 40),
-                      heightFactor: 2.5,
-                    );
-                  },
+                  CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minWidth: 40, minHeight: 40,),
+                        value: downloadProgress.progress),
+                  errorWidget: (context, url, error) =>
+                      Image.asset('assets/products/noimage.png', height: 150, width: widget.width, fit: BoxFit.cover),
+
                   height: 150,
                   width: widget.width,
                   fit: BoxFit.cover,

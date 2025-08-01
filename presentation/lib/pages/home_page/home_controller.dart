@@ -47,6 +47,7 @@ class HomeController extends GetxController {
           getNewProducts();
           await getSaleProducts();
           items.value = [
+            AdBannerViewModel(),
             HorizontalProductListViewModel(products: newProducts, type: ProductType.newProducts),
             HorizontalProductListViewModel(products: saleProducts, type: ProductType.saleProducts),
             AllProductsViewItem(items: products.map((e) => e.toModel).toList()),

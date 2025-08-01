@@ -4,9 +4,10 @@ import '../../themes/app_colors.dart';
 import '../../themes/app_text_styles.dart';
 
 class CircularProgressIndicatorPageWidget extends StatelessWidget {
+  final double? value;
   final BoxConstraints boxConstraints;
   final double? heightFactor;
-  const CircularProgressIndicatorPageWidget({super.key, required this.boxConstraints, this.heightFactor});
+  const CircularProgressIndicatorPageWidget({super.key, required this.boxConstraints, this.heightFactor, this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +18,12 @@ class CircularProgressIndicatorPageWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CircularProgressIndicator(
+              value: value,
               color: AppColors.primary,
               strokeWidth: 3,
               constraints: boxConstraints,
             ),
-            Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500)),
+            //Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500)),
           ],
       ),
     );

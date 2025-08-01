@@ -12,12 +12,28 @@ class SelectedChipWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Chip(
-      backgroundColor: AppColors.primary,
-      side: BorderSide(color: Colors.transparent),
-      label: Text(name, style: AppTextsStyle.medium.copyWith(color:Colors.white, fontWeight: FontWeight.bold),),
-      deleteIcon: Icon(Icons.close, color: Colors.white, size: 20),
-      onDeleted: onRemove,
-    );
+    return
+      InkWell(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onTap: () async {
+          onRemove.call();
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: AppColors.primary,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min ,
+            children: [
+              Text(name, style: AppTextsStyle.medium.copyWith(color:Colors.white, fontWeight: FontWeight.bold),),
+              SizedBox(width: 4),
+              Icon(Icons.close, color: Colors.white, size: 20),
+            ],
+          ),
+        ),
+      );
   }
 }

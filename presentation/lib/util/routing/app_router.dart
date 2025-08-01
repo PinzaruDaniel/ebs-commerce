@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/filtered_page/category_picker_page/category_picker_page.dart';
 
+import '../../pages/category_picker_page/category_picker_page.dart';
 import '../../pages/product_detail_page/product_detail_page.dart';
 import '../../pages/shopping_cart_page/shopping_cart_page.dart';
 import '../../view/product_view_model.dart';
