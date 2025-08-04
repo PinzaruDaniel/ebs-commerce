@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:input_quantity/input_quantity.dart';
 
-import '../../themes/app_colors.dart';
+import '../resources/app_colors.dart';
 
 class ProductInputQuantityWidget extends StatelessWidget {
   const ProductInputQuantityWidget({

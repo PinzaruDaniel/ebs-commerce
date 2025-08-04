@@ -4,13 +4,12 @@ import '../../../core/usecase.dart';
 import '../models/index.dart';
 import '../products_repository.dart';
 
-class GetProductsUseCase extends UseCase<List<ProductEntity>>{
+class GetProductsUseCase extends UseCase<List<ProductEntity>> {
   final ProductsRepository productsRepository;
 
   GetProductsUseCase({required this.productsRepository});
 
-  @override
-  Future<Either<Failure,List<ProductEntity>>> call()async {
-    return productsRepository.getProducts();
+  Future<Either<Failure, List<ProductEntity>>> call({required int page , required int perPage}) async {
+    return productsRepository.getProducts(page: page, perPage: perPage);
   }
 }

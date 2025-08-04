@@ -1,4 +1,5 @@
-import 'package:presentation/themes/app_text_styles.dart';
+import 'package:presentation/util/resources/app_text_styles.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class _ProductDetailTitleWidgetState extends State<ProductDetailTitleWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              Text(widget.item.company?['brand'] as String? ?? '', style: AppTextsStyle.boldSmall),
+              Text(widget.item.company?[AppTexts.brand] as String? ?? '', style: AppTextsStyle.boldSmall),
               Text(widget.item.title, style: AppTextsStyle.bold),
             ],
           ),

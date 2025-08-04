@@ -1,6 +1,7 @@
-import 'package:presentation/themes/app_colors.dart';
+import 'package:presentation/util/resources/app_colors.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
-import 'package:presentation/themes/app_text_styles.dart';
+import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class ProductDetailTagsWidget extends StatelessWidget {
         spacing: 6,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HeaderTitleWidget(title: 'MARKS', showDivider: false),
+          HeaderTitleWidget(title: AppTexts.marks, showDivider: false),
 
           Wrap(
             spacing: 8,

@@ -1,4 +1,4 @@
-import 'package:presentation/themes/app_text_styles.dart';
+import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/view/product_view_model.dart';
 
+import '../../../../../util/resources/app_images.dart';
 import '../../../../../util/widgets/circular_progress_indicator_page_widget.dart';
 
 class AddToCartPopUpImageWidget extends StatelessWidget {
@@ -17,7 +18,7 @@ class AddToCartPopUpImageWidget extends StatelessWidget {
           child: Image(
             image: item.imageUrl!.isNotEmpty
                 ? NetworkImage(item.imageUrl![0])
-                : AssetImage('assets/products/noimage.png') as ImageProvider,
+                : AssetImage(AppImages.noImage) as ImageProvider,
 
             loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) return child;

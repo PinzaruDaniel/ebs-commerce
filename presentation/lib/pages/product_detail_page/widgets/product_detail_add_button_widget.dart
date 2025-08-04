@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 
-import '../../../themes/app_colors.dart';
+import '../../../util/resources/app_colors.dart';
 
 class ProductDetailAddButtonWidget extends StatefulWidget {
   const ProductDetailAddButtonWidget({super.key});
@@ -21,7 +22,7 @@ class _ProductDetailAddButtonWidgetState extends State<ProductDetailAddButtonWid
               TextButton(
                 style: TextButton.styleFrom(backgroundColor: AppColors.primary, elevation: 2),
                 onPressed: () {},
-                child: Text('add to cart', style: TextStyle(color: Colors.white)),
+                child: Text(AppTexts.addToCart, style: TextStyle(color: Colors.white)),
               ),
             ],
           ),

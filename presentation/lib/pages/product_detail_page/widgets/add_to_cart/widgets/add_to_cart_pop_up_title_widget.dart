@@ -1,7 +1,9 @@
+import 'package:presentation/util/resources/app_colors.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../themes/app_text_styles.dart';
+import '../../../../../util/resources/app_text_styles.dart';
 import '../../product_detail_price_widget.dart';
 
 class AddToCartPopUpTitleWidget extends StatefulWidget {
@@ -28,8 +30,8 @@ class _AddToCartPopUpTitleWidgetState extends State<AddToCartPopUpTitleWidget> {
                 style: AppTextsStyle.bold.copyWith(color: Colors.black),
                 children: [
                   TextSpan(
-                    text: widget.item.company?['brand'] != null
-                        ? '${widget.item.title} From ${widget.item.company?['brand'] as String? ?? ''}'
+                    text: widget.item.company?[AppTexts.brand] != null
+                        ? '${widget.item.title} From ${widget.item.company?[AppTexts.brand] as String? ?? ''}'
                         : widget.item.title,
                   ),
                   if (widget.item.sale! > 0)
@@ -37,10 +39,10 @@ class _AddToCartPopUpTitleWidgetState extends State<AddToCartPopUpTitleWidget> {
                       alignment: PlaceholderAlignment.middle,
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 3, horizontal: 4),
-                        decoration: BoxDecoration(color: Color(0xfff8dcde), borderRadius: BorderRadius.circular(4)),
+                        decoration: BoxDecoration(color: AppColors.pinkBackGround, borderRadius: BorderRadius.circular(4)),
                         child: Text(
                           '${widget.item.sale}%',
-                          style: AppTextsStyle.boldSmall.copyWith(color: Color(0xffcf1c0c)),
+                          style: AppTextsStyle.boldSmall.copyWith(color: AppColors.redText),
                         ),
                       ),
                     ),

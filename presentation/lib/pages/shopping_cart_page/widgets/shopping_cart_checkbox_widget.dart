@@ -1,6 +1,6 @@
 import 'package:presentation/view/cart_products_view_model.dart';
 import 'package:flutter/material.dart';
-import '../../../themes/app_colors.dart';
+import '../../../util/resources/app_colors.dart';
 
 class ShoppingCartCheckboxWidget extends StatefulWidget {
   const ShoppingCartCheckboxWidget({super.key, required this.item});

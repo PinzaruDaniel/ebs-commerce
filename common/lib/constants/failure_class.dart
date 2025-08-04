@@ -25,7 +25,7 @@ class Failure {
       originalError: e,
       details: {
         'response': e.response?.data,
-        'stackTrace': e.stackTrace?.toString() ?? 'No stack trace',
+        'stackTrace': e.stackTrace.toString(),
       },
     );
   }

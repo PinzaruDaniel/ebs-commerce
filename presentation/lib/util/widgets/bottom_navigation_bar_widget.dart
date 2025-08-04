@@ -1,5 +1,5 @@
 import 'package:flutter_svg/svg.dart';
-import 'package:presentation/themes/app_colors.dart';
+import 'package:presentation/util/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/view/product_view_model.dart';

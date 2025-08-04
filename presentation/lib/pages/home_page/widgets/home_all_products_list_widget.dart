@@ -1,8 +1,12 @@
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/view/category_view_model.dart';
 
+import '../../../util/resources/app_texts.dart';
 import '../../../view/base_view_model.dart';
+import '../home_controller.dart';
 import 'home_products_item_widget.dart';
 
 class AllProductsListWidget extends StatefulWidget {
@@ -15,6 +19,7 @@ class AllProductsListWidget extends StatefulWidget {
 }
 
 class _AllProductsListWidgetState extends State<AllProductsListWidget> {
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +27,7 @@ class _AllProductsListWidgetState extends State<AllProductsListWidget> {
       children: [
         Padding(
           padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
-          child: HeaderTitleWidget(title: 'ALL PRODUCTS', showDivider: true),
+          child: HeaderTitleWidget(title: AppTexts.allProducts, showDivider: true),
         ),
         SizedBox(
           child: GridView.builder(

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:presentation/pages/filtered_products_page/filtered_products_page.dart';
-import 'package:presentation/themes/app_colors.dart';
-import 'package:presentation/util/routing/app_router.dart';
+import 'package:presentation/pages/filtered_page/widgets/add_to_category_button_widget.dart';
+import 'package:presentation/util/pages/products_display_page.dart';
+import 'package:presentation/util/resources/app_colors.dart';
+import 'package:presentation/util/resources/app_texts.dart';
+import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
-import 'package:presentation/util/widgets/selected_chip_widget.dart';
+import 'package:presentation/pages/filtered_page/widgets/selected_category_button_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-import '../../themes/app_text_styles.dart';
+import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
-
+import '../../util/resources/app_icons.dart';
 import '../../util/widgets/circular_progress_indicator_page_widget.dart';
 import '../category_picker_page/category_controller.dart';
 import 'filter_controller.dart';
@@ -40,22 +42,20 @@ class _FilterPageState extends State<FilterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
+      appBar: AppBarWidget(
+        title: AppTexts.filters,
+        showBorder: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xff003bd1), size: 20),
           onPressed: () => Navigator.pop(context),
+          icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
-        shape: Border(bottom: BorderSide(color: Colors.black12)),
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        title: Text('Filters', style: AppTextsStyle.bold),
         actions: [
           TextButton(
             style: TextButton.styleFrom(foregroundColor: Colors.black),
             onPressed: () {
               filController.resetFilters();
             },
-            child: Text('Reset', style: AppTextsStyle.bold),
+            child: Text(AppTexts.reset, style: AppTextsStyle.bold),
           ),
         ],
       ),
@@ -74,7 +74,7 @@ class _FilterPageState extends State<FilterPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
-                child: HeaderTitleWidget(title: 'Price', showDivider: false),
+                child: HeaderTitleWidget(title: AppTexts.apply, showDivider: false),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.8,
@@ -101,7 +101,7 @@ class _FilterPageState extends State<FilterPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 24, left: 16, bottom: 5),
-                child: HeaderTitleWidget(title: 'Categories selected', showDivider: false),
+                child: HeaderTitleWidget(title: AppTexts.categoriesSelected, showDivider: false),
               ),
               Obx(() {
                 final selected = filController.selectedCategoryId.toList();
@@ -112,42 +112,12 @@ class _FilterPageState extends State<FilterPage> {
                     runSpacing: 8,
                     children: [
                       for (final id in selected)
-                        SelectedChipWidget(
+                        SelectedCategoryButtonWidget(
                           id: id,
                           name: _nameFor(catController, id),
                           onRemove: () => filController.toggleCategory(id, false),
                         ),
-
-
-                      InkWell(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        onTap: () async {
-                          AppRouter.openCategoryPickerPage();
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            color: Colors.white,
-                            border: Border.all(color: Colors.grey.shade300),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min ,
-                            children: [
-                              Text(
-                                'Add Category',
-                                style: AppTextsStyle.medium.copyWith(
-                                  color: Color(0xff6b6d81),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(width: 4),
-                              Icon(Icons.add, size: 20, color: Color(0xff6b6d81)),
-                            ],
-                          ),
-                        ),
-                      ),
+                      AddToCategoryButtonWidget(),
                     ],
                   ),
                 );
@@ -160,13 +130,13 @@ class _FilterPageState extends State<FilterPage> {
       bottomNavigationBar: Obx(
         () => BottomNavigationBarWidget(
           item: dummyProduct,
-          title: 'Show results(${filController.filteredProducts.length})',
+          title: '${AppTexts.showResults}(${filController.filteredProducts.length})',
           showIcon: false,
           addToCart: null,
           router: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => FilteredProductsPage(items: filController.filteredProducts)),
+              MaterialPageRoute(builder: (context) => ProductsDisplayPage(items: filController.filteredProducts, title: AppTexts.filteredProducts,)),
             );
           },
         ),

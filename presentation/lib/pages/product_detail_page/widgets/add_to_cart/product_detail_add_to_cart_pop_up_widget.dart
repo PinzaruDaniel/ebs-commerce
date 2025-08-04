@@ -2,6 +2,7 @@ import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/add_to_cart_controller.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_image_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_title_widget.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/product_input_quantity_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
@@ -50,7 +51,7 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HeaderTitleWidget(title: 'QUANTITY', showDivider: false),
+              HeaderTitleWidget(title: AppTexts.quantity, showDivider: false),
               SizedBox(height: 12),
               ProductInputQuantityWidget(
                 initialValue: 1,
@@ -66,7 +67,7 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
         Spacer(),
         BottomNavigationBarWidget(
           item: widget.item,
-          title: 'Add to cart',
+          title: AppTexts.addToCart,
           addToCart: true,
           router: () {
             final item=addCartController.cartItem.value;

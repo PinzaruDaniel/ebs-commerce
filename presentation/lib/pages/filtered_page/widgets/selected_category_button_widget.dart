@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/themes/app_text_styles.dart';
+import 'package:presentation/util/resources/app_text_styles.dart';
 
-import '../../themes/app_colors.dart';
+import '../../../util/resources/app_colors.dart';
 
-class SelectedChipWidget extends StatelessWidget {
-  const SelectedChipWidget({super.key, required this.id, required this.name, required this.onRemove});
+class SelectedCategoryButtonWidget extends StatelessWidget {
+  const SelectedCategoryButtonWidget({super.key, required this.id, required this.name, required this.onRemove});
 
   final int id;
   final String name;

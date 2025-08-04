@@ -9,6 +9,6 @@ abstract class ProductsRepository {
   Future<Either<Failure, List<ProductEntity>>> getSaleProducts();
 
   Future<Either<Failure, List<ProductEntity>>> getNewProducts();
-  Future<Either<Failure, List<ProductEntity>>> getProducts();
+  Future<Either<Failure, List<ProductEntity>>> getProducts({int page = 1, int limit = 10});
 
 }

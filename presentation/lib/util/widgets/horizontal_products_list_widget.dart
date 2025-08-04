@@ -53,6 +53,8 @@ class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWid
           child: HeaderTitleWidget(
             title: widget.type.title,
             showDivider: true,
+            showSeeAll: true,
+            items: widget.items,
           ),
         ),
 

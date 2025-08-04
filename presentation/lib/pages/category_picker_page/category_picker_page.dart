@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:presentation/controllers/controller_imports.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/filtered_page/filter_controller.dart';
+import 'package:presentation/util/resources/app_icons.dart';
+import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
-import '../../../themes/app_colors.dart';
-import '../../../themes/app_text_styles.dart';
+import '../../util/resources/app_colors.dart';
+import '../../util/resources/app_text_styles.dart';
 import '../../../util/routing/app_router.dart';
+import '../../util/resources/app_texts.dart';
 import 'category_controller.dart';
 
 class CategoryPickerPage extends StatefulWidget {
@@ -18,36 +19,26 @@ class CategoryPickerPage extends StatefulWidget {
 }
 
 class _CategoryPickerPageState extends State<CategoryPickerPage> {
-  CategoryController get catController=>Get.find();
-  FilterController get filController=>Get.find();
+  CategoryController get catController => Get.find();
+
+  FilterController get filController => Get.find();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBarWidget(
+        showBorder: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xff003bd1), size: 20),
+          icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
-        shape: Border(bottom: BorderSide(color: Colors.black12)),
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        title: Text('Categories', style: AppTextsStyle.bold),
-        actions: [
-          IconButton(
-            onPressed: () {
-              AppRouter.openShoppingCartPage();
-            },
-            icon: SvgPicture.asset('assets/icons/Cart icon.svg'),
-          ),
-        ],
+        title: AppTexts.categories,
+        actions: [IconButton(onPressed: AppRouter.openShoppingCartPage, icon: AppIcons.cartIcon)],
       ),
       body: ListView.builder(
         itemCount: catController.categories.length,
@@ -64,7 +55,10 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                   onChanged: (v) => filController.toggleCategory(category.id, v ?? false),
                   activeColor: AppColors.primary,
                 ),
-                Text('${category.name}  ${category.id}  ${category.level} ${category.parent}', style: AppTextsStyle.bold),
+                Text(
+                  '${category.name}  ${category.id}  ${category.level} ${category.parent}',
+                  style: AppTextsStyle.bold,
+                ),
               ],
             );
           });
@@ -72,7 +66,7 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
         item: dummyProduct,
-        title: 'Apply',
+        title: AppTexts.apply,
         showIcon: false,
         router: Get.back,
         addToCart: null,

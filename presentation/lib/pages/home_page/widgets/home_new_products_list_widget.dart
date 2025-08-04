@@ -1,3 +1,4 @@
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 
 import 'package:presentation/view/product_view_model.dart';
@@ -20,7 +21,7 @@ class _HomeNewProductsListWidgetState extends State<HomeNewProductsListWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        HeaderTitleWidget(title: 'NEW PRODUCTS', showDivider: true),
+        HeaderTitleWidget(title: AppTexts.newProducts, showDivider: true),
         Container(
           height: 250,
           child: ListView.builder(

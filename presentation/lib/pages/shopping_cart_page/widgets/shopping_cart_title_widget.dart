@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../themes/app_text_styles.dart';
+import '../../../util/resources/app_text_styles.dart';
 import '../../../view/cart_products_view_model.dart';
 
 class ShoppingCartTitleWidget extends StatelessWidget {

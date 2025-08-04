@@ -1,8 +1,9 @@
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../../themes/app_text_styles.dart';
+import '../../../util/resources/app_text_styles.dart';
 
 class ProductDetailSpecificationWidget extends StatefulWidget {
   const ProductDetailSpecificationWidget({super.key, required this.item});
@@ -21,7 +22,7 @@ class _ProductDetailSpecificationWidgetState extends State<ProductDetailSpecific
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HeaderTitleWidget(title: 'PRODUCT SPECIFICATIONS', showDivider: false),
+          HeaderTitleWidget(title: AppTexts.productsSpecifications, showDivider: false),
 
           GridView.builder(
             shrinkWrap: true,

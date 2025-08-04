@@ -1,10 +1,14 @@
 import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'package:presentation/pages/shopping_cart_page/widgets/shopping_cart_checkbox_widget.dart';
 import 'package:presentation/pages/shopping_cart_page/widgets/shopping_cart_title_widget.dart';
-import 'package:presentation/themes/app_text_styles.dart';
+import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../themes/app_colors.dart';
+import 'package:presentation/util/widgets/app_bar_widget.dart';
+import '../../util/resources/app_colors.dart';
+import '../../util/resources/app_icons.dart';
+import '../../util/resources/app_images.dart';
+import '../../util/resources/app_texts.dart';
 import '../../util/widgets/circular_progress_indicator_page_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
 
@@ -27,18 +31,13 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Row(
-          children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.primary, size: 20),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
+      appBar: AppBarWidget(
+        title: AppTexts.shoppingCart,
+        showBorder: false,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        title: Text('Shopping Cart', style: AppTextsStyle.boldBig),
       ),
       body: Column(
         children: [
@@ -60,7 +59,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                           child: Image(
                             image: (item.imageUrl != null && item.imageUrl!.isNotEmpty)
                                 ? NetworkImage(item.imageUrl!)
-                                : const AssetImage('assets/products/noimage.png') as ImageProvider,
+                                : const AssetImage(AppImages.noImage) as ImageProvider,
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,
@@ -75,18 +74,19 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                         ),
                         Expanded(child: ShoppingCartTitleWidget(item: item)),
 
-                           Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              ProductInputQuantityWidget(
-                                initialValue: item.quantity,
-                                onChanged: (val) {
-                                  item.quantity = val;
-                                  cartController.cartItems.refresh();
-                                }, maxValue: item.stock,
-                              ),
-                            ],
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            ProductInputQuantityWidget(
+                              initialValue: item.quantity,
+                              onChanged: (val) {
+                                item.quantity = val;
+                                cartController.cartItems.refresh();
+                              },
+                              maxValue: item.stock,
+                            ),
+                          ],
                         ),
                       ],
                     ),

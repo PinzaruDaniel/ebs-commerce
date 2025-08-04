@@ -7,7 +7,9 @@ import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../themes/app_colors.dart';
+import '../../util/resources/app_colors.dart';
+import '../../util/resources/app_icons.dart';
+import '../../util/resources/app_texts.dart';
 import '../shopping_cart_page/shopping_cart_page.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -67,7 +69,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             surfaceTintColor: Colors.white,
 
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xff003bd1), size: 20),
+              icon: AppIcons.backIcon(color: AppColors.blue, size: 20),
               onPressed: () => Navigator.pop(context),
             ),
             actions: [
@@ -75,7 +77,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartPage()));
                 },
-                icon: SvgPicture.asset('assets/icons/Cart icon.svg'),
+                icon: AppIcons.cartIcon,
               ),
             ],
             flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),
@@ -94,10 +96,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       ),
 
       bottomNavigationBar: BottomNavigationBarWidget(
-        addToCart: widget.item?.price!=null && widget.item?.stock!=null,
+        addToCart: widget.item?.price != null && widget.item?.stock != null,
         item: widget.item!,
-        title: widget.item?.price!=null && widget.item?.stock!=null ? 'add to cart': 'this item can\'t be added' ,
-        showIcon: widget.item?.price!=null && widget.item?.stock!=null,
+        title: widget.item?.price != null && widget.item?.stock != null ? AppTexts.addToCart : AppTexts.cantAddToCart,
+        showIcon: widget.item?.price != null && widget.item?.stock != null,
       ),
     );
   }

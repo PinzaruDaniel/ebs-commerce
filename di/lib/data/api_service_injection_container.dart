@@ -10,7 +10,7 @@ Future<void> init() async {
     baseUrl: ApiConstants.baseUrl,
     headers: ApiConstants.saasAppToken,
     receiveTimeout: Duration(seconds: 60),
-    connectTimeout: Duration(seconds: 8),
+    connectTimeout: Duration(seconds: 20),
 
   );
 

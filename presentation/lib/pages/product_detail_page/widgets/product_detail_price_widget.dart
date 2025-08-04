@@ -1,4 +1,5 @@
-import 'package:presentation/themes/app_text_styles.dart';
+import 'package:presentation/util/resources/app_colors.dart';
+import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,7 @@ class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
               : Row(
             children: [
               Text(
-                '\$ discountPrice',
+                '\$',
                 style: AppTextsStyle.bold.copyWith(fontSize: 21),
               ),
               const SizedBox(width: 8),
@@ -52,13 +53,13 @@ class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
                 padding: const EdgeInsets.symmetric(
                     vertical: 3, horizontal: 4),
                 decoration: BoxDecoration(
-                  color: const Color(0xfff8dcde),
+                  color: AppColors.pinkBackGround,
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
                   '${widget.item.sale}%',
                   style: AppTextsStyle.boldSmall
-                      .copyWith(color: const Color(0xffcf1c0c)),
+                      .copyWith(color: AppColors.redText),
                 ),
               ),
             ],
