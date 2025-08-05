@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/filtered_page/filter_page.dart';
+import 'package:presentation/pages/filtered_page/filtered_products_page.dart';
 import 'package:presentation/util/pages/products_display_page.dart';
+import 'package:presentation/view/base_view_model.dart';
 
 import '../../pages/category_picker_page/category_picker_page.dart';
 import '../../pages/product_detail_page/product_detail_page.dart';
@@ -32,9 +34,9 @@ class AppRouter {
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> FilterPage()));
     }
   }
-  static void openProductsDisplayPage({required List<ProductViewModel>? items, required String title}){
+  static void openProductsDisplayPage({required AllProductsViewItem item, required String title}){
     if(Get.context !=null){
-      Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> ProductsDisplayPage(items: items, title: title)));
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> FilteredProductsPage(item: item, title: title)));
     }
   }
 

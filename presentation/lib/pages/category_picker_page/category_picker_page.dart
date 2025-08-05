@@ -33,10 +33,7 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
     return Scaffold(
       appBar: AppBarWidget(
         showBorder: true,
-        leading: IconButton(
-          icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
-          onPressed: () => Navigator.pop(context),
-        ),
+        iconColors: AppColors.primary,
         title: AppTexts.categories,
         actions: [IconButton(onPressed: AppRouter.openShoppingCartPage, icon: AppIcons.cartIcon)],
       ),

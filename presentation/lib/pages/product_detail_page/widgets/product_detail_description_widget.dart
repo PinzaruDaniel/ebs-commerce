@@ -27,7 +27,7 @@ class _ProductDetailDescriptionWidgetState extends State<ProductDetailDescriptio
           HeaderTitleWidget(title: AppTexts.productDescription, showDivider: false),
           SizedBox(height: 12),
           ReadMoreText(
-            widget.item.description ?? AppTexts.noDescription,
+            (widget.item.description ?? AppTexts.noDescription).replaceAll('/', '\n'),
             trimMode: TrimMode.Length,
             trimLength: 240,
             trimCollapsedText: AppTexts.readMore,

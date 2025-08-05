@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:presentation/pages/filtered_page/widgets/add_to_category_button_widget.dart';
+import 'package:presentation/pages/filtered_page/widgets/price_slider_widget.dart';
 import 'package:presentation/util/pages/products_display_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_texts.dart';
+import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
@@ -15,6 +17,7 @@ import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/widgets/circular_progress_indicator_page_widget.dart';
+import '../../view/base_view_model.dart';
 import '../category_picker_page/category_controller.dart';
 import 'filter_controller.dart';
 
@@ -45,10 +48,7 @@ class _FilterPageState extends State<FilterPage> {
       appBar: AppBarWidget(
         title: AppTexts.filters,
         showBorder: true,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
-        ),
+        iconColors: AppColors.primary,
         actions: [
           TextButton(
             style: TextButton.styleFrom(foregroundColor: Colors.black),
@@ -76,28 +76,13 @@ class _FilterPageState extends State<FilterPage> {
                 padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
                 child: HeaderTitleWidget(title: AppTexts.apply, showDivider: false),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: SfRangeSliderTheme(
-                  data: SfRangeSliderThemeData(
-                    activeTrackHeight: 4,
-                    inactiveTrackHeight: 2,
-                    tooltipBackgroundColor: AppColors.primary,
-                  ),
-                  child: SfRangeSlider(
-                    min: min,
-                    max: max,
-                    activeColor: AppColors.primary,
-                    inactiveColor: Colors.grey.shade300,
-                    showLabels: true,
-                    enableTooltip: true,
-                    tooltipShape: SfPaddleTooltipShape(),
-                    values: range,
-                    numberFormat: NumberFormat("\$"),
-                    onChanged: filController.onRangeChanged,
-                    onChangeEnd: filController.onRangeChangeEnd,
-                  ),
-                ),
+
+              PriceSliderWidget(
+                onRangeChanged: filController.onRangeChanged,
+                onRangeChangeEnd: filController.onRangeChangeEnd,
+                min: min,
+                max: max,
+                range: range,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 24, left: 16, bottom: 5),
@@ -134,9 +119,9 @@ class _FilterPageState extends State<FilterPage> {
           showIcon: false,
           addToCart: null,
           router: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProductsDisplayPage(items: filController.filteredProducts, title: AppTexts.filteredProducts,)),
+            AppRouter.openProductsDisplayPage(
+              item: AllProductsViewItem(items: filController.filteredProducts.value),
+              title: AppTexts.filteredProducts,
             );
           },
         ),

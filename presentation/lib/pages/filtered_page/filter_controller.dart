@@ -16,8 +16,8 @@ class FilterController extends GetxController {
   final RxSet<int> selectedCategoryId = <int>{}.obs;
 
   final RxDouble minPrice = 0.0.obs;
-  final RxDouble maxPrice = 0.0.obs;
-  final Rx<SfRangeValues> priceRange = SfRangeValues(0.0, 0.0).obs;
+  final RxDouble maxPrice = 1.0.obs;
+  final Rx<SfRangeValues> priceRange = SfRangeValues(0.0, 1.0).obs;
   @override
   void onInit(){
     super.onInit();

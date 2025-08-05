@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
 import 'package:presentation/pages/home_page/widgets/home_all_products_list_widget.dart';
+import 'package:presentation/util/pages/products_display_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
@@ -39,7 +40,6 @@ class _HomePageState extends State<HomePage> {
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onLoading() async {
-    await Future.delayed(Duration(seconds: 1));
     if (mounted) {
       setState(() {});
     }
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
 
               child: homeController.isLoading.value
                   ? CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
-              : homeController.failure.value!=null ? FailureWidget(failure: homeController.failure.value!):
+              :
                    ListView.builder(
                       itemCount: homeController.items.length,
                       itemBuilder: (context, index) {
@@ -104,6 +104,8 @@ class _HomePageState extends State<HomePage> {
                           return HorizontalProductsListWidget(items: item.products, type: item.type);
                         } else if (item is AllProductsViewItem) {
                           return AllProductsListWidget(item: item);
+
+                            //ProductsDisplayPage(item: AllProductsViewItem(items: item.items), title: 'ALL PRODUCTS',);
                         }
                         return null;
                       },

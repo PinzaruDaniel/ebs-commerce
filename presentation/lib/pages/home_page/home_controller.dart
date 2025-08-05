@@ -12,7 +12,6 @@ import 'package:presentation/view/product_view_model.dart';
 import '../../view/base_view_model.dart';
 
 class HomeController extends GetxController {
-
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
   final GetSaleProductsUseCase getSaleProductsUseCase = GetIt.instance<GetSaleProductsUseCase>();
   final GetNewProductsUseCase getNewProductsUseCase = GetIt.instance<GetNewProductsUseCase>();
@@ -28,33 +27,32 @@ class HomeController extends GetxController {
   bool hasMore = true;
 
   void initItems() {
-    items.add(
-        AdBannerViewModel());
+    items.add(AdBannerViewModel());
     getProducts();
   }
 
   void getProducts({bool loadMore = false}) async {
     if (loadMore) {
-      if(!hasMore || isLoadingMore.value)return;
-      isLoadingMore.value=true;
+      if (!hasMore || isLoadingMore.value) return;
+      isLoadingMore.value = true;
       currentPage++;
-    }else{
-      isLoading.value=true;
-      currentPage=1;
+    } else {
+      isLoading.value = true;
+      currentPage = 1;
       products.clear();
-      hasMore=true;
+      hasMore = true;
     }
-/*
+    /*
     await getAllProductsUseCase.call().then((value){value.fold((l){}, (r){
 
     });});*/
-    await getProductsUseCase.call(GetProductsParams(page: 1, perPage: 10)).then((either) async {
+    await getProductsUseCase.call(GetProductsParams(page: currentPage, perPage: perPage)).then((either) async {
       either.fold(
-            (f) {
+        (f) {
           isLoading.value = false;
-          failure.value = f;
+          showFailureSnackBar(f);
         },
-            (products) async {
+        (products) async {
           this.products.value = products.map((e) => e.toModel).toList();
           getNewProducts();
           await getSaleProducts();
@@ -73,12 +71,11 @@ class HomeController extends GetxController {
   Future<void> getNewProducts() async {
     await getNewProductsUseCase.call().then((either) async {
       either.fold(
-            (failure) {
+        (failure) {
           isLoading.value = false;
-          FailureWidget(failure: failure,);
         },
 
-            (products) async {
+        (products) async {
           newProducts = products.map((e) => e.toModel).toList();
         },
       );
@@ -88,12 +85,11 @@ class HomeController extends GetxController {
   Future<void> getSaleProducts() async {
     await getSaleProductsUseCase.call().then((either) async {
       either.fold(
-            (failure) {
+        (failure) {
           isLoading.value = false;
-          FailureWidget(failure: failure,);
         },
 
-            (products) async {
+        (products) async {
           saleProducts = products.map((e) => e.toModel).toList();
         },
       );

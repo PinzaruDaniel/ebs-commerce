@@ -5,6 +5,8 @@ import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/view/product_view_model.dart';
 
+import '../../view/base_view_model.dart';
+
 class HeaderTitleWidget extends StatelessWidget {
   const HeaderTitleWidget({super.key, required this.title, this.showDivider, this.showSeeAll, this.items});
 
@@ -25,7 +27,8 @@ class HeaderTitleWidget extends StatelessWidget {
             if(showSeeAll == true)
               TextButton(
                 onPressed: () {
-                  AppRouter.openProductsDisplayPage(items: items, title: title);
+                  final allProductsItem = AllProductsViewItem(items: items!);
+                  AppRouter.openProductsDisplayPage(item: allProductsItem, title: title);
                 },
                 child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 11, color: AppColors.primary)),
               ),

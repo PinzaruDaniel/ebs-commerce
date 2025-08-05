@@ -21,8 +21,17 @@ class Failure {
         .split('.')
         .last;
 
+    String message;
+    if (e.response?.statusCode == 404) {
+      message = 'Resource not found. Error 404';
+    } else if (e.response?.statusCode == 503) {
+      message = 'Service unavailable. Error 503';
+    } else {
+      message = 'Network Error';
+    }
+
     return Failure(
-      message: e.message ?? 'Network Error',
+      message: message,
       code: e.response?.statusCode?.toString(),
       type: 'dio_$errorType',
       originalError: e,

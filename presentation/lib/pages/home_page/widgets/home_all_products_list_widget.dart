@@ -1,3 +1,6 @@
+import 'package:get/get.dart';
+import 'package:presentation/pages/home_page/home_controller.dart';
+import 'package:presentation/util/widgets/circular_progress_indicator_page_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../util/resources/app_texts.dart';
@@ -14,30 +17,47 @@ class AllProductsListWidget extends StatefulWidget {
 }
 
 class _AllProductsListWidgetState extends State<AllProductsListWidget> {
+  final ScrollController _scrollController = ScrollController();
+
+  HomeController get controller => Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
-          child: HeaderTitleWidget(title: AppTexts.allProducts, showDivider: true),
-        ),
-        SizedBox(
-          child: GridView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.75),
-            padding: EdgeInsets.only(left: 8.0, top: 16),
-            itemCount: widget.item.items.length,
-            itemBuilder: (context, index) {
-              var itemProducts = widget.item.items[index];
-              return HomeProductsItemWidget(item: itemProducts, width: 180);
-            },
+    return Obx(() {
+      if (controller.isLoading.value) {
+        return CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 40, minWidth: 40));
+      }
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
+            child: HeaderTitleWidget(title: AppTexts.allProducts, showDivider: true),
           ),
-        ),
-      ],
-    );
+          SizedBox(
+            child: GridView.builder(
+              controller: _scrollController,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.75),
+              padding: EdgeInsets.only(left: 8.0, top: 16),
+              itemCount: widget.item.items.length + 1,
+              itemBuilder: (context, index) {
+                if (index ==widget.item.items.length) {
+                  print('allProducts ${controller.perPage}');
+                  return controller.isLoading.value
+                      ? CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 40, minWidth: 40))
+                      : SizedBox();
+                }
+                var itemProducts = widget.item.items[index];
+                print('noProducts  ${controller.perPage}');
+                return HomeProductsItemWidget(item: itemProducts, width: 180);
+              },
+            ),
+          ),
+        ],
+      );
+    });
   }
 }
