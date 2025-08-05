@@ -82,19 +82,17 @@ class _HomePageState extends State<HomePage> {
               ),
               controller: _refreshController,
               onRefresh: () async {
+                await homeController.getProducts(loadMore: false);
                 _refreshController.refreshCompleted();
-                if (mounted) {
-                  setState(() {});
-                }
               },
-              onLoading: () {
-                _onLoading.call();
+              onLoading: () async {
+                await homeController.getProducts(loadMore: true);
+                _refreshController.loadComplete();
               },
 
               child: homeController.isLoading.value
                   ? CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
-              :
-                   ListView.builder(
+                  : ListView.builder(
                       itemCount: homeController.items.length,
                       itemBuilder: (context, index) {
                         final item = homeController.items[index];
@@ -105,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                         } else if (item is AllProductsViewItem) {
                           return AllProductsListWidget(item: item);
 
-                            //ProductsDisplayPage(item: AllProductsViewItem(items: item.items), title: 'ALL PRODUCTS',);
+                          //ProductsDisplayPage(item: AllProductsViewItem(items: item.items), title: 'ALL PRODUCTS',);
                         }
                         return null;
                       },

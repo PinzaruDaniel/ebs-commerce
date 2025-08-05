@@ -1,3 +1,4 @@
+
 import 'package:common/constants/failure_class.dart';
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
@@ -21,11 +22,11 @@ class HomeController extends GetxController {
   List<ProductViewModel> newProducts = [];
   List<ProductViewModel> saleProducts = [];
   Rxn<Failure> failure = Rxn<Failure>();
-  int currentPage = 1;
-  final int perPage = 10;
-  int totalProducts=451;
+  RxInt currentPage = 1.obs;
+  RxInt perPage = 20.obs;
+  int totalProducts = 451;
   RxBool isLoadingMore = false.obs;
-  bool hasMore = true;
+  RxBool hasMore = true.obs;
 
   void initItems() {
     items.add(AdBannerViewModel());
@@ -34,40 +35,54 @@ class HomeController extends GetxController {
 
   Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
-      if (!hasMore || isLoadingMore.value) return;
+      if (!hasMore.value || isLoadingMore.value) return;
       isLoadingMore.value = true;
-      currentPage++;
+      currentPage.value++;
     } else {
       isLoading.value = true;
-      currentPage = 1;
       products.clear();
-      hasMore = true;
+      currentPage.value++;
+      hasMore.value = true;
     }
-    /*
-    await getAllProductsUseCase.call().then((value){value.fold((l){}, (r){
 
-    });});*/
-    await getProductsUseCase.call(GetProductsParams(page: currentPage, perPage: perPage)).then((either) async {
-      either.fold(
-        (f) {
-          isLoading.value = false;
-          showFailureSnackBar(f);
-        },
-        (products) async {
-          this.products.value = products.map((e) => e.toModel).toList();
+    print('Fetching page: ${currentPage.value}, perPage: ${perPage.value}');
 
-          getNewProducts();
-          await getSaleProducts();
-          items.value = [
-            AdBannerViewModel(),
-            HorizontalProductListViewModel(products: newProducts, type: ProductType.newProducts),
-            HorizontalProductListViewModel(products: saleProducts, type: ProductType.saleProducts),
-            AllProductsViewItem(items: products.map((e) => e.toModel).toList()),
-          ];
-          isLoading.value = false;
-        },
-      );
-    });
+    final either = await getProductsUseCase.call(
+      GetProductsParams(page: currentPage.value, perPage: perPage.value),
+    );
+
+    either.fold(
+          (failure) {
+        isLoading.value = false;
+        isLoadingMore.value = false;
+        showFailureSnackBar(failure);
+      },
+          (list) async {
+        final newItems = list.map((e) => e.toModel).toList();
+
+        if (loadMore) {
+          products.addAll(newItems);
+        } else {
+          products.assignAll(newItems);
+        }
+        if (newItems.length < perPage.value) {
+          hasMore.value = false;
+        }
+
+        await getNewProducts();
+        await getSaleProducts();
+
+        items.value = [
+          AdBannerViewModel(),
+          HorizontalProductListViewModel(products: newProducts, type: ProductType.newProducts),
+          HorizontalProductListViewModel(products: saleProducts, type: ProductType.saleProducts),
+          AllProductsViewItem(items: products.toList()),
+        ];
+
+        isLoading.value = false;
+        isLoadingMore.value = false;
+      },
+    );
   }
 
   Future<void> getNewProducts() async {

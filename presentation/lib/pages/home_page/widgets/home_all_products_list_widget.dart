@@ -17,20 +17,7 @@ class AllProductsListWidget extends StatefulWidget {
 }
 
 class _AllProductsListWidgetState extends State<AllProductsListWidget> {
-  final ScrollController _scrollController = ScrollController();
-
   HomeController get controller => Get.find();
-
-  @override
-  void initState(){
-    super.initState();
-    _scrollController.addListener(loadMoreData);
-  }
-  void loadMoreData(){
-  if(_scrollController.position.pixels==_scrollController.position.maxScrollExtent && controller.products.length <451){
-  controller.getProducts();
-  }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +35,14 @@ class _AllProductsListWidgetState extends State<AllProductsListWidget> {
           ),
           SizedBox(
             child: GridView.builder(
-              controller: _scrollController,
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.75),
               padding: EdgeInsets.only(left: 8.0, top: 16),
               itemCount: controller.products.length,
               itemBuilder: (context, index) {
-                var itemProducts = widget.item.items[index];
-                print('noProducts  ${controller.currentPage}');
+                var itemProducts = controller.products[index];
+                print('noProducts ${controller.products.length} perPage: ${controller.perPage}');
                 return HomeProductsItemWidget(item: itemProducts, width: 180);
               },
             ),
