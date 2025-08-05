@@ -22,6 +22,17 @@ class _AllProductsListWidgetState extends State<AllProductsListWidget> {
   HomeController get controller => Get.find();
 
   @override
+  void initState(){
+    super.initState();
+    _scrollController.addListener(loadMoreData);
+  }
+  void loadMoreData(){
+  if(_scrollController.position.pixels==_scrollController.position.maxScrollExtent && controller.products.length <451){
+  controller.getProducts();
+  }
+}
+
+  @override
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value) {
@@ -42,16 +53,10 @@ class _AllProductsListWidgetState extends State<AllProductsListWidget> {
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.75),
               padding: EdgeInsets.only(left: 8.0, top: 16),
-              itemCount: widget.item.items.length + 1,
+              itemCount: controller.products.length,
               itemBuilder: (context, index) {
-                if (index ==widget.item.items.length) {
-                  print('allProducts ${controller.perPage}');
-                  return controller.isLoading.value
-                      ? CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 40, minWidth: 40))
-                      : SizedBox();
-                }
                 var itemProducts = widget.item.items[index];
-                print('noProducts  ${controller.perPage}');
+                print('noProducts  ${controller.currentPage}');
                 return HomeProductsItemWidget(item: itemProducts, width: 180);
               },
             ),
@@ -59,5 +64,6 @@ class _AllProductsListWidgetState extends State<AllProductsListWidget> {
         ],
       );
     });
+
   }
 }

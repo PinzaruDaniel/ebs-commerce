@@ -22,7 +22,8 @@ class HomeController extends GetxController {
   List<ProductViewModel> saleProducts = [];
   Rxn<Failure> failure = Rxn<Failure>();
   int currentPage = 1;
-  final int perPage = 20;
+  final int perPage = 10;
+  int totalProducts=451;
   RxBool isLoadingMore = false.obs;
   bool hasMore = true;
 
@@ -31,7 +32,7 @@ class HomeController extends GetxController {
     getProducts();
   }
 
-  void getProducts({bool loadMore = false}) async {
+  Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
       if (!hasMore || isLoadingMore.value) return;
       isLoadingMore.value = true;
@@ -54,6 +55,7 @@ class HomeController extends GetxController {
         },
         (products) async {
           this.products.value = products.map((e) => e.toModel).toList();
+
           getNewProducts();
           await getSaleProducts();
           items.value = [
