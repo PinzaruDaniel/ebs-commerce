@@ -1,26 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class AppTextsStyle{
-  static const TextStyle bold=TextStyle(
-    fontFamily: 'Nunito-Sans',
-    fontSize: 16,
-    fontWeight: FontWeight.bold,
-  );
-
-  static const TextStyle boldBig=TextStyle(
-    fontFamily: 'Nunito-Sans',
-    fontSize: 18,
-    fontWeight: FontWeight.bold,
-  );
-
-  static const TextStyle boldSmall=TextStyle(
-    fontFamily: 'Nunito-Sans',
-    fontSize: 11,
-    fontWeight: FontWeight.bold,
-  );
-
-  static const TextStyle medium=TextStyle(
-    fontFamily: 'Nunito-Sans',
-    fontSize: 14,
-  );
+class AppTextsStyle {
+  static TextStyle bold({double? size, Color? color}) =>
+      TextStyle(fontFamily: 'Nunito-Sans', fontSize: size ?? 16, fontWeight: FontWeight.bold, color: color?? Colors.black);
+  static const TextStyle medium = TextStyle(fontFamily: 'Nunito-Sans', fontSize: 14);
 }

@@ -55,7 +55,7 @@ class _FilterPageState extends State<FilterPage> {
             onPressed: () {
               filController.resetFilters();
             },
-            child: Text(AppTexts.reset, style: AppTextsStyle.bold),
+            child: Text(AppTexts.reset, style: AppTextsStyle.bold()),
           ),
         ],
       ),

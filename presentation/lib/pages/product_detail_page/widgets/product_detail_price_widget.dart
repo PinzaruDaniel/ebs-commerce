@@ -29,13 +29,13 @@ class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
           (widget.item.sale == 0 || !widget.showDiscount)
               ? Text(
             '\$ ${widget.item.price ?? '-'}',
-            style: AppTextsStyle.bold.copyWith(fontSize: 21),
+            style: AppTextsStyle.bold(size: 21),
           )
               : Row(
             children: [
               Text(
                 '\$',
-                style: AppTextsStyle.bold.copyWith(fontSize: 21),
+                style: AppTextsStyle.bold(size: 21),
               ),
               const SizedBox(width: 8),
               Text(
@@ -58,8 +58,7 @@ class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
                 ),
                 child: Text(
                   '${widget.item.sale}%',
-                  style: AppTextsStyle.boldSmall
-                      .copyWith(color: AppColors.redText),
+                  style: AppTextsStyle.bold(size: 11, color: AppColors.redText)
                 ),
               ),
             ],

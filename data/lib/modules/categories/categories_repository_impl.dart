@@ -21,13 +21,9 @@ class CategoriesRepositoryImpl implements CategoriesRepository{
     } catch (e, stackTrace) {
       if (e is DioException) {
         return Left(Failure.dio(e));
-      } else if (e is Exception) {
-        return Left(Failure.exception(e, stackTrace));
-      } else {
-        return Left(Failure.error(e, stackTrace));
       }
+      return Left(Failure.error(e, stackTrace));
     }
-
   }
 
 }

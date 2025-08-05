@@ -21,18 +21,13 @@ class ProductsRepositoryImpl implements ProductsRepository {
     } catch (e, stackTrace) {
       if (e is DioException) {
         return Left(Failure.dio(e));
-
-      } else if (e is Exception) {
-        return Left(Failure.exception(e, stackTrace));
-      } else {
-        return Left(Failure.error(e, stackTrace));
-
       }
+      return Left(Failure.error(e, stackTrace));
     }
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getProducts({required int page, required int perPage}) async {
+  Future<Either<Failure, List<ProductEntity>>> getProducts( int page,  int perPage) async {
     try {
       final response = await apiService.getProducts(null, page, perPage);
       final entities = response.map((dto) => dto.toEntity()).toList();
@@ -40,11 +35,8 @@ class ProductsRepositoryImpl implements ProductsRepository {
     } catch (e, stackTrace) {
       if (e is DioException) {
         return Left(Failure.dio(e));
-      } else if (e is Exception) {
-        return Left(Failure.exception(e, stackTrace));
-      } else {
-        return Left(Failure.error(e, stackTrace));
       }
+      return Left(Failure.error(e, stackTrace));
     }
   }
 
@@ -57,11 +49,8 @@ class ProductsRepositoryImpl implements ProductsRepository {
     } catch (e, stackTrace) {
       if (e is DioException) {
         return Left(Failure.dio(e));
-      } else if (e is Exception) {
-        return Left(Failure.exception(e, stackTrace));
-      } else {
-        return Left(Failure.error(e, stackTrace));
       }
+      return Left(Failure.error(e, stackTrace));
     }
   }
 
@@ -74,11 +63,8 @@ class ProductsRepositoryImpl implements ProductsRepository {
     } catch (e, stackTrace) {
       if (e is DioException) {
         return Left(Failure.dio(e));
-      } else if (e is Exception) {
-        return Left(Failure.exception(e, stackTrace));
-      } else {
-        return Left(Failure.error(e, stackTrace));
       }
+      return Left(Failure.error(e, stackTrace));
     }
   }
 }

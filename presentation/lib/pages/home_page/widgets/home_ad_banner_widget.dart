@@ -36,7 +36,7 @@ class _HomeAdBannerWidgetState extends State<HomeAdBannerWidget> {
                       Positioned(
                         left: 60,
                         child: Text(AppTexts.bestDiscounts, textAlign: TextAlign.center,
-                          style: AppTextsStyle.bold.copyWith(color: Colors.white),),
+                          style: AppTextsStyle.bold(color: Colors.white),),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),

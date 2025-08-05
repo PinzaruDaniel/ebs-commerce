@@ -49,7 +49,7 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
                 child: Text(widget.item.title, style: AppTextsStyle.medium),
               ),
               Text(widget.item.company?[AppTexts.brand] as String? ?? '', style: AppTextsStyle.medium),
-              Text('\$ ${widget.item.price ?? '-'} ', style: AppTextsStyle.boldBig.copyWith(fontSize: 16)),
+              Text('\$ ${widget.item.price ?? '-'} ', style: AppTextsStyle.bold()),
             ],
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 
+import '../../../util/resources/app_colors.dart';
 import '../../../util/resources/app_text_styles.dart';
 
 class ProductDetailDescriptionWidget extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ProductDetailDescriptionWidgetState extends State<ProductDetailDescriptio
             trimLength: 240,
             trimCollapsedText: AppTexts.readMore,
             trimExpandedText: AppTexts.showLess,
-            moreStyle: AppTextsStyle.bold.copyWith(color: Color(0xff003bd1), fontSize: 12),
+            moreStyle: AppTextsStyle.bold(color: AppColors.blue, size: 12),
           ),
         ],
       ),

@@ -57,7 +57,7 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                 ),
                 Text(
                   '${category.name}  ${category.id}  ${category.level} ${category.parent}',
-                  style: AppTextsStyle.bold,
+                  style: AppTextsStyle.bold(),
                 ),
               ],
             );

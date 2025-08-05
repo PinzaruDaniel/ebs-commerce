@@ -16,7 +16,10 @@ class Failure {
   });
 
   factory Failure.dio(DioException e) {
-    String errorType = e.type.toString().split('.').last;
+    String errorType = e.type
+        .toString()
+        .split('.')
+        .last;
 
     return Failure(
       message: e.message ?? 'Network Error',
@@ -26,17 +29,6 @@ class Failure {
       details: {
         'response': e.response?.data,
         'stackTrace': e.stackTrace.toString(),
-      },
-    );
-  }
-
-  factory Failure.exception(Exception e, [StackTrace? stackTrace]) {
-    return Failure(
-      message: e.toString(),
-      type: 'exception',
-      originalError: e,
-      details: {
-        'stackTrace': stackTrace?.toString() ?? 'No stack trace',
       },
     );
   }

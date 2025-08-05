@@ -6,7 +6,7 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/circular_progress_indicator_page_widget.dart';
-import 'package:presentation/util/widgets/failure_widget.dart';
+import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../../util/routing/app_router.dart';

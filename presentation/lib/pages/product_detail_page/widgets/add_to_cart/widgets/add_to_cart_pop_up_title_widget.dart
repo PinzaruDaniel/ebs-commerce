@@ -27,7 +27,7 @@ class _AddToCartPopUpTitleWidgetState extends State<AddToCartPopUpTitleWidget> {
             padding: EdgeInsets.only(left: 8.0, top: 8, bottom: 4),
             child: RichText(
               text: TextSpan(
-                style: AppTextsStyle.bold.copyWith(color: Colors.black),
+                style: AppTextsStyle.bold(),
                 children: [
                   TextSpan(
                     text: widget.item.company?[AppTexts.brand] != null
@@ -42,7 +42,7 @@ class _AddToCartPopUpTitleWidgetState extends State<AddToCartPopUpTitleWidget> {
                         decoration: BoxDecoration(color: AppColors.pinkBackGround, borderRadius: BorderRadius.circular(4)),
                         child: Text(
                           '${widget.item.sale}%',
-                          style: AppTextsStyle.boldSmall.copyWith(color: AppColors.redText),
+                          style: AppTextsStyle.bold(size: 11, color: AppColors.redText),
                         ),
                       ),
                     ),

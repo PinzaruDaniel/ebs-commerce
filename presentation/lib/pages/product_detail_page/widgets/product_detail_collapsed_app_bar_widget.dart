@@ -14,6 +14,6 @@ class ProductDetailCollapsedAppBarWidget extends StatefulWidget {
 class _ProductDetailCollapsedAppBarWidgetState extends State<ProductDetailCollapsedAppBarWidget> {
   @override
   Widget build(BuildContext context) {
-    return Row(children: [Text(widget.item.title, style: AppTextsStyle.bold)]);
+    return Row(children: [Text(widget.item.title, style: AppTextsStyle.bold())]);
   }
 }

@@ -6,7 +6,7 @@ import 'package:domain/modules/products/products_repository.dart';
 import '../models/index.dart';
 
 
-class GetSaleProductsUseCase extends UseCase<List<ProductEntity>>{
+class GetSaleProductsUseCase extends UseCaseNoParams<List<ProductEntity>>{
   final ProductsRepository productsRepository;
   GetSaleProductsUseCase({required this.productsRepository});
 

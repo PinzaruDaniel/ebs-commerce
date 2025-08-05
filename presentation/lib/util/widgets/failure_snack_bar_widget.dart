@@ -17,7 +17,6 @@ class FailureWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
           child: Center(
               child: Container(
-
                 decoration: BoxDecoration(
                   color: Colors.white,
                     boxShadow: [
@@ -35,7 +34,7 @@ class FailureWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     failure.message,
-                    style: AppTextsStyle.bold,
+                    style: AppTextsStyle.bold(),
                   ),
                 ),
               ),

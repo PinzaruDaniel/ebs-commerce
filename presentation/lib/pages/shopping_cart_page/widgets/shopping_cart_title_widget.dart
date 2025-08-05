@@ -25,12 +25,12 @@ class ShoppingCartTitleWidget extends StatelessWidget {
           ),
           Text(
             '\$${item.price??0}',
-            style: AppTextsStyle.bold.copyWith(fontSize: 14, color: Colors.grey.shade500),
+            style: AppTextsStyle.bold(size: 14, color: Colors.grey.shade500),
           ),
           SizedBox(height: 4),
           Text(
             'Total: $totalPrice ',
-            style: AppTextsStyle.bold.copyWith(fontSize: 14),
+            style: AppTextsStyle.bold(size: 14),
           ),
         ],
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/util/resources/app_icons.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/view/product_view_model.dart';
 
@@ -40,19 +42,19 @@ class BottomNavigationBarWidget extends StatelessWidget {
             if (router != null) {
               router?.call();
             } else {
-              AppPopUp.showBottomSheet(context, item: item);
+              AppPopUp.showCartInfoPopUp(item: item);
             }
           } else if(addToCart == false) {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
                 backgroundColor: Colors.white,
-                title: Text('Sorry :('),
-                content: Text("The item ${item.title} can't be added to cart."),
+                title: Text(AppTexts.oops),
+                content: Text(AppTexts.cantAddToCart),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text('OK', style: TextStyle(color: AppColors.primary)),
+                    child: Text(AppTexts.ok, style: TextStyle(color: AppColors.primary)),
                   ),
                 ],
               ),
@@ -65,7 +67,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            showIcon ? SvgPicture.asset('assets/icons/Union.svg', height: 14) : SizedBox.shrink(),
+            showIcon ? AppIcons.toCartIcon : SizedBox.shrink(),
             SizedBox(width: 6),
             Text(
               title,

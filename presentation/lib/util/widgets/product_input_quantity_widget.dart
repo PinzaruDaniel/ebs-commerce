@@ -33,7 +33,7 @@ class ProductInputQuantityWidget extends StatelessWidget {
         enabledBorder: InputBorder.none,
         isBordered: false,
         width: 8,
-        borderShape: BorderShapeBtn.roundedRect,
+        borderShape: BorderShapeBtn.circle,
       ),
       initVal: initialVal,
       minVal: adjustMin,

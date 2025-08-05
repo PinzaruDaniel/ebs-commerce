@@ -5,7 +5,7 @@ import '../../../core/usecase.dart';
 import '../models/index.dart';
 
 
-class GetAllProductsUseCase extends UseCase<List<ProductEntity>>{
+class GetAllProductsUseCase extends UseCaseNoParams<List<ProductEntity>>{
   final ProductsRepository productsRepository;
 
   GetAllProductsUseCase({required this.productsRepository});

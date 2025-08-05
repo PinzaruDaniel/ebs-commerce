@@ -39,7 +39,7 @@ class _ProductDetailSpecificationWidgetState extends State<ProductDetailSpecific
                   Expanded(
                     child: Text(
                       spec.title,
-                      style: AppTextsStyle.bold.copyWith(fontSize: 14),
+                      style: AppTextsStyle.bold(size: 14),
                       textAlign: TextAlign.start,
                     ),
                   ),

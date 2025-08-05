@@ -20,14 +20,14 @@ class HeaderTitleWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(title, style: AppTextsStyle.boldSmall),
+            Text(title, style: AppTextsStyle.bold(size: 11)),
             Spacer(),
             if(showSeeAll == true)
               TextButton(
                 onPressed: () {
                   AppRouter.openProductsDisplayPage(items: items, title: title);
                 },
-                child: Text(AppTexts.seeAll, style: AppTextsStyle.boldSmall.copyWith(color: AppColors.secondary)),
+                child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 11, color: AppColors.primary)),
               ),
           ],
         ),

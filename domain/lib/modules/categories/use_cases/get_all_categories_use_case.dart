@@ -4,7 +4,7 @@ import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/categories/categories_repository.dart';
 import 'package:domain/modules/categories/models/index.dart';
 
-class GetAllCategoriesUseCase extends UseCase<List<CategoryEntity>>{
+class GetAllCategoriesUseCase extends UseCaseNoParams<List<CategoryEntity>>{
   final CategoriesRepository categoriesRepository;
 
   GetAllCategoriesUseCase({required this.categoriesRepository});

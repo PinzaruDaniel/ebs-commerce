@@ -24,7 +24,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.white,
       leading: leading,
       actions: actions,
-      title: Text(title??'', style: AppTextsStyle.boldBig,),
+      title: Text(title??'', style: AppTextsStyle.bold(size: 18),),
     );
   }
   @override
