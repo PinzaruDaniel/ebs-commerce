@@ -60,7 +60,7 @@ class HomeController extends GetxController {
         final newItems = list.map((e) => e.toModel).toList();
 
         if (loadMore) {
-          products.addAll(newItems);
+          products.value=newItems;
 
           if (newItems.length < perPage.value) {
             hasMore.value = false;
