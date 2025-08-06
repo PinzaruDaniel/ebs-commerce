@@ -25,8 +25,6 @@ class HomeController extends GetxController {
   RxInt perPage = 20.obs;
   int totalProducts = 1000;
   RxBool isLoadingMore = false.obs;
-  RxBool hasMore = true.obs;
-
   void initItems() {
     items.add(AdBannerViewModel());
     getProducts();
@@ -34,7 +32,7 @@ class HomeController extends GetxController {
 
   Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
-      if (!hasMore.value || isLoadingMore.value) return;
+      if ( isLoadingMore.value) return;
       isLoadingMore.value = true;
       currentPage.value++;
     } else {
@@ -42,9 +40,6 @@ class HomeController extends GetxController {
       products.clear();
       currentPage.value = 1;
     }
-
-    print('[DEBUG] Calling getProductsUseCase with page: ${currentPage.value}, perPage: ${perPage.value}');
-
     final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage.value));
 
     either.fold(
@@ -59,9 +54,6 @@ class HomeController extends GetxController {
         if (loadMore) {
           products.addAll(newItems);
 
-          if (newItems.length < perPage.value) {
-            hasMore.value = false;
-          }
         } else {
           products.assignAll(newItems);
         }
