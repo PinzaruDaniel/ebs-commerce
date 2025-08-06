@@ -1,4 +1,3 @@
-
 import 'package:common/constants/failure_class.dart';
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
@@ -24,7 +23,7 @@ class HomeController extends GetxController {
   Rxn<Failure> failure = Rxn<Failure>();
   RxInt currentPage = 1.obs;
   RxInt perPage = 20.obs;
-  int totalProducts = 451;
+  int totalProducts = 1000;
   RxBool isLoadingMore = false.obs;
   RxBool hasMore = true.obs;
 
@@ -38,37 +37,37 @@ class HomeController extends GetxController {
       if (!hasMore.value || isLoadingMore.value) return;
       isLoadingMore.value = true;
       currentPage.value++;
+      perPage.value+=20;
     } else {
       isLoading.value = true;
       products.clear();
-      currentPage.value++;
+      currentPage.value = 1;
+      perPage.value=20;
       hasMore.value = true;
     }
 
-    print('Fetching page: ${currentPage.value}, perPage: ${perPage.value}');
+    print('[DEBUG] Calling getProductsUseCase with page: ${currentPage.value}, perPage: ${perPage.value}');
 
-    final either = await getProductsUseCase.call(
-      GetProductsParams(page: currentPage.value, perPage: perPage.value),
-    );
+    final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage.value));
 
     either.fold(
-          (failure) {
+      (failure) {
         isLoading.value = false;
         isLoadingMore.value = false;
         showFailureSnackBar(failure);
       },
-          (list) async {
+      (list) async {
         final newItems = list.map((e) => e.toModel).toList();
 
         if (loadMore) {
           products.addAll(newItems);
+
+          if (newItems.length < perPage.value) {
+            hasMore.value = false;
+          }
         } else {
           products.assignAll(newItems);
         }
-        if (newItems.length < perPage.value) {
-          hasMore.value = false;
-        }
-
         await getNewProducts();
         await getSaleProducts();
 
@@ -99,11 +98,12 @@ class HomeController extends GetxController {
     });
   }
 
-  Future<void> getSaleProducts() async {
+  Future<void> getSaleProducts({bool loadMore = false}) async {
     await getSaleProductsUseCase.call().then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;
+          isLoadingMore.value = false;
         },
 
         (products) async {

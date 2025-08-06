@@ -35,16 +35,10 @@ class _HomePageState extends State<HomePage> {
     homeController.initItems();
     homeController.getSaleProducts();
     homeController.getNewProducts();
+
   }
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
-
-  void _onLoading() async {
-    if (mounted) {
-      setState(() {});
-    }
-    _refreshController.loadComplete();
-  }
 
   @override
   Widget build(BuildContext context) {

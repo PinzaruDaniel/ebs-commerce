@@ -10,12 +10,14 @@ class GetProductsUseCase extends UseCase<List<ProductEntity>,GetProductsParams> 
   GetProductsUseCase({required this.productsRepository});
 
   Future<Either<Failure, List<ProductEntity>>> call(params) async {
-    return productsRepository.getProducts( params.page,  params.perPage);
+
+    return productsRepository.getProducts( params.page, params.perPage);
   }
 }
 
 class GetProductsParams {
+
   final int page;
   final int perPage;
-  GetProductsParams({required this.page, required this.perPage});
+  GetProductsParams({required this.page, required this.perPage,});
 }

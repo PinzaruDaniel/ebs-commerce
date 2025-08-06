@@ -27,7 +27,9 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getProducts( int page,  int perPage) async {
+  Future<Either<Failure, List<ProductEntity>>> getProducts( page, perPage) async {
+    print('[REPO DEBUG] Fetching products with page=$page');
+
     try {
       final response = await apiService.getProducts(null, page, perPage);
       final entities = response.map((dto) => dto.toEntity()).toList();
