@@ -12,7 +12,7 @@ abstract class ProductsApiService {
   @GET('/products')
   Future<ProductResponseApiDto> getProducts(
     @Query('marks') String? mark,
-    @Query('current_page') int? page,
+    @Query('page') int? page,
     @Query('per_page') int? limit
   );
 }

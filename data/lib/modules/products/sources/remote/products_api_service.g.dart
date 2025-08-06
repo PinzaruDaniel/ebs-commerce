@@ -26,7 +26,7 @@ class _ProductsApiService implements ProductsApiService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'marks': mark,
-      r'current_page': page,
+      r'page': page,
       r'per_page': limit,
     };
     queryParameters.removeWhere((k, v) => v == null);

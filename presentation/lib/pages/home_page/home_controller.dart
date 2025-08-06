@@ -37,13 +37,10 @@ class HomeController extends GetxController {
       if (!hasMore.value || isLoadingMore.value) return;
       isLoadingMore.value = true;
       currentPage.value++;
-      perPage.value+=20;
     } else {
       isLoading.value = true;
       products.clear();
       currentPage.value = 1;
-      perPage.value=20;
-      hasMore.value = true;
     }
 
     print('[DEBUG] Calling getProductsUseCase with page: ${currentPage.value}, perPage: ${perPage.value}');
@@ -60,7 +57,7 @@ class HomeController extends GetxController {
         final newItems = list.map((e) => e.toModel).toList();
 
         if (loadMore) {
-          products.value=newItems;
+          products.addAll(newItems);
 
           if (newItems.length < perPage.value) {
             hasMore.value = false;
