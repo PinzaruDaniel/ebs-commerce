@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/product_view_model.dart';
 
-import '../widgets/header_title_widget.dart';
-import '../../pages/home_page/widgets/home_products_item_widget.dart';
+import '../../../util/widgets/header_title_widget.dart';
+import '../../home_page/widgets/home_products_item_widget.dart';
 
 class ProductsDisplayPage extends StatefulWidget {
   final String title;

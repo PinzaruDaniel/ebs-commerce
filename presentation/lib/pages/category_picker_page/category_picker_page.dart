@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/category_picker_page/widgets/checkbox_category_widget.dart';
 import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
@@ -49,32 +50,24 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
               shape: Border(),
               iconColor: hasChildren ? AppColors.primary : Colors.transparent,
               collapsedIconColor: hasChildren ? Colors.black : Colors.transparent,
-              title: Row(
-                children: [
-                  Checkbox(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                    side: BorderSide(color: Colors.grey.shade300, width: 2),
-                    tristate: true,
-                    value: selected,
-                    onChanged: (v) {
-                      filController.toggleCategoryRecursive(parent.id, v ?? false);
-                      if (hasChildren && v == true) {
-                        for (var child in catController.groupedCategories[parent.id]!) {
-                          filController.toggleCategory(child.id, true);
-                          if (catController.groupedCategories.containsKey(child.id)) {
-                            for (var grand in catController.groupedCategories[child.id]!) {
-                              filController.toggleCategory(grand.id, true);
-                            }
-                          }
+              title: CheckboxCategoryWidget(
+                title: parent.name,
+                textStyle: AppTextsStyle.bold(),
+                selected: selected,
+                onChanged: (v) {
+                  filController.toggleCategoryRecursive(parent.id, v ?? false);
+                  if (hasChildren && v == true) {
+                    for (var child in catController.groupedCategories[parent.id]!) {
+                      filController.toggleCategory(child.id, true);
+                      if (catController.groupedCategories.containsKey(child.id)) {
+                        for (var grand in catController.groupedCategories[child.id]!) {
+                          filController.toggleCategory(grand.id, true);
                         }
                       }
-                    },
-                    activeColor: AppColors.primary,
-                  ),
-                  Expanded(child: Text(parent.name, style: AppTextsStyle.bold())),
-                ],
+                    }
+                  }
+                },
               ),
-
               children: hasChildren
                   ? List.generate(catController.groupedCategories[parent.id]!.length, (childIndex) {
                       final child = catController.groupedCategories[parent.id]![childIndex];
@@ -86,25 +79,18 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                               iconColor: AppColors.primary,
                               title: Padding(
                                 padding: const EdgeInsets.only(left: 16.0),
-                                child: Row(
-                                  children: [
-                                    Checkbox(
-                                      tristate: true,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                      side: BorderSide(color: Colors.grey.shade300, width: 2),
-                                      value: selectedChild,
-                                      onChanged: (v) {
-                                        filController.toggleCategoryRecursive(child.id, v ?? false);
-                                        if (hasGrandChildren && v == true) {
-                                          for (var grand in catController.groupedCategories[child.id]!) {
-                                            filController.toggleCategory(grand.id, true);
-                                          }
-                                        }
-                                      },
-                                      activeColor: AppColors.primary,
-                                    ),
-                                    Text(child.name, style: AppTextsStyle.medium),
-                                  ],
+                                child: CheckboxCategoryWidget(
+                                  title: child.name,
+                                  textStyle: AppTextsStyle.medium,
+                                  selected: selectedChild,
+                                  onChanged: (v) {
+                                    filController.toggleCategoryRecursive(child.id, v ?? false);
+                                    if (hasGrandChildren && v == true) {
+                                      for (var grand in catController.groupedCategories[child.id]!) {
+                                        filController.toggleCategory(grand.id, true);
+                                      }
+                                    }
+                                  },
                                 ),
                               ),
                               children: List.generate(catController.groupedCategories[child.id]!.length, (grandIndex) {
@@ -114,17 +100,11 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                                   shape: Border(),
                                   title: Padding(
                                     padding: const EdgeInsets.only(left: 32.0),
-                                    child: Row(
-                                      children: [
-                                        Checkbox(
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                          side: BorderSide(color: Colors.grey.shade300, width: 2),
-                                          value: selectedGrand,
-                                          onChanged: (v) => filController.toggleCategory(grand.id, v ?? false),
-                                          activeColor: AppColors.primary,
-                                        ),
-                                        Text(grand.name, style: AppTextsStyle.medium.copyWith(fontSize: 10)),
-                                      ],
+                                    child: CheckboxCategoryWidget(
+                                      title: grand.name,
+                                      textStyle: AppTextsStyle.medium.copyWith(fontSize: 10),
+                                      selected: selectedGrand,
+                                      onChanged: (v) => filController.toggleCategory(grand.id, v ?? false),
                                     ),
                                   ),
                                 );
@@ -133,18 +113,10 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                           : ListTile(
                               title: Padding(
                                 padding: const EdgeInsets.only(left: 16.0),
-                                child: Row(
-                                  children: [
-                                    Checkbox(
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                      side: BorderSide(color: Colors.grey.shade300, width: 2),
-                                      value: selected,
-                                      onChanged: (v) => filController.toggleCategory(child.id, v ?? false),
-                                      activeColor: AppColors.primary,
-                                    ),
-                                    Text(child.name, style: AppTextsStyle.medium),
-                                  ],
-                                ),
+                                child:
+                                CheckboxCategoryWidget(title: child.name, textStyle: AppTextsStyle.medium, selected: selectedChild,
+                                  onChanged: (v) => filController.toggleCategory(child.id, v ?? false),
+                                )
                               ),
                             );
                     })
