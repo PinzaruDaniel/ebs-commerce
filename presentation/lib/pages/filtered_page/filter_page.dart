@@ -60,56 +60,58 @@ class _FilterPageState extends State<FilterPage> {
         ],
       ),
       body: SafeArea(
-        child: Obx(() {
-          if (filController.isLoading.value) {
-            return CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75));
-          }
-
-          final min = filController.minPrice.value;
-          final max = filController.maxPrice.value;
-          final range = filController.priceRange.value;
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
-                child: HeaderTitleWidget(title: AppTexts.apply, showDivider: false),
-              ),
-
-              PriceSliderWidget(
-                onRangeChanged: filController.onRangeChanged,
-                onRangeChangeEnd: filController.onRangeChangeEnd,
-                min: min,
-                max: max,
-                range: range,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 24, left: 16, bottom: 5),
-                child: HeaderTitleWidget(title: AppTexts.categoriesSelected, showDivider: false),
-              ),
-              Obx(() {
-                final selected = filController.selectedCategoryId.toList();
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      for (final id in selected)
-                        SelectedCategoryButtonWidget(
-                          id: id,
-                          name: _nameFor(catController, id),
-                          onRemove: () => filController.toggleCategory(id, false),
-                        ),
-                      AddToCategoryButtonWidget(),
-                    ],
-                  ),
-                );
-              }),
-            ],
-          );
-        }),
+        child: SingleChildScrollView(
+          child: Obx(() {
+            if (filController.isLoading.value) {
+              return CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75));
+            }
+          
+            final min = filController.minPrice.value;
+            final max = filController.maxPrice.value;
+            final range = filController.priceRange.value;
+          
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
+                  child: HeaderTitleWidget(title: AppTexts.apply, showDivider: false),
+                ),
+          
+                PriceSliderWidget(
+                  onRangeChanged: filController.onRangeChanged,
+                  onRangeChangeEnd: filController.onRangeChangeEnd,
+                  min: min,
+                  max: max,
+                  range: range,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 24, left: 16, bottom: 5),
+                  child: HeaderTitleWidget(title: AppTexts.categoriesSelected, showDivider: false),
+                ),
+                Obx(() {
+                  final selected = filController.selectedCategoryId.toList();
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final id in selected)
+                          SelectedCategoryButtonWidget(
+                            id: id,
+                            name: _nameFor(catController, id),
+                            onRemove: () => filController.toggleCategory(id, false),
+                          ),
+                        AddToCategoryButtonWidget(),
+                      ],
+                    ),
+                  );
+                }),
+              ],
+            );
+          }),
+        ),
       ),
 
       bottomNavigationBar: Obx(

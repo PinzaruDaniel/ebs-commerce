@@ -44,18 +44,31 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
           final parent = catController.groupedCategories[null]![index];
           final hasChildren = catController.groupedCategories.containsKey(parent.id);
           return Obx(() {
-            final selected = filController.selectedCategoryId.contains(parent.id);
+            final selected = filController.getCategorySelectionState(parent.id);
             return ExpansionTile(
               shape: Border(),
-              iconColor:  hasChildren? AppColors.primary: Colors.transparent,
-              collapsedIconColor: hasChildren? Colors.black: Colors.transparent,
+              iconColor: hasChildren ? AppColors.primary : Colors.transparent,
+              collapsedIconColor: hasChildren ? Colors.black : Colors.transparent,
               title: Row(
                 children: [
                   Checkbox(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                     side: BorderSide(color: Colors.grey.shade300, width: 2),
+                    tristate: true,
                     value: selected,
-                    onChanged: (v) => filController.toggleCategory(parent.id, v ?? false),
+                    onChanged: (v) {
+                      filController.toggleCategoryRecursive(parent.id, v ?? false);
+                      if (hasChildren && v == true) {
+                        for (var child in catController.groupedCategories[parent.id]!) {
+                          filController.toggleCategory(child.id, true);
+                          if (catController.groupedCategories.containsKey(child.id)) {
+                            for (var grand in catController.groupedCategories[child.id]!) {
+                              filController.toggleCategory(grand.id, true);
+                            }
+                          }
+                        }
+                      }
+                    },
                     activeColor: AppColors.primary,
                   ),
                   Expanded(child: Text(parent.name, style: AppTextsStyle.bold())),
@@ -66,7 +79,7 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                   ? List.generate(catController.groupedCategories[parent.id]!.length, (childIndex) {
                       final child = catController.groupedCategories[parent.id]![childIndex];
                       final hasGrandChildren = catController.groupedCategories.containsKey(child.id);
-                      final selectedChild = filController.selectedCategoryId.contains(child.id);
+                      final selectedChild = filController.getCategorySelectionState(child.id);
                       return hasGrandChildren
                           ? ExpansionTile(
                               shape: Border(),
@@ -76,10 +89,18 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                                 child: Row(
                                   children: [
                                     Checkbox(
+                                      tristate: true,
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                                       side: BorderSide(color: Colors.grey.shade300, width: 2),
                                       value: selectedChild,
-                                      onChanged: (v) => filController.toggleCategory(child.id, v ?? false),
+                                      onChanged: (v) {
+                                        filController.toggleCategoryRecursive(child.id, v ?? false);
+                                        if (hasGrandChildren && v == true) {
+                                          for (var grand in catController.groupedCategories[child.id]!) {
+                                            filController.toggleCategory(grand.id, true);
+                                          }
+                                        }
+                                      },
                                       activeColor: AppColors.primary,
                                     ),
                                     Text(child.name, style: AppTextsStyle.medium),
@@ -110,17 +131,20 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                               }),
                             )
                           : ListTile(
-                              title: Row(
-                                children: [
-                                  Checkbox(
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                    side: BorderSide(color: Colors.grey.shade300, width: 2),
-                                    value: selected,
-                                    onChanged: (v) => filController.toggleCategory(child.id, v ?? false),
-                                    activeColor: AppColors.primary,
-                                  ),
-                                  Text(child.name, style: AppTextsStyle.medium),
-                                ],
+                              title: Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: Row(
+                                  children: [
+                                    Checkbox(
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                                      side: BorderSide(color: Colors.grey.shade300, width: 2),
+                                      value: selected,
+                                      onChanged: (v) => filController.toggleCategory(child.id, v ?? false),
+                                      activeColor: AppColors.primary,
+                                    ),
+                                    Text(child.name, style: AppTextsStyle.medium),
+                                  ],
+                                ),
                               ),
                             );
                     })
@@ -129,31 +153,6 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
           });
         },
       ),
-
-      /*ListView.builder(
-        itemCount: catController.categories.length,
-        itemBuilder: (_, i) {
-          final category = catController.categories[i];
-          return Obx(() {
-            final selected = filController.selectedCategoryId.contains(category.id);
-            return Row(
-              children: [
-                Checkbox(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                  side: BorderSide(color: Colors.grey.shade300, width: 2),
-                  value: selected,
-                  onChanged: (v) => filController.toggleCategory(category.id, v ?? false),
-                  activeColor: AppColors.primary,
-                ),
-                Text(
-                  '${category.name}  ${category.id}  ${category.level} ${category.parent}',
-                  style: AppTextsStyle.bold(),
-                ),
-              ],
-            );
-          });
-        },
-      ),*/
       bottomNavigationBar: BottomNavigationBarWidget(
         item: dummyProduct,
         title: AppTexts.apply,

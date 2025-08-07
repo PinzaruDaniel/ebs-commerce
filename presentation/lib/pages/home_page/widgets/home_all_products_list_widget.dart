@@ -42,7 +42,6 @@ class _AllProductsListWidgetState extends State<AllProductsListWidget> {
               itemCount: controller.products.length,
               itemBuilder: (context, index) {
                 var itemProducts = controller.products[index];
-                print('noProducts ${controller.products.length} perPage: ${controller.perPage}');
                 return HomeProductsItemWidget(item: itemProducts, width: 180);
               },
             ),
