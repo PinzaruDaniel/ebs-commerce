@@ -15,7 +15,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<Either<Failure, List<ProductEntity>>> getAllProducts() async {
     try {
-      final response = await apiService.getProducts({'per_page': 451});
+      final response = await apiService.getProducts(null, null, 451, null);
       final entities = response.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {
@@ -29,7 +29,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<Either<Failure, List<ProductEntity>>> getProducts( page, perPage) async {
     try {
-      final response = await apiService.getProducts({'page': page,'per_page': perPage});
+      final response = await apiService.getProducts(null, page, perPage, null);
       final entities = response.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {
@@ -41,9 +41,9 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getSaleProducts( page, perPage) async {
+  Future<Either<Failure, List<ProductEntity>>> getSaleProducts() async {
     try {
-      final response = await apiService.getProducts({'has_discount': true, 'page': page,'per_page': perPage});
+      final response = await apiService.getProducts('sale', null, null, null);
       final entities = response.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {
@@ -55,9 +55,9 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getNewProducts( page, perPage) async {
+  Future<Either<Failure, List<ProductEntity>>> getNewProducts() async {
     try {
-      final response = await apiService.getProducts({'marks': 'new', 'page': page,'per_page': perPage});
+      final response = await apiService.getProducts('new', null, null, null);
       final entities = response.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {
