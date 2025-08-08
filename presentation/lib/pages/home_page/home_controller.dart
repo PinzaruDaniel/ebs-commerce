@@ -6,10 +6,10 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
+import 'package:presentation/util/widgets/horizontal_products_list_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 
 import '../../view/base_view_model.dart';
-import '../products_display_page/products_display_controller.dart';
 
 class HomeController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
@@ -22,9 +22,9 @@ class HomeController extends GetxController {
   List<ProductViewModel> saleProducts = [];
   Rxn<Failure> failure = Rxn<Failure>();
   RxInt currentPage = 1.obs;
-  int perPage = 20;
+  RxInt perPage = 20.obs;
+  int totalProducts = 1000;
   RxBool isLoadingMore = false.obs;
-
   void initItems() {
     items.add(AdBannerViewModel());
     getProducts();
@@ -32,7 +32,7 @@ class HomeController extends GetxController {
 
   Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
-      if (isLoadingMore.value) return;
+      if ( isLoadingMore.value) return;
       isLoadingMore.value = true;
       currentPage.value++;
     } else {
@@ -40,7 +40,7 @@ class HomeController extends GetxController {
       products.clear();
       currentPage.value = 1;
     }
-    final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage));
+    final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage.value));
 
     either.fold(
       (failure) {
@@ -53,19 +53,18 @@ class HomeController extends GetxController {
 
         if (loadMore) {
           products.addAll(newItems);
+
         } else {
           products.assignAll(newItems);
         }
-        if(!loadMore && currentPage.value==1){
-          await getNewProducts();
-          await getSaleProducts();
-        }
+        await getNewProducts();
+        await getSaleProducts();
 
         items.value = [
           AdBannerViewModel(),
-          HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
-          HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
-          AllProductsViewItem(products: products),
+          HorizontalProductListViewModel(products: newProducts, type: ProductType.newProducts),
+          HorizontalProductListViewModel(products: saleProducts, type: ProductType.saleProducts),
+          AllProductsViewItem(items: products.toList()),
         ];
 
         isLoading.value = false;
@@ -75,7 +74,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getNewProducts() async {
-    await getNewProductsUseCase.call(GetNewProductsParams(page: 1, perPage: perPage)).then((either) async {
+    await getNewProductsUseCase.call().then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;
@@ -89,7 +88,8 @@ class HomeController extends GetxController {
   }
 
   Future<void> getSaleProducts({bool loadMore = false}) async {
-    await getSaleProductsUseCase.call(GetSaleProductsParams(page: 1, perPage: perPage)).then((either) async {
+    //TODO: Request-ul sa fie cu has_discount=true
+    await getSaleProductsUseCase.call().then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;
