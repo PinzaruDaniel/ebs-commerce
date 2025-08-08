@@ -1,7 +1,8 @@
-import 'package:presentation/util/resources/app_images.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_texts.dart';
+
+import '../../../util/resources/app_icons.dart';
 
 class HomeAdBannerWidget extends StatefulWidget {
   const HomeAdBannerWidget({super.key});
@@ -31,7 +32,7 @@ class _HomeAdBannerWidgetState extends State<HomeAdBannerWidget> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(24),
-                        child: Image.asset(AppImages.adBanner, fit: BoxFit.fill, width: 300),
+                        child: Image.asset(AppIcons.adBanner, fit: BoxFit.fill, width: 300),
                       ),
                       Positioned(
                         left: 60,

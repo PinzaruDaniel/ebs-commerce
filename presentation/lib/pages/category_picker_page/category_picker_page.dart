@@ -5,12 +5,12 @@ import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
-import 'package:presentation/util/widgets/circular_progress_indicator_page_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_text_styles.dart';
 import '../../../util/routing/app_router.dart';
 import '../../util/resources/app_texts.dart';
+import '../../util/widgets/select_checkbox_widget.dart';
 import 'category_controller.dart';
 
 class CategoryPickerPage extends StatefulWidget {
@@ -45,7 +45,7 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
           final parent = catController.groupedCategories[null]![index];
           final hasChildren = catController.groupedCategories.containsKey(parent.id);
           return Obx(() {
-            final selected = filController.getCategorySelectionState(parent.id);
+            final selected = catController.getCategorySelectionState(parent.id);
             return ExpansionTile(
               shape: Border(),
               iconColor: hasChildren ? AppColors.primary : Colors.transparent,
@@ -55,13 +55,13 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                 textStyle: AppTextsStyle.bold(),
                 selected: selected,
                 onChanged: (v) {
-                  filController.toggleCategoryRecursive(parent.id, v ?? false);
+                  catController.toggleCategoryRecursive(parent.id, v ?? false);
                   if (hasChildren && v == true) {
                     for (var child in catController.groupedCategories[parent.id]!) {
-                      filController.toggleCategory(child.id, true);
+                      catController.toggleCategory(child.id, true);
                       if (catController.groupedCategories.containsKey(child.id)) {
                         for (var grand in catController.groupedCategories[child.id]!) {
-                          filController.toggleCategory(grand.id, true);
+                          catController.toggleCategory(grand.id, true);
                         }
                       }
                     }
@@ -72,7 +72,7 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                   ? List.generate(catController.groupedCategories[parent.id]!.length, (childIndex) {
                       final child = catController.groupedCategories[parent.id]![childIndex];
                       final hasGrandChildren = catController.groupedCategories.containsKey(child.id);
-                      final selectedChild = filController.getCategorySelectionState(child.id);
+                      final selectedChild = catController.getCategorySelectionState(child.id);
                       return hasGrandChildren
                           ? ExpansionTile(
                               shape: Border(),
@@ -84,10 +84,10 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                                   textStyle: AppTextsStyle.medium,
                                   selected: selectedChild,
                                   onChanged: (v) {
-                                    filController.toggleCategoryRecursive(child.id, v ?? false);
+                                    catController.toggleCategoryRecursive(child.id, v ?? false);
                                     if (hasGrandChildren && v == true) {
                                       for (var grand in catController.groupedCategories[child.id]!) {
-                                        filController.toggleCategory(grand.id, true);
+                                        catController.toggleCategory(grand.id, true);
                                       }
                                     }
                                   },
@@ -95,16 +95,16 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                               ),
                               children: List.generate(catController.groupedCategories[child.id]!.length, (grandIndex) {
                                 final grand = catController.groupedCategories[child.id]![grandIndex];
-                                final selectedGrand = filController.selectedCategoryId.contains(grand.id);
+                                final selectedGrand = catController.selectedCategoryId.contains(grand.id);
                                 return ListTile(
                                   shape: Border(),
                                   title: Padding(
                                     padding: const EdgeInsets.only(left: 32.0),
                                     child: CheckboxCategoryWidget(
                                       title: grand.name,
-                                      textStyle: AppTextsStyle.medium.copyWith(fontSize: 10),
+                                      textStyle: AppTextsStyle.medium.copyWith(fontSize: 12),
                                       selected: selectedGrand,
-                                      onChanged: (v) => filController.toggleCategory(grand.id, v ?? false),
+                                      onChanged: (v) => catController.toggleCategory(grand.id, v ?? false),
                                     ),
                                   ),
                                 );
@@ -113,10 +113,12 @@ class _CategoryPickerPageState extends State<CategoryPickerPage> {
                           : ListTile(
                               title: Padding(
                                 padding: const EdgeInsets.only(left: 16.0),
-                                child:
-                                CheckboxCategoryWidget(title: child.name, textStyle: AppTextsStyle.medium, selected: selectedChild,
-                                  onChanged: (v) => filController.toggleCategory(child.id, v ?? false),
-                                )
+                                child: CheckboxCategoryWidget(
+                                  title: child.name,
+                                  textStyle: AppTextsStyle.medium,
+                                  selected: selectedChild,
+                                  onChanged: (v) => catController.toggleCategory(child.id, v ?? false),
+                                ),
                               ),
                             );
                     })

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/pages/products_display_page/widgets/products_display_widget.dart';
+import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 
@@ -24,7 +24,7 @@ class _FilteredProductsPageState extends State<FilteredProductsPage> {
         title: widget.title,
         actions: [IconButton(onPressed: AppRouter.openShoppingCartPage, icon: AppIcons.cartIcon)],
       ),
-      body: SingleChildScrollView(child: ProductsDisplayPage(item: widget.item, title: widget.title, showHeaderTitle: false,)),
+      body: SingleChildScrollView(child: ProductsListDisplayWidget(item: widget.item, title: widget.title, showHeaderTitle: false,)),
     );
   }
 }

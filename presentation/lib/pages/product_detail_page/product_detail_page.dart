@@ -99,7 +99,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         addToCart: widget.item?.price != null && widget.item?.stock != null,
         item: widget.item!,
         title: widget.item?.price != null && widget.item?.stock != null ? AppTexts.addToCart : AppTexts.cantAddToCart,
-        showIcon: widget.item?.price != null && widget.item?.stock != null,
+        showIcon: widget.item?.price != null && widget.item?.stock != null, titleDialog: AppTexts.oops, contentDialog: AppTexts.cantAddToCart,
       ),
     );
   }

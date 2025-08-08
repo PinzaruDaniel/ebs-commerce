@@ -26,7 +26,7 @@ class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
       padding: const EdgeInsets.only(left: 12),
       child: Row(
         children: [
-          (widget.item.sale == 0 || !widget.showDiscount)
+          (widget.item.discount == null ||widget.item.discount!.isEmpty)
               ? Text(
             '\$ ${widget.item.price ?? '-'}',
             style: AppTextsStyle.bold(size: 21),
@@ -34,12 +34,12 @@ class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
               : Row(
             children: [
               Text(
-                '\$',
+                '\$ ${widget.item.discountedPrice ?? '-'}',
                 style: AppTextsStyle.bold(size: 21),
               ),
               const SizedBox(width: 8),
               Text(
-                '\$ ${widget.item.price}',
+                '\$ ${widget.item.price ?? '-'}',
                 style: const TextStyle(
                   decoration: TextDecoration.lineThrough,
                   decorationColor: Color(0xffA0A5AB),
@@ -48,23 +48,26 @@ class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
                   fontFamily: 'Nunito-Sans',
                 ),
               ),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 3, horizontal: 4),
-                decoration: BoxDecoration(
-                  color: AppColors.pinkBackGround,
-                  borderRadius: BorderRadius.circular(4),
+              widget.showDiscount==true ?
+              Padding(
+                padding: const EdgeInsets.only(left:8.0),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.pinkBackGround,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    '${widget.item.discount}%',
+                    style: AppTextsStyle.bold(size: 11, color: AppColors.redText),
+                  ),
                 ),
-                child: Text(
-                  '${widget.item.sale}%',
-                  style: AppTextsStyle.bold(size: 11, color: AppColors.redText)
-                ),
-              ),
+              ):SizedBox()
             ],
           ),
         ],
       ),
+
     );
   }
 }

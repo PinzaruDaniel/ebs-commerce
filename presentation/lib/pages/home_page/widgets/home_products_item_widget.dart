@@ -1,13 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
-import 'package:presentation/util/widgets/circular_progress_indicator_page_widget.dart';
 import 'package:presentation/util/widgets/product_image_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../../util/resources/app_images.dart';
 
 class HomeProductsItemWidget extends StatefulWidget {
   const HomeProductsItemWidget({super.key, required this.item, this.width});

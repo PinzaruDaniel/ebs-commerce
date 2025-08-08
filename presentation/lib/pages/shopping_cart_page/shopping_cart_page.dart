@@ -1,13 +1,12 @@
 import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
-import 'package:presentation/pages/shopping_cart_page/widgets/shopping_cart_checkbox_widget.dart';
 import 'package:presentation/pages/shopping_cart_page/widgets/shopping_cart_title_widget.dart';
-import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
+import 'package:presentation/util/widgets/product_image_widget.dart';
+import 'package:presentation/util/widgets/select_checkbox_widget.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
-import '../../util/resources/app_images.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/circular_progress_indicator_page_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
@@ -53,13 +52,25 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                     child: Row(
                       children: [
-                        ShoppingCartCheckboxWidget(item: item),
+                        SelectCheckboxWidget(
+                          tristate: false,
+                          selected: item.isSelected,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              item.isSelected = value;
+                            });
+                          },
+                        ),
                         ClipRRect(
                           borderRadius: BorderRadiusGeometry.circular(16),
-                          child: Image(
+                          child:
+                          /*ProductImageWidget(height: 80, width: 80, imageUrl:  item.imageUrl != null && item.imageUrl!.isNotEmpty ? item
+                              .imageUrl![0] : null,)*/
+
+                          Image(
                             image: (item.imageUrl != null && item.imageUrl!.isNotEmpty)
                                 ? NetworkImage(item.imageUrl!)
-                                : const AssetImage(AppImages.noImage) as ImageProvider,
+                                : const AssetImage(AppIcons.noImage) as ImageProvider,
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,

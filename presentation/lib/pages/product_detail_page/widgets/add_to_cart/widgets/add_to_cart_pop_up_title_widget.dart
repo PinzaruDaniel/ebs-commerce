@@ -34,18 +34,25 @@ class _AddToCartPopUpTitleWidgetState extends State<AddToCartPopUpTitleWidget> {
                         ? '${widget.item.title} From ${widget.item.company?[AppTexts.brand] as String? ?? ''}'
                         : widget.item.title,
                   ),
-                  if (widget.item.sale! > 0)
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.middle,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 3, horizontal: 4),
-                        decoration: BoxDecoration(color: AppColors.pinkBackGround, borderRadius: BorderRadius.circular(4)),
-                        child: Text(
-                          '${widget.item.sale}%',
-                          style: AppTextsStyle.bold(size: 11, color: AppColors.redText),
-                        ),
-                      ),
-                    ),
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: widget.item.discount?.isNotEmpty == true
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 4),
+                              decoration: BoxDecoration(
+                                color: AppColors.pinkBackGround,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                '${widget.item.discount}%',
+                                style: AppTextsStyle.bold(size: 11, color: AppColors.redText),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+                  ),
                 ],
               ),
             ),

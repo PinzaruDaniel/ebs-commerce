@@ -23,7 +23,7 @@ class Failure {
 
     String message;
     if (e.response?.statusCode == 404) {
-      message = 'Resource not found. Error 404';
+      message = 'Error 404. Resource not found or there are no products';
     } else if (e.response?.statusCode == 503) {
       message = 'Service unavailable. Error 503';
     } else {
