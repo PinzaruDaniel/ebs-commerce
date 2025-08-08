@@ -19,11 +19,19 @@ class _ProductsApiService implements ProductsApiService {
 
   @override
   Future<ProductResponseApiDto> getProducts(
-    Map<String, dynamic> queryParams,
+    String? mark,
+    int? page,
+    int? limit,
+    List<int>? categoriesId,
   ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.addAll(queryParams);
+    final queryParameters = <String, dynamic>{
+      r'marks': mark,
+      r'page': page,
+      r'per_page': limit,
+      r'categories': categoriesId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ProductResponseApiDto>(
