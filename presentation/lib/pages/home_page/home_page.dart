@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/category_picker_page/category_controller.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
 import 'package:presentation/pages/home_page/widgets/home_all_products_list_widget.dart';
-import 'package:presentation/pages/products_display_page/widgets/products_display_widget.dart';
+import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
@@ -24,13 +25,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomeController get homeController => Get.find();
-
+  CategoryController get catController=>Get.find();
   FilterController get filController => Get.find();
 
   @override
   void initState() {
     super.initState();
     Get.put(HomeController());
+    Get.put(CategoryController());
+
     Get.put(FilterController());
     homeController.initItems();
     homeController.getSaleProducts();
@@ -69,6 +72,13 @@ class _HomePageState extends State<HomePage> {
             child: SmartRefresher(
               enablePullDown: true,
               enablePullUp: true,
+              footer: ClassicFooter(
+                loadingText: 'Loading more...',
+                loadingIcon: CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 20, minWidth: 20)),
+                canLoadingText: 'Release to load more',
+                idleText: 'Pull up to load more',
+                noDataText: 'No more data',
+              ),
               header: WaterDropMaterialHeader(
                 distance: 50,
                 color: AppColors.primary,

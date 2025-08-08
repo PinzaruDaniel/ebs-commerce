@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Food Recipe App',
+      title: 'E-commerce ebs app',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         bottomSheetTheme: BottomSheetThemeData(dragHandleColor: Colors.grey.shade300),

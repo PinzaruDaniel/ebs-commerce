@@ -30,7 +30,7 @@ class _ProductDetailExpandedAppBarState extends State<ProductDetailExpandedAppBa
               height: 400,
               width: double.infinity,
               imageUrl:  widget.item.imageUrl != null && widget.item.imageUrl!.isNotEmpty ? widget.item
-                  .imageUrl![0] : null,
+                  .imageUrl![itemIndex] : null,
             );
           },
           options: CarouselOptions(

@@ -39,7 +39,6 @@ class ProductInputQuantityWidget extends StatelessWidget {
       minVal: adjustMin,
       maxVal: adjustMax,
       onQtyChanged: (val) {
-        print('Quantity changed to $val');
         onChanged(val);
       },
     );

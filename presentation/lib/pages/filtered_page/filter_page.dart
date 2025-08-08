@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:presentation/pages/filtered_page/widgets/add_to_category_button_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/price_slider_widget.dart';
-import 'package:presentation/pages/products_display_page/widgets/products_display_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
@@ -11,11 +9,8 @@ import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/selected_category_button_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
-import '../../util/resources/app_icons.dart';
 import '../../util/widgets/circular_progress_indicator_page_widget.dart';
 import '../../view/base_view_model.dart';
 import '../category_picker_page/category_controller.dart';
@@ -36,7 +31,6 @@ class _FilterPageState extends State<FilterPage> {
   @override
   void initState() {
     super.initState();
-    Get.put(CategoryController());
     filController.getAllProducts();
     filController.filteredProducts;
   }
@@ -60,24 +54,27 @@ class _FilterPageState extends State<FilterPage> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Obx(() {
-            if (filController.isLoading.value) {
-              return CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75));
-            }
-          
-            final min = filController.minPrice.value;
-            final max = filController.maxPrice.value;
-            final range = filController.priceRange.value;
-          
-            return Column(
+        child: Obx(() {
+          if (filController.isLoading.value) {
+            return const Center(
+              child: CircularProgressIndicatorPageWidget(
+                boxConstraints: BoxConstraints(minWidth: 75, minHeight: 75),
+              ),
+            );
+          }
+
+          final min = filController.minPrice.value;
+          final max = filController.maxPrice.value;
+          final range = filController.priceRange.value;
+
+          return SingleChildScrollView(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
-                  child: HeaderTitleWidget(title: AppTexts.apply, showDivider: false),
+                  child: HeaderTitleWidget(title: AppTexts.price, showDivider: false),
                 ),
-          
                 PriceSliderWidget(
                   onRangeChanged: filController.onRangeChanged,
                   onRangeChangeEnd: filController.onRangeChangeEnd,
@@ -90,7 +87,7 @@ class _FilterPageState extends State<FilterPage> {
                   child: HeaderTitleWidget(title: AppTexts.categoriesSelected, showDivider: false),
                 ),
                 Obx(() {
-                  final selected = filController.selectedCategoryId.toList();
+                  final selected = catController.selectedCategoryId.toList();
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Wrap(
@@ -101,7 +98,7 @@ class _FilterPageState extends State<FilterPage> {
                           SelectedCategoryButtonWidget(
                             id: id,
                             name: _nameFor(catController, id),
-                            onRemove: () => filController.toggleCategory(id, false),
+                            onRemove: () => catController.toggleCategory(id, false),
                           ),
                         AddToCategoryButtonWidget(),
                       ],
@@ -109,25 +106,35 @@ class _FilterPageState extends State<FilterPage> {
                   );
                 }),
               ],
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
 
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBarWidget(
+
+      bottomNavigationBar: Obx(() {
+        if (filController.isLoading.value) {
+          return  SizedBox();
+        }
+
+        return BottomNavigationBarWidget(
           item: dummyProduct,
-          title: '${AppTexts.showResults}(${filController.filteredProducts.length})',
+          title: filController.filteredProducts.isNotEmpty
+              ? '${AppTexts.showResults}(${filController.filteredProducts.length})'
+              : AppTexts.noProductsToShow,
           showIcon: false,
-          addToCart: null,
+          addToCart: filController.filteredProducts.isNotEmpty,
           router: () {
             AppRouter.openProductsDisplayPage(
               item: AllProductsViewItem(items: filController.filteredProducts.value),
               title: AppTexts.filteredProducts,
             );
           },
-        ),
-      ),
+          titleDialog: AppTexts.oops,
+          contentDialog: AppTexts.noProductsToShow,
+        );
+      }),
+
     );
   }
 

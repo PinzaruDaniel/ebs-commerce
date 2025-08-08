@@ -18,10 +18,7 @@ class AppPopUp {
         context: Get.context!,
         builder: (_) =>
             Container(
-              height: MediaQuery
-                  .of(Get.context!)
-                  .size
-                  .height * 0.35,
+              height: Get.height * 0.35,
               child: Column(
                 children: [Expanded(child: ProductDetailAddToCartBottomSheetWidget(item: item))],
               ),

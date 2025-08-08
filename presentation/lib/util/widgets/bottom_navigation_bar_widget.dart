@@ -9,6 +9,8 @@ import 'package:presentation/view/product_view_model.dart';
 class BottomNavigationBarWidget extends StatelessWidget {
   final ProductViewModel item;
   final String title;
+  final String? titleDialog;
+  final String? contentDialog;
   final Function? router;
   final bool? addToCart;
   final bool showIcon;
@@ -20,6 +22,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
     this.router,
     required this.showIcon,
     this.addToCart,
+    this.titleDialog,
+    this.contentDialog,
   });
 
   @override
@@ -44,13 +48,13 @@ class BottomNavigationBarWidget extends StatelessWidget {
             } else {
               AppPopUp.showCartInfoPopUp(item: item);
             }
-          } else if(addToCart == false) {
+          } else if (addToCart == false) {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
                 backgroundColor: Colors.white,
-                title: Text(AppTexts.oops),
-                content: Text(AppTexts.cantAddToCart),
+                title: Text(titleDialog!),
+                content: Text(contentDialog!),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
@@ -59,8 +63,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
                 ],
               ),
             );
-          }
-          else{
+          } else {
             router?.call();
           }
         },

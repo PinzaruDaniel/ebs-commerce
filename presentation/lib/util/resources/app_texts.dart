@@ -26,5 +26,6 @@ class AppTexts {
   static const String seeAll='See All';
   static const String oops='Oopsie';
   static const String ok='OK';
+  static const String noProductsToShow='There are no products to show';
 
 }

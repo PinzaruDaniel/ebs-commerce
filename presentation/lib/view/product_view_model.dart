@@ -9,8 +9,9 @@ class ProductViewModel extends BaseViewModel {
   final List<String>? imageUrl;
   final List<String>? marks;
   final String? price;
+  final String? discount;
+  final String? discountedPrice;
   final int? stock;
-  final int? sale;
   final String? description;
   final List<SpecificationViewModel> specification;
   final List<CategoryViewModel> category;
@@ -23,7 +24,8 @@ class ProductViewModel extends BaseViewModel {
     required this.marks,
     required this.price,
     required this.stock,
-    required this.sale,
+    required this.discount,
+    required this.discountedPrice,
     required this.description,
     required this.specification,
     required this.category,
@@ -38,7 +40,8 @@ ProductViewModel get dummyProduct => ProductViewModel(
   marks: [],
   price: null,
   stock: null,
-  sale: null,
+  discount: null,
+  discountedPrice: null,
   description: '',
   specification: [],
   category: [],

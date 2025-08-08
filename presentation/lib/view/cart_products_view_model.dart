@@ -8,7 +8,7 @@ class CartItem {
   final int? stock;
   final SpecificationViewModel? specification;
   int quantity;
-  bool isSelected;
+  bool? isSelected;
 
   CartItem({
     required this.id,
