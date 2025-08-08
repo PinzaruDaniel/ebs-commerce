@@ -88,6 +88,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getSaleProducts({bool loadMore = false}) async {
+    //TODO: Request-ul sa fie cu has_discount=true
     await getSaleProductsUseCase.call().then((either) async {
       either.fold(
         (failure) {
