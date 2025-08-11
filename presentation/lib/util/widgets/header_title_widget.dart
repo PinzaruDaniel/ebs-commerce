@@ -3,18 +3,17 @@ import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
+import 'package:presentation/view/product_list_type_enum.dart';
 import 'package:presentation/view/product_view_model.dart';
 
-import '../../view/base_view_model.dart';
 
 class HeaderTitleWidget extends StatelessWidget {
-  const HeaderTitleWidget({super.key, required this.title, this.showDivider, this.showSeeAll, this.items});
+  const HeaderTitleWidget({super.key, required this.title, this.showDivider, this.showSeeAll,  this.type,});
 
   final String title;
   final bool? showDivider;
   final bool? showSeeAll;
-  final List<ProductViewModel>? items;
-
+final ProductListType? type;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,8 +26,7 @@ class HeaderTitleWidget extends StatelessWidget {
             if(showSeeAll == true)
               TextButton(
                 onPressed: () {
-                  final allProductsItem = AllProductsViewItem(items: items!);
-                  AppRouter.openProductsDisplayPage(item: allProductsItem, title: title);
+                  AppRouter.openProductsDisplayPage(type: type!, title: title);
                 },
                 child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 11, color: AppColors.primary)),
               ),

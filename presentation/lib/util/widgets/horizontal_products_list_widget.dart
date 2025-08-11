@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/view/product_view_model.dart';
 
+import '../../view/product_list_type_enum.dart';
 import 'header_title_widget.dart';
 import '../../pages/home_page/widgets/home_products_item_widget.dart';
 
-enum ProductType {
-  newProducts('new_products'),
-  saleProducts('sale_products');
 
-  const ProductType(this.value);
-
-  final String value;
-}
-
-extension MapTextProductType on ProductType {
+extension MapTextProductType on ProductListType {
   String get title {
     switch (this) {
-      case ProductType.newProducts:
+      case ProductListType.newProducts:
         return 'NEW PRODUCTS';
-      case ProductType.saleProducts:
+      case ProductListType.saleProducts:
         return 'SALE PRODUCTS';
+      case ProductListType.allProducts:
+        // TODO: Handle this case.
+        throw UnimplementedError();
+      case ProductListType.filteredProducts:
+        // TODO: Handle this case.
+        throw UnimplementedError();
     }
   }
 }
@@ -28,7 +27,7 @@ class HorizontalProductsListWidget extends StatefulWidget {
   const HorizontalProductsListWidget({super.key, required this.items, required this.type});
 
   final List<ProductViewModel> items;
-  final ProductType type;
+  final ProductListType type;
 
   @override
   State<HorizontalProductsListWidget> createState() => _HorizontalProductsListWidgetState();
@@ -54,7 +53,7 @@ class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWid
             title: widget.type.title,
             showDivider: true,
             showSeeAll: true,
-            items: widget.items,
+            type: widget.type,
           ),
         ),
 
