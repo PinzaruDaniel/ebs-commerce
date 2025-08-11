@@ -11,9 +11,6 @@ abstract class ProductsApiService {
 
   @GET('/products')
   Future<ProductResponseApiDto> getProducts(
-    @Query('marks') String? mark,
-    @Query('page') int? page,
-    @Query('per_page') int? limit,
-      @Query('categories') List<int>? categoriesId,
-  );
+      @Queries() Map<String, dynamic> queryParams,
+      );
 }

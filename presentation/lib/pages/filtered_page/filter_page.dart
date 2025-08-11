@@ -13,6 +13,7 @@ import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
 import '../../util/widgets/circular_progress_indicator_page_widget.dart';
 import '../../view/base_view_model.dart';
+import '../../view/product_list_type_enum.dart';
 import '../category_picker_page/category_controller.dart';
 import 'filter_controller.dart';
 
@@ -126,7 +127,7 @@ class _FilterPageState extends State<FilterPage> {
           addToCart: filController.filteredProducts.isNotEmpty,
           router: () {
             AppRouter.openProductsDisplayPage(
-              item: AllProductsViewItem(items: filController.filteredProducts.value),
+              type: ProductListType.allProducts,
               title: AppTexts.filteredProducts,
             );
           },
