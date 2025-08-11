@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/checkout_page/checkout_page.dart';
 import 'package:presentation/pages/filtered_page/filter_page.dart';
 import 'package:presentation/pages/products_display_page/products_display_page.dart';
 import '../../pages/category_picker_page/category_picker_page.dart';
@@ -35,6 +36,11 @@ class AppRouter {
   static void openProductsDisplayPage({required ProductListType type, required String title}){
     if(Get.context !=null){
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> ProductsDisplayPage( title: title, type: type,)));
+    }
+  }
+  static void openCheckoutPage(){
+    if(Get.context !=null){
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> CheckoutPage()));
     }
   }
 

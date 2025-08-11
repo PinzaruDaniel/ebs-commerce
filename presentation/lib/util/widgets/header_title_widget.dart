@@ -33,7 +33,19 @@ final ProductListType? type;
           ],
         ),
         if (showDivider == true)
-          Divider(thickness: 3, radius: BorderRadiusGeometry.circular(24), color: AppColors.secondary, endIndent: 350),
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Container(
+              height: 3,
+              width: 40,
+              decoration: BoxDecoration(
+                  color: AppColors.secondary,
+
+                  borderRadius: BorderRadius.all(Radius.circular(3))
+              ),
+
+            ),
+          )
       ],
     );
   }

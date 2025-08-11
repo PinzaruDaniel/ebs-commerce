@@ -53,8 +53,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
               context: context,
               builder: (context) => AlertDialog(
                 backgroundColor: Colors.white,
-                title: Text(titleDialog!),
-                content: Text(contentDialog!),
+                title: Text(titleDialog ??  ''),
+                content: Text(contentDialog??  ''),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
