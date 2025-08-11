@@ -3,12 +3,9 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_page.dart';
 import 'package:presentation/pages/filtered_page/filter_page.dart';
 import 'package:presentation/pages/products_display_page/products_display_page.dart';
-import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
-import 'package:presentation/view/base_view_model.dart';
-import 'package:presentation/view/product_list_type_enum.dart';
-
 import '../../pages/category_picker_page/category_picker_page.dart';
 import '../../pages/product_detail_page/product_detail_page.dart';
+import '../../pages/products_display_page/products_display_controller.dart';
 import '../../pages/shopping_cart_page/shopping_cart_page.dart';
 import '../../view/product_view_model.dart';
 
