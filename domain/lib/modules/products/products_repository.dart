@@ -6,8 +6,8 @@ import 'models/index.dart';
 abstract class ProductsRepository {
   Future<Either<Failure, List<ProductEntity>>> getAllProducts();
 
-  Future<Either<Failure, List<ProductEntity>>> getSaleProducts();
+  Future<Either<Failure, List<ProductEntity>>> getSaleProducts(int page, int perPage);
 
-  Future<Either<Failure, List<ProductEntity>>> getNewProducts();
+  Future<Either<Failure, List<ProductEntity>>> getNewProducts(int page, int perPage);
   Future<Either<Failure, List<ProductEntity>>> getProducts(int page, int perPage);
 }

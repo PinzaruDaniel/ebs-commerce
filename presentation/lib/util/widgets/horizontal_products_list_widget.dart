@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/view/product_view_model.dart';
 
-import '../../view/product_list_type_enum.dart';
+import '../../pages/products_display_page/products_display_controller.dart';
 import 'header_title_widget.dart';
 import '../../pages/home_page/widgets/home_products_item_widget.dart';
 
 
 extension MapTextProductType on ProductListType {
-  String get title {
+  String? get title {
     switch (this) {
       case ProductListType.newProducts:
         return 'NEW PRODUCTS';
       case ProductListType.saleProducts:
         return 'SALE PRODUCTS';
-      case ProductListType.allProducts:
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case ProductListType.filteredProducts:
-        // TODO: Handle this case.
-        throw UnimplementedError();
+      default:
+        return null;
     }
   }
 }
@@ -50,7 +46,7 @@ class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWid
         Padding(
           padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
           child: HeaderTitleWidget(
-            title: widget.type.title,
+            title: widget.type.title!,
             showDivider: true,
             showSeeAll: true,
             type: widget.type,

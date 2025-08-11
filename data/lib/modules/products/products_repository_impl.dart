@@ -41,9 +41,9 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getSaleProducts() async {
+  Future<Either<Failure, List<ProductEntity>>> getSaleProducts( page, perPage) async {
     try {
-      final response = await apiService.getProducts({'has_discount': true,});
+      final response = await apiService.getProducts({'has_discount': true, 'page': page,'per_page': perPage});
       final entities = response.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {
@@ -55,9 +55,9 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getNewProducts() async {
+  Future<Either<Failure, List<ProductEntity>>> getNewProducts( page, perPage) async {
     try {
-      final response = await apiService.getProducts({'marks': 'new'});
+      final response = await apiService.getProducts({'marks': 'new', 'page': page,'per_page': perPage});
       final entities = response.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {

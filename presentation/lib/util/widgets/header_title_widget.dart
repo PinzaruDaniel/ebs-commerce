@@ -3,8 +3,8 @@ import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
-import 'package:presentation/view/product_list_type_enum.dart';
-import 'package:presentation/view/product_view_model.dart';
+
+import '../../pages/products_display_page/products_display_controller.dart';
 
 
 class HeaderTitleWidget extends StatelessWidget {
