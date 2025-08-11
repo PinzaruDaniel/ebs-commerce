@@ -2,12 +2,15 @@ import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'package:presentation/pages/shopping_cart_page/widgets/shopping_cart_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/product_image_widget.dart';
 import 'package:presentation/util/widgets/select_checkbox_widget.dart';
+import 'package:presentation/view/product_view_model.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
+import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/circular_progress_indicator_page_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
 
@@ -63,24 +66,12 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                         ),
                         ClipRRect(
                           borderRadius: BorderRadiusGeometry.circular(16),
-                          child:
-                          /*ProductImageWidget(height: 80, width: 80, imageUrl:  item.imageUrl != null && item.imageUrl!.isNotEmpty ? item
-                              .imageUrl![0] : null,)*/
-
-                          Image(
-                            image: (item.imageUrl != null && item.imageUrl!.isNotEmpty)
-                                ? NetworkImage(item.imageUrl!)
-                                : const AssetImage(AppIcons.noImage) as ImageProvider,
-                            width: 80,
+                          child: ProductImageWidget(
                             height: 80,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return CircularProgressIndicatorPageWidget(
-                                boxConstraints: BoxConstraints(minHeight: 40, minWidth: 40),
-                                heightFactor: 2.5,
-                              );
-                            },
+                            width: 80,
+                            imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty
+                                ? item.imageUrl
+                                : null,
                           ),
                         ),
                         Expanded(child: ShoppingCartTitleWidget(item: item)),
@@ -108,6 +99,15 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
           ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        item: dummyProduct,
+        title: AppTexts.checkout,
+        showIcon: false,
+        router: (){
+          AppRouter.openCheckoutPage();
+        },
+      ),
     );
+
   }
 }
