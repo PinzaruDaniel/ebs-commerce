@@ -6,10 +6,10 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
-import 'package:presentation/view/product_list_type_enum.dart';
 import 'package:presentation/view/product_view_model.dart';
 
 import '../../view/base_view_model.dart';
+import '../products_display_page/products_display_controller.dart';
 
 class HomeController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
@@ -56,14 +56,16 @@ class HomeController extends GetxController {
         } else {
           products.assignAll(newItems);
         }
-        await getNewProducts();
-        await getSaleProducts();
+        if(!loadMore && currentPage.value==1){
+          await getNewProducts();
+          await getSaleProducts();
+        }
 
         items.value = [
           AdBannerViewModel(),
           HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
           HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
-          AllProductsViewItem(type: ProductListType.allProducts),
+          AllProductsViewItem(products: products),
         ];
 
         isLoading.value = false;
@@ -73,7 +75,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getNewProducts() async {
-    await getNewProductsUseCase.call().then((either) async {
+    await getNewProductsUseCase.call(GetNewProductsParams(page: 1, perPage: perPage)).then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;
@@ -87,8 +89,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getSaleProducts({bool loadMore = false}) async {
-    //TODO: Request-ul sa fie cu has_discount=true
-    await getSaleProductsUseCase.call().then((either) async {
+    await getSaleProductsUseCase.call(GetSaleProductsParams(page: 1, perPage: perPage)).then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;

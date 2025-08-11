@@ -12,9 +12,8 @@ import 'package:presentation/view/product_view_model.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
 import '../../util/widgets/circular_progress_indicator_page_widget.dart';
-import '../../view/base_view_model.dart';
-import '../../view/product_list_type_enum.dart';
 import '../category_picker_page/category_controller.dart';
+import '../products_display_page/products_display_controller.dart';
 import 'filter_controller.dart';
 
 class FilterPage extends StatefulWidget {
@@ -127,7 +126,7 @@ class _FilterPageState extends State<FilterPage> {
           addToCart: filController.filteredProducts.isNotEmpty,
           router: () {
             AppRouter.openProductsDisplayPage(
-              type: ProductListType.allProducts,
+              type: ProductListType.filteredProducts,
               title: AppTexts.filteredProducts,
             );
           },

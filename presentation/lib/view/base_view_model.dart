@@ -1,6 +1,5 @@
-import 'package:presentation/util/widgets/horizontal_products_list_widget.dart';
-import 'package:presentation/view/product_list_type_enum.dart';
 import 'package:presentation/view/product_view_model.dart';
+import '../pages/products_display_page/products_display_controller.dart';
 
 abstract class BaseViewModel{}
 
@@ -13,7 +12,7 @@ class HorizontalProductListViewModel extends BaseViewModel{
 }
 
 class AllProductsViewItem extends BaseViewModel {
-  final ProductListType type;
+  final List<ProductViewModel> products;
 
-  AllProductsViewItem({required this.type});
+  AllProductsViewItem({required this.products});
 }

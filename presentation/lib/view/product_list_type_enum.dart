@@ -1,1 +1,0 @@
-enum ProductListType {allProducts, saleProducts, newProducts, filteredProducts}

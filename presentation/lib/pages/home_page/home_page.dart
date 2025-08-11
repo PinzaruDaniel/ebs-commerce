@@ -7,13 +7,10 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/circular_progress_indicator_page_widget.dart';
-import 'package:presentation/view/base_view_model.dart';
-import 'package:presentation/view/product_list_type_enum.dart';
-import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:presentation/view/base_view_model.dart';import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../../util/routing/app_router.dart';
 import '../../util/widgets/horizontal_products_list_widget.dart';
 import '../filtered_page/filter_controller.dart';
-import '../products_display_page/products_display_controller.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,7 +26,6 @@ class _HomePageState extends State<HomePage> {
   CategoryController get catController => Get.find();
 
   FilterController get filController => Get.find();
-  ProductsDisplayController get displayController=>Get.find();
 
 
   @override
@@ -39,13 +35,10 @@ class _HomePageState extends State<HomePage> {
     Get.put(CategoryController());
     Get.put(FilterController());
     homeController.initItems();
-    displayController.initItems();
+
   }
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -109,10 +102,10 @@ class _HomePageState extends State<HomePage> {
                         if (item is AdBannerViewModel) {
                           return HomeAdBannerWidget();
                         } else if (item is HorizontalProductListViewModel) {
+                          print('this is ${item.type}');
                           return HorizontalProductsListWidget(items: item.products, type: item.type);
                         } else if (item is AllProductsViewItem) {
-                          return //AllProductsListWidget(item: item);
-                          ProductsListDisplayWidget( title: 'ALL PRODUCTS', products: homeController.products,);
+                          return ProductsListDisplayWidget(title: 'ALL PRODUCTS', products: homeController.products);
                         }
                         return null;
                       },
