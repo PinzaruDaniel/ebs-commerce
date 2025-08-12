@@ -108,6 +108,5 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         },
       ),
     );
-
   }
 }
