@@ -20,6 +20,7 @@ final ProductListType? type;
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+
           children: [
             Text(title, style: AppTextsStyle.bold(size: 11)),
             Spacer(),
