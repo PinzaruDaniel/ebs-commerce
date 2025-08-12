@@ -51,7 +51,7 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HeaderTitleWidget(title: AppTexts.quantity, showDivider: false),
+              HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: AppTexts.quantity, showDivider: false),),
               SizedBox(height: 12),
               ProductInputQuantityWidget(
                 initialValue: 1,

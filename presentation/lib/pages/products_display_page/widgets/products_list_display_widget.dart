@@ -26,7 +26,7 @@ class ProductsListDisplayWidget extends StatelessWidget {
             if(showHeaderTitle != false)
               Padding(
                 padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
-                child: HeaderTitleWidget(title: title, showDivider: true),
+                child: HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: title, showDivider: true),),
               ),
             SizedBox(
               child: GridView.builder(

@@ -38,7 +38,6 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('this are ${widget.type}');
     return Scaffold(
       appBar: AppBarWidget(
         showBorder: true,

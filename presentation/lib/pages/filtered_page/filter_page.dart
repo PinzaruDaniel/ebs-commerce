@@ -73,7 +73,7 @@ class _FilterPageState extends State<FilterPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
-                  child: HeaderTitleWidget(title: AppTexts.price, showDivider: false),
+                  child: HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: AppTexts.price, showDivider: false, ),),
                 ),
                 PriceSliderWidget(
                   onRangeChanged: filController.onRangeChanged,
@@ -84,7 +84,7 @@ class _FilterPageState extends State<FilterPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 24, left: 16, bottom: 5),
-                  child: HeaderTitleWidget(title: AppTexts.categoriesSelected, showDivider: false),
+                  child: HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: AppTexts.categoriesSelected, showDivider: false),),
                 ),
                 Obx(() {
                   final selected = catController.selectedCategoryId.toList();

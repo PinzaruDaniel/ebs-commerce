@@ -16,3 +16,4 @@ class AllProductsViewItem extends BaseViewModel {
 
   AllProductsViewItem({required this.products});
 }
+

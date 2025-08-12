@@ -4,70 +4,58 @@ import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailPriceWidget extends StatefulWidget {
-  const ProductDetailPriceWidget({
-    super.key,
-    required this.item,
-    required this.showDiscount,
-  });
+  const ProductDetailPriceWidget({super.key, required this.item, required this.showDiscount});
 
   final ProductViewModel item;
   final bool showDiscount;
 
   @override
-  State<ProductDetailPriceWidget> createState() =>
-      _ProductDetailPriceWidgetState();
+  State<ProductDetailPriceWidget> createState() => _ProductDetailPriceWidgetState();
 }
 
 class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.only(left: 12),
       child: Row(
         children: [
-          (widget.item.discount == null ||widget.item.discount!.isEmpty)
-              ? Text(
-            '\$ ${widget.item.price ?? '-'}',
-            style: AppTextsStyle.bold(size: 21),
-          )
+          (widget.item.discount == null || widget.item.discount!.isEmpty)
+              ? Text('\$ ${widget.item.price ?? '-'}', style: AppTextsStyle.bold(size: 21))
               : Row(
-            children: [
-              Text(
-                '\$ ${widget.item.discountedPrice ?? '-'}',
-                style: AppTextsStyle.bold(size: 21),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                '\$ ${widget.item.price ?? '-'}',
-                style: const TextStyle(
-                  decoration: TextDecoration.lineThrough,
-                  decorationColor: Color(0xffA0A5AB),
-                  color: Color(0xffA0A5AB),
-                  fontSize: 12,
-                  fontFamily: 'Nunito-Sans',
+                  children: [
+                    Text('\$ ${widget.item.discountedPrice ?? '-'}', style: AppTextsStyle.bold(size: 21)),
+                    const SizedBox(width: 8),
+                    Text(
+                      '\$ ${widget.item.price ?? '-'}',
+                      style: const TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        decorationColor: Color(0xffA0A5AB),
+                        color: Color(0xffA0A5AB),
+                        fontSize: 12,
+                        fontFamily: 'Nunito-Sans',
+                      ),
+                    ),
+                    widget.showDiscount == true
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 4),
+                              decoration: BoxDecoration(
+                                color: AppColors.pinkBackGround,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                '${widget.item.discount}%',
+                                style: AppTextsStyle.bold(size: 11, color: AppColors.redText),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
                 ),
-              ),
-              widget.showDiscount==true ?
-              Padding(
-                padding: const EdgeInsets.only(left:8.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 4),
-                  decoration: BoxDecoration(
-                    color: AppColors.pinkBackGround,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    '${widget.item.discount}%',
-                    style: AppTextsStyle.bold(size: 11, color: AppColors.redText),
-                  ),
-                ),
-              ):SizedBox()
-            ],
-          ),
         ],
       ),
-
     );
   }
 }

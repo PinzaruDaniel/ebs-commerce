@@ -10,7 +10,6 @@ import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_text_styles.dart';
 import '../../../util/routing/app_router.dart';
 import '../../util/resources/app_texts.dart';
-import '../../util/widgets/select_checkbox_widget.dart';
 import 'category_controller.dart';
 
 class CategoryPickerPage extends StatefulWidget {

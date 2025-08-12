@@ -4,17 +4,18 @@ import '../../../../view/cart_products_view_model.dart';
 import '../../../../view/product_view_model.dart';
 
 class AddToCartController extends GetxController {
-  RxList<CartItem> cartItems = RxList([]);
-  Rxn<CartItem> cartItem = Rxn<CartItem>();
+  RxList<CartViewModel> cartItems = RxList([]);
+  Rxn<CartViewModel> cartItem = Rxn<CartViewModel>();
 
-  CartItem initCartItem(ProductViewModel item) {
-    final itemToAdd = CartItem(
+  CartViewModel initCartItem(ProductViewModel item) {
+    final itemToAdd = CartViewModel(
       id: item.id,
       title: item.title,
       imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty
           ? item.imageUrl!.first
           : null,
       price: item.price,
+      discountedPrice: item.discountedPrice,
       stock: item.stock,
       specification: item.specification.isNotEmpty ? item.specification.first : null,
       quantity: 1,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
@@ -17,7 +16,7 @@ class AppPopUp {
         ),
         context: Get.context!,
         builder: (_) =>
-            Container(
+            SizedBox(
               height: Get.height * 0.35,
               child: Column(
                 children: [Expanded(child: ProductDetailAddToCartBottomSheetWidget(item: item))],

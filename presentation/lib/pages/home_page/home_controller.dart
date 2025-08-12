@@ -75,7 +75,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getNewProducts() async {
-    await getNewProductsUseCase.call(GetNewProductsParams(page: 1, perPage: perPage)).then((either) async {
+    await getNewProductsUseCase.call(GetNewProductsParams(page: 1, perPage: 5)).then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;
@@ -89,7 +89,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getSaleProducts({bool loadMore = false}) async {
-    await getSaleProductsUseCase.call(GetSaleProductsParams(page: 1, perPage: perPage)).then((either) async {
+    await getSaleProductsUseCase.call(GetSaleProductsParams(page: 1, perPage: 5)).then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;

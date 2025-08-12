@@ -5,7 +5,6 @@ import '../../pages/products_display_page/products_display_controller.dart';
 import 'header_title_widget.dart';
 import '../../pages/home_page/widgets/home_products_item_widget.dart';
 
-
 extension MapTextProductType on ProductListType {
   String? get title {
     switch (this) {
@@ -30,9 +29,6 @@ class HorizontalProductsListWidget extends StatefulWidget {
 }
 
 class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWidget> {
-
-
-
   @override
   void initState() {
     super.initState();
@@ -46,36 +42,33 @@ class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWid
         Padding(
           padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
           child: HeaderTitleWidget(
-            title: widget.type.title!,
-            showDivider: true,
-            showSeeAll: true,
-            type: widget.type,
+            itemViewModel: HeaderTitleViewModel(
+              title: widget.type.title!,
+              showDivider: true,
+              showSeeAll: true,
+              type: widget.type,
+            ),
           ),
         ),
 
         widget.items.isNotEmpty
-            ? Container(
-          height: 280,
-          child: ListView.builder(
-            padding: EdgeInsets.only(top: 12, left: 8),
-            scrollDirection: Axis.horizontal,
-            itemCount: widget.items.length,
-            itemBuilder: (context, index) {
-              final itemProduct = widget.items[index];
-              return HomeProductsItemWidget(item: itemProduct, width: 180);
-            },
-          ),
-        )
+            ? SizedBox(
+                height: 280,
+                child: ListView.builder(
+                  padding: EdgeInsets.only(top: 12, left: 8),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.items.length,
+                  itemBuilder: (context, index) {
+                    final itemProduct = widget.items[index];
+                    return HomeProductsItemWidget(item: itemProduct, width: 180);
+                  },
+                ),
+              )
             : Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-          child: Text(
-            'No products with sale',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
-          ),
-        ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                child: Text('No products with sale', style: TextStyle(fontSize: 16, color: Colors.grey)),
+              ),
       ],
     );
-
   }
 }
-

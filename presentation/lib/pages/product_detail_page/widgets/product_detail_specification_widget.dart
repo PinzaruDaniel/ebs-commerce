@@ -22,7 +22,9 @@ class _ProductDetailSpecificationWidgetState extends State<ProductDetailSpecific
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HeaderTitleWidget(title: AppTexts.productsSpecifications, showDivider: false),
+          HeaderTitleWidget(
+            itemViewModel: HeaderTitleViewModel(title: AppTexts.productsSpecifications, showDivider: false),
+          ),
 
           GridView.builder(
             shrinkWrap: true,
@@ -35,13 +37,8 @@ class _ProductDetailSpecificationWidgetState extends State<ProductDetailSpecific
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-
                   Expanded(
-                    child: Text(
-                      spec.title,
-                      style: AppTextsStyle.bold(size: 14),
-                      textAlign: TextAlign.start,
-                    ),
+                    child: Text(spec.title, style: AppTextsStyle.bold(size: 14), textAlign: TextAlign.start),
                   ),
 
                   Expanded(child: Text(spec.value)),

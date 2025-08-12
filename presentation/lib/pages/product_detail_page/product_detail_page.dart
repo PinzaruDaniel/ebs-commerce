@@ -1,12 +1,9 @@
-import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_collapsed_app_bar_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_expanded_app_bar.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_page_body_widget.dart';
-import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';

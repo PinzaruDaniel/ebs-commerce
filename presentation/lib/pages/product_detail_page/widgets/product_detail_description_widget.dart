@@ -24,7 +24,7 @@ class _ProductDetailDescriptionWidgetState extends State<ProductDetailDescriptio
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HeaderTitleWidget(title: AppTexts.productDescription, showDivider: false),
+          HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: AppTexts.productDescription, showDivider: false),),
           SizedBox(height: 12),
           ReadMoreText(
             (widget.item.description ?? AppTexts.noDescription).replaceAll('/', '\n'),

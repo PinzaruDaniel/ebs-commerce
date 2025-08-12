@@ -68,9 +68,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                           child: ProductImageWidget(
                             height: 80,
                             width: 80,
-                            imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty
-                                ? item.imageUrl
-                                : null,
+                            imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty ? item.imageUrl : null,
                           ),
                         ),
                         Expanded(child: ShoppingCartTitleWidget(item: item)),
@@ -103,11 +101,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         item: dummyProduct,
         title: AppTexts.checkout,
         showIcon: false,
-        router: (){
-          AppRouter.openCheckoutPage();
+        router: () {
+          AppRouter.openCheckoutPage(items: cartController.selectedItems);
         },
       ),
     );
-
   }
 }

@@ -18,7 +18,7 @@ class ProductDetailTagsWidget extends StatelessWidget {
         spacing: 6,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HeaderTitleWidget(title: AppTexts.marks, showDivider: false),
+          HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: AppTexts.marks, showDivider: false),),
 
           Wrap(
             spacing: 8,

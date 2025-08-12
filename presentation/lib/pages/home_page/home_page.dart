@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                         if (item is AdBannerViewModel) {
                           return HomeAdBannerWidget();
                         } else if (item is HorizontalProductListViewModel) {
-                          print('this is ${item.type}');
+
                           return HorizontalProductsListWidget(items: item.products, type: item.type);
                         } else if (item is AllProductsViewItem) {
                           return ProductsListDisplayWidget(title: 'ALL PRODUCTS', products: homeController.products);

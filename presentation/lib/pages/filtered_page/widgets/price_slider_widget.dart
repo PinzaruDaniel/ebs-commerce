@@ -1,8 +1,9 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../../../util/resources/app_colors.dart';
 
@@ -23,7 +24,7 @@ class PriceSliderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: SfRangeSliderTheme(
         data: SfRangeSliderThemeData(
