@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:presentation/view/product_view_model.dart';
 
 import '../../pages/products_display_page/products_display_controller.dart';
-import '../../view/product_list_type_enum.dart';
 import 'header_title_widget.dart';
 import '../../pages/home_page/widgets/home_products_item_widget.dart';
 

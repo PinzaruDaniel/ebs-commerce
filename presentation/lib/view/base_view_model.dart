@@ -1,4 +1,3 @@
-import 'package:presentation/view/product_list_type_enum.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../pages/products_display_page/products_display_controller.dart';
 

@@ -13,7 +13,7 @@ class HeaderTitleWidget extends StatelessWidget {
   final String title;
   final bool? showDivider;
   final bool? showSeeAll;
-final ProductListType? type;
+  final ProductListType? type;
   @override
   Widget build(BuildContext context) {
     return Column(
