@@ -31,6 +31,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+
             HeaderTitleWidget(title: AppTexts.orderSummary, showDivider: true,),
             HeaderTitleWidget(title: AppTexts.contactInformation, showDivider: true,),
             HeaderTitleWidget(title: AppTexts.deliveryAddress, showDivider: true,),

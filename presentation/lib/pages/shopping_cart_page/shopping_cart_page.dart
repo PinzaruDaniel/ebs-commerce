@@ -99,6 +99,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
           ),
         ],
       ),
+
       bottomNavigationBar: BottomNavigationBarWidget(
         item: dummyProduct,
         title: AppTexts.checkout,
