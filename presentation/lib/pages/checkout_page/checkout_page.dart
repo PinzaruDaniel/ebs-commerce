@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_contact_information_widget.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
-import 'package:presentation/pages/contact_information_page/contact_information_page.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
 
@@ -62,7 +61,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     itemBuilder:(context, index){
                       var item=checkController.allItems[index];
                       if(item is HeaderTitleViewModel){
-                        return HeaderTitleWidget(itemViewModel: item);
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: HeaderTitleWidget(itemViewModel: item),
+                        );
                       }
                       if (item is CartViewModel) {
                         return CheckoutProductViewWidget(item: item);

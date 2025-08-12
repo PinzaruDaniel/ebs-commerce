@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
+import 'package:presentation/pages/contact_information_page/widgets/text_field_contact_info_widget.dart';
 
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
@@ -13,6 +16,17 @@ class ContactInformationPage extends StatefulWidget {
 }
 
 class _ContactInformationPageState extends State<ContactInformationPage> {
+  ContactInformationController get contactController => Get.find();
+
+  @override
+  void initState(){
+    super.initState();
+    Get.put(ContactInformationController());
+
+    contactController.initAllItems();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +39,22 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         ),
       ),
       body: SafeArea(
-
         child: Column(
           children: [
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(border: OutlineInputBorder(), ),
-            )
-
+            Obx(
+              () => Expanded(
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: contactController.allItems.length,
+                  itemBuilder: (context, index) {
+                    var item = contactController.allItems[index];
+                    if (item is TextFieldContactInfoViewModel) {
+                      return TextFieldContactInfoWidget(itemViewModel: item,);
+                    }
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
