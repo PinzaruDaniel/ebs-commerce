@@ -11,7 +11,6 @@ import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
-import '../../util/widgets/circular_progress_indicator_page_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
 
 class ShoppingCartPage extends StatefulWidget {

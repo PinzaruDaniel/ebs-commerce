@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 
 class AppIcons {
-
   //icons
   static SvgPicture cartIcon = SvgPicture.asset('assets/icons/Cart icon.svg');
 
