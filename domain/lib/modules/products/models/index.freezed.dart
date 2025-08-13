@@ -12,6 +12,281 @@ part of 'index.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
+mixin _$ProductResponseEntity {
+
+ int get count; int? get totalPages; int? get perPage; int? get currentPage; List<ProductEntity> get response;
+/// Create a copy of ProductResponseEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ProductResponseEntityCopyWith<ProductResponseEntity> get copyWith => _$ProductResponseEntityCopyWithImpl<ProductResponseEntity>(this as ProductResponseEntity, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductResponseEntity&&(identical(other.count, count) || other.count == count)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.perPage, perPage) || other.perPage == perPage)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other.response, response));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,count,totalPages,perPage,currentPage,const DeepCollectionEquality().hash(response));
+
+@override
+String toString() {
+  return 'ProductResponseEntity(count: $count, totalPages: $totalPages, perPage: $perPage, currentPage: $currentPage, response: $response)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ProductResponseEntityCopyWith<$Res>  {
+  factory $ProductResponseEntityCopyWith(ProductResponseEntity value, $Res Function(ProductResponseEntity) _then) = _$ProductResponseEntityCopyWithImpl;
+@useResult
+$Res call({
+ int count, int? totalPages, int? perPage, int? currentPage, List<ProductEntity> response
+});
+
+
+
+
+}
+/// @nodoc
+class _$ProductResponseEntityCopyWithImpl<$Res>
+    implements $ProductResponseEntityCopyWith<$Res> {
+  _$ProductResponseEntityCopyWithImpl(this._self, this._then);
+
+  final ProductResponseEntity _self;
+  final $Res Function(ProductResponseEntity) _then;
+
+/// Create a copy of ProductResponseEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? count = null,Object? totalPages = freezed,Object? perPage = freezed,Object? currentPage = freezed,Object? response = null,}) {
+  return _then(_self.copyWith(
+count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
+as int,totalPages: freezed == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
+as int?,perPage: freezed == perPage ? _self.perPage : perPage // ignore: cast_nullable_to_non_nullable
+as int?,currentPage: freezed == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int?,response: null == response ? _self.response : response // ignore: cast_nullable_to_non_nullable
+as List<ProductEntity>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ProductResponseEntity].
+extension ProductResponseEntityPatterns on ProductResponseEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProductResponseEntity value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ProductResponseEntity() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProductResponseEntity value)  $default,){
+final _that = this;
+switch (_that) {
+case _ProductResponseEntity():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProductResponseEntity value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ProductResponseEntity() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int count,  int? totalPages,  int? perPage,  int? currentPage,  List<ProductEntity> response)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ProductResponseEntity() when $default != null:
+return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.response);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int count,  int? totalPages,  int? perPage,  int? currentPage,  List<ProductEntity> response)  $default,) {final _that = this;
+switch (_that) {
+case _ProductResponseEntity():
+return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.response);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int count,  int? totalPages,  int? perPage,  int? currentPage,  List<ProductEntity> response)?  $default,) {final _that = this;
+switch (_that) {
+case _ProductResponseEntity() when $default != null:
+return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.response);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _ProductResponseEntity implements ProductResponseEntity {
+  const _ProductResponseEntity({required this.count, required this.totalPages, required this.perPage, required this.currentPage, required final  List<ProductEntity> response}): _response = response;
+  
+
+@override final  int count;
+@override final  int? totalPages;
+@override final  int? perPage;
+@override final  int? currentPage;
+ final  List<ProductEntity> _response;
+@override List<ProductEntity> get response {
+  if (_response is EqualUnmodifiableListView) return _response;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_response);
+}
+
+
+/// Create a copy of ProductResponseEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ProductResponseEntityCopyWith<_ProductResponseEntity> get copyWith => __$ProductResponseEntityCopyWithImpl<_ProductResponseEntity>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductResponseEntity&&(identical(other.count, count) || other.count == count)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.perPage, perPage) || other.perPage == perPage)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other._response, _response));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,count,totalPages,perPage,currentPage,const DeepCollectionEquality().hash(_response));
+
+@override
+String toString() {
+  return 'ProductResponseEntity(count: $count, totalPages: $totalPages, perPage: $perPage, currentPage: $currentPage, response: $response)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ProductResponseEntityCopyWith<$Res> implements $ProductResponseEntityCopyWith<$Res> {
+  factory _$ProductResponseEntityCopyWith(_ProductResponseEntity value, $Res Function(_ProductResponseEntity) _then) = __$ProductResponseEntityCopyWithImpl;
+@override @useResult
+$Res call({
+ int count, int? totalPages, int? perPage, int? currentPage, List<ProductEntity> response
+});
+
+
+
+
+}
+/// @nodoc
+class __$ProductResponseEntityCopyWithImpl<$Res>
+    implements _$ProductResponseEntityCopyWith<$Res> {
+  __$ProductResponseEntityCopyWithImpl(this._self, this._then);
+
+  final _ProductResponseEntity _self;
+  final $Res Function(_ProductResponseEntity) _then;
+
+/// Create a copy of ProductResponseEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? count = null,Object? totalPages = freezed,Object? perPage = freezed,Object? currentPage = freezed,Object? response = null,}) {
+  return _then(_ProductResponseEntity(
+count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
+as int,totalPages: freezed == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
+as int?,perPage: freezed == perPage ? _self.perPage : perPage // ignore: cast_nullable_to_non_nullable
+as int?,currentPage: freezed == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int?,response: null == response ? _self._response : response // ignore: cast_nullable_to_non_nullable
+as List<ProductEntity>,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$ProductEntity {
 
  int get id; String get name; Map<String, dynamic>? get brand; String? get price; String? get discount; String? get discountedPrice; List<String>? get imageUrl; List<String>? get marks; int? get stock; String? get description; List<SpecificationEntity>? get specification; List<CategoryEntity>? get category;

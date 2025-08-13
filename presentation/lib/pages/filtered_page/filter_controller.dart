@@ -1,8 +1,10 @@
+import 'package:domain/modules/products/models/index.dart';
 import 'package:domain/modules/products/use_cases/get_all_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/pages/category_picker_page/category_controller.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
+import 'package:presentation/util/mapper/product_response_mapper.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -10,101 +12,59 @@ class FilterController extends GetxController {
   CategoryController get catController => Get.find();
   final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();
 
-  RxList<ProductViewModel> products = RxList<ProductViewModel>();
   final RxList<ProductViewModel> filteredProducts = RxList([]);
   RxBool isLoading = true.obs;
 
   final RxDouble minPrice = 1.0.obs;
   final RxDouble maxPrice = 50000.0.obs;
   final Rx<SfRangeValues> priceRange = SfRangeValues(1.0, 50000.0).obs;
+  final RxInt filteredCount = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-    ever<SfRangeValues>(priceRange, (_) => applyFilters());
-    ever<Set<int>>(catController.selectedCategoryId, (_) => applyFilters());
+    debounce<SfRangeValues>(priceRange, (_) => getFilteredProducts(page: 1), time: Duration(seconds: 1));
+    debounce<Set<int>>(
+      catController.selectedCategoryId,
+      (_) => getFilteredProducts(page: 1),
+      time: Duration(seconds: 1),
+    );
   }
 
-  Future<void> getAllProducts() async {
+  Future<void> getFilteredProducts({required int page}) async {
     isLoading.value = true;
-    final selectedCategories = catController.selectedCategoryId.toList();
-    final min =(priceRange.value.start as num).toDouble();
-    final max =(priceRange.value.end as num).toDouble();
 
-    await getFilteredProductsUseCase
-        .call(
-          GetFilteredProductsParams(
-            priceGte: min,
-            priceLte: max,
-            categoriesId: selectedCategories.isNotEmpty ? selectedCategories : null,
-          ),
-        )
-        .then((either) async {
-          either.fold(
-            (failure) {
-              isLoading.value = false;
-            },
+    final min = priceRange.value.start.toDouble();
+    final max = priceRange.value.end.toDouble();
+    final categories = catController.selectedCategoryId.toList();
 
-            (list) async {
-              products.assignAll(list.map((e) => e.toModel).toList());
-              setProducts(products);
-              isLoading.value = false;
-            },
-          );
-        });
+    final result = await getFilteredProductsUseCase.call(
+      GetFilteredProductsParams(
+          page: page,
+          priceGte: min, priceLte: max, categoriesId: categories.isNotEmpty ? categories : null),
+    );
+
+    result.fold(
+      (failure) {
+        filteredProducts.clear();
+        filteredCount.value = 0;
+      },
+      (responseEntity) {
+        final products = responseEntity.response.map((e) => e.toModel).toList();
+        filteredProducts.value = products;
+        filteredCount.value = responseEntity.count;
+      },
+    );
+
+    isLoading.value = false;
   }
-
-  void setProducts(List<ProductViewModel> items) {
-    final valid = items.where((p) => _priceToDouble(p) != null && p.stock != null).toList();
-    final prices = valid.map(_priceToDouble).whereType<double>().toList()..sort();
-    if (prices.isEmpty) {
-      minPrice.value = 0;
-      maxPrice.value = 1;
-      priceRange.value = SfRangeValues(0, 1);
-      filteredProducts.assignAll(products);
-      return;
-    }
-
-    minPrice.value = prices.first;
-    maxPrice.value = prices.last;
-    priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
-
-    products.assignAll(valid);
-    filteredProducts.assignAll(valid);
-  }
-
   void onRangeChanged(SfRangeValues v) => priceRange.value = v;
 
   void onRangeChangeEnd(SfRangeValues v) => priceRange.value = v;
 
-  void applyFilters() {
-    final min = (priceRange.value.start as num).toDouble();
-    final max = (priceRange.value.end as num).toDouble();
-    final selected = catController.selectedCategoryId;
-
-    final result = products.where((p) {
-      final price = _priceToDouble(p);
-      final matchesPrice = price != null && price >= min && price <= max;
-      final categories = p.category;
-      final matchesCategory = selected.isEmpty || categories.any((c) => selected.contains(c.id));
-      return matchesPrice && matchesCategory;
-    }).toList();
-    filteredProducts.assignAll(result);
-  }
-
   void resetFilters() {
     catController.selectedCategoryId.clear();
     priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
-    setProducts(products);
-  }
-
-  double? _priceToDouble(ProductViewModel p) {
-    final dynamic price = p.price;
-    if (price == null) return null;
-
-    if (price is double) return price;
-    if (price is int) return price.toDouble();
-    if (price is String) return double.tryParse(price);
-    return null;
+    getFilteredProducts(page: 1);
   }
 }

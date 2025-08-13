@@ -1,4 +1,5 @@
 import 'package:common/constants/failure_class.dart';
+import 'package:data/mapper/product_mapper.dart';
 import 'package:data/mapper/product_response_mapper.dart';
 import 'package:data/modules/products/models/remote/index.dart';
 import 'package:dartz/dartz.dart';
@@ -13,10 +14,15 @@ class ProductsRepositoryImpl implements ProductsRepository {
   ProductsRepositoryImpl({required this.apiService});
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getFilteredProducts(priceGte, priceLte) async {
+  Future<Either<Failure, ProductResponseEntity>> getFilteredProducts(page, priceGte, priceLte, categoriesId) async {
     try {
-      final response = await apiService.getProducts({'price_gte': priceGte, 'price_lte': priceLte});
-      final entities = response.map((dto) => dto.toEntity()).toList();
+      final response = await apiService.getProducts({
+        'page': page,
+        'price_gte': priceGte,
+        'price_lte': priceLte,
+        if (categoriesId != null) 'categories': categoriesId,
+      });
+      final entities = response.map((dto) => dto.toEntity());
       return Right(entities);
     } catch (e, stackTrace) {
       if (e is DioException) {
@@ -27,10 +33,10 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getProducts( page, perPage) async {
+  Future<Either<Failure, List<ProductEntity>>> getProducts(page, perPage) async {
     try {
-      final response = await apiService.getProducts({'page': page,'per_page': perPage});
-      final entities = response.map((dto) => dto.toEntity()).toList();
+      final response = await apiService.getProducts({'page': page, 'per_page': perPage});
+      final entities = response.results.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {
       if (e is DioException) {
@@ -41,10 +47,10 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getSaleProducts( page, perPage) async {
+  Future<Either<Failure, List<ProductEntity>>> getSaleProducts(page, perPage) async {
     try {
-      final response = await apiService.getProducts({'has_discount': true, 'page': page,'per_page': perPage});
-      final entities = response.map((dto) => dto.toEntity()).toList();
+      final response = await apiService.getProducts({'marks': 'sale', 'page': page, 'per_page': perPage});
+      final entities = response.results.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {
       if (e is DioException) {
@@ -55,10 +61,10 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getNewProducts( page, perPage) async {
+  Future<Either<Failure, List<ProductEntity>>> getNewProducts(page, perPage) async {
     try {
-      final response = await apiService.getProducts({'marks': 'new', 'page': page,'per_page': perPage});
-      final entities = response.map((dto) => dto.toEntity()).toList();
+      final response = await apiService.getProducts({'marks': 'new', 'page': page, 'per_page': perPage});
+      final entities = response.results.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {
       if (e is DioException) {

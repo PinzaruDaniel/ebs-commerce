@@ -105,11 +105,13 @@ class ProductsDisplayController extends GetxController {
   }
 
   Future<void> getFilteredProducts(bool loadMore) async {
-    if (!loadMore) {
-      products.addAll(filterController.filteredProducts.value);
-    }
-    else {
-      products.assignAll(filterController.filteredProducts.value);
+    await filterController.getFilteredProducts(page: currentPage.value);
+
+    if (loadMore) {
+      products.addAll(filterController.filteredProducts);
+    } else {
+      products.assignAll(filterController.filteredProducts);
     }
   }
+
 }
