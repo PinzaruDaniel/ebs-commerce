@@ -4,16 +4,20 @@ import 'package:dartz/dartz.dart';
 import '../../../core/usecase.dart';
 import '../models/index.dart';
 
-
-class GetAllProductsUseCase extends UseCaseNoParams<List<ProductEntity>>{
+class GetFilteredProductsUseCase extends UseCase<List<ProductEntity>, GetFilteredProductsParams> {
   final ProductsRepository productsRepository;
 
-  GetAllProductsUseCase({required this.productsRepository});
-  
+  GetFilteredProductsUseCase({required this.productsRepository});
+
   @override
-  Future<Either<Failure,List<ProductEntity>>> call()async {
-    return productsRepository.getAllProducts();
+  Future<Either<Failure, List<ProductEntity>>> call(params) async {
+    return productsRepository.getFilteredProducts(params.priceGte, params.priceLte);
   }
 }
 
+class GetFilteredProductsParams {
+  double priceGte;
+  double priceLte;
 
+  GetFilteredProductsParams({required this.priceGte, required this.priceLte});
+}

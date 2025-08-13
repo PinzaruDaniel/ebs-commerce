@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'models/index.dart';
 
 abstract class ProductsRepository {
-  Future<Either<Failure, List<ProductEntity>>> getAllProducts();
+  Future<Either<Failure, List<ProductEntity>>> getFilteredProducts(double priceGte, double priceLte);
 
   Future<Either<Failure, List<ProductEntity>>> getSaleProducts(int page, int perPage);
 

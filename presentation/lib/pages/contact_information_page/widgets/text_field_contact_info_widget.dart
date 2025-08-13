@@ -5,12 +5,15 @@ import 'package:presentation/view/base_view_model.dart';
 class TextFieldContactInfoViewModel extends BaseViewModel {
   final String title;
   final TextInputType? textInputType;
-  TextFieldContactInfoViewModel( {required this.title, this.textInputType,});
+
+  TextFieldContactInfoViewModel({required this.title, this.textInputType});
 }
 
 class TextFieldContactInfoWidget extends StatelessWidget {
   const TextFieldContactInfoWidget({super.key, required this.itemViewModel});
-final TextFieldContactInfoViewModel itemViewModel;
+
+  final TextFieldContactInfoViewModel itemViewModel;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,26 +22,23 @@ final TextFieldContactInfoViewModel itemViewModel;
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(itemViewModel.title),
-          SizedBox(height: 4,),
+          SizedBox(height: 4),
           TextField(
+            cursorColor: AppColors.primary,
             keyboardType: itemViewModel.textInputType ?? TextInputType.text,
             decoration: InputDecoration(
+              isDense: true,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
-                borderSide: BorderSide(
-                  color: Colors.grey.shade300,
-                  width: 1.0,
-                ),
+                borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
-                borderSide: BorderSide(
-                  color: AppColors.secondary,
-                  width: 2.0,
-                ),
+                borderSide: BorderSide(color: AppColors.secondary, width: 2.0),
               ),
             ),
-          ),        ],
+          ),
+        ],
       ),
     );
   }

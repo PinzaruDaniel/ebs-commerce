@@ -1,21 +1,22 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:presentation/pages/contact_information_page/contact_information_page.dart';
 import 'package:presentation/view/base_view_model.dart';
+import 'package:presentation/view/user_view_model.dart';
 
 class CheckoutContactInformationVieModel extends BaseViewModel{}
 
 class CheckoutContactInformationWidget extends StatelessWidget {
-  const CheckoutContactInformationWidget({super.key});
+final UserViewModel? user;
+  const CheckoutContactInformationWidget({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8), // Example padding
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
               Expanded(
@@ -32,6 +33,11 @@ class CheckoutContactInformationWidget extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(16))
                     ),
                     height: 100,
+
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(user == null ? 'Enter Your data'  : user!.name),
+                    ),
                   ),
                 ),
               ),

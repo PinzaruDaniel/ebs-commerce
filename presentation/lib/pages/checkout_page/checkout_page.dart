@@ -70,7 +70,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         return CheckoutProductViewWidget(item: item);
                       }
                       if(item is CheckoutContactInformationVieModel){
-                        return CheckoutContactInformationWidget();
+                        return CheckoutContactInformationWidget(user: checkController.user.value,);
                       }
                       return Container(
 

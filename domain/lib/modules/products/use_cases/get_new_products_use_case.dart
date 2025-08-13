@@ -16,8 +16,9 @@ class GetNewProductsUseCase extends UseCase<List<ProductEntity>, GetNewProductsP
   }
 }
 
-class  GetNewProductsParams{
+class GetNewProductsParams {
   int page;
   int perPage;
+
   GetNewProductsParams({required this.page, required this.perPage});
 }

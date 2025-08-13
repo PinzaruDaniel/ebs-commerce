@@ -55,13 +55,13 @@ class _FilterPageState extends State<FilterPage> {
       ),
       body: SafeArea(
         child: Obx(() {
-          if (filController.isLoading.value) {
+          /*if (filController.isLoading.value) {
             return const Center(
               child: CircularProgressIndicatorPageWidget(
                 boxConstraints: BoxConstraints(minWidth: 75, minHeight: 75),
               ),
             );
-          }
+          }*/
 
           final min = filController.minPrice.value;
           final max = filController.maxPrice.value;

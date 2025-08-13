@@ -8,7 +8,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class FilterController extends GetxController {
   CategoryController get catController=>Get.find();
-  final GetAllProductsUseCase getAllProductsUseCase = GetIt.instance<GetAllProductsUseCase>();
+  final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();
 
   RxList<ProductViewModel> products = RxList<ProductViewModel>();
   final RxList<ProductViewModel> filteredProducts = RxList([]);
@@ -33,7 +33,7 @@ class FilterController extends GetxController {
 
     isLoading.value = true;
 
-    await getAllProductsUseCase.call().then((either) async {
+    await getFilteredProductsUseCase.call(GetFilteredProductsParams(priceGte: minPrice.value, priceLte: maxPrice.value)).then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;
