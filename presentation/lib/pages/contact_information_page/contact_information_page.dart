@@ -7,6 +7,8 @@ import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
+import '../../util/widgets/bottom_navigation_bar_widget.dart';
+import '../../view/product_view_model.dart';
 
 class ContactInformationPage extends StatefulWidget {
   const ContactInformationPage({super.key});
@@ -57,6 +59,17 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        item: dummyProduct,
+        title: 'save',
+        showIcon: false,
+        //addToCart: null,
+        router: () {
+        Navigator.pop(context);
+        },
+        titleDialog: AppTexts.oops,
+        contentDialog: AppTexts.noProductsToShow,
       ),
     );
   }

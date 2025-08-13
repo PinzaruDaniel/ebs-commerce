@@ -3,16 +3,26 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:presentation/pages/contact_information_page/widgets/text_field_contact_info_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
+import 'package:presentation/view/user_view_model.dart';
 
-class ContactInformationController extends GetxController{
-  RxList<BaseViewModel> allItems=RxList([]);
-  void initAllItems(){
-    allItems.value=[
+class ContactInformationController extends GetxController {
+  RxList<BaseViewModel> allItems = RxList([]);
+  Rxn<UserViewModel> user = Rxn<UserViewModel>();
+
+  void initAllItems() {
+    allItems.value = [
       TextFieldContactInfoViewModel(title: 'Name'),
       TextFieldContactInfoViewModel(title: 'Surname'),
       TextFieldContactInfoViewModel(title: 'Phone', textInputType: TextInputType.phone),
       TextFieldContactInfoViewModel(title: 'Email', textInputType: TextInputType.emailAddress),
     ];
+  }
+
+  UserViewModel toUserViewModel() {
+    return UserViewModel(name: (allItems[0] as TextFieldContactInfoViewModel).value.value,
+        surname: (allItems[1] as TextFieldContactInfoViewModel).value.value,
+        number: (allItems[2] as TextFieldContactInfoViewModel).value.value,
+        email: (allItems[3] as TextFieldContactInfoViewModel).value.value);
   }
 
 }

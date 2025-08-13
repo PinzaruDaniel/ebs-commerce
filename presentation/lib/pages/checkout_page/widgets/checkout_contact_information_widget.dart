@@ -2,8 +2,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:presentation/pages/contact_information_page/contact_information_page.dart';
+import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
+
+import '../../../util/resources/app_colors.dart';
 
 class CheckoutContactInformationVieModel extends BaseViewModel{}
 
@@ -33,10 +36,35 @@ final UserViewModel? user;
                       borderRadius: BorderRadius.all(Radius.circular(16))
                     ),
                     height: 100,
-
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(user == null ? 'Enter Your data'  : user!.name),
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(user == null ? 'Enter Your data here'  : user!.name),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Transform.flip(
+                                flipX: true,
+                                child:
+                                AppIcons.backIcon(color: AppColors.blue),
+                              )
+                            ],
+                          )
+                        ],
+
+                      ),
                     ),
                   ),
                 ),

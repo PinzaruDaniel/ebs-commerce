@@ -22,16 +22,16 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
-  CheckoutController get checkController=>Get.find();
+  CheckoutController get checkController => Get.find();
+
   CartController get cartController => Get.find();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     Get.put(CheckoutController());
 
     checkController.initAllItems();
-
   }
 
   @override
@@ -50,60 +50,32 @@ class _CheckoutPageState extends State<CheckoutPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-
-            Obx(()
-              => Expanded(
+            Obx(
+              () => Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
 
-                    itemCount: checkController.allItems.length,
-                    itemBuilder:(context, index){
-                      var item=checkController.allItems[index];
-                      if(item is HeaderTitleViewModel){
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: HeaderTitleWidget(itemViewModel: item),
-                        );
-                      }
-                      if (item is CartViewModel) {
-                        return CheckoutProductViewWidget(item: item);
-                      }
-                      if(item is CheckoutContactInformationVieModel){
-                        return CheckoutContactInformationWidget(user: checkController.user.value,);
-                      }
-                      return Container(
-
+                  itemCount: checkController.allItems.length,
+                  itemBuilder: (context, index) {
+                    var item = checkController.allItems[index];
+                    if (item is HeaderTitleViewModel) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: HeaderTitleWidget(itemViewModel: item),
                       );
-                    } ),
+                    }
+                    if (item is CartViewModel) {
+                      return CheckoutProductViewWidget(item: item);
+                    }
+                    if (item is CheckoutContactInformationVieModel) {
+                      return CheckoutContactInformationWidget(user: checkController.user.value);
+                    }
+                    return Container();
+                  },
+                ),
               ),
-            )
-
-            /*Obx(
-              () => ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: cartController.selectedItems.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      children: [
-
-                        ClipRRect(
-                          borderRadius: BorderRadiusGeometry.circular(16),
-                          child: ProductImageWidget(
-                            height: 64,
-                            width: 64,
-                            imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty ? item.imageUrl : null,
-                          ),
-                        ),
-                        CheckoutProductsTitleWidget(item: item),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),*/
+            ),
           ],
         ),
       ),

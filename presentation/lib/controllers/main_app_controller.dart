@@ -12,5 +12,4 @@ class MainAppController extends GetxController {
       cartItems.add(item);
     }
   }
-
 }
