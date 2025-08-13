@@ -31,7 +31,9 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
     super.initState();
     Get.delete<ProductsDisplayController>();
     Get.put(ProductsDisplayController(widget.type));
-    controller.loadProducts();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.loadProducts();
+    });
   }
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);

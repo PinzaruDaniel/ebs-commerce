@@ -31,7 +31,9 @@ class _FilterPageState extends State<FilterPage> {
   @override
   void initState() {
     super.initState();
-    filController.getAllProducts();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      filController.getFilteredProducts(page: 1);
+    });
     filController.filteredProducts;
   }
 
@@ -55,14 +57,6 @@ class _FilterPageState extends State<FilterPage> {
       ),
       body: SafeArea(
         child: Obx(() {
-          /*if (filController.isLoading.value) {
-            return const Center(
-              child: CircularProgressIndicatorPageWidget(
-                boxConstraints: BoxConstraints(minWidth: 75, minHeight: 75),
-              ),
-            );
-          }*/
-
           final min = filController.minPrice.value;
           final max = filController.maxPrice.value;
           final range = filController.priceRange.value;
@@ -73,7 +67,9 @@ class _FilterPageState extends State<FilterPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 16, left: 16, bottom: 5),
-                  child: HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: AppTexts.price, showDivider: false, ),),
+                  child: HeaderTitleWidget(
+                    itemViewModel: HeaderTitleViewModel(title: AppTexts.price, showDivider: false),
+                  ),
                 ),
                 PriceSliderWidget(
                   onRangeChanged: filController.onRangeChanged,
@@ -84,7 +80,9 @@ class _FilterPageState extends State<FilterPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 24, left: 16, bottom: 5),
-                  child: HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: AppTexts.categoriesSelected, showDivider: false),),
+                  child: HeaderTitleWidget(
+                    itemViewModel: HeaderTitleViewModel(title: AppTexts.categoriesSelected, showDivider: false),
+                  ),
                 ),
                 Obx(() {
                   final selected = catController.selectedCategoryId.toList();
@@ -111,30 +109,23 @@ class _FilterPageState extends State<FilterPage> {
         }),
       ),
 
-
       bottomNavigationBar: Obx(() {
-        if (filController.isLoading.value) {
-          return  SizedBox();
-        }
-
         return BottomNavigationBarWidget(
           item: dummyProduct,
-          title: filController.filteredProducts.isNotEmpty
-              ? '${AppTexts.showResults}(${filController.filteredProducts.length})'
-              : AppTexts.noProductsToShow,
+          title: filController.isLoading.value
+              ? 'Loading...'
+              : (filController.filteredCount.value > 0
+                    ? '${AppTexts.showResults}(${filController.filteredCount.value})'
+                    : AppTexts.noProductsToShow),
           showIcon: false,
           addToCart: filController.filteredProducts.isNotEmpty,
           router: () {
-            AppRouter.openProductsDisplayPage(
-              type: ProductListType.filteredProducts,
-              title: AppTexts.filteredProducts,
-            );
+            AppRouter.openProductsDisplayPage(type: ProductListType.filteredProducts, title: AppTexts.filteredProducts);
           },
           titleDialog: AppTexts.oops,
           contentDialog: AppTexts.noProductsToShow,
         );
       }),
-
     );
   }
 
