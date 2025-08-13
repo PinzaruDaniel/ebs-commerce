@@ -11,8 +11,7 @@ import 'package:presentation/util/mapper/product_mapper.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../view/product_view_model.dart';
 
-enum ProductListType { saleProducts, newProducts, filteredProducts}
-
+enum ProductListType { saleProducts, newProducts, filteredProducts }
 
 class ProductsDisplayController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
@@ -38,25 +37,31 @@ class ProductsDisplayController extends GetxController {
   Future<void> loadProducts({bool loadMore = false}) async {
     if (loadMore) {
       if (isLoadingMore.value) return;
-      isLoadingMore.value = true;
-      currentPage.value++;
     } else {
       isLoading.value = true;
       currentPage.value = 1;
       products.clear();
     }
 
-    switch (productType) {
-      case ProductListType.newProducts:
-        await getNewProducts(loadMore);
-        break;
-      case ProductListType.saleProducts:
-        await getSaleProducts(loadMore);
-        break;
+    try {
+      switch (productType) {
+        case ProductListType.newProducts:
+          await getNewProducts(loadMore);
+          break;
+        case ProductListType.saleProducts:
+          await getSaleProducts(loadMore);
+          break;
 
-      case ProductListType.filteredProducts:
-        await getFilteredProducts(loadMore);
-        break;
+        case ProductListType.filteredProducts:
+          await getFilteredProducts(loadMore);
+          break;
+      }
+      if (loadMore) {
+        currentPage.value++;
+      }
+    } finally {
+      isLoading.value = false;
+      isLoadingMore.value = false;
     }
 
     isLoading.value = false;
@@ -66,20 +71,19 @@ class ProductsDisplayController extends GetxController {
   Future<void> getSaleProducts(bool loadMore) async {
     final either = await getSaleProductsUseCase.call(GetSaleProductsParams(page: currentPage.value, perPage: perPage));
     either.fold(
-            (failure) {
-          isLoading.value = false;
-          isLoadingMore.value = false;
-          showFailureSnackBar(failure);
-        },
-            (list) {
-          final newItems = list.map((e) => e.toModel).toList();
-          if (loadMore) {
-            products.addAll(newItems);
-          }
-          else {
-            products.assignAll(newItems);
-          }
+      (failure) {
+        isLoading.value = false;
+        isLoadingMore.value = false;
+        showFailureSnackBar(failure);
+      },
+      (list) {
+        final newItems = list.map((e) => e.toModel).toList();
+        if (loadMore) {
+          products.addAll(newItems);
+        } else {
+          products.assignAll(newItems);
         }
+      },
     );
   }
 
@@ -87,31 +91,34 @@ class ProductsDisplayController extends GetxController {
     final either = await getNewProductsUseCase.call(GetNewProductsParams(page: currentPage.value, perPage: perPage));
 
     either.fold(
-            (failure) {
-          isLoading.value = false;
-          isLoadingMore.value = false;
-          showFailureSnackBar(failure);
-        },
-            (list) {
-          final newItems = list.map((e) => e.toModel).toList();
-          if (loadMore) {
-            products.addAll(newItems);
-          }
-          else {
-            products.assignAll(newItems);
-          }
+      (failure) {
+        isLoading.value = false;
+        isLoadingMore.value = false;
+        showFailureSnackBar(failure);
+      },
+      (list) {
+        final newItems = list.map((e) => e.toModel).toList();
+        if (loadMore) {
+          products.addAll(newItems);
+        } else {
+          products.assignAll(newItems);
         }
+      },
     );
   }
 
   Future<void> getFilteredProducts(bool loadMore) async {
+    if (!loadMore) {
+      currentPage.value = 1;
+    }
+
     await filterController.getFilteredProducts(page: currentPage.value);
 
     if (loadMore) {
       products.addAll(filterController.filteredProducts);
+      currentPage.value++;
     } else {
       products.assignAll(filterController.filteredProducts);
     }
   }
-
 }

@@ -31,7 +31,9 @@ class _FilterPageState extends State<FilterPage> {
   @override
   void initState() {
     super.initState();
-    filController.getFilteredProducts(page: 1);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      filController.getFilteredProducts(page: 1);
+    });
     filController.filteredProducts;
   }
 
