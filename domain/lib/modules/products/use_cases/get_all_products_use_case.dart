@@ -18,6 +18,6 @@ class GetFilteredProductsUseCase extends UseCase<List<ProductEntity>, GetFiltere
 class GetFilteredProductsParams {
   double priceGte;
   double priceLte;
-
-  GetFilteredProductsParams({required this.priceGte, required this.priceLte});
+  List<int>? categoriesId;
+  GetFilteredProductsParams({required this.priceGte, required this.priceLte, required this.categoriesId});
 }

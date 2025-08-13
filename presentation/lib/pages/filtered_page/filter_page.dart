@@ -31,7 +31,6 @@ class _FilterPageState extends State<FilterPage> {
   @override
   void initState() {
     super.initState();
-    filController.getAllProducts();
     filController.filteredProducts;
   }
 
@@ -113,10 +112,6 @@ class _FilterPageState extends State<FilterPage> {
 
 
       bottomNavigationBar: Obx(() {
-        if (filController.isLoading.value) {
-          return  SizedBox();
-        }
-
         return BottomNavigationBarWidget(
           item: dummyProduct,
           title: filController.filteredProducts.isNotEmpty

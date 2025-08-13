@@ -7,16 +7,16 @@ import 'package:presentation/view/product_view_model.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class FilterController extends GetxController {
-  CategoryController get catController=>Get.find();
+  CategoryController get catController => Get.find();
   final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();
 
   RxList<ProductViewModel> products = RxList<ProductViewModel>();
   final RxList<ProductViewModel> filteredProducts = RxList([]);
   RxBool isLoading = true.obs;
 
-  final RxDouble minPrice = 0.0.obs;
-  final RxDouble maxPrice = 1.0.obs;
-  final Rx<SfRangeValues> priceRange = SfRangeValues(0.0, 1.0).obs;
+  final RxDouble minPrice = 1.0.obs;
+  final RxDouble maxPrice = 50000.0.obs;
+  final Rx<SfRangeValues> priceRange = SfRangeValues(1.0, 50000.0).obs;
 
   @override
   void onInit() {
@@ -26,30 +26,35 @@ class FilterController extends GetxController {
   }
 
   Future<void> getAllProducts() async {
-    if (products.isNotEmpty) {
-      isLoading.value = false;
-      return resetFilters();
-    }
-
     isLoading.value = true;
+    final selectedCategories = catController.selectedCategoryId.toList();
+    final min =(priceRange.value.start as num).toDouble();
+    final max =(priceRange.value.end as num).toDouble();
 
-    await getFilteredProductsUseCase.call(GetFilteredProductsParams(priceGte: minPrice.value, priceLte: maxPrice.value)).then((either) async {
-      either.fold(
-        (failure) {
-          isLoading.value = false;
-        },
+    await getFilteredProductsUseCase
+        .call(
+          GetFilteredProductsParams(
+            priceGte: min,
+            priceLte: max,
+            categoriesId: selectedCategories.isNotEmpty ? selectedCategories : null,
+          ),
+        )
+        .then((either) async {
+          either.fold(
+            (failure) {
+              isLoading.value = false;
+            },
 
-        (list) async {
-          products.assignAll(list.map((e) => e.toModel).toList());
-          setProducts(products);
-          isLoading.value = false;
-        },
-      );
-    });
+            (list) async {
+              products.assignAll(list.map((e) => e.toModel).toList());
+              setProducts(products);
+              isLoading.value = false;
+            },
+          );
+        });
   }
 
   void setProducts(List<ProductViewModel> items) {
-
     final valid = items.where((p) => _priceToDouble(p) != null && p.stock != null).toList();
     final prices = valid.map(_priceToDouble).whereType<double>().toList()..sort();
     if (prices.isEmpty) {
@@ -71,8 +76,6 @@ class FilterController extends GetxController {
   void onRangeChanged(SfRangeValues v) => priceRange.value = v;
 
   void onRangeChangeEnd(SfRangeValues v) => priceRange.value = v;
-
-
 
   void applyFilters() {
     final min = (priceRange.value.start as num).toDouble();
