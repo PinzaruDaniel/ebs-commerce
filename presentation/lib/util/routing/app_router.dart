@@ -5,6 +5,7 @@ import 'package:presentation/pages/filtered_page/filter_page.dart';
 import 'package:presentation/pages/products_display_page/products_display_page.dart';
 import 'package:presentation/view/user_view_model.dart';
 import '../../pages/category_picker_page/category_picker_page.dart';
+import '../../pages/contact_information_page/contact_information_page.dart';
 import '../../pages/product_detail_page/product_detail_page.dart';
 import '../../pages/products_display_page/products_display_controller.dart';
 import '../../pages/shopping_cart_page/shopping_cart_page.dart';
@@ -43,6 +44,12 @@ class AppRouter {
   static void openCheckoutPage({required List<CartViewModel> items, required UserViewModel user}){
     if(Get.context !=null){
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> CheckoutPage(items: items,)));
+    }
+  }
+
+  static void openContactInformationPgae({required List<CartViewModel> items, required UserViewModel user}){
+    if(Get.context !=null){
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ContactInformationPage()));
     }
   }
 

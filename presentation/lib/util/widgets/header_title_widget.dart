@@ -9,11 +9,11 @@ import '../../pages/products_display_page/products_display_controller.dart';
 
 class HeaderTitleViewModel extends BaseViewModel {
   final String title;
-  final bool? showDivider;
-  final bool? showSeeAll;
+  final bool showDivider;
+  final bool showSeeAll;
   final ProductListType? type;
 
-  HeaderTitleViewModel({required this.title, this.showDivider, this.showSeeAll, this.type});
+  HeaderTitleViewModel({required this.title,  this.showDivider=true, this.showSeeAll=false, this.type});
 }
 
 class HeaderTitleWidget extends StatelessWidget {
@@ -29,7 +29,7 @@ class HeaderTitleWidget extends StatelessWidget {
           children: [
             Text(itemViewModel.title, style: AppTextsStyle.bold(size: 11)),
             Spacer(),
-            if (itemViewModel.showSeeAll == true)
+            if (itemViewModel.showSeeAll)
               TextButton(
                 onPressed: () {
                   AppRouter.openProductsDisplayPage(type: itemViewModel.type!, title: itemViewModel.title);
@@ -38,7 +38,7 @@ class HeaderTitleWidget extends StatelessWidget {
               ),
           ],
         ),
-        if (itemViewModel.showDivider == true)
+        if (itemViewModel.showDivider)
           Padding(
             padding: const EdgeInsets.only(top: 4.0),
             child: Container(
