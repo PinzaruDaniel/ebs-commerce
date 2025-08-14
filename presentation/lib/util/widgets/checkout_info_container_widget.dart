@@ -1,22 +1,21 @@
-/*
+import '../../view/base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
-import 'package:presentation/view/base_view_model.dart';
 import '../../../util/resources/app_colors.dart';
 
-class CheckoutContactInformationVieModel extends BaseViewModel {
+class CheckoutInfoContainerViewModel extends BaseViewModel {
   final Map<String, dynamic>? infoItems;
   final String? titleKey;
-
-  CheckoutContactInformationVieModel({required this.infoItems, this.titleKey});
-}
-
-class CheckoutContactInformationWidget extends StatelessWidget {
-  final CheckoutContactInformationVieModel item;
   final VoidCallback? onTap;
 
-  const CheckoutContactInformationWidget({super.key, required this.item, this.onTap});
+  CheckoutInfoContainerViewModel({required this.infoItems, this.titleKey,  this.onTap});
+}
+
+class CheckoutInfoContainerWidget extends StatelessWidget {
+  final CheckoutInfoContainerViewModel item;
+
+  const CheckoutInfoContainerWidget({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class CheckoutContactInformationWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: InkWell(
-                  onTap: onTap,
+                  onTap: item.onTap,
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade300),
@@ -77,4 +76,3 @@ class CheckoutContactInformationWidget extends StatelessWidget {
     );
   }
 }
-*/

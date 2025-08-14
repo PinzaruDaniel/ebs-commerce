@@ -35,8 +35,6 @@ class ContactInformationController extends GetxController {
 }
 
   UserViewModel toUserViewModel() {
-  
-
   final model = UserViewModel(
     name: (allItems[0] as TextFieldContactInfoViewModel).value.value,
     surname: (allItems[1] as TextFieldContactInfoViewModel).value.value,

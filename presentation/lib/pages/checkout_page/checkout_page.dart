@@ -4,6 +4,7 @@ import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_contact_information_widget.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
 import 'package:presentation/util/routing/app_router.dart';
+import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
@@ -35,8 +36,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
   void initState() {
     super.initState();
     Get.put(CheckoutController());
-    contactController.user;
+    Get.put(ContactInformationController());
     checkController.initAllItems();
+    contactController.initAllItems();
+    contactController.toUserViewModel();
   }
 
   @override
@@ -73,13 +76,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     if (item is CartViewModel) {
                       return CheckoutProductViewWidget(item: item);
                     }
-                    if (item is CheckoutContactInformationVieModel) {
-                      return CheckoutContactInformationWidget(
+                    if (item is CheckoutInfoContainerViewModel) {
+                      return CheckoutInfoContainerWidget(
                         item: item,
-                        onTap: () {
-                          print('this is ${contactController.user.value?.email}');
-                          AppRouter.openContactInformationPage();
-                        },
+
                       );
                     }
                     return Container();

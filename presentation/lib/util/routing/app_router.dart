@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_page.dart';
+import 'package:presentation/pages/delivery_address_page/delivery_address_page.dart';
 import 'package:presentation/pages/filtered_page/filter_page.dart';
 import 'package:presentation/pages/products_display_page/products_display_page.dart';
 import 'package:presentation/view/user_view_model.dart';
@@ -25,31 +26,41 @@ class AppRouter {
     }
   }
 
-  static void openCategoryPickerPage(){
-    if(Get.context != null){
-      Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> CategoryPickerPage()));
+  static void openCategoryPickerPage() {
+    if (Get.context != null) {
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => CategoryPickerPage()));
     }
   }
 
-  static void openFilterPage(){
-    if(Get.context !=null){
-      Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> FilterPage()));
-    }
-  }
-  static void openProductsDisplayPage({required ProductListType type, required String title}){
-    if(Get.context !=null){
-      Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> ProductsDisplayPage( title: title, type: type,)));
-    }
-  }
-  static void openCheckoutPage({required List<CartViewModel> items, required UserViewModel user}){
-    if(Get.context !=null){
-      Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> CheckoutPage(items: items,)));
+  static void openFilterPage() {
+    if (Get.context != null) {
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => FilterPage()));
     }
   }
 
-  static void openContactInformationPage(){
-    if(Get.context !=null){
+  static void openProductsDisplayPage({required ProductListType type, required String title}) {
+    if (Get.context != null) {
+      Navigator.push(
+          Get.context!, MaterialPageRoute(builder: (context) => ProductsDisplayPage(title: title, type: type,)));
+    }
+  }
+
+  static void openCheckoutPage({required List<CartViewModel> items, required UserViewModel user}) {
+    if (Get.context != null) {
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => CheckoutPage(items: items,)));
+    }
+  }
+
+  static void openContactInformationPage() {
+    if (Get.context != null) {
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ContactInformationPage()));
+    }
+  }
+
+  static void openDeliveryAddressPage() {
+    if (Get.context != null) {
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => DeliveryAddressPage()));
+
     }
   }
 

@@ -30,8 +30,9 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     super.initState();
     Get.put(CartController());
     Get.put(ContactInformationController(), permanent: true);
+
     contactController.initAllItems();
-    //contactController.toUserViewModel();
+    contactController.toUserViewModel();
   }
 
   @override

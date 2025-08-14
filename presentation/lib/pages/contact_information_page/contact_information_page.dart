@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
 import 'package:presentation/pages/contact_information_page/widgets/text_field_contact_info_widget.dart';
 
@@ -19,7 +20,7 @@ class ContactInformationPage extends StatefulWidget {
 
 class _ContactInformationPageState extends State<ContactInformationPage> {
   ContactInformationController get contactController => Get.find();
-
+  CheckoutController get checkController=>Get.find();
   @override
   void initState() {
     super.initState();
@@ -62,9 +63,7 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         showIcon: false,
         //addToCart: null,
         router: () {
-          final user = contactController.toUserViewModel();
-          print(user.name);
-          print(user.email);
+          checkController.initAllItems();
           Navigator.pop(context);
         },
         titleDialog: AppTexts.oops,
