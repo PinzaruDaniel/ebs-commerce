@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_page.dart';
 import 'package:presentation/pages/filtered_page/filter_page.dart';
 import 'package:presentation/pages/products_display_page/products_display_page.dart';
+import 'package:presentation/view/user_view_model.dart';
 import '../../pages/category_picker_page/category_picker_page.dart';
 import '../../pages/product_detail_page/product_detail_page.dart';
 import '../../pages/products_display_page/products_display_controller.dart';
@@ -39,7 +40,7 @@ class AppRouter {
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> ProductsDisplayPage( title: title, type: type,)));
     }
   }
-  static void openCheckoutPage({required List<CartViewModel> items}){
+  static void openCheckoutPage({required List<CartViewModel> items, required UserViewModel user}){
     if(Get.context !=null){
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> CheckoutPage(items: items,)));
     }

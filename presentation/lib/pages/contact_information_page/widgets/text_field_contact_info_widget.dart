@@ -6,36 +6,57 @@ import 'package:presentation/view/base_view_model.dart';
 class TextFieldContactInfoViewModel extends BaseViewModel {
   final String title;
   final TextInputType? textInputType;
-  final RxString value=RxString('');
+  final RxString value;
 
-  TextFieldContactInfoViewModel({required this.title, this.textInputType});
+  TextFieldContactInfoViewModel({required this.title, this.textInputType,  String initialValue = '',}): value = initialValue.obs;
 }
 
-class TextFieldContactInfoWidget extends StatelessWidget {
+class TextFieldContactInfoWidget extends StatefulWidget {
   const TextFieldContactInfoWidget({super.key, required this.itemViewModel});
 
   final TextFieldContactInfoViewModel itemViewModel;
 
   @override
+  State<TextFieldContactInfoWidget> createState() => _TextFieldContactInfoWidgetState();
+}
+
+class _TextFieldContactInfoWidgetState extends State<TextFieldContactInfoWidget> {
+  late final TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController(text: widget.itemViewModel.value.value);
+
+    controller.addListener(() {
+      widget.itemViewModel.value.value = controller.text;
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final controller=TextEditingController(text: itemViewModel.value.value);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(itemViewModel.title),
-          SizedBox(height: 4),
+          Text(widget.itemViewModel.title),
+          const SizedBox(height: 4),
           Obx(() {
-            controller.value=controller.value.copyWith(
-              text: itemViewModel.value.value,
-              selection: TextSelection.collapsed(offset: itemViewModel.value.value.length),
-            );
-
+            if (controller.text != widget.itemViewModel.value.value) {
+              controller.text = widget.itemViewModel.value.value;
+              controller.selection = TextSelection.collapsed(offset: controller.text.length);
+            }
             return TextField(
+              controller: controller, 
               cursorColor: AppColors.primary,
-              keyboardType: itemViewModel.textInputType ?? TextInputType.text,
-              onChanged: (text)=> itemViewModel.value.value=text,
+              keyboardType: widget.itemViewModel.textInputType ?? TextInputType.text,
               decoration: InputDecoration(
                 isDense: true,
                 enabledBorder: OutlineInputBorder(
@@ -48,8 +69,7 @@ class TextFieldContactInfoWidget extends StatelessWidget {
                 ),
               ),
             );
-          }
-          ),
+          }),
         ],
       ),
     );

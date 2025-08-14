@@ -10,19 +10,41 @@ class ContactInformationController extends GetxController {
   Rxn<UserViewModel> user = Rxn<UserViewModel>();
 
   void initAllItems() {
-    allItems.value = [
-      TextFieldContactInfoViewModel(title: 'Name'),
-      TextFieldContactInfoViewModel(title: 'Surname'),
-      TextFieldContactInfoViewModel(title: 'Phone', textInputType: TextInputType.phone),
-      TextFieldContactInfoViewModel(title: 'Email', textInputType: TextInputType.emailAddress),
-    ];
-  }
+  final existingUser = user.value;
+
+  allItems.value = [
+    TextFieldContactInfoViewModel(
+      title: 'Name',
+      initialValue: existingUser?.name ?? '',
+    ),
+    TextFieldContactInfoViewModel(
+      title: 'Surname',
+      initialValue: existingUser?.surname ?? '',
+    ),
+    TextFieldContactInfoViewModel(
+      title: 'Phone',
+      textInputType: TextInputType.phone,
+      initialValue: existingUser?.number ?? '',
+    ),
+    TextFieldContactInfoViewModel(
+      title: 'Email',
+      textInputType: TextInputType.emailAddress,
+      initialValue: existingUser?.email ?? '',
+    ),
+  ];
+}
 
   UserViewModel toUserViewModel() {
-    return UserViewModel(name: (allItems[0] as TextFieldContactInfoViewModel).value.value,
-        surname: (allItems[1] as TextFieldContactInfoViewModel).value.value,
-        number: (allItems[2] as TextFieldContactInfoViewModel).value.value,
-        email: (allItems[3] as TextFieldContactInfoViewModel).value.value);
-  }
+  
+
+  final model = UserViewModel(
+    name: (allItems[0] as TextFieldContactInfoViewModel).value.value,
+    surname: (allItems[1] as TextFieldContactInfoViewModel).value.value,
+    number: (allItems[2] as TextFieldContactInfoViewModel).value.value,
+    email: (allItems[3] as TextFieldContactInfoViewModel).value.value,
+  );
+  user.value = model;
+  return model;
+}
 
 }

@@ -1,3 +1,4 @@
+import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
 import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'package:presentation/pages/shopping_cart_page/widgets/shopping_cart_title_widget.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +23,15 @@ class ShoppingCartPage extends StatefulWidget {
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   CartController get cartController => Get.find();
+  ContactInformationController get contactController => Get.find();
 
   @override
   void initState() {
     super.initState();
     Get.put(CartController());
+    Get.put(ContactInformationController(), permanent: true);
+    contactController.initAllItems();
+    //contactController.toUserViewModel();
   }
 
   @override
@@ -102,7 +107,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         title: AppTexts.checkout,
         showIcon: false,
         router: () {
-          AppRouter.openCheckoutPage(items: cartController.selectedItems);
+          AppRouter.openCheckoutPage(items: cartController.selectedItems, user: contactController.toUserViewModel());
         },
       ),
     );

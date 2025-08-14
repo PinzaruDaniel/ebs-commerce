@@ -21,12 +21,8 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
   ContactInformationController get contactController => Get.find();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    Get.put(ContactInformationController());
-
-    contactController.initAllItems();
-
   }
 
   @override
@@ -51,7 +47,7 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
                   itemBuilder: (context, index) {
                     var item = contactController.allItems[index];
                     if (item is TextFieldContactInfoViewModel) {
-                      return TextFieldContactInfoWidget(itemViewModel: item,);
+                      return TextFieldContactInfoWidget(itemViewModel: item);
                     }
                   },
                 ),
@@ -66,7 +62,10 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         showIcon: false,
         //addToCart: null,
         router: () {
-        Navigator.pop(context);
+          final user = contactController.toUserViewModel();
+          print(user.name);
+          print(user.email);
+          Navigator.pop(context);
         },
         titleDialog: AppTexts.oops,
         contentDialog: AppTexts.noProductsToShow,
