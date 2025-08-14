@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_contact_information_widget.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
+import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
@@ -11,6 +12,7 @@ import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
+import '../contact_information_page/contact_information_controller.dart';
 import '../shopping_cart_page/cart_controller.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -25,6 +27,7 @@ class CheckoutPage extends StatefulWidget {
 
 class _CheckoutPageState extends State<CheckoutPage> {
   CheckoutController get checkController => Get.find();
+  ContactInformationController get contactController => Get.find();
 
   CartController get cartController => Get.find();
 
@@ -32,7 +35,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   void initState() {
     super.initState();
     Get.put(CheckoutController());
-
+    contactController.user;
     checkController.initAllItems();
   }
 
@@ -71,7 +74,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       return CheckoutProductViewWidget(item: item);
                     }
                     if (item is CheckoutContactInformationVieModel) {
-                      return CheckoutContactInformationWidget(item: item,);
+                      return CheckoutContactInformationWidget(
+                        item: item,
+                        onTap: () {
+                          print('this is ${contactController.user.value?.email}');
+                          AppRouter.openContactInformationPage();
+                        },
+                      );
                     }
                     return Container();
                   },

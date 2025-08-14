@@ -47,7 +47,7 @@ class AppRouter {
     }
   }
 
-  static void openContactInformationPgae({required List<CartViewModel> items, required UserViewModel user}){
+  static void openContactInformationPage(){
     if(Get.context !=null){
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ContactInformationPage()));
     }

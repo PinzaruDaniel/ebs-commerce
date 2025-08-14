@@ -107,6 +107,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         title: AppTexts.checkout,
         showIcon: false,
         router: () {
+          print('this are ${contactController.user.value?.email}');
           AppRouter.openCheckoutPage(items: cartController.selectedItems, user: contactController.toUserViewModel());
         },
       ),
