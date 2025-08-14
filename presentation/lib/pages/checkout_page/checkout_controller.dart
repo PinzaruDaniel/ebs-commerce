@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:presentation/pages/checkout_page/widgets/checkout_contact_information_widget.dart';
 import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
 import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';

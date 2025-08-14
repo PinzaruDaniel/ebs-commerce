@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_controller.dart';
-import 'package:presentation/pages/checkout_page/widgets/checkout_contact_information_widget.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
-import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
-
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
@@ -37,6 +34,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     super.initState();
     Get.put(CheckoutController());
     Get.put(ContactInformationController());
+
     checkController.initAllItems();
     contactController.initAllItems();
     contactController.toUserViewModel();
