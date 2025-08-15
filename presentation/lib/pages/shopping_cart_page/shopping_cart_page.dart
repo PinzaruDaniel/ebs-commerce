@@ -13,6 +13,7 @@ import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
+import '../delivery_address_page/delivery_address_controller.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   const ShoppingCartPage({super.key});
@@ -24,13 +25,15 @@ class ShoppingCartPage extends StatefulWidget {
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   CartController get cartController => Get.find();
   ContactInformationController get contactController => Get.find();
-
+  DeliveryAddressController get deliveryController => Get.find();
   @override
   void initState() {
     super.initState();
     Get.put(CartController());
     Get.put(ContactInformationController(), permanent: true);
-
+    Get.put(DeliveryAddressController(), permanent: true);
+    deliveryController.onInit();
+    deliveryController.toDeliveryAddressViewModel();
     contactController.initAllItems();
     contactController.toUserViewModel();
   }
@@ -108,8 +111,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         title: AppTexts.checkout,
         showIcon: false,
         router: () {
-          print('this are ${contactController.user.value?.email}');
-          AppRouter.openCheckoutPage(items: cartController.selectedItems, user: contactController.toUserViewModel());
+          AppRouter.openCheckoutPage(items: cartController.selectedItems);
         },
       ),
     );

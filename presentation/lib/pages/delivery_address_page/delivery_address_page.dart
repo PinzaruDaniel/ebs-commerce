@@ -1,10 +1,11 @@
 // lib/pages/delivery_address_page/delivery_address_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/dropdown_widget.dart';
-import 'package:presentation/pages/delivery_address_page/widgets/text_field_widget.dart';
+import 'package:presentation/util/widgets/text_field_widget.dart';
 
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
@@ -23,17 +24,18 @@ class DeliveryAddressPage extends StatefulWidget {
 class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   DeliveryAddressController get deliveryController => Get.find();
 
+  CheckoutController get checkController => Get.find();
+
   @override
   void initState() {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        title: 'Delivery Address',
+        title: AppTexts.deliveryAddress.capitalizeFirst,
         showBorder: false,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
@@ -44,7 +46,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         child: Column(
           children: [
             Obx(
-                  () => Expanded(
+              () => Expanded(
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: deliveryController.allItems.length,
@@ -70,8 +72,8 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         title: 'Save',
         showIcon: false,
         router: () {
-          final address = deliveryController.toDeliveryAddressViewModel();
-          print(address.deliveryType);
+          checkController.initAllItems();
+          deliveryController.onInit();
           Navigator.pop(context);
         },
         titleDialog: AppTexts.oops,

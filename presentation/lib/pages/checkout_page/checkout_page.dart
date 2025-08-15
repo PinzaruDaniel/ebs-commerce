@@ -5,7 +5,6 @@ import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_w
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
-import 'package:presentation/view/user_view_model.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
@@ -16,9 +15,8 @@ import '../shopping_cart_page/cart_controller.dart';
 
 class CheckoutPage extends StatefulWidget {
   final List<CartViewModel> items;
-  final UserViewModel? user;
 
-  const CheckoutPage({super.key, required this.items, this.user});
+  const CheckoutPage({super.key, required this.items});
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -26,9 +24,11 @@ class CheckoutPage extends StatefulWidget {
 
 class _CheckoutPageState extends State<CheckoutPage> {
   CheckoutController get checkController => Get.find();
+
   ContactInformationController get contactController => Get.find();
 
   CartController get cartController => Get.find();
+
   DeliveryAddressController get deliveryController => Get.find();
 
   @override
@@ -36,7 +36,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
     super.initState();
     Get.put(CheckoutController());
     Get.put(ContactInformationController());
-    Get.put(DeliveryAddressController());
     deliveryController.onInit();
     deliveryController.toDeliveryAddressViewModel();
     checkController.initAllItems();
@@ -79,10 +78,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       return CheckoutProductViewWidget(item: item);
                     }
                     if (item is CheckoutInfoContainerViewModel) {
-                      return CheckoutInfoContainerWidget(
-                        item: item,
-
-                      );
+                      return CheckoutInfoContainerWidget(item: item);
                     }
                     return Container();
                   },

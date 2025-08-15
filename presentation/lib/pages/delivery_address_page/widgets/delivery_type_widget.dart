@@ -17,6 +17,7 @@ class DeliveryTypeWidget extends StatelessWidget {
   const DeliveryTypeWidget({super.key, required this.itemViewModel});
 
   final DeliveryTypeViewModel itemViewModel;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,9 +28,9 @@ class DeliveryTypeWidget extends StatelessWidget {
           const Text('Delivery Type'),
           const SizedBox(height: 4),
           Obx(
-                () => Wrap(
-              spacing: 8.0, // horizontal space between items
-              runSpacing: 8.0, // vertical space between lines
+            () => Wrap(
+              spacing: 8.0,
+              runSpacing: 8.0,
               children: itemViewModel.options.map((option) {
                 bool isSelected = itemViewModel.selected.value == option;
                 return GestureDetector(
@@ -38,19 +39,15 @@ class DeliveryTypeWidget extends StatelessWidget {
                     Get.find<DeliveryAddressController>().updateAllItems();
                   },
                   child: Container(
-                    padding: const EdgeInsets.only(left:12.0, right: 24, top: 8, bottom: 8),
+                    padding: const EdgeInsets.only(left: 12.0, right: 24, top: 8, bottom: 8),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                        color: isSelected ? AppColors.primary : Colors.grey.shade300,
-                      ),
+                      border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
                     ),
                     child: Text(
                       option,
-                      style: AppTextsStyle.medium.copyWith(
-                        color: isSelected ? AppColors.primary : Colors.black,
-                      ),
+                      style: AppTextsStyle.medium.copyWith(color: isSelected ? AppColors.primary : Colors.black),
                     ),
                   ),
                 );
@@ -60,6 +57,5 @@ class DeliveryTypeWidget extends StatelessWidget {
         ],
       ),
     );
-
   }
 }

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
-import 'package:presentation/pages/contact_information_page/widgets/text_field_contact_info_widget.dart';
-
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
+import '../../util/widgets/text_field_widget.dart';
 import '../../view/product_view_model.dart';
 
 class ContactInformationPage extends StatefulWidget {
@@ -47,8 +46,8 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
                   itemCount: contactController.allItems.length,
                   itemBuilder: (context, index) {
                     var item = contactController.allItems[index];
-                    if (item is TextFieldContactInfoViewModel) {
-                      return TextFieldContactInfoWidget(itemViewModel: item);
+                    if (item is TextFieldViewModel) {
+                      return TextFieldWidget(itemViewModel: item);
                     }
                   },
                 ),
@@ -64,6 +63,7 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         //addToCart: null,
         router: () {
           checkController.initAllItems();
+          contactController.initAllItems();
           Navigator.pop(context);
         },
         titleDialog: AppTexts.oops,

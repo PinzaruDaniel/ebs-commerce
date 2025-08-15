@@ -11,6 +11,7 @@ import '../../pages/product_detail_page/product_detail_page.dart';
 import '../../pages/products_display_page/products_display_controller.dart';
 import '../../pages/shopping_cart_page/shopping_cart_page.dart';
 import '../../view/cart_products_view_model.dart';
+import '../../view/delivery_address_view_model.dart';
 import '../../view/product_view_model.dart';
 
 class AppRouter {
@@ -45,7 +46,7 @@ class AppRouter {
     }
   }
 
-  static void openCheckoutPage({required List<CartViewModel> items, required UserViewModel user}) {
+  static void openCheckoutPage({required List<CartViewModel> items}) {
     if (Get.context != null) {
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => CheckoutPage(items: items,)));
     }

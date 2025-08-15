@@ -351,7 +351,7 @@ as List<List<CategoryApiDto>>?,
 /// @nodoc
 mixin _$ProductResponseApiDto {
 
- int get count;@JsonKey(name: 'total_pages') int? get totalPages;@JsonKey(name: 'par_page') int? get perPage;@JsonKey(name: 'current_page') int? get currentPage; List<ProductApiDto> get results;
+ int get count;@JsonKey(name: 'total_pages') int? get totalPages;@JsonKey(name: 'per_page') int? get perPage;@JsonKey(name: 'current_page') int? get currentPage; List<ProductApiDto> get results;
 /// Create a copy of ProductResponseApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -384,7 +384,7 @@ abstract mixin class $ProductResponseApiDtoCopyWith<$Res>  {
   factory $ProductResponseApiDtoCopyWith(ProductResponseApiDto value, $Res Function(ProductResponseApiDto) _then) = _$ProductResponseApiDtoCopyWithImpl;
 @useResult
 $Res call({
- int count,@JsonKey(name: 'total_pages') int? totalPages,@JsonKey(name: 'par_page') int? perPage,@JsonKey(name: 'current_page') int? currentPage, List<ProductApiDto> results
+ int count,@JsonKey(name: 'total_pages') int? totalPages,@JsonKey(name: 'per_page') int? perPage,@JsonKey(name: 'current_page') int? currentPage, List<ProductApiDto> results
 });
 
 
@@ -493,7 +493,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'par_page')  int? perPage, @JsonKey(name: 'current_page')  int? currentPage,  List<ProductApiDto> results)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'per_page')  int? perPage, @JsonKey(name: 'current_page')  int? currentPage,  List<ProductApiDto> results)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductResponseApiDto() when $default != null:
 return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.results);case _:
@@ -514,7 +514,7 @@ return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'par_page')  int? perPage, @JsonKey(name: 'current_page')  int? currentPage,  List<ProductApiDto> results)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'per_page')  int? perPage, @JsonKey(name: 'current_page')  int? currentPage,  List<ProductApiDto> results)  $default,) {final _that = this;
 switch (_that) {
 case _ProductResponseApiDto():
 return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.results);case _:
@@ -534,7 +534,7 @@ return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'par_page')  int? perPage, @JsonKey(name: 'current_page')  int? currentPage,  List<ProductApiDto> results)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'per_page')  int? perPage, @JsonKey(name: 'current_page')  int? currentPage,  List<ProductApiDto> results)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductResponseApiDto() when $default != null:
 return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.results);case _:
@@ -549,12 +549,12 @@ return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_th
 @JsonSerializable()
 
 class _ProductResponseApiDto implements ProductResponseApiDto {
-  const _ProductResponseApiDto({required this.count, @JsonKey(name: 'total_pages') required this.totalPages, @JsonKey(name: 'par_page') required this.perPage, @JsonKey(name: 'current_page') required this.currentPage, required final  List<ProductApiDto> results}): _results = results;
+  const _ProductResponseApiDto({required this.count, @JsonKey(name: 'total_pages') required this.totalPages, @JsonKey(name: 'per_page') required this.perPage, @JsonKey(name: 'current_page') required this.currentPage, required final  List<ProductApiDto> results}): _results = results;
   factory _ProductResponseApiDto.fromJson(Map<String, dynamic> json) => _$ProductResponseApiDtoFromJson(json);
 
 @override final  int count;
 @override@JsonKey(name: 'total_pages') final  int? totalPages;
-@override@JsonKey(name: 'par_page') final  int? perPage;
+@override@JsonKey(name: 'per_page') final  int? perPage;
 @override@JsonKey(name: 'current_page') final  int? currentPage;
  final  List<ProductApiDto> _results;
 @override List<ProductApiDto> get results {
@@ -597,7 +597,7 @@ abstract mixin class _$ProductResponseApiDtoCopyWith<$Res> implements $ProductRe
   factory _$ProductResponseApiDtoCopyWith(_ProductResponseApiDto value, $Res Function(_ProductResponseApiDto) _then) = __$ProductResponseApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- int count,@JsonKey(name: 'total_pages') int? totalPages,@JsonKey(name: 'par_page') int? perPage,@JsonKey(name: 'current_page') int? currentPage, List<ProductApiDto> results
+ int count,@JsonKey(name: 'total_pages') int? totalPages,@JsonKey(name: 'per_page') int? perPage,@JsonKey(name: 'current_page') int? currentPage, List<ProductApiDto> results
 });
 
 

@@ -20,4 +20,5 @@ Future<void> init() async {
 
   GetIt.instance.registerLazySingleton<ProductsApiService>(() => ProductsApiService(mainClient));
   GetIt.instance.registerLazySingleton<CategoriesApiService>(()=> CategoriesApiService(mainClient));
+
 }

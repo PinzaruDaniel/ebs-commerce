@@ -14,7 +14,7 @@ import '../../util/routing/app_router.dart';
 class CheckoutController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
-  Rxn<DeliveryAddressViewModel> deliveryModel= Rxn<DeliveryAddressViewModel>();
+  Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
 
   CartController get cartController => Get.find();
 
@@ -22,8 +22,10 @@ class CheckoutController extends GetxController {
 
   DeliveryAddressController get deliveryController => Get.find();
 
-
   void initAllItems() {
+    userModel.value = contactController.toUserViewModel();
+    deliveryModel.value = deliveryController.toDeliveryAddressViewModel();
+    final isPickup = deliveryModel.value?.deliveryType == 'Ridicare la sediu';
     final infoItems = <String, String>{};
 
     final number = userModel.value?.number;
@@ -36,14 +38,23 @@ class CheckoutController extends GetxController {
       infoItems[email] = '';
     }
 
-    userModel.value = contactController.toUserViewModel();
-    deliveryModel.value=deliveryController.toDeliveryAddressViewModel();
+
+    final deliveryInfoItems = isPickup
+        ? {'Pickup Location: ${deliveryModel.value?.pickupLocation ?? ''}': ''}
+        : {
+            'Country: ${deliveryModel.value?.country ?? ''}': '',
+            'Region: ${deliveryModel.value?.region ?? ''}': '',
+            'City: ${deliveryModel.value?.city ?? ''}': '',
+            'Postal Code: ${deliveryModel.value?.postalCode ?? ''}': '',
+            'Street: ${deliveryModel.value?.address ?? ''}': '',
+          };
+
     allItems.value = [
       HeaderTitleViewModel(title: AppTexts.orderSummary),
       ...cartController.selectedItems,
       HeaderTitleViewModel(title: AppTexts.contactInformation),
       CheckoutInfoContainerViewModel(
-        titleKey: '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''} ',
+        titleKey: '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''}',
         infoItems: infoItems,
         onTap: () {
           AppRouter.openContactInformationPage();
@@ -51,22 +62,15 @@ class CheckoutController extends GetxController {
       ),
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
-          titleKey: deliveryModel.value?.deliveryType ?? '',
-          infoItems: {
-            'Country': deliveryModel.value?.country ?? '',
-            'Region': deliveryModel.value?.region ?? '',
-            'City': deliveryModel.value?.city ?? '',
-            'PostalCode': deliveryModel.value?.postalCode ?? '',
-            'Street': deliveryModel.value?.address
-          },
-
+        titleKey: deliveryModel.value?.deliveryType ?? '',
+        infoItems: deliveryInfoItems,
         onTap: () {
           AppRouter.openDeliveryAddressPage();
         },
       ),
-
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
     ];
+
     allItems.refresh();
   }
 }

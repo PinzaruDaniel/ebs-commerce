@@ -12,7 +12,7 @@ class SelectionViewModel extends BaseViewModel {
   final RxString selectedValue;
 
   SelectionViewModel({required this.title, required this.options, String? initialValue})
-      : selectedValue = (initialValue ?? options.first).obs;
+    : selectedValue = (initialValue ?? options.first).obs;
 }
 
 class SelectionWidget extends StatelessWidget {
@@ -23,14 +23,12 @@ class SelectionWidget extends StatelessWidget {
   void _showCupertinoPicker(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (BuildContext context) {
         return Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16))
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
           ),
           height: 300,
           padding: const EdgeInsets.all(16.0),
@@ -47,9 +45,8 @@ class SelectionWidget extends StatelessWidget {
                   useMagnifier: true,
                   magnification: 1.2,
                   selectionOverlay: Container(
-
                     decoration: BoxDecoration(
-                      border: Border.symmetric(horizontal: BorderSide(color: Colors.grey.shade300) )
+                      border: Border.symmetric(horizontal: BorderSide(color: Colors.grey.shade300)),
                     ),
                   ),
                   onSelectedItemChanged: (int index) {
@@ -59,12 +56,7 @@ class SelectionWidget extends StatelessWidget {
                     initialItem: itemViewModel.options.indexOf(itemViewModel.selectedValue.value),
                   ),
                   children: itemViewModel.options.map((String option) {
-                    return Center(
-                      child: Text(
-                        option,
-                        style: AppTextsStyle.medium.copyWith(fontSize: 23, ),
-                      ),
-                    );
+                    return Center(child: Text(option, style: AppTextsStyle.medium.copyWith(fontSize: 23)));
                   }).toList(),
                 ),
               ),
@@ -85,7 +77,7 @@ class SelectionWidget extends StatelessWidget {
           Text(itemViewModel.title),
           const SizedBox(height: 4),
           Obx(
-                () => GestureDetector(
+            () => GestureDetector(
               onTap: () => _showCupertinoPicker(context),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -96,10 +88,7 @@ class SelectionWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      itemViewModel.selectedValue.value,
-                      style: const TextStyle(color: Colors.black),
-                    ),
+                    Text(itemViewModel.selectedValue.value, style: const TextStyle(color: Colors.black)),
                     const Icon(Icons.arrow_drop_down, color: Colors.grey),
                   ],
                 ),
