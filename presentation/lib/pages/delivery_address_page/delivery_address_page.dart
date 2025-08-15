@@ -26,7 +26,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   @override
   void initState() {
     super.initState();
-    Get.put(DeliveryAddressController());
   }
 
 

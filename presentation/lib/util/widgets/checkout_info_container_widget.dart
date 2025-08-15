@@ -52,7 +52,7 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                                       padding: EdgeInsets.symmetric(vertical: 2),
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [Text(entry.key)],
+                                        children: [Text('${entry.key}:'), Text(entry.value?? '')],
                                       ),
                                     );
                                   }),

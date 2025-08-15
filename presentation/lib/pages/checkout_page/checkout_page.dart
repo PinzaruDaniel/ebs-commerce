@@ -11,6 +11,7 @@ import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../contact_information_page/contact_information_controller.dart';
+import '../delivery_address_page/delivery_address_controller.dart';
 import '../shopping_cart_page/cart_controller.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -28,13 +29,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
   ContactInformationController get contactController => Get.find();
 
   CartController get cartController => Get.find();
+  DeliveryAddressController get deliveryController => Get.find();
 
   @override
   void initState() {
     super.initState();
     Get.put(CheckoutController());
     Get.put(ContactInformationController());
-
+    Get.put(DeliveryAddressController());
+    deliveryController.onInit();
+    deliveryController.toDeliveryAddressViewModel();
     checkController.initAllItems();
     contactController.initAllItems();
     contactController.toUserViewModel();
