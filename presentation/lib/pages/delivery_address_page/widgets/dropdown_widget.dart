@@ -1,8 +1,6 @@
-// lib/pages/delivery_address_page/widgets/selection_widget.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/base_view_model.dart';
 
@@ -10,9 +8,21 @@ class SelectionViewModel extends BaseViewModel {
   final String title;
   final List<String> options;
   final RxString selectedValue;
+  final Function(String)? onSelectionChanged;
 
-  SelectionViewModel({required this.title, required this.options, String? initialValue})
-    : selectedValue = (initialValue ?? options.first).obs;
+  SelectionViewModel({
+    required this.title,
+    required this.options,
+    String? initialValue,
+    this.onSelectionChanged,
+  }) : selectedValue =
+           (initialValue ?? (options.isNotEmpty ? options.first : '')).obs {
+    selectedValue.listen((value) {
+      if (onSelectionChanged != null) {
+        onSelectionChanged!(value);
+      }
+    });
+  }
 }
 
 class SelectionWidget extends StatelessWidget {
@@ -22,22 +32,41 @@ class SelectionWidget extends StatelessWidget {
 
   void _showCupertinoPicker(BuildContext context) {
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       builder: (BuildContext context) {
         return Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
           ),
           height: 300,
-          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade400,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
               Text(
                 'Choose ${itemViewModel.title.toLowerCase()}',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
               Expanded(
                 child: CupertinoPicker(
@@ -46,17 +75,27 @@ class SelectionWidget extends StatelessWidget {
                   magnification: 1.2,
                   selectionOverlay: Container(
                     decoration: BoxDecoration(
-                      border: Border.symmetric(horizontal: BorderSide(color: Colors.grey.shade300)),
+                      border: Border.symmetric(
+                        horizontal: BorderSide(color: Colors.grey.shade300),
+                      ),
                     ),
                   ),
                   onSelectedItemChanged: (int index) {
-                    itemViewModel.selectedValue.value = itemViewModel.options[index];
+                    itemViewModel.selectedValue.value =
+                        itemViewModel.options[index];
                   },
                   scrollController: FixedExtentScrollController(
-                    initialItem: itemViewModel.options.indexOf(itemViewModel.selectedValue.value),
+                    initialItem: itemViewModel.options.indexOf(
+                      itemViewModel.selectedValue.value,
+                    ),
                   ),
                   children: itemViewModel.options.map((String option) {
-                    return Center(child: Text(option, style: AppTextsStyle.medium.copyWith(fontSize: 23)));
+                    return Center(
+                      child: Text(
+                        option,
+                        style: AppTextsStyle.medium.copyWith(fontSize: 23),
+                      ),
+                    );
                   }).toList(),
                 ),
               ),
@@ -80,7 +119,10 @@ class SelectionWidget extends StatelessWidget {
             () => GestureDetector(
               onTap: () => _showCupertinoPicker(context),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 16,
+                ),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey.shade300),
                   borderRadius: BorderRadius.circular(5),
@@ -88,7 +130,10 @@ class SelectionWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(itemViewModel.selectedValue.value, style: const TextStyle(color: Colors.black)),
+                    Text(
+                      itemViewModel.selectedValue.value,
+                      style: const TextStyle(color: Colors.black),
+                    ),
                     const Icon(Icons.arrow_drop_down, color: Colors.grey),
                   ],
                 ),

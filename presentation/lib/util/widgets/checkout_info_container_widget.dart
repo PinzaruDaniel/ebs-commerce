@@ -9,7 +9,7 @@ class CheckoutInfoContainerViewModel extends BaseViewModel {
   final String? titleKey;
   final VoidCallback? onTap;
 
-  CheckoutInfoContainerViewModel({required this.infoItems, this.titleKey,  this.onTap});
+  CheckoutInfoContainerViewModel({ this.infoItems, this.titleKey,  this.onTap});
 }
 
 class CheckoutInfoContainerWidget extends StatelessWidget {

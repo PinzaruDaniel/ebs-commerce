@@ -69,6 +69,9 @@ class CheckoutController extends GetxController {
         },
       ),
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
+      CheckoutInfoContainerViewModel(
+        titleKey: 'MetodaDePlata',
+      )
     ];
 
     allItems.refresh();

@@ -1,5 +1,8 @@
-import 'package:data/modules/cities/models/remote/index.dart';
-import 'package:domain/modules/cities/models/index.dart';
+
+
+import 'package:domain/modules/delivery_address/models/index.dart';
+
+import '../modules/delivery_address/models/remote/index.dart';
 
 extension CitiesResponseApiDtoMapper on CitiesResponseApiDto{
   CitiesResponseEntity get toEntity{

@@ -11,6 +11,7 @@ void main() async {
   await initDi();
   await RootBinding().dependencies();
 
+
   runApp(const MyApp());
 }
 

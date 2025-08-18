@@ -10,7 +10,8 @@ class DeliveryTypeViewModel extends BaseViewModel {
   final List<String> options;
   final RxString selected;
 
-  DeliveryTypeViewModel({required this.options, String? initial}) : selected = (initial ?? options.first).obs;
+  DeliveryTypeViewModel({required this.options, String? initial})
+    : selected = (initial ?? options.first).obs;
 }
 
 class DeliveryTypeWidget extends StatelessWidget {
@@ -39,15 +40,48 @@ class DeliveryTypeWidget extends StatelessWidget {
                     Get.find<DeliveryAddressController>().updateAllItems();
                   },
                   child: Container(
-                    padding: const EdgeInsets.only(left: 12.0, right: 24, top: 8, bottom: 8),
+                    padding: const EdgeInsets.only(
+                      left: 12.0,
+                      right: 24,
+                      top: 8,
+                      bottom: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
+                      border: Border.all(
+                        color: isSelected
+                            ? AppColors.primary
+                            : Colors.grey.shade300,
+                      ),
                     ),
-                    child: Text(
-                      option,
-                      style: AppTextsStyle.medium.copyWith(color: isSelected ? AppColors.primary : Colors.black),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (option == 'DHL')
+                          Image.asset(
+                            'assets/icons/dhl.png',
+                            width: 40,
+                            height: 20,
+                            fit: BoxFit.contain,
+                          ),
+                        if (option == 'Fan courier')
+                          Image.asset(
+                            'assets/icons/fan_courier.png',
+                            width: 40,
+                            height: 20,
+                            fit: BoxFit.contain,
+                          ),
+                        const SizedBox(width: 8),
+                        Text(
+                          option,
+                          style: AppTextsStyle.medium.copyWith(
+                            color: isSelected
+                                ? AppColors.primary
+                                : Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );
