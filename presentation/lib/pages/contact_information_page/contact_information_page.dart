@@ -18,6 +18,9 @@ class ContactInformationPage extends StatefulWidget {
 }
 
 class _ContactInformationPageState extends State<ContactInformationPage> {
+  final _formKey = GlobalKey<FormState>();
+  String bottomBarTitle = 'Save';
+
   ContactInformationController get contactController => Get.find();
   CheckoutController get checkController=>Get.find();
   @override
@@ -40,16 +43,20 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         child: Column(
           children: [
             Obx(
-              () => Expanded(
-                child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: contactController.allItems.length,
-                  itemBuilder: (context, index) {
-                    var item = contactController.allItems[index];
-                    if (item is TextFieldViewModel) {
-                      return TextFieldWidget(itemViewModel: item);
-                    }
-                  },
+              () => Form(
+                key: _formKey,
+                child: Expanded(
+                  child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: contactController.allItems.length,
+                    itemBuilder: (context, index) {
+                      var item = contactController.allItems[index];
+                      if (item is TextFieldViewModel) {
+                        return TextFieldWidget(itemViewModel: item);
+                      }
+                      return null;
+                    },
+                  ),
                 ),
               ),
             ),
@@ -58,13 +65,14 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
         item: dummyProduct,
-        title: 'save',
+        title:bottomBarTitle,
         showIcon: false,
-        //addToCart: null,
         router: () {
-          checkController.initAllItems();
-          contactController.initAllItems();
-          Navigator.pop(context);
+          if (_formKey.currentState?.validate() ?? false) {
+            checkController.initAllItems();
+            contactController.initAllItems();
+            Navigator.pop(context);
+          }
         },
         titleDialog: AppTexts.oops,
         contentDialog: AppTexts.noProductsToShow,

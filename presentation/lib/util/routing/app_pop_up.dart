@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
 import '../resources/app_colors.dart';
+import '../widgets/bottom_navigation_bar_widget.dart';
 
 class AppPopUp {
   static Future<void> showCustomBottomSheet({
@@ -33,92 +35,78 @@ class AppPopUp {
     return showCustomBottomSheet(child: ProductDetailAddToCartBottomSheetWidget(item: item));
   }
 
-  static Future<void> paymentMethod({
-    String? selectedMethod,
-    required Function(String) onSelected,
-  }) async {
+  static Future<void> paymentMethod({required RxString selectedMethod, required Function(String) onSelected}) async {
     if (Get.context == null) return;
 
-    final methods = ['PayPal', 'Numerar'];
+    final methods = ['PayPal', 'Plata Numerar'];
+    final checkController = Get.find<CheckoutController>();
 
-    await showModalBottomSheet(
-      context: Get.context!,
-      backgroundColor: Colors.white,
-      showDragHandle: true,
-      shape:  RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(16),
-          topLeft: Radius.circular(16),
-        ),
-      ),
-      builder: (_) => SizedBox(
-        height: Get.height * 0.35,
-        child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Text(
-                  'Choose Payment Method',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-               SizedBox(height: 24),
-              Column(
-                spacing: 12,
+    await showCustomBottomSheet(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(child: Text('Choose Payment Method', style: AppTextsStyle.bold(size: 18))),
+          SizedBox(height: 24),
+          Obx(() {
+            final selected = selectedMethod.value;
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
                 children: methods.map((option) {
-                  final isSelected = option == selectedMethod;
-
-                  return Material(
-                    color: Colors.transparent,
+                  final isSelected = selected == option;
+                  return InkWell(
+                    onTap: () {
+                      onSelected(option);
+                      checkController.initAllItems();
+                      Navigator.pop(Get.context!);
+                    },
                     borderRadius: BorderRadius.circular(5),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(5),
-                      onTap: () {
-                        onSelected(option);
-                      },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2.0),
                       child: Container(
-                        padding: const EdgeInsets.only(
-                          left: 8.0,
-                          right: 36,
-                          top: 8,
-                          bottom: 8,
-                        ),
+                        padding: const EdgeInsets.only(left: 8.0, right: 36, top: 8, bottom: 8),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                            color: isSelected
-                                ? AppColors.primary
-                                : Colors.grey.shade300,
-                          ),
+                          border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              option,
-                              style: AppTextsStyle.medium.copyWith(
-                                color: isSelected
-                                    ? AppColors.primary
-                                    : Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                option,
+                                style: AppTextsStyle.medium.copyWith(
+                                  color: isSelected ? AppColors.primary : Colors.black,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   );
                 }).toList(),
               ),
-            ],
+            );
+          }),
+
+          Spacer(),
+          BottomNavigationBarWidget(
+            item: dummyProduct,
+            title: 'Save',
+            router: () {
+              checkController.initAllItems();
+              Navigator.pop(Get.context!);
+            },
+            showIcon: false,
           ),
-        ),
+        ],
       ),
     );
   }
-
 
   static Future<void> showSelection({
     required String title,

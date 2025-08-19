@@ -21,6 +21,8 @@ class DeliveryAddressPage extends StatefulWidget {
 }
 
 class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
+  final _formKey = GlobalKey<FormState>();
+
   DeliveryAddressController get deliveryController => Get.find();
 
   CheckoutController get checkController => Get.find();
@@ -45,21 +47,24 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         child: Column(
           children: [
             Obx(
-              () => Expanded(
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: deliveryController.allItems.length,
-                  itemBuilder: (context, index) {
-                    var item = deliveryController.allItems[index];
-                    if (item is DeliveryTypeViewModel) {
-                      return DeliveryTypeWidget(itemViewModel: item);
-                    } else if (item is SelectionViewModel) {
-                      return SelectionWidget(itemViewModel: item);
-                    } else if (item is TextFieldViewModel) {
-                      return TextFieldWidget(itemViewModel: item);
-                    }
-                    return const SizedBox.shrink();
-                  },
+              () => Form(
+                key: _formKey,
+                child: Expanded(
+                  child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: deliveryController.allItems.length,
+                    itemBuilder: (context, index) {
+                      var item = deliveryController.allItems[index];
+                      if (item is DeliveryTypeViewModel) {
+                        return DeliveryTypeWidget(itemViewModel: item);
+                      } else if (item is SelectionViewModel) {
+                        return SelectionWidget(itemViewModel: item);
+                      } else if (item is TextFieldViewModel) {
+                        return TextFieldWidget(itemViewModel: item);
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
                 ),
               ),
             ),
@@ -71,9 +76,11 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         title: deliveryController.isLoading.value ? 'Loading' : 'Save',
         showIcon: false,
         router: () {
-          checkController.initAllItems();
-          deliveryController.onInit();
-          Navigator.pop(context);
+          if (_formKey.currentState?.validate() ?? false){
+            checkController.initAllItems();
+            deliveryController.onInit();
+            Navigator.pop(context);
+          }
         },
         titleDialog: AppTexts.oops,
         contentDialog: AppTexts.noProductsToShow,

@@ -21,8 +21,8 @@ class TextFieldWidget extends StatefulWidget {
 }
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
-  late final TextEditingController controller;
-
+  var controller = TextEditingController();
+  var focusNode = FocusNode();
   @override
   void initState() {
     super.initState();
@@ -31,11 +31,18 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     controller.addListener(() {
       widget.itemViewModel.value.value = controller.text;
     });
+
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {
+        setState(() {});
+      }
+    });
   }
 
   @override
   void dispose() {
     controller.dispose();
+    focusNode.dispose();
     super.dispose();
   }
 
@@ -53,12 +60,27 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               controller.text = widget.itemViewModel.value.value;
               controller.selection = TextSelection.collapsed(offset: controller.text.length);
             }
-            return TextField(
+            return TextFormField(
+              validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return "This field is required";
+                }
+                return null;
+              },
               controller: controller,
               cursorColor: AppColors.primary,
               keyboardType: widget.itemViewModel.textInputType ?? TextInputType.text,
+              textInputAction: TextInputAction.done,
               decoration: InputDecoration(
                 isDense: true,
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: AppColors.red, width: 2.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(color: AppColors.redText, width: 1.0),
+                ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
                   borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),

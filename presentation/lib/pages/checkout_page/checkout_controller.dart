@@ -16,7 +16,7 @@ class CheckoutController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
-  var selectedPaymentMethod = Rxn<String>();
+  RxString selectedPaymentMethod = RxString('');
 
   CartController get cartController => Get.find();
 
@@ -76,7 +76,7 @@ class CheckoutController extends GetxController {
         titleKey: selectedPaymentMethod.value ?? '',
         onTap: () {
           AppPopUp.paymentMethod(
-            selectedMethod: selectedPaymentMethod.value,
+            selectedMethod: selectedPaymentMethod.value.obs,
             onSelected: (value) {
               selectedPaymentMethod.value = value;
             },

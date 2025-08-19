@@ -9,7 +9,7 @@ class CheckoutInfoContainerViewModel extends BaseViewModel {
   final String? titleKey;
   final VoidCallback? onTap;
 
-  CheckoutInfoContainerViewModel({ this.infoItems, this.titleKey,  this.onTap});
+  CheckoutInfoContainerViewModel({this.infoItems, this.titleKey, this.onTap});
 }
 
 class CheckoutInfoContainerWidget extends StatelessWidget {
@@ -27,6 +27,8 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: InkWell(
+                 highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
                   onTap: item.onTap,
                   child: Container(
                     decoration: BoxDecoration(
@@ -46,7 +48,7 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                                     padding: EdgeInsets.only(bottom: 4),
                                     child: Text(item.titleKey.toString(), style: AppTextsStyle.bold(size: 14)),
                                   ),
-                                if (item.infoItems != null && item.infoItems!.isNotEmpty )
+                                if (item.infoItems != null && item.infoItems!.isNotEmpty)
                                   ...item.infoItems!.entries.map((entry) {
                                     return Padding(
                                       padding: EdgeInsets.symmetric(vertical: 2),
@@ -56,7 +58,8 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                                       ),
                                     );
                                   }),
-                                if (item.infoItems == null || item.infoItems!.isEmpty) Text('Enter your data here'),
+                                if ((item.infoItems == null || item.infoItems!.isEmpty) && item.titleKey!.isEmpty)
+                                  Text('Enter your data here'),
                               ],
                             ),
                           ),

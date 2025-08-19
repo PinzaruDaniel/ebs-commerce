@@ -21,6 +21,7 @@ class ContactInformationController extends GetxController {
     TextFieldViewModel(
       title: 'Surname',
       initialValue: existingUser?.surname ?? '',
+
     ),
     TextFieldViewModel(
       title: 'Phone',

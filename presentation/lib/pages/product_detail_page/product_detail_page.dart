@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/add_to_cart_controller.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_collapsed_app_bar_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_expanded_app_bar.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_page_body_widget.dart';
@@ -25,6 +27,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   void initState() {
     super.initState();
+    Get.put(AddToCartController());
+
     scrollController = ScrollController();
     scrollController.addListener(_scrollListener);
   }
