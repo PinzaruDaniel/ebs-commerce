@@ -41,8 +41,8 @@ class DeliveryTypeWidget extends StatelessWidget {
                   },
                   child: Container(
                     padding: const EdgeInsets.only(
-                      left: 12.0,
-                      right: 24,
+                      left: 8.0,
+                      right: 36,
                       top: 8,
                       bottom: 8,
                     ),
