@@ -5,8 +5,40 @@ import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_t
 import '../../view/product_view_model.dart';
 
 class AppPopUp {
+  static Future<void> showCustomBottomSheet({
+    required Widget child,
+    double heightFraction = 0.35,
+    bool isDismissible = true,
+    bool enableDrag = true,
+    bool showHandle = true,
+  }) async {
+    if (Get.context != null) {
+      return await showModalBottomSheet(
+        backgroundColor: Colors.white,
+        showDragHandle: showHandle,
+        isDismissible: isDismissible,
+        enableDrag: enableDrag,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(16),
+            topLeft: Radius.circular(16),
+          ),
+        ),
+        context: Get.context!,
+        builder: (_) => SizedBox(
+          height: Get.height * heightFraction,
+          child: child,
+        ),
+      );
+    }
+  }
+  static Future<void> showCartInfoPopUp({required ProductViewModel item}) async {
+    return showCustomBottomSheet(
+      child: ProductDetailAddToCartBottomSheetWidget(item: item),
+    );
+  }
 
-  static Future<void> showBottomSheet({required ProductViewModel item}) async {
+  static Future<void>paymentMethod()async{
     if(Get.context!=null) {
       return await showModalBottomSheet(
         backgroundColor: Colors.white,
@@ -19,15 +51,14 @@ class AppPopUp {
             SizedBox(
               height: Get.height * 0.35,
               child: Column(
-                children: [Expanded(child: ProductDetailAddToCartBottomSheetWidget(item: item))],
+                children: [
+
+                  Expanded(child: Text('Hello'))
+                ],
               ),
             ),
       );
     }
-  }
-  static Future<void> showCartInfoPopUp({required ProductViewModel item})async {
-    showBottomSheet(item: item);
-
   }
 
 }

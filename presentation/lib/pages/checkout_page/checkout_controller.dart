@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
 import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
 import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
+import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -71,6 +72,9 @@ class CheckoutController extends GetxController {
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
       CheckoutInfoContainerViewModel(
         titleKey: 'MetodaDePlata',
+        onTap: (){
+          AppPopUp.paymentMethod();
+        }
       )
     ];
 

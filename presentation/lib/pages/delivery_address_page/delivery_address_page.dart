@@ -68,7 +68,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
         item: dummyProduct,
-        title: 'Save',
+        title: deliveryController.isLoading.value ? 'Loading' : 'Save',
         showIcon: false,
         router: () {
           checkController.initAllItems();
