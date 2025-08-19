@@ -81,12 +81,12 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
               child: controller.isLoading.value
                   ? CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
                   : SingleChildScrollView(
-                      child: ProductsListDisplayWidget(
-                        title: widget.title,
-                        showHeaderTitle: false,
-                        products: controller.products,
-                      ),
-                    ),
+                child: ProductsListDisplayWidget(
+                  title: widget.title,
+                  showHeaderTitle: false,
+                  products: controller.products,
+                ),
+              ),
             ),
           ),
         );

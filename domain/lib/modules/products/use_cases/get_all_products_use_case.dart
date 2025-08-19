@@ -18,6 +18,7 @@ class GetFilteredProductsUseCase extends UseCase<ProductResponseEntity, GetFilte
       params.categoriesId,
     );
   }
+
 }
 
 

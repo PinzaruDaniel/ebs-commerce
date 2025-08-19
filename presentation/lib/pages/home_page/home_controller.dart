@@ -43,12 +43,12 @@ class HomeController extends GetxController {
     final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage));
 
     either.fold(
-      (failure) {
+          (failure) {
         isLoading.value = false;
         isLoadingMore.value = false;
         showFailureSnackBar(failure);
       },
-      (list) async {
+          (list) async {
         final newItems = list.map((e) => e.toModel).toList();
 
         if (loadMore) {
@@ -77,11 +77,11 @@ class HomeController extends GetxController {
   Future<void> getNewProducts() async {
     await getNewProductsUseCase.call(GetNewProductsParams(page: 1, perPage: 5)).then((either) async {
       either.fold(
-        (failure) {
+            (failure) {
           isLoading.value = false;
         },
 
-        (products) async {
+            (products) async {
           newProducts = products.map((e) => e.toModel).toList();
         },
       );
@@ -91,12 +91,12 @@ class HomeController extends GetxController {
   Future<void> getSaleProducts({bool loadMore = false}) async {
     await getSaleProductsUseCase.call(GetSaleProductsParams(page: 1, perPage: 5)).then((either) async {
       either.fold(
-        (failure) {
+            (failure) {
           isLoading.value = false;
           isLoadingMore.value = false;
         },
 
-        (products) async {
+            (products) async {
           saleProducts = products.map((e) => e.toModel).toList();
         },
       );
