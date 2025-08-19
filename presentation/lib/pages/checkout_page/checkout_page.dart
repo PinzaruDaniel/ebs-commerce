@@ -44,6 +44,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -57,35 +58,27 @@ class _CheckoutPageState extends State<CheckoutPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Obx(
-              () => Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-
-                  itemCount: checkController.allItems.length,
-                  itemBuilder: (context, index) {
-                    var item = checkController.allItems[index];
-                    if (item is HeaderTitleViewModel) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 16.0),
-                        child: HeaderTitleWidget(itemViewModel: item),
-                      );
-                    }
-                    if (item is CartViewModel) {
-                      return CheckoutProductViewWidget(item: item);
-                    }
-                    if (item is CheckoutInfoContainerViewModel) {
-                      return CheckoutInfoContainerWidget(item: item);
-                    }
-                    return Container();
-                  },
-                ),
-              ),
+        child: Obx(
+              () => SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: checkController.allItems.map((item) {
+                if (item is HeaderTitleViewModel) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: HeaderTitleWidget(itemViewModel: item),
+                  );
+                }
+                if (item is CartViewModel) {
+                  return CheckoutProductViewWidget(item: item);
+                }
+                if (item is CheckoutInfoContainerViewModel) {
+                  return CheckoutInfoContainerWidget(item: item);
+                }
+                return const SizedBox();
+              }).toList(),
             ),
-          ],
+          ),
         ),
       ),
     );

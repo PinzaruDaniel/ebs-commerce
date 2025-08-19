@@ -39,4 +39,5 @@ class AppTexts {
   static const String voucherCode='Voucher Code';
   static const String total='Total';
   static const String contactInfo = 'Contact info';
+
 }

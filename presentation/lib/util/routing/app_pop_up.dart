@@ -5,8 +5,10 @@ import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
+import '../../view/promo_code_view_model.dart';
 import '../resources/app_colors.dart';
 import '../widgets/bottom_navigation_bar_widget.dart';
+import '../widgets/text_field_widget.dart';
 
 class AppPopUp {
   static Future<void> showCustomBottomSheet({
@@ -108,6 +110,54 @@ class AppPopUp {
     );
   }
 
+  static Future<void> voucherCode({required RxString voucherCode}) async {
+    final checkController = Get.find<CheckoutController>();
+
+    if (Get.context != null) {
+      final viewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
+
+      final promoCodeViewModel = PromoCodeViewModel();
+      final validCodes = promoCodeViewModel.getMockPromoCodes();
+
+      await showCustomBottomSheet(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(child: Text('Enter Voucher Code', style: AppTextsStyle.bold(size: 18))),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextFieldWidget(itemViewModel: viewModel),
+            ),
+
+            Spacer(),
+            BottomNavigationBarWidget(
+              item: dummyProduct,
+              title: 'Save',
+              router: () {
+                final enteredCode = viewModel.value.value.trim().toUpperCase();
+                if (validCodes.contains(enteredCode)) {
+                  voucherCode.value = enteredCode;
+                  checkController.initAllItems();
+                  Get.back();
+                  Get.snackbar("Success", "Promo code applied!", snackPosition: SnackPosition.BOTTOM);
+                } else {
+                  Get.snackbar(
+                    "Invalid Code",
+                    "Promo code not recognized.",
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.redAccent,
+                    colorText: Colors.white,
+                  );
+                }
+              },
+              showIcon: false,
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   static Future<void> showSelection({
     required String title,
     required List<String> options,
@@ -115,53 +165,35 @@ class AppPopUp {
     Function(String)? onSelectionChanged,
   }) async {
     if (Get.context != null) {
-      return await showModalBottomSheet(
-        backgroundColor: Colors.white,
-        context: Get.context!,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-        builder: (BuildContext context) {
-          return Container(
-            height: 300,
-            padding: const EdgeInsets.only(top: 12),
-            child: Column(
-              children: [
-                Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(color: Colors.grey.shade400, borderRadius: BorderRadius.circular(2)),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Choose ${title.toLowerCase()}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                Expanded(
-                  child: CupertinoPicker(
-                    itemExtent: 32,
-                    useMagnifier: true,
-                    magnification: 1.2,
-                    selectionOverlay: Container(
-                      padding: EdgeInsets.symmetric(vertical: 4),
-                      decoration: BoxDecoration(
-                        border: Border.symmetric(horizontal: BorderSide(color: Colors.grey.shade300)),
-                      ),
-                    ),
-                    scrollController: FixedExtentScrollController(initialItem: options.indexOf(selectedValue.value)),
-                    onSelectedItemChanged: (int index) {
-                      selectedValue.value = options[index];
-                      if (onSelectionChanged != null) {
-                        onSelectionChanged(options[index]);
-                      }
-                    },
-                    children: options
-                        .map((opt) => Center(child: Text(opt, style: AppTextsStyle.medium.copyWith(fontSize: 23))))
-                        .toList(),
+      return await showCustomBottomSheet(
+        child: Column(
+          children: [
+            Text('Choose ${title.toLowerCase()}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            Expanded(
+              child: CupertinoPicker(
+                itemExtent: 32,
+                useMagnifier: true,
+                magnification: 1.2,
+                selectionOverlay: Container(
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  decoration: BoxDecoration(
+                    border: Border.symmetric(horizontal: BorderSide(color: Colors.grey.shade300)),
                   ),
                 ),
-              ],
+                scrollController: FixedExtentScrollController(initialItem: options.indexOf(selectedValue.value)),
+                onSelectedItemChanged: (int index) {
+                  selectedValue.value = options[index];
+                  if (onSelectionChanged != null) {
+                    onSelectionChanged(options[index]);
+                  }
+                },
+                children: options
+                    .map((opt) => Center(child: Text(opt, style: AppTextsStyle.medium.copyWith(fontSize: 23))))
+                    .toList(),
+              ),
             ),
-          );
-        },
+          ],
+        ),
       );
     }
   }

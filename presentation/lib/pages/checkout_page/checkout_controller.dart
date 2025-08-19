@@ -7,6 +7,7 @@ import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
+import 'package:presentation/view/promo_code_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
 
 import '../../util/resources/app_texts.dart';
@@ -17,7 +18,7 @@ class CheckoutController extends GetxController {
   Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
   RxString selectedPaymentMethod = RxString('');
-
+  RxString voucherCode=RxString('');
   CartController get cartController => Get.find();
 
   ContactInformationController get contactController => Get.find();
@@ -73,7 +74,7 @@ class CheckoutController extends GetxController {
       ),
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
       CheckoutInfoContainerViewModel(
-        titleKey: selectedPaymentMethod.value ?? '',
+        titleKey: selectedPaymentMethod.value,
         onTap: () {
           AppPopUp.paymentMethod(
             selectedMethod: selectedPaymentMethod.value.obs,
@@ -82,6 +83,15 @@ class CheckoutController extends GetxController {
             },
           );
         },
+        infoItems: {}
+      ),
+
+      CheckoutInfoContainerViewModel(
+          titleKey: voucherCode.value,
+          onTap: () {
+            AppPopUp.voucherCode(voucherCode: voucherCode);
+          },
+          infoItems: {}
       ),
     ];
 

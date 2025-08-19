@@ -27,7 +27,7 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: InkWell(
-                 highlightColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
                   onTap: item.onTap,
                   child: Container(
@@ -58,7 +58,8 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                                       ),
                                     );
                                   }),
-                                if ((item.infoItems == null || item.infoItems!.isEmpty) && item.titleKey!.isEmpty)
+                                if ((item.infoItems == null || item.infoItems!.isEmpty) &&
+                                    (item.titleKey?.trim().isEmpty ?? true))
                                   Text('Enter your data here'),
                               ],
                             ),
