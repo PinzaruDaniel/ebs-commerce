@@ -16,12 +16,14 @@ class CheckoutController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
+  var selectedPaymentMethod = Rxn<String>();
 
   CartController get cartController => Get.find();
 
   ContactInformationController get contactController => Get.find();
 
   DeliveryAddressController get deliveryController => Get.find();
+
 
   void initAllItems() {
     userModel.value = contactController.toUserViewModel();
@@ -71,11 +73,16 @@ class CheckoutController extends GetxController {
       ),
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
       CheckoutInfoContainerViewModel(
-        titleKey: 'MetodaDePlata',
-        onTap: (){
-          AppPopUp.paymentMethod();
-        }
-      )
+        titleKey: selectedPaymentMethod.value ?? '',
+        onTap: () {
+          AppPopUp.paymentMethod(
+            selectedMethod: selectedPaymentMethod.value,
+            onSelected: (value) {
+              selectedPaymentMethod.value = value;
+            },
+          );
+        },
+      ),
     ];
 
     allItems.refresh();

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
+import '../resources/app_colors.dart';
 
 class AppPopUp {
   static Future<void> showCustomBottomSheet({
@@ -20,50 +21,104 @@ class AppPopUp {
         isDismissible: isDismissible,
         enableDrag: enableDrag,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(16),
-            topLeft: Radius.circular(16),
-          ),
+          borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
         ),
         context: Get.context!,
-        builder: (_) =>
-            SizedBox(
-              height: Get.height * heightFraction,
-              child: child,
-            ),
+        builder: (_) => SizedBox(height: Get.height * heightFraction, child: child),
       );
     }
   }
 
-  static Future<void> showCartInfoPopUp(
-      {required ProductViewModel item}) async {
-    return showCustomBottomSheet(
-      child: ProductDetailAddToCartBottomSheetWidget(item: item),
+  static Future<void> showCartInfoPopUp({required ProductViewModel item}) async {
+    return showCustomBottomSheet(child: ProductDetailAddToCartBottomSheetWidget(item: item));
+  }
+
+  static Future<void> paymentMethod({
+    String? selectedMethod,
+    required Function(String) onSelected,
+  }) async {
+    if (Get.context == null) return;
+
+    final methods = ['PayPal', 'Numerar'];
+
+    await showModalBottomSheet(
+      context: Get.context!,
+      backgroundColor: Colors.white,
+      showDragHandle: true,
+      shape:  RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(16),
+          topLeft: Radius.circular(16),
+        ),
+      ),
+      builder: (_) => SizedBox(
+        height: Get.height * 0.35,
+        child: Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  'Choose Payment Method',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+               SizedBox(height: 24),
+              Column(
+                spacing: 12,
+                children: methods.map((option) {
+                  final isSelected = option == selectedMethod;
+
+                  return Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(5),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(5),
+                      onTap: () {
+                        onSelected(option);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          left: 8.0,
+                          right: 36,
+                          top: 8,
+                          bottom: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            color: isSelected
+                                ? AppColors.primary
+                                : Colors.grey.shade300,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              option,
+                              style: AppTextsStyle.medium.copyWith(
+                                color: isSelected
+                                    ? AppColors.primary
+                                    : Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  static Future<void> paymentMethod() async {
-    if (Get.context != null) {
-      return await showModalBottomSheet(
-        backgroundColor: Colors.white,
-        showDragHandle: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(16), topLeft: Radius.circular(16)),
-        ),
-        context: Get.context!,
-        builder: (_) =>
-            SizedBox(
-              height: Get.height * 0.35,
-              child: const Column(
-                children: [
-                  Expanded(child: Text('Hello')),
-                ],
-              ),
-            ),
-      );
-    }
-  }
 
   static Future<void> showSelection({
     required String title,
@@ -75,61 +130,46 @@ class AppPopUp {
       return await showModalBottomSheet(
         backgroundColor: Colors.white,
         context: Get.context!,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
         builder: (BuildContext context) {
           return Container(
             height: 300,
             padding: const EdgeInsets.only(top: 12),
             child: Column(
               children: [
-              Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade400,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Choose ${title.toLowerCase()}',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            Expanded(
-              child: CupertinoPicker(
-                itemExtent: 32,
-                useMagnifier: true,
-                magnification: 1.2,
-                selectionOverlay: Container(
-                  padding: EdgeInsets.symmetric(vertical: 4),
-                  decoration: BoxDecoration(
-                    border: Border.symmetric(
-                        horizontal: BorderSide(color: Colors.grey.shade300),
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(color: Colors.grey.shade400, borderRadius: BorderRadius.circular(2)),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Choose ${title.toLowerCase()}',
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                Expanded(
+                  child: CupertinoPicker(
+                    itemExtent: 32,
+                    useMagnifier: true,
+                    magnification: 1.2,
+                    selectionOverlay: Container(
+                      padding: EdgeInsets.symmetric(vertical: 4),
+                      decoration: BoxDecoration(
+                        border: Border.symmetric(horizontal: BorderSide(color: Colors.grey.shade300)),
+                      ),
                     ),
+                    scrollController: FixedExtentScrollController(initialItem: options.indexOf(selectedValue.value)),
+                    onSelectedItemChanged: (int index) {
+                      selectedValue.value = options[index];
+                      if (onSelectionChanged != null) {
+                        onSelectionChanged(options[index]);
+                      }
+                    },
+                    children: options
+                        .map((opt) => Center(child: Text(opt, style: AppTextsStyle.medium.copyWith(fontSize: 23))))
+                        .toList(),
                   ),
                 ),
-                  scrollController: FixedExtentScrollController(
-                    initialItem: options.indexOf(selectedValue.value),
-                  ),
-                  onSelectedItemChanged: (int index) {
-                    selectedValue.value = options[index];
-                    if (onSelectionChanged != null) {
-                      onSelectionChanged(options[index]);
-                    }
-                  },
-                  children: options
-                      .map((opt) =>
-                      Center(
-                        child: Text(
-                          opt,
-                          style: AppTextsStyle.medium.copyWith(fontSize: 23),
-                        ),
-                      ))
-                      .toList(),
-                ),
-              ),
               ],
             ),
           );

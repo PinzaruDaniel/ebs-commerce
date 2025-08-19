@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
-import 'package:presentation/pages/delivery_address_page/widgets/dropdown_widget.dart';
+import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 
 import '../../util/resources/app_colors.dart';

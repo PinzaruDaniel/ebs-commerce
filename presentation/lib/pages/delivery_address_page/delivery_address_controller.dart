@@ -6,7 +6,7 @@ import 'package:domain/modules/delivery_address/use_cases/cities/get_cities_use_
 import 'package:domain/modules/delivery_address/use_cases/countries/get_countries_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/states/get_states_use_case.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
-import 'package:presentation/pages/delivery_address_page/widgets/dropdown_widget.dart';
+import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/mapper/cities_response_entity_mapper.dart';
 import 'package:presentation/util/mapper/countries_entity_mapper.dart';
 import 'package:presentation/util/mapper/states_entity_mapper.dart';

@@ -34,7 +34,7 @@ class DeliveryTypeWidget extends StatelessWidget {
               runSpacing: 8.0,
               children: itemViewModel.options.map((option) {
                 bool isSelected = itemViewModel.selected.value == option;
-                return GestureDetector(
+                return InkWell(
                   onTap: () {
                     itemViewModel.selected.value = option;
                     Get.find<DeliveryAddressController>().updateAllItems();
