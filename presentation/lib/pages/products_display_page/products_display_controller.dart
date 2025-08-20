@@ -10,8 +10,8 @@ import 'package:presentation/util/mapper/product_mapper.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../view/product_view_model.dart';
+import '../shopping_cart_page/enum/product_type.dart';
 
-enum ProductListType { saleProducts, newProducts, filteredProducts }
 
 class ProductsDisplayController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();

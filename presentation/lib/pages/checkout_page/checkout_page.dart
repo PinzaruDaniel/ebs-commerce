@@ -43,27 +43,29 @@ class _CheckoutPageState extends State<CheckoutPage> {
           icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Obx(
-              () => SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: checkoutController.allItems.map((item) {
-                if (item is HeaderTitleViewModel) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: HeaderTitleWidget(itemViewModel: item),
-                  );
-                }
-                if (item is CartViewModel) {
-                  return CheckoutProductViewWidget(item: item);
-                }
-                if (item is CheckoutInfoContainerViewModel) {
-                  return CheckoutInfoContainerWidget(item: item);
-                }
-                return const SizedBox();
-              }).toList(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Obx(
+                () => SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: checkoutController.allItems.map((item) {
+                  if (item is HeaderTitleViewModel) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: HeaderTitleWidget(itemViewModel: item),
+                    );
+                  }
+                  if (item is CartViewModel) {
+                    return CheckoutProductViewWidget(item: item);
+                  }
+                  if (item is CheckoutInfoContainerViewModel) {
+                    return CheckoutInfoContainerWidget(item: item);
+                  }
+                  return  SizedBox();
+                }).toList(),
+              ),
             ),
           ),
         ),

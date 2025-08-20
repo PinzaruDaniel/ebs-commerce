@@ -1,9 +1,9 @@
-import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'package:presentation/pages/shopping_cart_page/widgets/shopping_cart_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
+import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/product_image_widget.dart';
 import 'package:presentation/util/widgets/select_checkbox_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
@@ -22,12 +22,10 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
-  CartController get cartController => Get.find();
 
   @override
   void initState() {
     super.initState();
-    Get.put(CartController());
     deliveryAddressController.onInit();
     deliveryAddressController.toDeliveryAddressViewModel();
     contactInformationController.initAllItems();
@@ -47,12 +45,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       ),
       body: Obx(() {
         if (cartController.cartItems.isEmpty) {
-          return Center(
-            child: Text(
-              'Your cart is empty',
-              style: TextStyle(fontSize: 18, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
-            ),
-          );
+          return EmptyWidget();
         } else {
           return ListView.builder(
             physics: NeverScrollableScrollPhysics(),

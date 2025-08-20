@@ -8,7 +8,9 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/circular_progress_indicator_widget.dart';
 import 'package:presentation/view/base_view_model.dart';import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../../util/routing/app_router.dart';
+import '../../util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import '../../util/widgets/horizontal_products_list_widget.dart';
+import '../../view/cart_products_view_model.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -46,12 +48,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 icon: AppIcons.filtersIcon,
               ),
-              IconButton(
-                onPressed: () {
-                  AppRouter.openShoppingCartPage();
-                },
-                icon: AppIcons.cartIcon,
-              ),
+              AppBarIconShoppingCartWidget(),
             ],
           ),
           body: SafeArea(

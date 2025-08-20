@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:presentation/view/product_view_model.dart';
 
 import '../../pages/products_display_page/products_display_controller.dart';
+import '../../pages/shopping_cart_page/enum/product_type.dart';
+import 'empty_widget.dart';
 import 'header_title_widget.dart';
 import '../../pages/home_page/widgets/home_products_item_widget.dart';
 
@@ -64,10 +66,7 @@ class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWid
                   },
                 ),
               )
-            : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                child: Text('No products with sale', style: TextStyle(fontSize: 16, color: Colors.grey)),
-              ),
+            : EmptyWidget()
       ],
     );
   }

@@ -10,6 +10,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/routing/app_router.dart';
 import '../../util/widgets/circular_progress_indicator_widget.dart';
+import '../shopping_cart_page/enum/product_type.dart';
 
 class ProductsDisplayPage extends StatefulWidget {
   final String title;
