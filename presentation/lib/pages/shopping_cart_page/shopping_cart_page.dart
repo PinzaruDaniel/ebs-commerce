@@ -23,6 +23,7 @@ class ShoppingCartPage extends StatefulWidget {
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   CartController get cartController => Get.find();
+
   @override
   void initState() {
     super.initState();
@@ -44,70 +45,74 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
           icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
       ),
-      body: Column(
-        children: [
-          if (cartController.cartItems.isEmpty) Container(color: Colors.lightGreen),
-          Expanded(
-            child: Obx(
-              () => ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: cartController.cartItems.length,
-                itemBuilder: (context, index) {
-                  final item = cartController.cartItems[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-                    child: Row(
+      body: Obx(() {
+        if (cartController.cartItems.isEmpty) {
+          return Center(
+            child: Text(
+              'Your cart is empty',
+              style: TextStyle(fontSize: 18, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+            ),
+          );
+        } else {
+          return ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: cartController.cartItems.length,
+            itemBuilder: (context, index) {
+              final item = cartController.cartItems[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                child: Row(
+                  children: [
+                    SelectCheckboxWidget(
+                      tristate: false,
+                      selected: item.isSelected,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          item.isSelected = value;
+                        });
+                      },
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: ProductImageWidget(
+                        height: 80,
+                        width: 80,
+                        imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty ? item.imageUrl : null,
+                      ),
+                    ),
+                    Expanded(child: ShoppingCartTitleWidget(item: item)),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        SelectCheckboxWidget(
-                          tristate: false,
-                          selected: item.isSelected,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              item.isSelected = value;
-                            });
+                        ProductInputQuantityWidget(
+                          initialValue: item.quantity,
+                          onChanged: (val) {
+                            item.quantity = val;
+                            cartController.cartItems.refresh();
                           },
-                        ),
-                        ClipRRect(
-                          borderRadius: BorderRadiusGeometry.circular(16),
-                          child: ProductImageWidget(
-                            height: 80,
-                            width: 80,
-                            imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty ? item.imageUrl : null,
-                          ),
-                        ),
-                        Expanded(child: ShoppingCartTitleWidget(item: item)),
-
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            ProductInputQuantityWidget(
-                              initialValue: item.quantity,
-                              onChanged: (val) {
-                                item.quantity = val;
-                                cartController.cartItems.refresh();
-                              },
-                              maxValue: item.stock,
-                            ),
-                          ],
+                          maxValue: item.stock,
                         ),
                       ],
                     ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
+                  ],
+                ),
+              );
+            },
+          );
+        }
+      }),
 
-      bottomNavigationBar: BottomNavigationBarWidget(
-        item: dummyProduct,
-        title: AppTexts.checkout,
-        showIcon: false,
-        router: () {
-          AppRouter.openCheckoutPage(items: cartController.selectedItems);
-        },
+      bottomNavigationBar: Obx(()
+        =>  BottomNavigationBarWidget(
+          item: dummyProduct,
+          title: cartController.cartItems.isEmpty ? 'Continue shopping' : AppTexts.checkout,
+          showIcon: cartController.cartItems.isEmpty,
+          router: () {
+
+            cartController.cartItems.isEmpty ? AppRouter.openHomePage() : AppRouter.openCheckoutPage(items: cartController.selectedItems);
+          },
+        ),
       ),
     );
   }

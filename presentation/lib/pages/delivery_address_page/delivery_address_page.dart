@@ -28,6 +28,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBarWidget(
         title: AppTexts.deliveryAddress.capitalizeFirst,
         showBorder: false,
@@ -36,32 +37,30 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
           icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Obx(
-              () => Form(
-                key: _formKey,
-                child: Expanded(
-                  child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: deliveryAddressController.allItems.length,
-                    itemBuilder: (context, index) {
-                      var item = deliveryAddressController.allItems[index];
-                      if (item is DeliveryTypeViewModel) {
-                        return DeliveryTypeWidget(itemViewModel: item);
-                      } else if (item is SelectionViewModel) {
-                        return SelectionWidget(itemViewModel: item);
-                      } else if (item is TextFieldViewModel) {
-                        return TextFieldWidget(itemViewModel: item);
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  ),
-                ),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        behavior: HitTestBehavior.deferToChild,
+        child: SafeArea(
+          child: Obx(
+                () => Form(
+              key: _formKey,
+              child: ListView.builder(
+                padding: const EdgeInsets.only(bottom: 10),
+                itemCount: deliveryAddressController.allItems.length,
+                itemBuilder: (context, index) {
+                  var item = deliveryAddressController.allItems[index];
+                  if (item is DeliveryTypeViewModel) {
+                    return DeliveryTypeWidget(itemViewModel: item);
+                  } else if (item is SelectionViewModel) {
+                    return SelectionWidget(itemViewModel: item);
+                  } else if (item is TextFieldViewModel) {
+                    return TextFieldWidget(itemViewModel: item);
+                  }
+                  return const SizedBox.shrink();
+                },
               ),
             ),
-          ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
@@ -69,7 +68,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         title: deliveryAddressController.isLoading.value ? 'Loading' : 'Save',
         showIcon: false,
         router: () {
-          if (_formKey.currentState?.validate() ?? false){
+          if (_formKey.currentState?.validate() ?? false) {
             checkoutController.initAllItems();
             deliveryAddressController.onInit();
             Navigator.pop(context);

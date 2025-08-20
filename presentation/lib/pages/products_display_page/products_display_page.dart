@@ -9,7 +9,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../util/resources/app_icons.dart';
 import '../../util/routing/app_router.dart';
-import '../../util/widgets/circular_progress_indicator_page_widget.dart';
+import '../../util/widgets/circular_progress_indicator_widget.dart';
 
 class ProductsDisplayPage extends StatefulWidget {
   final String title;
@@ -53,7 +53,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
           enablePullUp: true,
           footer: ClassicFooter(
             loadingText: 'Loading more...',
-            loadingIcon: CircularProgressIndicatorPageWidget(
+            loadingIcon: CircularProgressIndicatorWidget(
               boxConstraints: BoxConstraints(minHeight: 20, minWidth: 20),
             ),
             canLoadingText: 'Release to load more',
@@ -76,7 +76,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
           },
 
           child: controller.isLoading.value
-              ? CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
+              ? CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
               : SingleChildScrollView(
                   child: ProductsListDisplayWidget(
                     title: widget.title,

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 
-import 'circular_progress_indicator_page_widget.dart';
+import 'circular_progress_indicator_widget.dart';
 
 class ProductImageWidget extends StatelessWidget {
   final double height;
@@ -16,7 +16,7 @@ class ProductImageWidget extends StatelessWidget {
       imageUrl: (imageUrl?.isNotEmpty ?? false) ? imageUrl! : AppIcons.noImage,
       progressIndicatorBuilder: (context, url, downloadProgress) =>
 
-          CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minWidth: 40, minHeight: 40,),
+          CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minWidth: 40, minHeight: 40,),
               value: downloadProgress.progress),
       errorWidget: (context, url, error) =>
           Image.asset(AppIcons.noImage, height: height, width: width, fit: BoxFit.cover),

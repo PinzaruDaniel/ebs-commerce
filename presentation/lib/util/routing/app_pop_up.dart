@@ -17,12 +17,14 @@ class AppPopUp {
     bool isDismissible = true,
     bool enableDrag = true,
     bool showHandle = true,
+    bool isScrollControlled=false,
   }) async {
     if (Get.context != null) {
       return await showModalBottomSheet(
         backgroundColor: Colors.white,
         showDragHandle: showHandle,
         isDismissible: isDismissible,
+        isScrollControlled: isScrollControlled,
         enableDrag: enableDrag,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
@@ -117,44 +119,36 @@ class AppPopUp {
       final promoCodeViewModel = PromoCodeViewModel();
       final validCodes = promoCodeViewModel.getMockPromoCodes();
 
-      await showCustomBottomSheet(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(child: Text('Enter Voucher Code', style: AppTextsStyle.bold(size: 18))),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextFieldWidget(itemViewModel: viewModel),
+      await showModalBottomSheet(
+          context: Get.context!,
+          isScrollControlled: true,
+          builder: (context) => Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Text('Enter your address',
+                      ),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                      hintText: 'address'
+                  ),
+                  autofocus: true,
+                ),
+              ],
             ),
-
-            Spacer(),
-            BottomNavigationBarWidget(
-              item: dummyProduct,
-              title: 'Save',
-              router: () {
-                final enteredCode = viewModel.value.value.trim().toUpperCase();
-                if (validCodes.contains(enteredCode)) {
-                  voucherCode.value = enteredCode;
-                  checkoutController.initAllItems();
-                  Get.back();
-                  Get.snackbar("Success", "Promo code applied!", snackPosition: SnackPosition.BOTTOM);
-                } else {
-                  Get.snackbar(
-                    "Invalid Code",
-                    "Promo code not recognized.",
-                    snackPosition: SnackPosition.BOTTOM,
-                    backgroundColor: Colors.redAccent,
-                    colorText: Colors.white,
-                  );
-                }
-              },
-              showIcon: false,
-            ),
-          ],
-        ),
-      );
+          ));
     }
   }
+
 
   static Future<void> showSelection({
     required String title,

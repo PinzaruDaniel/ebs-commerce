@@ -12,7 +12,7 @@ import 'package:presentation/pages/filtered_page/widgets/selected_category_butto
 import 'package:presentation/view/product_view_model.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
-import '../../util/widgets/circular_progress_indicator_page_widget.dart';
+import '../../util/widgets/circular_progress_indicator_widget.dart';
 import '../products_display_page/products_display_controller.dart';
 import 'filter_controller.dart';
 
