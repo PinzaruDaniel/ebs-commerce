@@ -14,6 +14,7 @@ import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
 import '../../util/widgets/circular_progress_indicator_widget.dart';
 import '../products_display_page/products_display_controller.dart';
+import '../shopping_cart_page/enum/product_type.dart';
 import 'filter_controller.dart';
 
 class FilterPage extends StatefulWidget {

@@ -9,6 +9,7 @@ import '../../pages/category_page/category_page.dart';
 import '../../pages/contact_information_page/contact_information_page.dart';
 import '../../pages/product_detail_page/product_detail_page.dart';
 import '../../pages/products_display_page/products_display_controller.dart';
+import '../../pages/shopping_cart_page/enum/product_type.dart';
 import '../../pages/shopping_cart_page/shopping_cart_page.dart';
 import '../../view/cart_products_view_model.dart';
 import '../../view/product_view_model.dart';

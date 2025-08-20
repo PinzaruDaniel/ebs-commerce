@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
+import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/product_image_widget.dart';
 import 'package:presentation/util/widgets/select_checkbox_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
@@ -47,12 +48,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       ),
       body: Obx(() {
         if (cartController.cartItems.isEmpty) {
-          return Center(
-            child: Text(
-              'Your cart is empty',
-              style: TextStyle(fontSize: 18, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
-            ),
-          );
+          return EmptyWidget();
         } else {
           return ListView.builder(
             physics: NeverScrollableScrollPhysics(),
