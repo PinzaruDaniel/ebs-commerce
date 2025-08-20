@@ -1,4 +1,3 @@
-import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
 import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'package:presentation/pages/shopping_cart_page/widgets/shopping_cart_title_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +7,12 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/product_image_widget.dart';
 import 'package:presentation/util/widgets/select_checkbox_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
+import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
-import '../delivery_address_page/delivery_address_controller.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   const ShoppingCartPage({super.key});
@@ -24,18 +23,14 @@ class ShoppingCartPage extends StatefulWidget {
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   CartController get cartController => Get.find();
-  ContactInformationController get contactController => Get.find();
-  DeliveryAddressController get deliveryController => Get.find();
   @override
   void initState() {
     super.initState();
     Get.put(CartController());
-    Get.put(ContactInformationController(), permanent: true);
-    Get.put(DeliveryAddressController(), permanent: true);
-    deliveryController.onInit();
-    deliveryController.toDeliveryAddressViewModel();
-    contactController.initAllItems();
-    contactController.toUserViewModel();
+    deliveryAddressController.onInit();
+    deliveryAddressController.toDeliveryAddressViewModel();
+    contactInformationController.initAllItems();
+    contactInformationController.toUserViewModel();
   }
 
   @override

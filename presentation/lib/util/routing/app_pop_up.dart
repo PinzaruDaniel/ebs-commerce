@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
+import '../../controllers/controller_imports.dart';
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
 import '../../view/promo_code_view_model.dart';
@@ -41,7 +41,6 @@ class AppPopUp {
     if (Get.context == null) return;
 
     final methods = ['PayPal', 'Plata Numerar'];
-    final checkController = Get.find<CheckoutController>();
 
     await showCustomBottomSheet(
       child: Column(
@@ -60,7 +59,7 @@ class AppPopUp {
                   return InkWell(
                     onTap: () {
                       onSelected(option);
-                      checkController.initAllItems();
+                      checkoutController.initAllItems();
                       Navigator.pop(Get.context!);
                     },
                     borderRadius: BorderRadius.circular(5),
@@ -100,7 +99,7 @@ class AppPopUp {
             item: dummyProduct,
             title: 'Save',
             router: () {
-              checkController.initAllItems();
+              checkoutController.initAllItems();
               Navigator.pop(Get.context!);
             },
             showIcon: false,
@@ -111,7 +110,6 @@ class AppPopUp {
   }
 
   static Future<void> voucherCode({required RxString voucherCode}) async {
-    final checkController = Get.find<CheckoutController>();
 
     if (Get.context != null) {
       final viewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
@@ -137,7 +135,7 @@ class AppPopUp {
                 final enteredCode = viewModel.value.value.trim().toUpperCase();
                 if (validCodes.contains(enteredCode)) {
                   voucherCode.value = enteredCode;
-                  checkController.initAllItems();
+                  checkoutController.initAllItems();
                   Get.back();
                   Get.snackbar("Success", "Promo code applied!", snackPosition: SnackPosition.BOTTOM);
                 } else {

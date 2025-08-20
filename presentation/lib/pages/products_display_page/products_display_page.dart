@@ -47,50 +47,45 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
         title: widget.title,
         actions: [IconButton(onPressed: AppRouter.openShoppingCartPage, icon: AppIcons.cartIcon)],
       ),
-      body: Obx(() {
-        return Scaffold(
-          backgroundColor: Colors.white,
-          body: SafeArea(
-            child: SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-              footer: ClassicFooter(
-                loadingText: 'Loading more...',
-                loadingIcon: CircularProgressIndicatorPageWidget(
-                  boxConstraints: BoxConstraints(minHeight: 20, minWidth: 20),
-                ),
-                canLoadingText: 'Release to load more',
-                idleText: 'Pull up to load more',
-                noDataText: 'No more data',
-              ),
-              header: WaterDropMaterialHeader(
-                distance: 50,
-                color: AppColors.primary,
-                backgroundColor: Colors.grey.shade100,
-              ),
-              controller: _refreshController,
-              onRefresh: () async {
-                await controller.loadProducts(loadMore: false);
-                _refreshController.refreshCompleted();
-              },
-              onLoading: () async {
-                await controller.loadProducts(loadMore: true);
-                _refreshController.loadComplete();
-              },
-
-              child: controller.isLoading.value
-                  ? CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
-                  : SingleChildScrollView(
-                child: ProductsListDisplayWidget(
-                  title: widget.title,
-                  showHeaderTitle: false,
-                  products: controller.products,
-                ),
-              ),
+      body: Obx(
+        () => SmartRefresher(
+          enablePullDown: true,
+          enablePullUp: true,
+          footer: ClassicFooter(
+            loadingText: 'Loading more...',
+            loadingIcon: CircularProgressIndicatorPageWidget(
+              boxConstraints: BoxConstraints(minHeight: 20, minWidth: 20),
             ),
+            canLoadingText: 'Release to load more',
+            idleText: 'Pull up to load more',
+            noDataText: 'No more data',
           ),
-        );
-      }),
+          header: WaterDropMaterialHeader(
+            distance: 50,
+            color: AppColors.primary,
+            backgroundColor: Colors.grey.shade100,
+          ),
+          controller: _refreshController,
+          onRefresh: () async {
+            await controller.loadProducts(loadMore: false);
+            _refreshController.refreshCompleted();
+          },
+          onLoading: () async {
+            await controller.loadProducts(loadMore: true);
+            _refreshController.loadComplete();
+          },
+
+          child: controller.isLoading.value
+              ? CircularProgressIndicatorPageWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
+              : SingleChildScrollView(
+                  child: ProductsListDisplayWidget(
+                    title: widget.title,
+                    showHeaderTitle: false,
+                    products: controller.products,
+                  ),
+                ),
+        ),
+      ),
     );
   }
 }

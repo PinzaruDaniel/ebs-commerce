@@ -6,8 +6,8 @@ import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
+import '../../controllers/controller_imports.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../view/product_view_model.dart';
 
@@ -20,7 +20,6 @@ class ProductsDisplayController extends GetxController {
   RxBool isLoading = true.obs;
   List<ProductViewModel> products = RxList([]);
 
-  FilterController get filterController => Get.find();
   Rxn<Failure> failure = Rxn<Failure>();
   RxInt currentPage = 1.obs;
   int perPage = 20;

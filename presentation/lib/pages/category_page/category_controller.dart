@@ -7,7 +7,6 @@ import 'package:presentation/util/mapper/category_mapper.dart';
 import '../../../view/category_view_model.dart';
 
 class CategoryController extends GetxController {
-  FilterController get filController=>Get.find();
   final GetAllCategoriesUseCase getAllCategoriesUseCase = GetIt.instance<GetAllCategoriesUseCase>();
 
   RxList<CategoryViewModel> categories = RxList([]);

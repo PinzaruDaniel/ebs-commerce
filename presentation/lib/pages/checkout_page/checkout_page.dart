@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
+import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
-import '../contact_information_page/contact_information_controller.dart';
-import '../delivery_address_page/delivery_address_controller.dart';
-import '../shopping_cart_page/cart_controller.dart';
 
 class CheckoutPage extends StatefulWidget {
   final List<CartViewModel> items;
@@ -23,24 +20,14 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
-  CheckoutController get checkController => Get.find();
-
-  ContactInformationController get contactController => Get.find();
-
-  CartController get cartController => Get.find();
-
-  DeliveryAddressController get deliveryController => Get.find();
-
   @override
   void initState() {
     super.initState();
-    Get.put(CheckoutController());
-    Get.put(ContactInformationController());
-    deliveryController.onInit();
-    deliveryController.toDeliveryAddressViewModel();
-    checkController.initAllItems();
-    contactController.initAllItems();
-    contactController.toUserViewModel();
+    deliveryAddressController.onInit();
+    deliveryAddressController.toDeliveryAddressViewModel();
+    checkoutController.initAllItems();
+    contactInformationController.initAllItems();
+    contactInformationController.toUserViewModel();
   }
 
   @override
@@ -62,7 +49,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               () => SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: checkController.allItems.map((item) {
+              children: checkoutController.allItems.map((item) {
                 if (item is HeaderTitleViewModel) {
                   return Padding(
                     padding: const EdgeInsets.only(top: 16.0),

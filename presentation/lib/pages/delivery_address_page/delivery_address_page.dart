@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/checkout_page/checkout_controller.dart';
-import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
-
+import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
@@ -22,11 +20,6 @@ class DeliveryAddressPage extends StatefulWidget {
 
 class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   final _formKey = GlobalKey<FormState>();
-
-  DeliveryAddressController get deliveryController => Get.find();
-
-  CheckoutController get checkController => Get.find();
-
   @override
   void initState() {
     super.initState();
@@ -52,9 +45,9 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                 child: Expanded(
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: deliveryController.allItems.length,
+                    itemCount: deliveryAddressController.allItems.length,
                     itemBuilder: (context, index) {
-                      var item = deliveryController.allItems[index];
+                      var item = deliveryAddressController.allItems[index];
                       if (item is DeliveryTypeViewModel) {
                         return DeliveryTypeWidget(itemViewModel: item);
                       } else if (item is SelectionViewModel) {
@@ -73,12 +66,12 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
         item: dummyProduct,
-        title: deliveryController.isLoading.value ? 'Loading' : 'Save',
+        title: deliveryAddressController.isLoading.value ? 'Loading' : 'Save',
         showIcon: false,
         router: () {
           if (_formKey.currentState?.validate() ?? false){
-            checkController.initAllItems();
-            deliveryController.onInit();
+            checkoutController.initAllItems();
+            deliveryAddressController.onInit();
             Navigator.pop(context);
           }
         },
