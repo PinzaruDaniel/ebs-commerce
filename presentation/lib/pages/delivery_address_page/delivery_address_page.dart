@@ -9,7 +9,6 @@ import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
-import '../../view/product_view_model.dart';
 
 class DeliveryAddressPage extends StatefulWidget {
   const DeliveryAddressPage({super.key});
@@ -37,37 +36,32 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
           icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
       ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        behavior: HitTestBehavior.deferToChild,
-        child: SafeArea(
-          child: Obx(
-                () => Form(
-              key: _formKey,
-              child: ListView.builder(
-                padding: const EdgeInsets.only(bottom: 10),
-                itemCount: deliveryAddressController.allItems.length,
-                itemBuilder: (context, index) {
-                  var item = deliveryAddressController.allItems[index];
-                  if (item is DeliveryTypeViewModel) {
-                    return DeliveryTypeWidget(itemViewModel: item);
-                  } else if (item is SelectionViewModel) {
-                    return SelectionWidget(itemViewModel: item);
-                  } else if (item is TextFieldViewModel) {
-                    return TextFieldWidget(itemViewModel: item);
-                  }
-                  return const SizedBox.shrink();
-                },
-              ),
+      body: SafeArea(
+        child: Obx(
+              () => Form(
+            key: _formKey,
+            child: ListView.builder(
+              padding: const EdgeInsets.only(bottom: 10),
+              itemCount: deliveryAddressController.allItems.length,
+              itemBuilder: (context, index) {
+                var item = deliveryAddressController.allItems[index];
+                if (item is DeliveryTypeViewModel) {
+                  return DeliveryTypeWidget(itemViewModel: item);
+                } else if (item is SelectionViewModel) {
+                  return SelectionWidget(itemViewModel: item);
+                } else if (item is TextFieldViewModel) {
+                  return TextFieldWidget(itemViewModel: item);
+                }
+                return const SizedBox.shrink();
+              },
             ),
           ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
-        item: dummyProduct,
         title: deliveryAddressController.isLoading.value ? 'Loading' : 'Save',
         showIcon: false,
-        router: () {
+        onTap: ()  {
           if (_formKey.currentState?.validate() ?? false) {
             checkoutController.initAllItems();
             deliveryAddressController.onInit();

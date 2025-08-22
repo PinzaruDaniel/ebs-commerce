@@ -25,15 +25,12 @@ class ProductsDisplayController extends GetxController {
   int perPage = 20;
   RxBool isLoadingMore = false.obs;
 
-  final ProductListType productType;
 
-  ProductsDisplayController(this.productType);
 
-  void initItems() {
-    loadProducts(loadMore: false);
-  }
 
-  Future<void> loadProducts({bool loadMore = false}) async {
+
+
+  Future<void> loadProducts({bool loadMore = false, required ProductListType productType}) async {
     if (loadMore) {
       if (isLoadingMore.value) return;
     } else {
@@ -54,6 +51,9 @@ class ProductsDisplayController extends GetxController {
         case ProductListType.filteredProducts:
           await getFilteredProducts(loadMore);
           break;
+
+          default:
+            return;
       }
       if (loadMore) {
         currentPage.value++;

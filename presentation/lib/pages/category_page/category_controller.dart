@@ -1,7 +1,6 @@
 import 'package:domain/modules/categories/use_cases/get_all_categories_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/util/mapper/category_mapper.dart';
 
 import '../../../view/category_view_model.dart';

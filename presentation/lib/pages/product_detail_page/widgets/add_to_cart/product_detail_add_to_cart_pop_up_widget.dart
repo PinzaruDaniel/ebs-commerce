@@ -65,10 +65,9 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
         ),
         Spacer(),
         BottomNavigationBarWidget(
-          item: widget.item,
           title: AppTexts.addToCart,
           addToCart: true,
-          router: () {
+          onTap: () {
             final item=addCartController.cartItem.value;
             if(item !=null){
               mainAppController.addToCart(item);

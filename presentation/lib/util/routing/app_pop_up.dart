@@ -98,9 +98,8 @@ class AppPopUp {
 
           Spacer(),
           BottomNavigationBarWidget(
-            item: dummyProduct,
             title: 'Save',
-            router: () {
+            onTap: () {
               checkoutController.initAllItems();
               Navigator.pop(Get.context!);
             },
@@ -116,53 +115,48 @@ class AppPopUp {
       final viewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
       final promoCodeViewModel = PromoCodeViewModel();
       final validCodes = promoCodeViewModel.getMockPromoCodes();
-      await showModalBottomSheet(
-        context: Get.context!,
+      await showCustomBottomSheet(
         isScrollControlled: true,
-        backgroundColor: Colors.white,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
-        builder: (context) {
-          return Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom, top: 24),
-            child: GestureDetector(
-              onTap: () => FocusScope.of(context).unfocus(),
-              behavior: HitTestBehavior.opaque,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Center(child: Text('Enter Voucher Code', style: AppTextsStyle.bold(size: 18))),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 52),
-                    child: TextFieldWidget(itemViewModel: viewModel),
-                  ),
-                  BottomNavigationBarWidget(
-                    item: dummyProduct,
-                    title: 'Save',
-                    router: () {
-                      final enteredCode = viewModel.value.value.trim().toUpperCase();
-                      if (validCodes.contains(enteredCode)) {
-                        voucherCode.value = enteredCode;
-                        checkoutController.initAllItems();
-                        Get.back();
-                        Get.snackbar("Success", "Promo code applied!", snackPosition: SnackPosition.BOTTOM);
-                      } else {
-                        Get.snackbar(
-                          "Invalid Code",
-                          "Promo code not recognized.",
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.redAccent,
-                          colorText: Colors.white,
-                        );
-                      }
-                    },
-                    showIcon: false,
-                  ),
-                ],
-              ),
+        child: Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).viewInsets.bottom, top: 24),
+          child: GestureDetector(
+            /*onTap: () => FocusScope.of((Get.context!).unfocus(),
+              behavior: HitTestBehavior.opaque,*/
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Center(child: Text('Enter Voucher Code', style: AppTextsStyle.bold(size: 18))),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 52),
+                  child: TextFieldWidget(itemViewModel: viewModel),
+                ),
+                BottomNavigationBarWidget(
+                  title: 'Save',
+                  onTap: () {
+                    final enteredCode = viewModel.placeholder.trim().toUpperCase();
+                    if (validCodes.contains(enteredCode)) {
+                      voucherCode.value = enteredCode;
+                      checkoutController.initAllItems();
+                      Get.back();
+                      Get.snackbar("Success", "Promo code applied!", snackPosition: SnackPosition.BOTTOM);
+                    } else {
+                      Get.snackbar(
+                        "Invalid Code",
+                        "Promo code not recognized.",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.redAccent,
+                        colorText: Colors.white,
+                      );
+                    }
+                  },
+                  showIcon: false,
+                ),
+              ],
             ),
-          );
-        },
+          ),
+        ),
+
       );
     }
   }

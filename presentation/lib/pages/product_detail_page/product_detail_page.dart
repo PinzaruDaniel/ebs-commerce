@@ -3,6 +3,7 @@ import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/add_t
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_collapsed_app_bar_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_expanded_app_bar.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_page_body_widget.dart';
+import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/material.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
-import '../shopping_cart_page/shopping_cart_page.dart';
 
 class ProductDetailPage extends StatefulWidget {
   const ProductDetailPage({super.key, required this.item});
@@ -74,9 +74,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               icon: AppIcons.backIcon(color: AppColors.blue, size: 20),
               onPressed: () => Navigator.pop(context),
             ),
-            actions: [
-              AppBarIconShoppingCartWidget(),
-            ],
+            actions: [AppBarIconShoppingCartWidget()],
             flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),
           ),
           SliverToBoxAdapter(
@@ -94,9 +92,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
       bottomNavigationBar: BottomNavigationBarWidget(
         addToCart: widget.item?.price != null && widget.item?.stock != null,
-        item: widget.item!,
         title: widget.item?.price != null && widget.item?.stock != null ? AppTexts.addToCart : AppTexts.cantAddToCart,
-        showIcon: widget.item?.price != null && widget.item?.stock != null, titleDialog: AppTexts.oops, contentDialog: AppTexts.cantAddToCart,
+        showIcon: widget.item?.price != null && widget.item?.stock != null,
+        titleDialog: AppTexts.oops,
+        contentDialog: AppTexts.cantAddToCart,
+        onTap: () {
+          AppPopUp.showCartInfoPopUp(item: widget.item!);
+        },
       ),
     );
   }

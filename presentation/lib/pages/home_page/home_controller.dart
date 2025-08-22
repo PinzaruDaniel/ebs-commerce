@@ -25,6 +25,7 @@ class HomeController extends GetxController {
   RxBool isLoadingMore = false.obs;
 
   void initItems() {
+    items.clear();
     items.add(AdBannerViewModel());
     getProducts();
   }

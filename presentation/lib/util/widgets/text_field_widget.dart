@@ -6,9 +6,9 @@ import 'package:presentation/view/base_view_model.dart';
 class TextFieldViewModel extends BaseViewModel {
   final String title;
   final TextInputType? textInputType;
-  final RxString value;
+  String placeholder;
 
-  TextFieldViewModel({required this.title, this.textInputType, String initialValue = ''}) : value = initialValue.obs;
+  TextFieldViewModel({required this.title, this.textInputType, String initialValue = ''}) : placeholder = initialValue;
 }
 
 class TextFieldWidget extends StatefulWidget {
@@ -23,19 +23,14 @@ class TextFieldWidget extends StatefulWidget {
 class _TextFieldWidgetState extends State<TextFieldWidget> {
   var controller = TextEditingController();
   var focusNode = FocusNode();
+
   @override
   void initState() {
     super.initState();
-    controller = TextEditingController(text: widget.itemViewModel.value.value);
+    controller = TextEditingController(text: widget.itemViewModel.placeholder);
 
     controller.addListener(() {
-      widget.itemViewModel.value.value = controller.text;
-    });
-
-    focusNode.addListener(() {
-      if (!focusNode.hasFocus) {
-        setState(() {});
-      }
+      widget.itemViewModel.placeholder = controller.text;
     });
   }
 
@@ -55,43 +50,40 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         children: [
           Text(widget.itemViewModel.title),
           const SizedBox(height: 4),
-          Obx(() {
-            if (controller.text != widget.itemViewModel.value.value) {
-              controller.text = widget.itemViewModel.value.value;
-              controller.selection = TextSelection.collapsed(offset: controller.text.length);
-            }
-            return TextFormField(
-              validator: (text) {
-                if (text == null || text.isEmpty) {
-                  return "This field is required";
-                }
-                return null;
-              },
-              controller: controller,
-              cursorColor: AppColors.primary,
-              keyboardType: widget.itemViewModel.textInputType ?? TextInputType.text,
-              textInputAction: TextInputAction.done,
-              decoration: InputDecoration(
-                isDense: true,
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(color: AppColors.red, width: 2.0),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(color: AppColors.redText, width: 1.0),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(color: AppColors.secondary, width: 2.0),
-                ),
+          TextFormField(
+            validator: (text) {
+              if (text == null || text.isEmpty) {
+                return "This field is required";
+              }
+              return null;
+            },
+            onTapOutside: (event) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            controller: controller,
+            cursorColor: AppColors.primary,
+            keyboardType: widget.itemViewModel.textInputType ?? TextInputType.text,
+            textInputAction: TextInputAction.done,
+            decoration: InputDecoration(
+              isDense: true,
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(color: AppColors.red, width: 2.0),
               ),
-            );
-          }),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(color: AppColors.redText, width: 1.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(color: AppColors.secondary, width: 2.0),
+              ),
+            ),
+          ),
         ],
       ),
     );

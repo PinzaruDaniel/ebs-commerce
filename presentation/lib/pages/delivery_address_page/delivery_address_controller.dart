@@ -256,15 +256,14 @@ class DeliveryAddressController extends GetxController {
         country: getViewModel<SelectionViewModel>('Country').selectedValue.value,
         region: getViewModel<SelectionViewModel>('Region').selectedValue.value,
         city: getViewModel<SelectionViewModel>('City').selectedValue.value,
-        postalCode: getViewModel<TextFieldViewModel>('Postal code').value.value,
-        address: getViewModel<TextFieldViewModel>('Address').value.value,
-        comments: getViewModel<TextFieldViewModel>('Other Comments').value.value,
+        postalCode: getViewModel<TextFieldViewModel>('Postal code').placeholder,
+        address: getViewModel<TextFieldViewModel>('Address').placeholder,
+        comments: getViewModel<TextFieldViewModel>('Other Comments').placeholder,
       );
       addressVM.value = model;
       return model;
     }
   }
-
   T getViewModel<T extends BaseViewModel>(String title) {
     return allItems.firstWhere((item) => item is T && (item as dynamic).title == title) as T;
   }

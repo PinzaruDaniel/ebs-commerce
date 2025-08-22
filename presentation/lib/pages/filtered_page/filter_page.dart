@@ -9,13 +9,9 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/selected_category_button_widget.dart';
-import 'package:presentation/view/product_view_model.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
-import '../../util/widgets/circular_progress_indicator_widget.dart';
-import '../products_display_page/products_display_controller.dart';
 import '../shopping_cart_page/enum/product_type.dart';
-import 'filter_controller.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -110,7 +106,6 @@ class _FilterPageState extends State<FilterPage> {
 
       bottomNavigationBar: Obx(() {
         return BottomNavigationBarWidget(
-          item: dummyProduct,
           title: filterController.isLoading.value
               ? 'Loading...'
               : (filterController.filteredCount.value > 0
@@ -118,7 +113,7 @@ class _FilterPageState extends State<FilterPage> {
                     : AppTexts.noProductsToShow),
           showIcon: false,
           addToCart: filterController.filteredProducts.isNotEmpty,
-          router: () {
+          onTap: () {
             AppRouter.openProductsDisplayPage(type: ProductListType.filteredProducts, title: AppTexts.filteredProducts);
           },
           titleDialog: AppTexts.oops,

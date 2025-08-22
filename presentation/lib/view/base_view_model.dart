@@ -13,7 +13,11 @@ class HorizontalProductListViewModel extends BaseViewModel{
 
 class AllProductsViewItem extends BaseViewModel {
   final List<ProductViewModel> products;
+  final ProductListType type;
 
-  AllProductsViewItem({required this.products});
+  AllProductsViewItem({
+    required this.products,
+    this.type = ProductListType.allProducts,
+  });
 }
 

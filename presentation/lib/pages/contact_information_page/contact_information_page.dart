@@ -7,7 +7,6 @@ import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/text_field_widget.dart';
-import '../../view/product_view_model.dart';
 
 class ContactInformationPage extends StatefulWidget {
   const ContactInformationPage({super.key});
@@ -38,8 +37,7 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Obx(
-              () => Form(
+            Form(
                 key: _formKey,
                 child: Expanded(
                   child: ListView.builder(
@@ -55,15 +53,13 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
-        item: dummyProduct,
         title:bottomBarTitle,
         showIcon: false,
-        router: () {
+        onTap: ()  {
           if (_formKey.currentState?.validate() ?? false) {
             checkoutController.initAllItems();
             contactInformationController.initAllItems();

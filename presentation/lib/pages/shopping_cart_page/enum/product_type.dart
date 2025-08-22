@@ -1,1 +1,1 @@
-enum ProductListType { saleProducts, newProducts, filteredProducts }
+enum ProductListType { saleProducts, newProducts, filteredProducts, allProducts }

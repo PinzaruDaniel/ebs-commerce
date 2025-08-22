@@ -6,7 +6,6 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/product_image_widget.dart';
 import 'package:presentation/util/widgets/select_checkbox_widget.dart';
-import 'package:presentation/view/product_view_model.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
@@ -98,12 +97,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
 
       bottomNavigationBar: Obx(()
         =>  BottomNavigationBarWidget(
-          item: dummyProduct,
-          title: cartController.cartItems.isEmpty ? 'Continue shopping' : AppTexts.checkout,
+          title: cartController.cartItems.isEmpty ||cartController.selectedItems.isEmpty ? 'Continue shopping' : AppTexts.checkout,
           showIcon: cartController.cartItems.isEmpty,
-          router: () {
-
-            cartController.cartItems.isEmpty ? AppRouter.openHomePage() : AppRouter.openCheckoutPage(items: cartController.selectedItems);
+          onTap: () {
+            cartController.cartItems.isEmpty || cartController.selectedItems.isEmpty ? AppRouter.openHomePage() : AppRouter.openCheckoutPage(items: cartController.selectedItems);
           },
         ),
       ),

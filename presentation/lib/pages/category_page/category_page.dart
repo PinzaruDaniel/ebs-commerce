@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/category_page/widgets/checkbox_category_widget.dart';
-import 'package:presentation/util/resources/app_icons.dart';
+import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
-import 'package:presentation/view/product_view_model.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_text_styles.dart';
-import '../../../util/routing/app_router.dart';
 import '../../util/resources/app_texts.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -128,10 +126,11 @@ class _CategoryPageState extends State<CategoryPage> {
               },
             ),
       bottomNavigationBar: BottomNavigationBarWidget(
-        item: dummyProduct,
-        title: AppTexts.apply,
+        title: categoryController.categories.isEmpty ? 'Go Home' : AppTexts.apply,
         showIcon: false,
-        router: Get.back,
+        onTap: () {
+          categoryController.categories.isEmpty? AppRouter.openHomePage() : Get.back;
+        },
         addToCart: null,
       ),
     );
