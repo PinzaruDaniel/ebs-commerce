@@ -12,29 +12,33 @@ class AppBarIconShoppingCartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Row(
       children: [
-        IconButton(
-          onPressed: () {
-            AppRouter.openShoppingCartPage();
-          },
-          icon: AppIcons.cartIcon,
-        ),
-        Obx(
-          () => cartController.cartItems.isEmpty
-              ? Container()
-              : Positioned(
-                  top: 12,
-                  left: 8,
-                  child: CircleAvatar(
-                    radius: 8,
-                    backgroundColor: AppColors.red,
-                    child: Text(
-                      '${cartController.cartItems.length}',
-                      style: AppTextsStyle.bold(size: 9, color: Colors.white),
+        Stack(
+          children: [
+            IconButton(
+              onPressed: () {
+                AppRouter.openShoppingCartPage();
+              },
+              icon: AppIcons.cartIcon,
+            ),
+            Obx(
+              () => cartController.cartItems.isEmpty
+                  ? SizedBox()
+                  : Positioned(
+                      top: 12,
+                      left: 8,
+                      child: CircleAvatar(
+                        radius: 8,
+                        backgroundColor: AppColors.red,
+                        child: Text(
+                          '${cartController.cartItems.length}',
+                          style: AppTextsStyle.bold(size: 9, color: Colors.white),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+            ),
+          ],
         ),
       ],
     );

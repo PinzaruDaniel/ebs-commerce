@@ -17,7 +17,7 @@ class AppPopUp {
     bool isDismissible = true,
     bool enableDrag = true,
     bool showHandle = true,
-    bool isScrollControlled=false,
+    bool isScrollControlled = false,
   }) async {
     if (Get.context != null) {
       return await showModalBottomSheet(
@@ -112,43 +112,58 @@ class AppPopUp {
   }
 
   static Future<void> voucherCode({required RxString voucherCode}) async {
-
     if (Get.context != null) {
       final viewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
-
       final promoCodeViewModel = PromoCodeViewModel();
       final validCodes = promoCodeViewModel.getMockPromoCodes();
-
       await showModalBottomSheet(
-          context: Get.context!,
-          isScrollControlled: true,
-          builder: (context) => Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text('Enter your address',
-                      ),
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                      hintText: 'address'
+        context: Get.context!,
+        isScrollControlled: true,
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+        builder: (context) {
+          return Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom, top: 24),
+            child: SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Center(child: Text('Enter Voucher Code', style: AppTextsStyle.bold(size: 18))),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 52),
+                    child: TextFieldWidget(itemViewModel: viewModel),
                   ),
-                  autofocus: true,
-                ),
-              ],
+                  BottomNavigationBarWidget(
+                    item: dummyProduct,
+                    title: 'Save',
+                    router: () {
+                      final enteredCode = viewModel.value.value.trim().toUpperCase();
+                      if (validCodes.contains(enteredCode)) {
+                        voucherCode.value = enteredCode;
+                        checkoutController.initAllItems();
+                        Get.back();
+                        Get.snackbar("Success", "Promo code applied!", snackPosition: SnackPosition.BOTTOM);
+                      } else {
+                        Get.snackbar(
+                          "Invalid Code",
+                          "Promo code not recognized.",
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.redAccent,
+                          colorText: Colors.white,
+                        );
+                      }
+                    },
+                    showIcon: false,
+                  ),
+                ],
+              ),
             ),
-          ));
+          );
+        },
+      );
     }
   }
-
 
   static Future<void> showSelection({
     required String title,
