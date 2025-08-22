@@ -6,19 +6,17 @@ import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/view/product_view_model.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
-  final ProductViewModel item;
   final String title;
   final String? titleDialog;
   final String? contentDialog;
-  final Function? router;
+  final Function(ProductViewModel?)? onCall;
   final bool? addToCart;
   final bool showIcon;
 
   const BottomNavigationBarWidget({
     super.key,
-    required this.item,
     required this.title,
-    this.router,
+    this.onCall,
     required this.showIcon,
     this.addToCart,
     this.titleDialog,
@@ -42,8 +40,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
         ),
         onPressed: () {
           if (addToCart == true) {
-            if (router != null) {
-              router?.call();
+            if (onCall != null) {
+              onCall?.call();
             } else {
               AppPopUp.showCartInfoPopUp(item: item);
             }
