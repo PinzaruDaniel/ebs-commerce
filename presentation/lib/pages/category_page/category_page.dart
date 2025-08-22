@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/category_page/widgets/checkbox_category_widget.dart';
 import 'package:presentation/util/resources/app_icons.dart';
+import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
@@ -32,7 +33,7 @@ class _CategoryPageState extends State<CategoryPage> {
         showBorder: true,
         iconColors: AppColors.primary,
         title: AppTexts.categories,
-        actions: [IconButton(onPressed: AppRouter.openShoppingCartPage, icon: AppIcons.cartIcon)],
+        actions: [AppBarIconShoppingCartWidget()],
       ),
       body: categoryController.categories.isEmpty
           ? EmptyWidget()

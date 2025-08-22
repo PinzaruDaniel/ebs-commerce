@@ -4,6 +4,7 @@ import 'package:presentation/pages/home_page/home_controller.dart';
 import 'package:presentation/pages/products_display_page/products_display_controller.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
+import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
@@ -46,7 +47,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
         showBorder: true,
         iconColors: AppColors.blue,
         title: widget.title,
-        actions: [IconButton(onPressed: AppRouter.openShoppingCartPage, icon: AppIcons.cartIcon)],
+        actions: [AppBarIconShoppingCartWidget()],
       ),
       body: Obx(
         () => SmartRefresher(
@@ -54,9 +55,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
           enablePullUp: true,
           footer: ClassicFooter(
             loadingText: 'Loading more...',
-            loadingIcon: CircularProgressIndicatorWidget(
-              boxConstraints: BoxConstraints(minHeight: 20, minWidth: 20),
-            ),
+            loadingIcon: CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 20, minWidth: 20)),
             canLoadingText: 'Release to load more',
             idleText: 'Pull up to load more',
             noDataText: 'No more data',

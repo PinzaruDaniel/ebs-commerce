@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
@@ -19,15 +20,22 @@ class AppBarIconShoppingCartWidget extends StatelessWidget {
           },
           icon: AppIcons.cartIcon,
         ),
-        Positioned(
-          top: 12,
-          left: 8,
-          child: CircleAvatar(
-              radius: 8,
-              backgroundColor: AppColors.red,
-              child: Text('${cartController.cartItems.length}', style: AppTextsStyle.bold(size: 9))),
-        )
-
+        Obx(
+          () => cartController.cartItems.isEmpty
+              ? Container()
+              : Positioned(
+                  top: 12,
+                  left: 8,
+                  child: CircleAvatar(
+                    radius: 8,
+                    backgroundColor: AppColors.red,
+                    child: Text(
+                      '${cartController.cartItems.length}',
+                      style: AppTextsStyle.bold(size: 9, color: Colors.white),
+                    ),
+                  ),
+                ),
+        ),
       ],
     );
   }

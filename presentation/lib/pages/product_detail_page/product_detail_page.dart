@@ -3,6 +3,7 @@ import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/add_t
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_collapsed_app_bar_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_expanded_app_bar.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_page_body_widget.dart';
+import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
@@ -74,12 +75,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               onPressed: () => Navigator.pop(context),
             ),
             actions: [
-              IconButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartPage()));
-                },
-                icon: AppIcons.cartIcon,
-              ),
+              AppBarIconShoppingCartWidget(),
             ],
             flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),
           ),
