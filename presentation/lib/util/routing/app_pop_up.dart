@@ -13,7 +13,6 @@ import '../widgets/text_field_widget.dart';
 class AppPopUp {
   static Future<void> showCustomBottomSheet({
     required Widget child,
-    double heightFraction = 0.35,
     bool isDismissible = true,
     bool enableDrag = true,
     bool showHandle = true,
@@ -27,34 +26,51 @@ class AppPopUp {
         isScrollControlled: isScrollControlled,
         enableDrag: enableDrag,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(16),
+            topLeft: Radius.circular(16),
+          ),
         ),
         context: Get.context!,
-        builder: (_) => SizedBox(height: Get.height * heightFraction, child: child),
+        builder: (_) => child,
       );
     }
   }
 
-  static Future<void> showCartInfoPopUp({required ProductViewModel item}) async {
-    return showCustomBottomSheet(child: ProductDetailAddToCartBottomSheetWidget(item: item));
+  static Future<void> showCartInfoPopUp({
+    required ProductViewModel item,
+  }) async {
+    return showCustomBottomSheet(
+      child: ProductDetailAddToCartBottomSheetWidget(item: item),
+    );
   }
 
-  static Future<void> paymentMethod({required RxString selectedMethod, required Function(String) onSelected}) async {
+  static Future<void> paymentMethod({
+    required RxString selectedMethod,
+    required Function(String) onSelected,
+  }) async {
     if (Get.context == null) return;
 
     final methods = ['PayPal', 'Plata Numerar'];
 
     await showCustomBottomSheet(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: Text('Choose Payment Method', style: AppTextsStyle.bold(size: 18))),
-          SizedBox(height: 24),
+          Center(
+            child: Text(
+              'Choose Payment Method',
+              style: AppTextsStyle.bold(size: 18),
+            ),
+          ),
           Obx(() {
             final selected = selectedMethod.value;
-
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 40,
+              ),
               child: Column(
                 children: methods.map((option) {
                   final isSelected = selected == option;
@@ -68,11 +84,20 @@ class AppPopUp {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2.0),
                       child: Container(
-                        padding: const EdgeInsets.only(left: 8.0, right: 36, top: 8, bottom: 8),
+                        padding: const EdgeInsets.only(
+                          left: 8.0,
+                          right: 36,
+                          top: 8,
+                          bottom: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
+                          border: Border.all(
+                            color: isSelected
+                                ? AppColors.primary
+                                : Colors.grey.shade300,
+                          ),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -82,7 +107,9 @@ class AppPopUp {
                               Text(
                                 option,
                                 style: AppTextsStyle.medium.copyWith(
-                                  color: isSelected ? AppColors.primary : Colors.black,
+                                  color: isSelected
+                                      ? AppColors.primary
+                                      : Colors.black,
                                 ),
                               ),
                             ],
@@ -95,8 +122,6 @@ class AppPopUp {
               ),
             );
           }),
-
-          Spacer(),
           BottomNavigationBarWidget(
             title: 'Save',
             onTap: () {
@@ -112,55 +137,75 @@ class AppPopUp {
 
   static Future<void> voucherCode({required RxString voucherCode}) async {
     if (Get.context != null) {
-      final viewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
+      final viewModel = TextFieldViewModel(
+        title: '',
+        initialValue: voucherCode.value,
+      );
       final promoCodeViewModel = PromoCodeViewModel();
       final validCodes = promoCodeViewModel.getMockPromoCodes();
+
       await showCustomBottomSheet(
         isScrollControlled: true,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).viewInsets.bottom, top: 24),
-          child: GestureDetector(
-            /*onTap: () => FocusScope.of((Get.context!).unfocus(),
-              behavior: HitTestBehavior.opaque,*/
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Center(child: Text('Enter Voucher Code', style: AppTextsStyle.bold(size: 18))),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 52),
-                  child: TextFieldWidget(itemViewModel: viewModel),
-                ),
-                BottomNavigationBarWidget(
-                  title: 'Save',
-                  onTap: () {
-                    final enteredCode = viewModel.placeholder.trim().toUpperCase();
-                    if (validCodes.contains(enteredCode)) {
-                      voucherCode.value = enteredCode;
-                      checkoutController.initAllItems();
-                      Get.back();
-                      Get.snackbar("Success", "Promo code applied!", snackPosition: SnackPosition.BOTTOM);
-                    } else {
-                      Get.snackbar(
-                        "Invalid Code",
-                        "Promo code not recognized.",
-                        snackPosition: SnackPosition.BOTTOM,
-                        backgroundColor: Colors.redAccent,
-                        colorText: Colors.white,
-                      );
-                    }
-                  },
-                  showIcon: false,
-                ),
-              ],
-            ),
-          ),
-        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
 
+              ),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: constraints.maxHeight),
+                child: SafeArea(
+                  top: false,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Center(
+                        child: Text(
+                          'Enter Voucher Code',
+                          style: AppTextsStyle.bold(size: 18),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 24),
+                        child: TextFieldWidget(itemViewModel: viewModel),
+                      ),
+                      BottomNavigationBarWidget(
+                        title: 'Save',
+                        onTap: () {
+                          final enteredCode = viewModel.placeholder.trim().toUpperCase();
+                          if (validCodes.contains(enteredCode)) {
+                            voucherCode.value = enteredCode;
+                            checkoutController.initAllItems();
+                            Get.back();
+                            Get.snackbar(
+                              "Success",
+                              "Promo code applied!",
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          } else {
+                            Get.snackbar(
+                              "Invalid Code",
+                              "Promo code not recognized.",
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.redAccent,
+                              colorText: Colors.white,
+                            );
+                          }
+                        },
+                        showIcon: false,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       );
     }
   }
-
   static Future<void> showSelection({
     required String title,
     required List<String> options,
@@ -170,8 +215,12 @@ class AppPopUp {
     if (Get.context != null) {
       return await showCustomBottomSheet(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Choose ${title.toLowerCase()}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            Text(
+              'Choose ${title.toLowerCase()}',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
             Expanded(
               child: CupertinoPicker(
                 itemExtent: 32,
@@ -180,10 +229,14 @@ class AppPopUp {
                 selectionOverlay: Container(
                   padding: EdgeInsets.symmetric(vertical: 4),
                   decoration: BoxDecoration(
-                    border: Border.symmetric(horizontal: BorderSide(color: Colors.grey.shade300)),
+                    border: Border.symmetric(
+                      horizontal: BorderSide(color: Colors.grey.shade300),
+                    ),
                   ),
                 ),
-                scrollController: FixedExtentScrollController(initialItem: options.indexOf(selectedValue.value)),
+                scrollController: FixedExtentScrollController(
+                  initialItem: options.indexOf(selectedValue.value),
+                ),
                 onSelectedItemChanged: (int index) {
                   selectedValue.value = options[index];
                   if (onSelectionChanged != null) {
@@ -191,7 +244,16 @@ class AppPopUp {
                   }
                 },
                 children: options
-                    .map((opt) => Center(child: Text(opt, style: AppTextsStyle.medium.copyWith(fontSize: 23))))
+                    .map(
+                      (opt) => Center(
+                        child: Text(
+                          opt,
+                          style: AppTextsStyle.medium.copyWith(
+                            fontSize: 23,
+                          ),
+                        ),
+                      ),
+                    )
                     .toList(),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
+import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
@@ -9,6 +10,7 @@ import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
+import '../../util/widgets/bottom_navigation_bar_widget.dart';
 
 class CheckoutPage extends StatefulWidget {
   final List<CartViewModel> items;
@@ -63,12 +65,21 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   if (item is CheckoutInfoContainerViewModel) {
                     return CheckoutInfoContainerWidget(item: item);
                   }
+                  if (item is OrderSummaryViewModel) {
+                    return OrderSummaryWidget(orderSummary: item,);
+                  }
                   return  SizedBox();
                 }).toList(),
               ),
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        title: 'Place Order',
+        showIcon: true,
+        onTap: () {
+        },
       ),
     );
   }

@@ -49,7 +49,7 @@ class ContactInformationController extends GetxController {
     return user.value = UserViewModel(
       name: getPlaceholderByTitle('Name'),
       surname: getPlaceholderByTitle('Surname'),
-      number: getPlaceholderByTitle('Number'),
+      number: getPlaceholderByTitle('Phone'),
       email: getPlaceholderByTitle('Email'),
     );
   }

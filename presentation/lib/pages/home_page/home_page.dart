@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                       } else if (item is HorizontalProductListViewModel) {
                         return HorizontalProductsListWidget(items: item.products, type: item.type);
                       } else if (item is AllProductsViewItem) {
-                        return ProductsListDisplayWidget(title: 'ALL PRODUCTS', products: homeController.products);
+                        return ProductsListDisplayWidget(title: item.type.title?? '', products: homeController.products);
                       }
                       return null;
                     },

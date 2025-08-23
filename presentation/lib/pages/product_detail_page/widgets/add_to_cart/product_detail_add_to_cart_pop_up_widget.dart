@@ -32,6 +32,7 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -45,25 +46,24 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
             ],
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 30, left: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: AppTexts.quantity, showDivider: false),),
-              SizedBox(height: 12),
-              ProductInputQuantityWidget(
-                initialValue: 1,
-                onChanged: (val) {
-                  addCartController.cartItem.value?.quantity = val;
-                  addCartController.cartItem.refresh();
-                },
-                maxValue: addCartController.cartItem.value?.stock,
-              ),
-            ],
+         Padding(
+            padding: EdgeInsets.only(top: 30, left: 24, bottom: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: AppTexts.quantity, showDivider: false),),
+                SizedBox(height: 12),
+                ProductInputQuantityWidget(
+                  initialValue: 1,
+                  onChanged: (val) {
+                    addCartController.cartItem.value?.quantity = val;
+                    addCartController.cartItem.refresh();
+                  },
+                  maxValue: addCartController.cartItem.value?.stock,
+                ),
+              ],
+            ),
           ),
-        ),
-        Spacer(),
         BottomNavigationBarWidget(
           title: AppTexts.addToCart,
           addToCart: true,
