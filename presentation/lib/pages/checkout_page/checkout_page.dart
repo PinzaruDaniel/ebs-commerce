@@ -66,7 +66,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     return CheckoutInfoContainerWidget(item: item);
                   }
                   if (item is OrderSummaryViewModel) {
-                    return OrderSummaryWidget(orderSummary: item,);
+                    return OrderSummaryWidget();
                   }
                   return  SizedBox();
                 }).toList(),

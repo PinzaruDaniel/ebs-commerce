@@ -122,9 +122,9 @@ class CheckoutController extends GetxController {
         },
         infoItems: {},
       ),
+    orderSummary,
     ];
 
-    orderSummary;
     allItems.refresh();
   }
 }

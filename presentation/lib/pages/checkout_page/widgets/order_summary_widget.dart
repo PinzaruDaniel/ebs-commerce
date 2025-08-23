@@ -4,6 +4,8 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/base_view_model.dart';
 
+import '../../../controllers/controller_imports.dart';
+
 class OrderSummaryViewModel extends BaseViewModel {
   final RxDouble subtotal = RxDouble(0.0);
   final RxDouble shippingFee = RxDouble(0.0);
@@ -15,9 +17,10 @@ class OrderSummaryViewModel extends BaseViewModel {
 
 
 class OrderSummaryWidget extends StatelessWidget {
-  final OrderSummaryViewModel orderSummary;
-
-  const OrderSummaryWidget({super.key, required this.orderSummary});
+  final orderSummary = checkoutController.allItems
+      .whereType<OrderSummaryViewModel>()
+      .first;
+   OrderSummaryWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
