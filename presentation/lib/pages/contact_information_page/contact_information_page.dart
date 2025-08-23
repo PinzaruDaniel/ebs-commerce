@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/checkout_page/checkout_controller.dart';
-import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
+import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/text_field_widget.dart';
-import '../../view/product_view_model.dart';
 
 class ContactInformationPage extends StatefulWidget {
   const ContactInformationPage({super.key});
@@ -20,9 +18,6 @@ class ContactInformationPage extends StatefulWidget {
 class _ContactInformationPageState extends State<ContactInformationPage> {
   final _formKey = GlobalKey<FormState>();
   String bottomBarTitle = 'Save';
-
-  ContactInformationController get contactController => Get.find();
-  CheckoutController get checkController=>Get.find();
   @override
   void initState() {
     super.initState();
@@ -42,15 +37,14 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Obx(
-              () => Form(
+            Form(
                 key: _formKey,
                 child: Expanded(
                   child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: contactController.allItems.length,
+                    itemCount: contactInformationController.allItems.length,
                     itemBuilder: (context, index) {
-                      var item = contactController.allItems[index];
+                      var item = contactInformationController.allItems[index];
                       if (item is TextFieldViewModel) {
                         return TextFieldWidget(itemViewModel: item);
                       }
@@ -59,18 +53,16 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
-        item: dummyProduct,
         title:bottomBarTitle,
         showIcon: false,
-        router: () {
+        onTap: ()  {
           if (_formKey.currentState?.validate() ?? false) {
-            checkController.initAllItems();
-            contactController.initAllItems();
+            checkoutController.initAllItems();
+            contactInformationController.initAllItems();
             Navigator.pop(context);
           }
         },

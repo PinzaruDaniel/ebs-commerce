@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../resources/app_colors.dart';
 
-class CircularProgressIndicatorPageWidget extends StatelessWidget {
+class CircularProgressIndicatorWidget extends StatelessWidget {
   final double? value;
   final BoxConstraints boxConstraints;
   final double? heightFactor;
-  const CircularProgressIndicatorPageWidget({super.key, required this.boxConstraints, this.heightFactor, this.value});
+  const CircularProgressIndicatorWidget({super.key, required this.boxConstraints, this.heightFactor, this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,6 @@ class CircularProgressIndicatorPageWidget extends StatelessWidget {
               strokeWidth: 3,
               constraints: boxConstraints,
             ),
-            //Text('Loading', style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500)),
           ],
       ),
     );

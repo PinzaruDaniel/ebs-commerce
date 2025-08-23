@@ -36,15 +36,22 @@ class ContactInformationController extends GetxController {
   ];
 }
 
-  UserViewModel toUserViewModel() {
-  final model = UserViewModel(
-    name: (allItems[0] as TextFieldViewModel).value.value,
-    surname: (allItems[1] as TextFieldViewModel).value.value,
-    number: (allItems[2] as TextFieldViewModel).value.value,
-    email: (allItems[3] as TextFieldViewModel).value.value,
-  );
-  user.value = model;
-  return model;
-}
+  UserViewModel? toUserViewModel() {
+
+    String getPlaceholderByTitle(String title) {
+      final item = allItems.firstWhere(
+            (element) => element is TextFieldViewModel && element.title == title,
+        orElse: () => TextFieldViewModel(title: '', initialValue: ''),
+      ) as TextFieldViewModel;
+      return item.placeholder;
+    }
+
+    return user.value = UserViewModel(
+      name: getPlaceholderByTitle('Name'),
+      surname: getPlaceholderByTitle('Surname'),
+      number: getPlaceholderByTitle('Phone'),
+      email: getPlaceholderByTitle('Email'),
+    );
+  }
 
 }

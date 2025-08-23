@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/filtered_page/widgets/add_to_category_button_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/price_slider_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
@@ -8,13 +9,9 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/selected_category_button_widget.dart';
-import 'package:presentation/view/product_view_model.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
-import '../../util/widgets/circular_progress_indicator_page_widget.dart';
-import '../category_picker_page/category_controller.dart';
-import '../products_display_page/products_display_controller.dart';
-import 'filter_controller.dart';
+import '../shopping_cart_page/enum/product_type.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -24,17 +21,15 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-  CategoryController get catController => Get.find();
 
-  FilterController get filController => Get.find();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      filController.getFilteredProducts(page: 1);
+      filterController.getFilteredProducts(page: 1);
     });
-    filController.filteredProducts;
+    filterController.filteredProducts;
   }
 
   @override
@@ -49,7 +44,7 @@ class _FilterPageState extends State<FilterPage> {
           TextButton(
             style: TextButton.styleFrom(foregroundColor: Colors.black),
             onPressed: () {
-              filController.resetFilters();
+              filterController.resetFilters();
             },
             child: Text(AppTexts.reset, style: AppTextsStyle.bold()),
           ),
@@ -57,9 +52,9 @@ class _FilterPageState extends State<FilterPage> {
       ),
       body: SafeArea(
         child: Obx(() {
-          final min = filController.minPrice.value;
-          final max = filController.maxPrice.value;
-          final range = filController.priceRange.value;
+          final min = filterController.minPrice.value;
+          final max = filterController.maxPrice.value;
+          final range = filterController.priceRange.value;
 
           return SingleChildScrollView(
             child: Column(
@@ -72,8 +67,8 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                 ),
                 PriceSliderWidget(
-                  onRangeChanged: filController.onRangeChanged,
-                  onRangeChangeEnd: filController.onRangeChangeEnd,
+                  onRangeChanged: filterController.onRangeChanged,
+                  onRangeChangeEnd: filterController.onRangeChangeEnd,
                   min: min,
                   max: max,
                   range: range,
@@ -85,7 +80,7 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                 ),
                 Obx(() {
-                  final selected = catController.selectedCategoryId.toList();
+                  final selected = categoryController.selectedCategoryId.toList();
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Wrap(
@@ -95,8 +90,8 @@ class _FilterPageState extends State<FilterPage> {
                         for (final id in selected)
                           SelectedCategoryButtonWidget(
                             id: id,
-                            name: _nameFor(catController, id),
-                            onRemove: () => catController.toggleCategory(id, false),
+                            name: _nameFor(id),
+                            onRemove: () => categoryController.toggleCategory(id, false),
                           ),
                         AddToCategoryButtonWidget(),
                       ],
@@ -111,15 +106,14 @@ class _FilterPageState extends State<FilterPage> {
 
       bottomNavigationBar: Obx(() {
         return BottomNavigationBarWidget(
-          item: dummyProduct,
-          title: filController.isLoading.value
+          title: filterController.isLoading.value
               ? 'Loading...'
-              : (filController.filteredCount.value > 0
-                    ? '${AppTexts.showResults}(${filController.filteredCount.value})'
+              : (filterController.filteredCount.value > 0
+                    ? '${AppTexts.showResults}(${filterController.filteredCount.value})'
                     : AppTexts.noProductsToShow),
           showIcon: false,
-          addToCart: filController.filteredProducts.isNotEmpty,
-          router: () {
+          addToCart: filterController.filteredProducts.isNotEmpty,
+          onTap: () {
             AppRouter.openProductsDisplayPage(type: ProductListType.filteredProducts, title: AppTexts.filteredProducts);
           },
           titleDialog: AppTexts.oops,
@@ -129,7 +123,7 @@ class _FilterPageState extends State<FilterPage> {
     );
   }
 
-  String _nameFor(CategoryController categoryController, int id) {
+  String _nameFor(int id) {
     final c = categoryController.categories.firstWhereOrNull((e) => e.id == id);
     return c!.name;
   }

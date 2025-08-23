@@ -18,8 +18,8 @@ import 'package:presentation/view/city_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 
 import '../../util/widgets/failure_snack_bar_widget.dart';
+import '../shopping_cart_page/enum/delivery_type.dart';
 
-enum DeliveryType { pickup, fanCourier, dhl }
 
 extension DeliveryTypeExtension on DeliveryType {
   String get label {
@@ -256,15 +256,14 @@ class DeliveryAddressController extends GetxController {
         country: getViewModel<SelectionViewModel>('Country').selectedValue.value,
         region: getViewModel<SelectionViewModel>('Region').selectedValue.value,
         city: getViewModel<SelectionViewModel>('City').selectedValue.value,
-        postalCode: getViewModel<TextFieldViewModel>('Postal code').value.value,
-        address: getViewModel<TextFieldViewModel>('Address').value.value,
-        comments: getViewModel<TextFieldViewModel>('Other Comments').value.value,
+        postalCode: getViewModel<TextFieldViewModel>('Postal code').placeholder,
+        address: getViewModel<TextFieldViewModel>('Address').placeholder,
+        comments: getViewModel<TextFieldViewModel>('Other Comments').placeholder,
       );
       addressVM.value = model;
       return model;
     }
   }
-
   T getViewModel<T extends BaseViewModel>(String title) {
     return allItems.firstWhere((item) => item is T && (item as dynamic).title == title) as T;
   }

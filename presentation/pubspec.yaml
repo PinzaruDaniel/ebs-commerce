@@ -48,6 +48,7 @@ dependencies:
   get: ^4.7.2
   readmore: ^3.0.0
   flutter_svg: ^2.0.5
+  mock_data: ^2.0.1
   flutter:
     sdk: flutter
 

@@ -1,13 +1,12 @@
 import 'package:domain/modules/products/use_cases/get_all_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:presentation/pages/category_picker_page/category_controller.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class FilterController extends GetxController {
-  CategoryController get catController => Get.find();
   final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();
 
   final RxList<ProductViewModel> filteredProducts = RxList([]);
@@ -23,7 +22,7 @@ class FilterController extends GetxController {
     super.onInit();
     debounce<SfRangeValues>(priceRange, (_) => getFilteredProducts(page: 1), time: Duration(seconds: 1));
     debounce<Set<int>>(
-      catController.selectedCategoryId,
+      categoryController.selectedCategoryId,
       (_) => getFilteredProducts(page: 1),
       time: Duration(seconds: 1),
     );
@@ -34,7 +33,7 @@ class FilterController extends GetxController {
 
     final min = priceRange.value.start.toDouble();
     final max = priceRange.value.end.toDouble();
-    final categories = catController.selectedCategoryId.toList();
+    final categories = categoryController.selectedCategoryId.toList();
 
     final result = await getFilteredProductsUseCase.call(
       GetFilteredProductsParams(
@@ -61,7 +60,7 @@ class FilterController extends GetxController {
   void onRangeChangeEnd(SfRangeValues v) => priceRange.value = v;
 
   void resetFilters() {
-    catController.selectedCategoryId.clear();
+    categoryController.selectedCategoryId.clear();
     priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
     getFilteredProducts(page: 1);
   }

@@ -6,12 +6,12 @@ import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
+import '../../controllers/controller_imports.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../view/product_view_model.dart';
+import '../shopping_cart_page/enum/product_type.dart';
 
-enum ProductListType { saleProducts, newProducts, filteredProducts }
 
 class ProductsDisplayController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
@@ -20,21 +20,17 @@ class ProductsDisplayController extends GetxController {
   RxBool isLoading = true.obs;
   List<ProductViewModel> products = RxList([]);
 
-  FilterController get filterController => Get.find();
   Rxn<Failure> failure = Rxn<Failure>();
   RxInt currentPage = 1.obs;
   int perPage = 20;
   RxBool isLoadingMore = false.obs;
 
-  final ProductListType productType;
 
-  ProductsDisplayController(this.productType);
 
-  void initItems() {
-    loadProducts(loadMore: false);
-  }
 
-  Future<void> loadProducts({bool loadMore = false}) async {
+
+
+  Future<void> loadProducts({bool loadMore = false, required ProductListType productType}) async {
     if (loadMore) {
       if (isLoadingMore.value) return;
     } else {
@@ -55,6 +51,9 @@ class ProductsDisplayController extends GetxController {
         case ProductListType.filteredProducts:
           await getFilteredProducts(loadMore);
           break;
+
+          default:
+            return;
       }
       if (loadMore) {
         currentPage.value++;

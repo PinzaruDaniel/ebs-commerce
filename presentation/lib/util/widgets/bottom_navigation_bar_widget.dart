@@ -2,23 +2,19 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/resources/app_texts.dart';
-import 'package:presentation/util/routing/app_pop_up.dart';
-import 'package:presentation/view/product_view_model.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
-  final ProductViewModel item;
   final String title;
   final String? titleDialog;
   final String? contentDialog;
-  final Function? router;
+  final Function()? onTap;
   final bool? addToCart;
   final bool showIcon;
 
   const BottomNavigationBarWidget({
     super.key,
-    required this.item,
     required this.title,
-    this.router,
+    this.onTap,
     required this.showIcon,
     this.addToCart,
     this.titleDialog,
@@ -33,7 +29,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
         color: Colors.white,
         boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: 12)],
       ),
-      padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 28),
+      padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 8),
       child: TextButton(
         style: TextButton.styleFrom(
           backgroundColor: (addToCart ?? true) ? AppColors.primary : Colors.grey,
@@ -42,18 +38,14 @@ class BottomNavigationBarWidget extends StatelessWidget {
         ),
         onPressed: () {
           if (addToCart == true) {
-            if (router != null) {
-              router?.call();
-            } else {
-              AppPopUp.showCartInfoPopUp(item: item);
-            }
+            onTap?.call();
           } else if (addToCart == false) {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
                 backgroundColor: Colors.white,
-                title: Text(titleDialog ??  ''),
-                content: Text(contentDialog??  ''),
+                title: Text(titleDialog ?? ''),
+                content: Text(contentDialog ?? ''),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
@@ -63,7 +55,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
               ),
             );
           } else {
-            router?.call();
+            onTap?.call();
           }
         },
         child: Row(

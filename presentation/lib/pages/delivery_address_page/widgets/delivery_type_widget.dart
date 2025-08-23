@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/base_view_model.dart';
-
-import '../delivery_address_controller.dart';
+import '../../../controllers/controller_imports.dart';
 
 class DeliveryTypeViewModel extends BaseViewModel {
   final List<String> options;
@@ -37,7 +36,7 @@ class DeliveryTypeWidget extends StatelessWidget {
                 return InkWell(
                   onTap: () {
                     itemViewModel.selected.value = option;
-                    Get.find<DeliveryAddressController>().updateAllItems();
+                    deliveryAddressController.updateAllItems();
                   },
                   child: Container(
                     padding: const EdgeInsets.only(

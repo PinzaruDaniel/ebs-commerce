@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
+import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
+import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
-import '../contact_information_page/contact_information_controller.dart';
-import '../delivery_address_page/delivery_address_controller.dart';
-import '../shopping_cart_page/cart_controller.dart';
+import '../../util/widgets/bottom_navigation_bar_widget.dart';
 
 class CheckoutPage extends StatefulWidget {
   final List<CartViewModel> items;
@@ -23,26 +22,17 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
-  CheckoutController get checkController => Get.find();
-
-  ContactInformationController get contactController => Get.find();
-
-  CartController get cartController => Get.find();
-
-  DeliveryAddressController get deliveryController => Get.find();
-
   @override
   void initState() {
     super.initState();
-    Get.put(CheckoutController());
-    Get.put(ContactInformationController());
-    deliveryController.onInit();
-    deliveryController.toDeliveryAddressViewModel();
-    checkController.initAllItems();
-    contactController.initAllItems();
-    contactController.toUserViewModel();
+    deliveryAddressController.onInit();
+    deliveryAddressController.toDeliveryAddressViewModel();
+    checkoutController.initAllItems();
+    contactInformationController.initAllItems();
+    contactInformationController.toUserViewModel();
   }
 
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,38 +45,41 @@ class _CheckoutPageState extends State<CheckoutPage> {
           icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Obx(
-              () => Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-
-                  itemCount: checkController.allItems.length,
-                  itemBuilder: (context, index) {
-                    var item = checkController.allItems[index];
-                    if (item is HeaderTitleViewModel) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 16.0),
-                        child: HeaderTitleWidget(itemViewModel: item),
-                      );
-                    }
-                    if (item is CartViewModel) {
-                      return CheckoutProductViewWidget(item: item);
-                    }
-                    if (item is CheckoutInfoContainerViewModel) {
-                      return CheckoutInfoContainerWidget(item: item);
-                    }
-                    return Container();
-                  },
-                ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Obx(
+                () => SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: checkoutController.allItems.map((item) {
+                  if (item is HeaderTitleViewModel) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: HeaderTitleWidget(itemViewModel: item),
+                    );
+                  }
+                  if (item is CartViewModel) {
+                    return CheckoutProductViewWidget(item: item);
+                  }
+                  if (item is CheckoutInfoContainerViewModel) {
+                    return CheckoutInfoContainerWidget(item: item);
+                  }
+                  if (item is OrderSummaryViewModel) {
+                    return OrderSummaryWidget(orderSummary: item,);
+                  }
+                  return  SizedBox();
+                }).toList(),
               ),
             ),
-          ],
+          ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        title: 'Place Order',
+        showIcon: true,
+        onTap: () {
+        },
       ),
     );
   }
