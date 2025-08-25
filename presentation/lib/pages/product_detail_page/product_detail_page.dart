@@ -97,7 +97,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         titleDialog: AppTexts.oops,
         contentDialog: AppTexts.cantAddToCart,
         onTap: () {
-          AppPopUp.showCartInfoPopUp(item: widget.item!);
+          WidgetsBinding.instance.addPostFrameCallback((_){
+            AppPopUp.showCartInfoPopUp(item: widget.item!);
+          });
         },
       ),
     );
