@@ -156,49 +156,46 @@ class AppPopUp {
               ),
               child: ConstrainedBox(
                 constraints: BoxConstraints(maxHeight: constraints.maxHeight),
-                child: SafeArea(
-                  top: false,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Center(
-                        child: Text(
-                          AppTexts.enterVoucher,
-                          style: AppTextsStyle.bold(size: 18),
-                        ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Center(
+                      child: Text(
+                        AppTexts.enterVoucher,
+                        style: AppTextsStyle.bold(size: 18),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 24),
-                        child: TextFieldWidget(itemViewModel: viewModel),
-                      ),
-                      BottomNavigationBarWidget(
-                        title: AppTexts.save,
-                        onTap: () {
-                          final enteredCode = viewModel.placeholder.trim().toUpperCase();
-                          if (validCodes.contains(enteredCode)) {
-                            voucherCode.value = enteredCode;
-                            checkoutController.initAllItems();
-                            Get.back();
-                            Get.snackbar(
-                              AppTexts.success,
-                              AppTexts.promoValid,
-                              snackPosition: SnackPosition.BOTTOM,
-                            );
-                          } else {
-                            Get.snackbar(
-                              AppTexts.invalidCode,
-                              AppTexts.promoNotValid,
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.redAccent,
-                              colorText: Colors.white,
-                            );
-                          }
-                        },
-                        showIcon: false,
-                      ),
-                    ],
-                  ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 24),
+                      child: TextFieldWidget(itemViewModel: viewModel),
+                    ),
+                    BottomNavigationBarWidget(
+                      title: AppTexts.save,
+                      onTap: () {
+                        final enteredCode = viewModel.placeholder.trim().toUpperCase();
+                        if (validCodes.contains(enteredCode)) {
+                          voucherCode.value = enteredCode;
+                          checkoutController.initAllItems();
+                          Get.back();
+                          Get.snackbar(
+                            AppTexts.success,
+                            AppTexts.promoValid,
+                            snackPosition: SnackPosition.BOTTOM,
+                          );
+                        } else {
+                          Get.snackbar(
+                            AppTexts.invalidCode,
+                            AppTexts.promoNotValid,
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.redAccent,
+                            colorText: Colors.white,
+                          );
+                        }
+                      },
+                      showIcon: false,
+                    ),
+                  ],
                 ),
               ),
             );
