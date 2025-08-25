@@ -24,12 +24,13 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   late ScrollController scrollController;
   bool isCollapsed = false;
+  AddToCartController get addCartController => Get.find();
 
   @override
   void initState() {
     super.initState();
     Get.put(AddToCartController());
-
+    addCartController.initCartItem(widget.item!);
     scrollController = ScrollController();
     scrollController.addListener(_scrollListener);
   }
@@ -44,7 +45,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   void dispose() {
     super.dispose();
-
     scrollController.removeListener(_scrollListener);
     scrollController.dispose();
   }
@@ -96,7 +96,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         showIcon: widget.item?.price != null && widget.item?.stock != null,
         titleDialog: AppTexts.oops,
         contentDialog: AppTexts.cantAddToCart,
-        onTap: () {
+        onTap: () async {
           WidgetsBinding.instance.addPostFrameCallback((_){
             AppPopUp.showCartInfoPopUp(item: widget.item!);
           });

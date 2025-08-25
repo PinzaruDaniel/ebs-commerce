@@ -26,7 +26,6 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
   @override
   void initState() {
     super.initState();
-    addCartController.initCartItem(widget.item);
   }
 
   @override
