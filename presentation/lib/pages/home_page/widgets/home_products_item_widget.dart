@@ -7,10 +7,11 @@ import 'package:flutter/material.dart';
 
 
 class HomeProductsItemWidget extends StatefulWidget {
-  const HomeProductsItemWidget({super.key, required this.item, this.width});
+  const HomeProductsItemWidget({super.key, required this.item, this.width, this.height});
 
   final ProductViewModel item;
   final double? width;
+  final double? height;
 
   @override
   State<HomeProductsItemWidget> createState() => _HomeProductsItemWidgetState();
@@ -28,15 +29,14 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
       },
       child: Padding(
         padding: EdgeInsets.only(left: 8, right: 8),
-        child: SizedBox(
-          width: widget.width,
+        child: SizedBox(width: widget.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(24),
-                  child: ProductImageWidget(height: 150,
-                      width: widget.width,
+                  child: ProductImageWidget(height: widget.height ?? 150,
+                      width: double.infinity,
                       imageUrl: widget.item.imageUrl != null && widget.item.imageUrl!.isNotEmpty ? widget.item
                           .imageUrl![0] : null, )
               ),

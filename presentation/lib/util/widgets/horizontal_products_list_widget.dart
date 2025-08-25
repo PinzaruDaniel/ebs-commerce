@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/util/mapper/map_text_product_type.dart';
 import 'package:presentation/view/product_view_model.dart';
-
-import '../../pages/shopping_cart_page/enum/product_type.dart';
+import '../enum/product_type.dart';
 import 'empty_widget.dart';
 import 'header_title_widget.dart';
 import '../../pages/home_page/widgets/home_products_item_widget.dart';
-
-extension MapTextProductType on ProductListType {
-  String? get title {
-    switch (this) {
-      case ProductListType.newProducts:
-        return 'NEW PRODUCTS';
-      case ProductListType.saleProducts:
-        return 'SALE PRODUCTS';
-      default:
-        return null;
-    }
-  }
-}
 
 class HorizontalProductsListWidget extends StatefulWidget {
   const HorizontalProductsListWidget({super.key, required this.items, required this.type});

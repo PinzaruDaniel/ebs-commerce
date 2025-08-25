@@ -17,8 +17,8 @@ import 'package:presentation/view/state_view_model.dart';
 import 'package:presentation/view/city_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 
+import '../../util/enum/delivery_type.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
-import '../shopping_cart_page/enum/delivery_type.dart';
 
 
 extension DeliveryTypeExtension on DeliveryType {

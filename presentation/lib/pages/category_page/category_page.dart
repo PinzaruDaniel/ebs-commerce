@@ -126,7 +126,7 @@ class _CategoryPageState extends State<CategoryPage> {
               },
             ),
       bottomNavigationBar: BottomNavigationBarWidget(
-        title: categoryController.categories.isEmpty ? 'Go Home' : AppTexts.apply,
+        title: categoryController.categories.isEmpty ? AppTexts.goHome : AppTexts.apply,
         showIcon: false,
         onTap: () {
           categoryController.categories.isEmpty? AppRouter.openHomePage() : Get.back;

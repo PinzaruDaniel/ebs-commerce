@@ -29,7 +29,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
         color: Colors.white,
         boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: 12)],
       ),
-      padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 8),
+      padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 16),
       child: TextButton(
         style: TextButton.styleFrom(
           backgroundColor: (addToCart ?? true) ? AppColors.primary : Colors.grey,

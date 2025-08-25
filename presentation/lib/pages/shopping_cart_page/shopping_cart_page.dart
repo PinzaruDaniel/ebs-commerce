@@ -21,7 +21,6 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
-
   @override
   void initState() {
     super.initState();
@@ -95,12 +94,16 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         }
       }),
 
-      bottomNavigationBar: Obx(()
-        =>  BottomNavigationBarWidget(
-          title: cartController.cartItems.isEmpty ||cartController.selectedItems.isEmpty ? 'Continue shopping' : AppTexts.checkout,
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBarWidget(
+          title: cartController.cartItems.isEmpty || cartController.selectedItems.isEmpty
+              ? AppTexts.continueShopping
+              : AppTexts.checkout,
           showIcon: cartController.cartItems.isEmpty,
           onTap: () {
-            cartController.cartItems.isEmpty || cartController.selectedItems.isEmpty ? AppRouter.openHomePage() : AppRouter.openCheckoutPage(items: cartController.selectedItems);
+            cartController.cartItems.isEmpty || cartController.selectedItems.isEmpty
+                ? AppRouter.openHomePage()
+                : AppRouter.openCheckoutPage(items: cartController.selectedItems);
           },
         ),
       ),

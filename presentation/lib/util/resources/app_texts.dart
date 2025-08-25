@@ -25,7 +25,12 @@ class AppTexts {
 
   static const String quantity = 'QUANTITY';
   static const String seeAll = 'See All';
+  static const String success = 'Success';
+  static const String promoValid = 'Promo code applied!';
+
   static const String oops = 'Oopsie';
+  static const String invalidCode = 'Invalid Code';
+  static const String promoNotValid = 'Promo code not recognized.';
   static const String ok = 'OK';
   static const String noProductsToShow = 'There are no products to show';
   static const String checkout = 'Check out';
@@ -33,11 +38,24 @@ class AppTexts {
   static const String contactInformation = 'CONTACT INFORMATION';
   static const String deliveryAddress = 'DELIVERY ADDRESS';
   static const String paymentMethod = 'PAYMENT METHOD';
-  static const String subTotal='Subtotal';
-  static const String shippingFee='Shipping Fee';
-  static const String adminFee='Admin Fee';
-  static const String voucherCode='Voucher Code';
-  static const String total='Total';
+  static const String subTotal = 'Subtotal';
+  static const String shippingFee = 'Shipping Fee';
+  static const String adminFee = 'Admin Fee';
+  static const String voucherCode = 'Voucher Code';
+  static const String total = 'Total';
   static const String contactInfo = 'Contact info';
-
+  static const String save = 'Save';
+  static const String choosePaymentMethod = 'Choose your payment method';
+  static const String enterYourVoucher = 'Enter your voucher code';
+  static const String enterVoucher = 'Enter Voucher Code';
+  static const String enterAllData='Enter all data';
+  static const String continueShopping = 'Continue shopping';
+  static const String loadingMore = 'Loading more...';
+  static const String loading='Loading';
+  static const String canLoading = 'Release to load more';
+  static const String idleText = 'Pull up to load more';
+  static const String noDataText = 'No more data';
+  static const String goHome='Go Home';
+  static const String createOrder='Create Order';
+  static const String orderSuccess='Order has been placed Successfully';
 }

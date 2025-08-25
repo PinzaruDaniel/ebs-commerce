@@ -8,6 +8,7 @@ import '../../../util/resources/app_colors.dart';
 
 class CheckoutInfoContainerViewModel extends BaseViewModel {
   final Map<String, dynamic>? infoItems;
+  final String? placeholder;
   final String? titleKey;
   final VoidCallback? onTap;
   final VoidCallback? onRemoveTap;
@@ -17,6 +18,7 @@ class CheckoutInfoContainerViewModel extends BaseViewModel {
   CheckoutInfoContainerViewModel({
     this.infoItems,
     this.titleKey,
+    this.placeholder,
     this.onTap,
     this.onRemoveTap,
     this.showRemoveButton = false,
@@ -56,8 +58,7 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                if (item.titleKey != null &&
-                                    item.titleKey!.trim().isNotEmpty)
+                                if (item.titleKey != null && item.titleKey!.trim().isNotEmpty)
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 4),
                                     child: Row(
@@ -73,41 +74,28 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                                         if (item.isPromoValid)
                                           Padding(
                                             padding: const EdgeInsets.only(left: 4),
-                                            child: Icon(
-                                              Icons.check_circle,
-                                              color: AppColors.primary,
-                                              size: 18,
-                                            ),
+                                            child: Icon(Icons.check_circle, color: AppColors.primary, size: 18),
                                           ),
                                       ],
                                     ),
                                   ),
-                                if (item.infoItems != null &&
-                                    item.infoItems!.isNotEmpty)
+                                if (item.infoItems != null && item.infoItems!.isNotEmpty)
                                   ...item.infoItems!.entries.map((entry) {
                                     return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 2,
-                                      ),
+                                      padding: EdgeInsets.symmetric(vertical: 2),
                                       child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Expanded(
-                                            child: Text(
-                                              entry.key,
-                                              softWrap: true,
-                                              overflow: TextOverflow.visible,
-                                            ),
+                                            child: Text(entry.key, softWrap: true, overflow: TextOverflow.visible),
                                           ),
                                         ],
                                       ),
                                     );
                                   }),
-                                if ((item.infoItems == null ||
-                                        item.infoItems!.isEmpty) &&
+                                if ((item.infoItems == null || item.infoItems!.isEmpty) &&
                                     (item.titleKey?.trim().isEmpty ?? true))
-                                  Text('Enter your data here'),
+                                  Text(item.placeholder==null ? 'Enter your data here': item.placeholder!),
                               ],
                             ),
                           ),
@@ -120,29 +108,17 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                                     padding: const EdgeInsets.all(2.0),
                                     child: Text(
                                       'Remove',
-                                      style:
-                                          AppTextsStyle.bold(
-                                            size: 12,
-                                            color: AppColors.redText,
-                                          ).copyWith(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationColor:
-                                                AppColors.redText,
-                                            decorationThickness: 1,
-                                            height: 1.3,
-                                          ),
+                                      style: AppTextsStyle.bold(size: 12, color: AppColors.redText).copyWith(
+                                        decoration: TextDecoration.underline,
+                                        decorationColor: AppColors.redText,
+                                        decorationThickness: 1,
+                                        height: 1.3,
+                                      ),
                                     ),
                                   ),
                                 )
-
                               else
-                                Transform.flip(
-                                  flipX: true,
-                                  child: AppIcons.backIcon(
-                                    color: AppColors.blue,
-                                  ),
-                                ),
+                                Transform.flip(flipX: true, child: AppIcons.backIcon(color: AppColors.blue)),
                             ],
                           ),
                         ],

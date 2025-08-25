@@ -7,6 +7,7 @@
       "name": "presentation",
       "version": "1.0.0+1",
       "dependencies": [
+        "awesome_dialog",
         "cached_network_image",
         "carousel_slider",
         "common",
@@ -96,6 +97,14 @@
       "name": "mock_data",
       "version": "2.0.1",
       "dependencies": []
+    },
+    {
+      "name": "awesome_dialog",
+      "version": "3.2.1",
+      "dependencies": [
+        "flutter",
+        "rive"
+      ]
     },
     {
       "name": "flutter_svg",
@@ -431,6 +440,19 @@
       "name": "sky_engine",
       "version": "0.0.0",
       "dependencies": []
+    },
+    {
+      "name": "rive",
+      "version": "0.13.20",
+      "dependencies": [
+        "collection",
+        "flutter",
+        "flutter_web_plugins",
+        "http",
+        "meta",
+        "plugin_platform_interface",
+        "rive_common"
+      ]
     },
     {
       "name": "vector_graphics_compiler",
@@ -778,6 +800,40 @@
       ]
     },
     {
+      "name": "rive_common",
+      "version": "0.4.15",
+      "dependencies": [
+        "collection",
+        "ffi",
+        "flutter",
+        "flutter_web_plugins",
+        "graphs",
+        "http",
+        "meta",
+        "plugin_platform_interface",
+        "web"
+      ]
+    },
+    {
+      "name": "plugin_platform_interface",
+      "version": "2.1.8",
+      "dependencies": [
+        "meta"
+      ]
+    },
+    {
+      "name": "flutter_web_plugins",
+      "version": "0.0.0",
+      "dependencies": [
+        "characters",
+        "collection",
+        "flutter",
+        "material_color_utilities",
+        "meta",
+        "vector_math"
+      ]
+    },
+    {
       "name": "xml",
       "version": "6.5.0",
       "dependencies": [
@@ -963,6 +1019,18 @@
       ]
     },
     {
+      "name": "graphs",
+      "version": "2.3.2",
+      "dependencies": [
+        "collection"
+      ]
+    },
+    {
+      "name": "ffi",
+      "version": "2.1.4",
+      "dependencies": []
+    },
+    {
       "name": "petitparser",
       "version": "6.1.0",
       "dependencies": [
@@ -1073,20 +1141,8 @@
       "dependencies": []
     },
     {
-      "name": "plugin_platform_interface",
-      "version": "2.1.8",
-      "dependencies": [
-        "meta"
-      ]
-    },
-    {
       "name": "platform",
       "version": "3.1.6",
-      "dependencies": []
-    },
-    {
-      "name": "ffi",
-      "version": "2.1.4",
       "dependencies": []
     },
     {

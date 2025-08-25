@@ -32,12 +32,12 @@ class ProductsListDisplayWidget extends StatelessWidget {
               child: GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.75),
-                padding: EdgeInsets.only(left: 8.0, top: 16),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7),
+                padding: EdgeInsets.only( top: 16),
                 itemCount: products.length,
                 itemBuilder: (context, index) {
                   var itemProducts = products[index];
-                  return HomeProductsItemWidget(item: itemProducts, width: 180);
+                  return HomeProductsItemWidget(item: itemProducts, height: 160);
                 },
               ),
             ),

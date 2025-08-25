@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../resources/app_colors.dart';
@@ -15,7 +16,6 @@ class SmartRefresherWidget extends StatefulWidget {
   State<SmartRefresherWidget> createState() => _SmartRefresherWidgetState();
 }
 
-final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
 class _SmartRefresherWidgetState extends State<SmartRefresherWidget> {
   @override
@@ -24,11 +24,11 @@ class _SmartRefresherWidgetState extends State<SmartRefresherWidget> {
       enablePullDown: true,
       enablePullUp: true,
       footer: ClassicFooter(
-        loadingText: 'Loading more...',
+        loadingText: AppTexts.loadingMore,
         loadingIcon: CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 20, minWidth: 20)),
-        canLoadingText: 'Release to load more',
-        idleText: 'Pull up to load more',
-        noDataText: 'No more data',
+        canLoadingText: AppTexts.canLoading,
+        idleText: AppTexts.idleText,
+        noDataText: AppTexts.noDataText,
       ),
       header: WaterDropMaterialHeader(distance: 50, color: AppColors.primary, backgroundColor: Colors.grey.shade100),
       controller: widget.controller,

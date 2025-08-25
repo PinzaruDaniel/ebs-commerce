@@ -1,5 +1,6 @@
 import 'package:presentation/view/product_view_model.dart';
-import '../pages/shopping_cart_page/enum/product_type.dart';
+
+import '../util/enum/product_type.dart';
 
 abstract class BaseViewModel{}
 

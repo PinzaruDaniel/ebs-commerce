@@ -9,9 +9,9 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/selected_category_button_widget.dart';
+import '../../util/enum/product_type.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
-import '../shopping_cart_page/enum/product_type.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -107,7 +107,7 @@ class _FilterPageState extends State<FilterPage> {
       bottomNavigationBar: Obx(() {
         return BottomNavigationBarWidget(
           title: filterController.isLoading.value
-              ? 'Loading...'
+              ? AppTexts.loading
               : (filterController.filteredCount.value > 0
                     ? '${AppTexts.showResults}(${filterController.filteredCount.value})'
                     : AppTexts.noProductsToShow),

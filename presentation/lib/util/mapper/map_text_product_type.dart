@@ -1,14 +1,16 @@
-import '../../pages/shopping_cart_page/enum/product_type.dart';
+
+import '../enum/product_type.dart';
+import '../resources/app_texts.dart';
 
 extension MapTextProductType on ProductListType {
   String? get title {
     switch (this) {
       case ProductListType.newProducts:
-        return 'NEW PRODUCTS';
+        return AppTexts.newProducts;
       case ProductListType.saleProducts:
-        return 'SALE PRODUCTS';
+        return AppTexts.saleProducts;
       case ProductListType.allProducts:
-        return 'ALL PRODUCTS';
+        return AppTexts.allProducts;
       default:
         return null;
     }

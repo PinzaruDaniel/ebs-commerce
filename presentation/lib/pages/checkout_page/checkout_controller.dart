@@ -22,10 +22,21 @@ class CheckoutController extends GetxController {
 
   CartController get cartController => Get.find();
 
+  bool hasIncompleteUserInfo() {
+    final user = contactInformationController.toUserViewModel();
+    if (user == null) return true;
+
+    userModel.value = user;
+
+    return user.surname.isEmpty ||
+        user.number.isEmpty ||
+        user.name.isEmpty ||
+        user.email.isEmpty;
+  }
+
   void initAllItems() {
     userModel.value = contactInformationController.toUserViewModel();
-    deliveryModel.value = deliveryAddressController
-        .toDeliveryAddressViewModel();
+    deliveryModel.value = deliveryAddressController.toDeliveryAddressViewModel();
     final isPickup = deliveryModel.value?.deliveryType == 'Ridicare la sediu';
     final infoItems = <String, String>{};
 
@@ -50,25 +61,15 @@ class CheckoutController extends GetxController {
           };
 
     final orderSummary = OrderSummaryViewModel();
-    orderSummary.subtotal.value = cartController.selectedItems.fold(0.0, (
-      sum,
-      item,
-    ) {
+    orderSummary.subtotal.value = cartController.selectedItems.fold(0.0, (sum, item) {
       final price = item.price;
       return sum +
-          (price is String
-              ? double.tryParse(price.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0.0
-              : price as num? ?? 0.0);
+          (price is String ? double.tryParse(price.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0.0 : price as num? ?? 0.0);
     });
     orderSummary.shippingFee.value =
-        (deliveryModel.value?.deliveryType == 'DHL' ||
-            deliveryModel.value?.deliveryType == 'Fan courier')
-        ? 5.0
-        : 0.0;
+        (deliveryModel.value?.deliveryType == 'DHL' || deliveryModel.value?.deliveryType == 'Fan courier') ? 5.0 : 0.0;
     orderSummary.adminFee.value = 2.0;
-    orderSummary.voucherDiscount.value = voucherCode.value.isNotEmpty
-        ? 10.0
-        : 0.0;
+    orderSummary.voucherDiscount.value = voucherCode.value.isNotEmpty ? 10.0 : 0.0;
     orderSummary.total.value =
         orderSummary.subtotal.value +
         orderSummary.shippingFee.value +
@@ -80,8 +81,7 @@ class CheckoutController extends GetxController {
       ...cartController.selectedItems,
       HeaderTitleViewModel(title: AppTexts.contactInformation),
       CheckoutInfoContainerViewModel(
-        titleKey:
-            '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''}',
+        titleKey: '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''}',
         infoItems: infoItems,
         onTap: () {
           AppRouter.openContactInformationPage();
@@ -97,6 +97,7 @@ class CheckoutController extends GetxController {
       ),
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
       CheckoutInfoContainerViewModel(
+        placeholder: AppTexts.choosePaymentMethod,
         titleKey: selectedPaymentMethod.value,
         onTap: () {
           AppPopUp.paymentMethod(
@@ -110,6 +111,7 @@ class CheckoutController extends GetxController {
       ),
 
       CheckoutInfoContainerViewModel(
+        placeholder: AppTexts.enterYourVoucher,
         isPromoValid: true,
         showRemoveButton: voucherCode.value.isEmpty ? false : true,
         titleKey: voucherCode.value,
@@ -122,7 +124,7 @@ class CheckoutController extends GetxController {
         },
         infoItems: {},
       ),
-    orderSummary,
+      orderSummary,
     ];
 
     allItems.refresh();

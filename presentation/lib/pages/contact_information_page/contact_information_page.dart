@@ -17,7 +17,6 @@ class ContactInformationPage extends StatefulWidget {
 
 class _ContactInformationPageState extends State<ContactInformationPage> {
   final _formKey = GlobalKey<FormState>();
-  String bottomBarTitle = 'Save';
   @override
   void initState() {
     super.initState();
@@ -57,7 +56,7 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
-        title:bottomBarTitle,
+        title: AppTexts.save,
         showIcon: false,
         onTap: ()  {
           if (_formKey.currentState?.validate() ?? false) {

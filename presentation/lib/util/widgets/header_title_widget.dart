@@ -5,7 +5,8 @@ import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/view/base_view_model.dart';
 
-import '../../pages/shopping_cart_page/enum/product_type.dart';
+import '../enum/product_type.dart';
+
 
 class HeaderTitleViewModel extends BaseViewModel {
   final String title;

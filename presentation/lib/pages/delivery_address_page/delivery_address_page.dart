@@ -59,7 +59,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
-        title: deliveryAddressController.isLoading.value ? 'Loading' : 'Save',
+        title: deliveryAddressController.isLoading.value ? AppTexts.loading : AppTexts.save,
         showIcon: false,
         onTap: ()  {
           if (_formKey.currentState?.validate() ?? false) {

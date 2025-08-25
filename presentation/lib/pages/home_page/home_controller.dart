@@ -7,8 +7,8 @@ import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
+import '../../util/enum/product_type.dart';
 import '../../view/base_view_model.dart';
-import '../shopping_cart_page/enum/product_type.dart';
 
 class HomeController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();

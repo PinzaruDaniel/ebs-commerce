@@ -1,7 +1,9 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
+import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
@@ -49,7 +51,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Obx(
-                () => SingleChildScrollView(
+            () => SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: checkoutController.allItems.map((item) {
@@ -66,20 +68,35 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     return CheckoutInfoContainerWidget(item: item);
                   }
                   if (item is OrderSummaryViewModel) {
+                    print(' thisd is${checkoutController.hasIncompleteUserInfo()}');
                     return OrderSummaryWidget();
                   }
-                  return  SizedBox();
+                  return SizedBox();
                 }).toList(),
               ),
             ),
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarWidget(
-        title: 'Place Order',
-        showIcon: true,
-        onTap: () {
-        },
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBarWidget(
+          title: checkoutController.selectedPaymentMethod.isNotEmpty && !checkoutController.hasIncompleteUserInfo()
+              ? AppTexts.createOrder
+              : AppTexts.enterAllData,
+          addToCart: checkoutController.selectedPaymentMethod.isNotEmpty && !checkoutController.hasIncompleteUserInfo(),
+          onTap: () {
+            AwesomeDialog(
+              context: context,
+              animType: AnimType.scale,
+              dialogType: DialogType.success,
+              title: AppTexts.orderSuccess,
+              btnOkText: AppTexts.ok,
+              btnOkOnPress: () {},
+              btnOkColor: AppColors.primary,
+            ).show();
+          },
+          showIcon: false,
+        ),
       ),
     );
   }
