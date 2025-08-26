@@ -8,6 +8,8 @@ class AddToCartController extends GetxController {
   Rxn<CartViewModel> cartItem = Rxn<CartViewModel>();
 
   CartViewModel initCartItem(ProductViewModel item) {
+
+
     final itemToAdd = CartViewModel(
       id: item.id,
       title: item.title,

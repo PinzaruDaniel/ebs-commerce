@@ -36,8 +36,8 @@ class AppPopUp {
     }
   }
 
-  static Future<void> showCartInfoPopUp({required ProductViewModel item}) async {
-    await showCustomBottomSheet(child: ProductDetailAddToCartBottomSheetWidget(item: item));
+  static Future<void> showCartInfoPopUp({required ProductViewModel item, required Function onAdd}) async {
+    await showCustomBottomSheet(child: ProductDetailAddToCartBottomSheetWidget(item: item, onAdd: onAdd));
   }
 
   static Future<void> paymentMethod({required RxString selectedMethod, required Function(String) onSelected}) async {

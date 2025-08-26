@@ -10,11 +10,12 @@ import 'package:flutter/material.dart';
 import '../../../../util/routing/app_router.dart';
 import '../../../../util/widgets/header_title_widget.dart';
 import 'package:get/get.dart';
-
+//de scos controlerul
 class ProductDetailAddToCartBottomSheetWidget extends StatefulWidget {
-  const ProductDetailAddToCartBottomSheetWidget({super.key, required this.item});
+  const ProductDetailAddToCartBottomSheetWidget({super.key, required this.item, required this.onAdd});
 
   final ProductViewModel item;
+  final Function onAdd;
 
   @override
   State<ProductDetailAddToCartBottomSheetWidget> createState() => _ProductDetailAddToCartBottomSheetWidgetState();
@@ -22,7 +23,7 @@ class ProductDetailAddToCartBottomSheetWidget extends StatefulWidget {
 
 class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailAddToCartBottomSheetWidget> {
   AddToCartController get addCartController => Get.find();
-
+  int quantity=1;
   @override
   void initState() {
     super.initState();
@@ -30,6 +31,7 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +48,7 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
           ),
         ),
          Padding(
-            padding: EdgeInsets.only(top: 30, left: 24, bottom: 30),
+            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -55,8 +57,9 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
                 ProductInputQuantityWidget(
                   initialValue: 1,
                   onChanged: (val) {
-                    addCartController.cartItem.value?.quantity = val;
-                    addCartController.cartItem.refresh();
+                    quantity=val;
+                    //addCartController.cartItem.value?.quantity = val;
+                //    addCartController.cartItem.refresh();
                   },
                   maxValue: addCartController.cartItem.value?.stock,
                 ),
@@ -67,11 +70,13 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
           title: AppTexts.addToCart,
           addToCart: true,
           onTap: () {
-            final item=addCartController.cartItem.value;
+            widget.onAdd.call(quantity);
+
+           /* final item=addCartController.cartItem.value;
             if(item !=null){
               mainAppController.addToCart(item);
               AppRouter.openShoppingCartPage();
-            }
+            }*/
           },
           showIcon: true,
         ),
