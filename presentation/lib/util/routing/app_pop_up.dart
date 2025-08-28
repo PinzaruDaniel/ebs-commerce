@@ -1,15 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/util/resources/app_text_styles.dart';
-import 'package:presentation/util/resources/app_texts.dart';
-import '../../controllers/controller_imports.dart';
+import 'package:presentation/util/widgets/option_picker_widget.dart';
+import 'package:presentation/util/widgets/payment_method_selection_widget.dart';
+import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
-import '../../view/promo_code_view_model.dart';
-import '../resources/app_colors.dart';
-import '../widgets/bottom_navigation_bar_widget.dart';
 import '../widgets/text_field_widget.dart';
 
 class AppPopUp {
@@ -36,8 +31,14 @@ class AppPopUp {
     }
   }
 
-  static Future<void> showCartInfoPopUp({required ProductViewModel item, required Function onAdd}) async {
-    await showCustomBottomSheet(child: ProductDetailAddToCartBottomSheetWidget(item: item, onAdd: onAdd));
+  static Future<void> showCartInfoPopUp({
+    required ProductViewModel item,
+    required Function onAdd,
+    required int? maxValue,
+  }) async {
+    await showCustomBottomSheet(
+      child: ProductDetailAddToCartBottomSheetWidget(item: item, onAdd: onAdd, maxValue: maxValue),
+    );
   }
 
   static Future<void> paymentMethod({required RxString selectedMethod, required Function(String) onSelected}) async {
@@ -46,118 +47,18 @@ class AppPopUp {
     final methods = ['PayPal', 'Plata Numerar'];
 
     await showCustomBottomSheet(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(child: Text(AppTexts.choosePaymentMethod, style: AppTextsStyle.bold(size: 18))),
-          Obx(() {
-            final selected = selectedMethod.value;
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40),
-              child: Column(
-                children: methods.map((option) {
-                  final isSelected = selected == option;
-                  return InkWell(
-                    onTap: () {
-                      onSelected(option);
-                      checkoutController.initAllItems();
-                      Navigator.pop(Get.context!);
-                    },
-                    borderRadius: BorderRadius.circular(5),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2.0),
-                      child: Container(
-                        padding: const EdgeInsets.only(left: 8.0, right: 36, top: 8, bottom: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                option,
-                                style: AppTextsStyle.medium.copyWith(
-                                  color: isSelected ? AppColors.primary : Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            );
-          }),
-          BottomNavigationBarWidget(
-            title: AppTexts.save,
-            onTap: () {
-              checkoutController.initAllItems();
-              Navigator.pop(Get.context!);
-            },
-            showIcon: false,
-          ),
-        ],
-      ),
+      child: PaymentMethodSelectionWidget(selectedMethod: selectedMethod, onSelected: onSelected, methods: methods)
     );
   }
 
-  static Future<void> voucherCode({required RxString voucherCode}) async {
+  static Future<void> voucherCode({
+    required Function()? onTap,
+    required TextFieldViewModel textViewModel,
+  }) async {
     if (Get.context != null) {
-      final viewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
-      final promoCodeViewModel = PromoCodeViewModel();
-      final validCodes = promoCodeViewModel.getMockPromoCodes();
-
       await showCustomBottomSheet(
         isScrollControlled: true,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: constraints.maxHeight),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Center(child: Text(AppTexts.enterVoucher, style: AppTextsStyle.bold(size: 18))),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 24),
-                      child: TextFieldWidget(itemViewModel: viewModel),
-                    ),
-                    BottomNavigationBarWidget(
-                      title: AppTexts.save,
-                      onTap: () {
-                        final enteredCode = viewModel.placeholder.trim().toUpperCase();
-                        if (validCodes.contains(enteredCode)) {
-                          voucherCode.value = enteredCode;
-                          checkoutController.initAllItems();
-                          Get.back();
-                          Get.snackbar(AppTexts.success, AppTexts.promoValid, snackPosition: SnackPosition.BOTTOM);
-                        } else {
-                          Get.snackbar(
-                            AppTexts.invalidCode,
-                            AppTexts.promoNotValid,
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.redAccent,
-                            colorText: Colors.white,
-                          );
-                        }
-                      },
-                      showIcon: false,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
+        child: VoucherCodeInputWidget(onTap: onTap, textViewModel: textViewModel)
       );
     }
   }
@@ -170,35 +71,7 @@ class AppPopUp {
   }) async {
     if (Get.context != null) {
       return await showCustomBottomSheet(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('Choose ${title.toLowerCase()}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            SizedBox(
-              height: Get.height * 0.25,
-              child: CupertinoPicker(
-                itemExtent: 32,
-                useMagnifier: true,
-                magnification: 1.2,
-                selectionOverlay: Container(
-                  decoration: BoxDecoration(
-                    border: Border.symmetric(horizontal: BorderSide(color: Colors.grey.shade300)),
-                  ),
-                ),
-                scrollController: FixedExtentScrollController(initialItem: options.indexOf(selectedValue.value)),
-                onSelectedItemChanged: (int index) {
-                  selectedValue.value = options[index];
-                  if (onSelectionChanged != null) {
-                    onSelectionChanged(options[index]);
-                  }
-                },
-                children: options
-                    .map((opt) => Center(child: Text(opt, style: AppTextsStyle.medium.copyWith(fontSize: 23))))
-                    .toList(),
-              ),
-            ),
-          ],
-        ),
+        child: OptionPickerWidget(title: title, options: options, selectedValue: selectedValue, onSelectionChanged: onSelectionChanged)
       );
     }
   }

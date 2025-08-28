@@ -68,7 +68,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     return CheckoutInfoContainerWidget(item: item);
                   }
                   if (item is OrderSummaryViewModel) {
-                    print(' thisd is${checkoutController.hasIncompleteUserInfo()}');
                     return OrderSummaryWidget();
                   }
                   return SizedBox();
@@ -80,6 +79,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBarWidget(
+          titleDialog: AppTexts.oops,
+          contentDialog: AppTexts.enterAllData,
           title: checkoutController.selectedPaymentMethod.isNotEmpty && !checkoutController.hasIncompleteUserInfo()
               ? AppTexts.createOrder
               : AppTexts.enterAllData,

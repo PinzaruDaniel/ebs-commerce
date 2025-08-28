@@ -7,7 +7,7 @@ void showFailureSnackBar(Failure failure) {
     final snackBar = SnackBar(
       content: Text(failure.message),
       backgroundColor: Colors.red,
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 3),
       behavior: SnackBarBehavior.floating,
       margin: EdgeInsets.only(bottom: 50, left:10, right: 10),
       padding: EdgeInsets.all(20),

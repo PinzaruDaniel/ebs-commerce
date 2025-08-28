@@ -108,11 +108,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
               final item = addCartController.cartItem.value;
 
-              if (item != null) {
-                mainAppController.addToCart(item);
+                mainAppController.addToCart(item!);
                 AppRouter.openShoppingCartPage();
-              }
-            },
+            }, maxValue: addCartController.cartItem.value!.stock,
           );
         },
       ),

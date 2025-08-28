@@ -10,8 +10,11 @@ import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
 
 import '../../controllers/controller_imports.dart';
+import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/routing/app_router.dart';
+import '../../util/widgets/text_field_widget.dart';
+import '../../view/promo_code_view_model.dart';
 
 class CheckoutController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
@@ -25,56 +28,18 @@ class CheckoutController extends GetxController {
   bool hasIncompleteUserInfo() {
     final user = contactInformationController.toUserViewModel();
     if (user == null) return true;
-
     userModel.value = user;
-
-    return user.surname.isEmpty ||
-        user.number.isEmpty ||
-        user.name.isEmpty ||
-        user.email.isEmpty;
+    return user.surname.isEmpty || user.number.isEmpty || user.name.isEmpty || user.email.isEmpty;
   }
 
   void initAllItems() {
     userModel.value = contactInformationController.toUserViewModel();
     deliveryModel.value = deliveryAddressController.toDeliveryAddressViewModel();
-    final isPickup = deliveryModel.value?.deliveryType == 'Ridicare la sediu';
-    final infoItems = <String, String>{};
 
-    final number = userModel.value?.number;
-    if (number != null && number.isNotEmpty) {
-      infoItems[number] = '';
-    }
-
-    final email = userModel.value?.email;
-    if (email != null && email.isNotEmpty) {
-      infoItems[email] = '';
-    }
-
-    final deliveryInfoItems = isPickup
-        ? {'Pickup Location: ${deliveryModel.value?.pickupLocation ?? ''}': ''}
-        : {
-            'Country: ${deliveryModel.value?.country ?? ''}': '',
-            'Region: ${deliveryModel.value?.region ?? ''}': '',
-            'City: ${deliveryModel.value?.city ?? ''}': '',
-            'Postal Code: ${deliveryModel.value?.postalCode ?? ''}': '',
-            'Street: ${deliveryModel.value?.address ?? ''}': '',
-          };
-
-    final orderSummary = OrderSummaryViewModel();
-    orderSummary.subtotal.value = cartController.selectedItems.fold(0.0, (sum, item) {
-      final price = item.price;
-      return sum +
-          (price is String ? double.tryParse(price.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0.0 : price as num? ?? 0.0);
-    });
-    orderSummary.shippingFee.value =
-        (deliveryModel.value?.deliveryType == 'DHL' || deliveryModel.value?.deliveryType == 'Fan courier') ? 5.0 : 0.0;
-    orderSummary.adminFee.value = 2.0;
-    orderSummary.voucherDiscount.value = voucherCode.value.isNotEmpty ? 10.0 : 0.0;
-    orderSummary.total.value =
-        orderSummary.subtotal.value +
-        orderSummary.shippingFee.value +
-        orderSummary.adminFee.value -
-        orderSummary.voucherDiscount.value;
+    final subtotal = _calculateSubtotal();
+    final orderSummary = _buildOrderSummary(subtotal);
+    final userInfoItems = _buildUserInfo(userModel.value);
+    final deliveryInfoItems = _buildDeliveryInfo(deliveryModel.value);
 
     allItems.value = [
       HeaderTitleViewModel(title: AppTexts.orderSummary),
@@ -82,18 +47,14 @@ class CheckoutController extends GetxController {
       HeaderTitleViewModel(title: AppTexts.contactInformation),
       CheckoutInfoContainerViewModel(
         titleKey: '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''}',
-        infoItems: infoItems,
-        onTap: () {
-          AppRouter.openContactInformationPage();
-        },
+        infoItems: userInfoItems,
+        onTap: AppRouter.openContactInformationPage,
       ),
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
         titleKey: deliveryModel.value?.deliveryType ?? '',
         infoItems: deliveryInfoItems,
-        onTap: () {
-          AppRouter.openDeliveryAddressPage();
-        },
+        onTap: AppRouter.openDeliveryAddressPage,
       ),
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
       CheckoutInfoContainerViewModel(
@@ -104,23 +65,22 @@ class CheckoutController extends GetxController {
             selectedMethod: selectedPaymentMethod.value.obs,
             onSelected: (value) {
               selectedPaymentMethod.value = value;
+              initAllItems();
+              Navigator.pop(Get.context!);
             },
           );
         },
         infoItems: {},
       ),
-
       CheckoutInfoContainerViewModel(
         placeholder: AppTexts.enterYourVoucher,
         isPromoValid: true,
-        showRemoveButton: voucherCode.value.isEmpty ? false : true,
+        showRemoveButton: voucherCode.value.isNotEmpty,
         titleKey: voucherCode.value,
-        onTap: () {
-          AppPopUp.voucherCode(voucherCode: voucherCode);
-        },
+        onTap: _handleVoucherTap,
         onRemoveTap: () {
           voucherCode.value = '';
-          checkoutController.initAllItems();
+          initAllItems();
         },
         infoItems: {},
       ),
@@ -128,5 +88,73 @@ class CheckoutController extends GetxController {
     ];
 
     allItems.refresh();
+  }
+
+  double _calculateSubtotal() {
+    return cartController.selectedItems.fold(0.0, (sum, item) {
+      final priceString = item.discountedPrice ?? item.price;
+      final price = double.tryParse(priceString ?? '') ?? 0.0;
+      return sum + price * item.quantity;
+    });
+  }
+
+  Map<String, String> _buildDeliveryInfo(DeliveryAddressViewModel? model) {
+    if (model?.deliveryType == 'Ridicare la sediu') {
+      return {'Pickup Location: ${model?.pickupLocation ?? ''}': ''};
+    }
+    return {
+      'Country: ${model?.country ?? ''}': '',
+      'Region: ${model?.region ?? ''}': '',
+      'City: ${model?.city ?? ''}': '',
+      'Postal Code: ${model?.postalCode ?? ''}': '',
+      'Street: ${model?.address ?? ''}': '',
+    };
+  }
+
+  Map<String, String> _buildUserInfo(UserViewModel? model) {
+    final info = <String, String>{};
+    if (model?.number.isNotEmpty ?? false) info[model!.number] = '';
+    if (model?.email.isNotEmpty ?? false) info[model!.email] = '';
+    return info;
+  }
+
+  OrderSummaryViewModel _buildOrderSummary(double subtotal) {
+    final summary = OrderSummaryViewModel();
+    summary.subtotal.value = subtotal;
+    summary.shippingFee.value =
+        (deliveryModel.value?.deliveryType == 'DHL' || deliveryModel.value?.deliveryType == 'Fan courier') ? 5.0 : 0.0;
+    summary.voucherDiscount.value = voucherCode.value.isNotEmpty ? 10.0 : 0.0;
+    summary.total.value = subtotal + summary.shippingFee.value + summary.adminFee.value - summary.voucherDiscount.value;
+    return summary;
+  }
+
+  void _handleVoucherTap() {
+    final textViewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
+    AppPopUp.voucherCode(
+      textViewModel: textViewModel,
+      onTap: () {
+        final promoCodeViewModel = PromoCodeViewModel();
+        final validCodes = promoCodeViewModel.getMockPromoCodes();
+        final enteredCode = textViewModel.placeholder.trim().toUpperCase();
+
+        final isValid = validCodes.contains(enteredCode);
+        if (isValid) {
+          voucherCode.value = enteredCode;
+          initAllItems();
+          Get.back();
+        }
+        Future.delayed(Duration(milliseconds: 500), () {
+          Get.snackbar(
+            isValid ? AppTexts.success : AppTexts.invalidCode,
+            isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: isValid ? AppColors.primary : AppColors.red,
+            colorText: Colors.white,
+            forwardAnimationCurve: Curves.easeOutBack,
+            margin: EdgeInsets.all(14),
+          );
+        });
+      },
+    );
   }
 }

@@ -10,13 +10,8 @@ class SelectionViewModel extends BaseViewModel {
   final RxString selectedValue;
   final Function(String)? onSelectionChanged;
 
-  SelectionViewModel({
-    required this.title,
-    required this.options,
-    String? initialValue,
-    this.onSelectionChanged,
-  }) : selectedValue =
-           (initialValue ?? (options.isNotEmpty ? options.first : '')).obs {
+  SelectionViewModel({required this.title, required this.options, String? initialValue, this.onSelectionChanged})
+    : selectedValue = (initialValue ?? (options.isNotEmpty ? options.first : '')).obs {
     selectedValue.listen((value) {
       if (onSelectionChanged != null) {
         onSelectionChanged!(value);
@@ -40,7 +35,7 @@ class SelectionWidget extends StatelessWidget {
           Text(itemViewModel.title),
           const SizedBox(height: 4),
           Obx(
-            () => GestureDetector(
+            () => InkWell(
               onTap: () => AppPopUp.showSelection(
                 title: itemViewModel.title,
                 options: itemViewModel.options,
@@ -48,10 +43,7 @@ class SelectionWidget extends StatelessWidget {
                 onSelectionChanged: itemViewModel.onSelectionChanged,
               ),
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 16,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey.shade300),
                   borderRadius: BorderRadius.circular(5),
@@ -59,10 +51,7 @@ class SelectionWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      itemViewModel.selectedValue.value,
-                      style: const TextStyle(color: Colors.black),
-                    ),
+                    Text(itemViewModel.selectedValue.value, style: const TextStyle(color: Colors.black)),
                     const Icon(Icons.arrow_drop_down, color: Colors.grey),
                   ],
                 ),

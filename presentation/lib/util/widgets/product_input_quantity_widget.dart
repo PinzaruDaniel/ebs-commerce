@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:input_quantity/input_quantity.dart';
 
@@ -20,10 +19,9 @@ class ProductInputQuantityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isOutOfStock = maxValue == null;
-    final int adjustMax = isOutOfStock ? 0 : maxValue;
-    final int adjustMin = isOutOfStock ? 0 : minValue;
-    final int initialVal=initialValue.clamp(adjustMin, adjustMax);
+    final int adjustMax = maxValue;
+    final int adjustMin = minValue;
+    final int initialVal = initialValue.clamp(adjustMin, adjustMax);
 
     return InputQty.int(
       qtyFormProps: QtyFormProps(enableTyping: false),
@@ -32,7 +30,23 @@ class ProductInputQuantityWidget extends StatelessWidget {
         enabledBorder: InputBorder.none,
         isBordered: false,
         width: 8,
-        borderShape: BorderShapeBtn.circle,
+        borderShape: BorderShapeBtn.none,
+        plusBtn: Container(
+          height: 26,
+          width: 26,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: Colors.grey.shade300)),
+          child: Icon(Icons.add_rounded, size: 24, color: AppColors.primary,),
+        ),
+        minusBtn: Container(
+          height: 26,
+          width: 26,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: Colors.grey.shade300)),
+          child: Icon(Icons.remove_rounded, size: 24, color: AppColors.primary,),
+        ),
       ),
       initVal: initialVal,
       minVal: adjustMin,
