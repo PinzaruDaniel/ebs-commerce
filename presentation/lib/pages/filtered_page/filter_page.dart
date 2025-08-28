@@ -104,22 +104,32 @@ class _FilterPageState extends State<FilterPage> {
         }),
       ),
 
-      bottomNavigationBar: Obx(() {
-        return BottomNavigationBarWidget(
-          title: filterController.isLoading.value
-              ? AppTexts.loading
-              : (filterController.filteredCount.value > 0
-                    ? '${AppTexts.showResults}(${filterController.filteredCount.value})'
-                    : AppTexts.noProductsToShow),
-          showIcon: false,
-          addToCart: filterController.filteredProducts.isNotEmpty,
-          onTap: () {
-            AppRouter.openProductsDisplayPage(type: ProductListType.filteredProducts, title: AppTexts.filteredProducts);
-          },
-          titleDialog: AppTexts.oops,
-          contentDialog: AppTexts.noProductsToShow,
-        );
-      }),
+        bottomNavigationBar: Obx(() {
+          final isLoading = filterController.isLoading.value;
+          final hasProducts = filterController.filteredProducts.isNotEmpty;
+          final filteredCount = filterController.filteredCount.value;
+
+          return BottomNavigationBarWidget(
+            title: isLoading
+                ? AppTexts.loading
+                : (filteredCount > 0
+                ? '${AppTexts.showResults}($filteredCount)'
+                : AppTexts.noProductsToShow),
+            showIcon: false,
+            addToCart: hasProducts,
+            onTap: isLoading || !hasProducts
+                ? null
+                : () {
+              AppRouter.openProductsDisplayPage(
+                type: ProductListType.filteredProducts,
+                title: AppTexts.filteredProducts,
+              );
+            },
+            titleDialog: AppTexts.oops,
+            contentDialog: AppTexts.noProductsToShow,
+          );
+        })
+
     );
   }
 

@@ -20,7 +20,6 @@ import 'package:presentation/view/delivery_address_view_model.dart';
 import '../../util/enum/delivery_type.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 
-
 extension DeliveryTypeExtension on DeliveryType {
   String get label {
     switch (this) {
@@ -39,7 +38,6 @@ extension DeliveryTypeExtension on DeliveryType {
 }
 
 class DeliveryAddressController extends GetxController {
-
   final GetCountriesUseCase getCountriesUseCase = GetIt.instance<GetCountriesUseCase>();
   final GetStatesUseCase getStatesUseCase = GetIt.instance<GetStatesUseCase>();
   final GetCitiesUseCase getCitiesUseCase = GetIt.instance<GetCitiesUseCase>();
@@ -251,19 +249,35 @@ class DeliveryAddressController extends GetxController {
       addressVM.value = model;
       return model;
     } else {
+      final country = getViewModel<SelectionViewModel>('Country').selectedValue.value;
+      final region = getViewModel<SelectionViewModel>('Region').selectedValue.value;
+      final city = getViewModel<SelectionViewModel>('City').selectedValue.value;
+      final postalCode = getViewModel<TextFieldViewModel>('Postal code').placeholder;
+      final address = getViewModel<TextFieldViewModel>('Address').placeholder;
+      final comments = getViewModel<TextFieldViewModel>('Other Comments').placeholder;
+
+      final areFieldsEmpty = country.isEmpty || region.isEmpty || city.isEmpty || postalCode.isEmpty || address.isEmpty;
+      if (areFieldsEmpty) {
+        final pickupLocation = pickupLocations.first;
+        final model = DeliveryAddressViewModel(deliveryType: DeliveryType.pickup.label, pickupLocation: pickupLocation);
+        addressVM.value = model;
+        return model;
+      }
+
       final model = DeliveryAddressViewModel(
         deliveryType: type.label,
-        country: getViewModel<SelectionViewModel>('Country').selectedValue.value,
-        region: getViewModel<SelectionViewModel>('Region').selectedValue.value,
-        city: getViewModel<SelectionViewModel>('City').selectedValue.value,
-        postalCode: getViewModel<TextFieldViewModel>('Postal code').placeholder,
-        address: getViewModel<TextFieldViewModel>('Address').placeholder,
-        comments: getViewModel<TextFieldViewModel>('Other Comments').placeholder,
+        country: country,
+        region: region,
+        city: city,
+        postalCode: postalCode,
+        address: address,
+        comments: comments,
       );
       addressVM.value = model;
       return model;
     }
   }
+
   T getViewModel<T extends BaseViewModel>(String title) {
     return allItems.firstWhere((item) => item is T && (item as dynamic).title == title) as T;
   }
