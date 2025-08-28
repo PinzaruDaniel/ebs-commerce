@@ -40,9 +40,7 @@ class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget>
       minVal: widget.minValue,
       maxVal: widget.maxValue!,
       onQtyChanged: (val) {
-        setState(() {
-          _currentValue = val;
-        });
+        _currentValue = val;
         widget.onChanged(val);
       },
       qtyFormProps: QtyFormProps(enableTyping: false),
@@ -59,11 +57,7 @@ class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget>
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: Colors.grey.shade300),
           ),
-          child: Icon(
-            Icons.add_rounded,
-            size: 24,
-            color: isAtMax ? Colors.grey : AppColors.primary,
-          ),
+          child: Icon(Icons.add_rounded, size: 24, color: isAtMax ? Colors.grey : AppColors.primary),
         ),
         minusBtn: Container(
           height: 26,
@@ -72,13 +66,16 @@ class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget>
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: Colors.grey.shade300),
           ),
-          child: Icon(
-            Icons.remove_rounded,
-            size: 24,
-            color: isAtMin ? Colors.grey : AppColors.primary,
-          ),
+          child: Icon(Icons.remove_rounded, size: 24, color: isAtMin ? Colors.grey : AppColors.primary),
         ),
       ),
     );
   }
 }
+
+/*onQtyChanged: (val) {
+setState(() {
+_currentValue = val;
+});
+widget.onChanged(val);
+},*/

@@ -1,6 +1,7 @@
 import 'package:presentation/pages/shopping_cart_page/widgets/shopping_cart_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
@@ -77,10 +78,29 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         ProductInputQuantityWidget(
+                          key: ValueKey('${index}_${item.quantity}'),
+                          minValue: 0,
                           initialValue: item.quantity,
-                          onChanged: (val) {
-                            item.quantity = val;
-                            cartController.cartItems.refresh();
+                          onChanged: (val) async {
+                            if (val == 0) {
+                              final shouldDelete = await AppPopUp.showConfirmationDialog(
+                                context: context,
+                                title: 'Remove Item?',
+                                content: 'Do you want to remove this item from your cart?',
+                              );
+
+                              if (shouldDelete) {
+                                cartController.cartItems.removeAt(index);
+                              } else {
+                                item.quantity = 1;
+                                cartController.cartItems[index] = item;
+                                cartController.cartItems.refresh();
+                              }
+                            } else {
+                              item.quantity = val;
+                              cartController.cartItems[index] = item;
+                              cartController.cartItems.refresh();
+                            }
                           },
                           maxValue: item.stock,
                         ),

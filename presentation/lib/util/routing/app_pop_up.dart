@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:presentation/util/widgets/option_picker_widget.dart';
 import 'package:presentation/util/widgets/payment_method_selection_widget.dart';
 import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
+import '../../controllers/controller_imports.dart';
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
+import '../resources/app_colors.dart';
+import '../resources/app_texts.dart';
 import '../widgets/text_field_widget.dart';
 
 class AppPopUp {
@@ -76,5 +79,38 @@ class AppPopUp {
         ),
       );
     }
+  }
+  static Future<bool> showConfirmationDialog({
+    required BuildContext context,
+    String? title,
+    String? content,
+    String confirmText = AppTexts.ok,
+    String cancelText = 'Cancel',
+    VoidCallback? onCancel,
+  }) async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: Text(title ?? 'Confirm'),
+        content: Text(content ?? 'Are you sure?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              onCancel?.call();
+              Navigator.of(context).pop(false);
+            },
+            child: Text(cancelText),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(
+              confirmText,
+              style: TextStyle(color: AppColors.primary),
+            ),
+          ),
+        ],
+      ),
+    ) ?? false;
   }
 }

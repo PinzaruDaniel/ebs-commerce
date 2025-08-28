@@ -1,5 +1,3 @@
-import 'package:presentation/util/routing/app_router.dart';
-
 import '../../view/base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_icons.dart';
