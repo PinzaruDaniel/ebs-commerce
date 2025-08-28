@@ -47,18 +47,15 @@ class AppPopUp {
     final methods = ['PayPal', 'Plata Numerar'];
 
     await showCustomBottomSheet(
-      child: PaymentMethodSelectionWidget(selectedMethod: selectedMethod, onSelected: onSelected, methods: methods)
+      child: PaymentMethodSelectionWidget(selectedMethod: selectedMethod, onSelected: onSelected, methods: methods),
     );
   }
 
-  static Future<void> voucherCode({
-    required Function()? onTap,
-    required TextFieldViewModel textViewModel,
-  }) async {
+  static Future<void> voucherCode({required Function()? onTap, required TextFieldViewModel textViewModel}) async {
     if (Get.context != null) {
       await showCustomBottomSheet(
         isScrollControlled: true,
-        child: VoucherCodeInputWidget(onTap: onTap, textViewModel: textViewModel)
+        child: VoucherCodeInputWidget(onTap: onTap, textViewModel: textViewModel),
       );
     }
   }
@@ -71,7 +68,12 @@ class AppPopUp {
   }) async {
     if (Get.context != null) {
       return await showCustomBottomSheet(
-        child: OptionPickerWidget(title: title, options: options, selectedValue: selectedValue, onSelectionChanged: onSelectionChanged)
+        child: OptionPickerWidget(
+          title: title,
+          options: options,
+          selectedValue: selectedValue,
+          onSelectionChanged: onSelectionChanged,
+        ),
       );
     }
   }
