@@ -10,7 +10,7 @@ import 'package:presentation/util/widgets/smart_refresher_widget.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../util/enum/product_type.dart';
-import '../../util/widgets/circular_progress_indicator_widget.dart';
+import '../../util/widgets/loading_overlay_widget.dart';
 
 class ProductsDisplayPage extends StatefulWidget {
   final String title;
@@ -61,7 +61,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
             },
         
             child: controller.isLoading.value
-                ? CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
+                ? LoadingOverlayWidget(isLoading: true)
                 : SingleChildScrollView(
                     child: ProductsListDisplayWidget(
                       title: widget.title,

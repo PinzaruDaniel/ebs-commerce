@@ -1,7 +1,6 @@
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_icons.dart';
-import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {

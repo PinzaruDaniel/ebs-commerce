@@ -22,10 +22,8 @@ class AppBarIconShoppingCartWidget extends StatelessWidget {
             shape: LiquidRoundedSuperellipse(borderRadius: Radius.circular(50)),
             settings: LiquidGlassSettings(
               blur: 1.6,
-              glassColor: Colors.white12,
-              lightIntensity: 2,
-              thickness: 16,
-              lightness: 1.2,
+              glassColor: Colors.white38,
+              thickness: 10,
             ),
             child: SizedBox(height: 46, width: 46),
           ),

@@ -18,21 +18,19 @@ Future<void> init() async {
 
     receiveTimeout: Duration(seconds: 60),
     connectTimeout: Duration(seconds: 20),
-    validateStatus: (status) {
-      return status! < 400 || status == 301 || status == 302; // Accept 301 and 302 redirects
-    },
   );
 
   var mainClient = Dio(apiClientOption);
+  mainClient.interceptors.add(
+    LogInterceptor(requestBody: true, responseBody: true),
+  );
 
   var addressesClient = Dio(apiAddressesOption);
   addressesClient.interceptors.add(
     LogInterceptor(requestBody: true, responseBody: true),
   );
 
-  mainClient.interceptors.add(
-    LogInterceptor(requestBody: true, responseBody: true),
-  );
+
 
   GetIt.instance.registerLazySingleton<ProductsApiService>(
     () => ProductsApiService(mainClient),

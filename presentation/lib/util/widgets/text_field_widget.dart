@@ -4,10 +4,13 @@ import 'package:presentation/view/base_view_model.dart';
 
 class TextFieldViewModel extends BaseViewModel {
   final String title;
+  final String? keyId;
   final TextInputType? textInputType;
   String placeholder;
 
-  TextFieldViewModel({required this.title, this.textInputType, String initialValue = ''}) : placeholder = initialValue;
+  TextFieldViewModel({
+    this.keyId,
+    required this.title, this.textInputType, String initialValue = ''}) : placeholder = initialValue;
 }
 
 class TextFieldWidget extends StatefulWidget {

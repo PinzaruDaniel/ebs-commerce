@@ -26,14 +26,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   void initState() {
     super.initState();
-    deliveryAddressController.onInit();
+    deliveryAddressController.initItems();
     deliveryAddressController.toDeliveryAddressViewModel();
     checkoutController.initAllItems();
     contactInformationController.initAllItems();
     contactInformationController.toUserViewModel();
   }
 
-  @override
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

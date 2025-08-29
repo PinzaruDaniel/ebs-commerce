@@ -27,7 +27,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   late ScrollController scrollController;
   bool isCollapsed = false;
 
-  //de scos controller
   AddToCartController get addCartController => Get.find();
 
   @override

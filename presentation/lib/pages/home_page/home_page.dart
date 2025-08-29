@@ -5,12 +5,12 @@ import 'package:presentation/pages/products_display_page/widgets/products_list_d
 import 'package:presentation/util/mapper/map_text_product_type.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
-import 'package:presentation/util/widgets/circular_progress_indicator_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../../util/routing/app_router.dart';
 import '../../util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import '../../util/widgets/horizontal_products_list_widget.dart';
+import '../../util/widgets/loading_overlay_widget.dart';
 import '../../util/widgets/smart_refresher_widget.dart';
 import 'home_controller.dart';
 
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
         showBorder: true,
-        leading: Image.asset(AppIcons.companyIcon),
+        leading: AppIcons.companyIcon,
         actions: [
           IconButton(
             onPressed: () {
@@ -54,32 +54,35 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: Obx(
-          () => SmartRefresherWidget(
-            controller: _refreshController,
-            onRefresh: () async {
-              await homeController.getProducts(loadMore: false);
-              _refreshController.refreshCompleted();
-            },
-            onLoading: () async {
-              await homeController.getProducts(loadMore: true);
-              _refreshController.loadComplete();
-            },
-            child: homeController.isLoading.value
-                ? CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75))
-                : ListView.builder(
-                    itemCount: homeController.items.length,
-                    itemBuilder: (context, index) {
-                      final item = homeController.items[index];
-                      if (item is AdBannerViewModel) {
-                        return HomeAdBannerWidget();
-                      } else if (item is HorizontalProductListViewModel) {
-                        return HorizontalProductsListWidget(items: item.products, type: item.type);
-                      } else if (item is AllProductsViewItem) {
-                        return ProductsListDisplayWidget(title: item.type.title?? '', products: homeController.products);
-                      }
-                      return null;
-                    },
-                  ),
+          () => Stack(
+            children: [
+              SmartRefresherWidget(
+                controller: _refreshController,
+                onRefresh: () async {
+                  await homeController.getProducts(loadMore: false);
+                  _refreshController.refreshCompleted();
+                },
+                onLoading: () async {
+                  await homeController.getProducts(loadMore: true);
+                  _refreshController.loadComplete();
+                },
+                child: ListView.builder(
+                  itemCount: homeController.items.length,
+                  itemBuilder: (context, index) {
+                    final item = homeController.items[index];
+                    if (item is AdBannerViewModel) {
+                      return HomeAdBannerWidget();
+                    } else if (item is HorizontalProductListViewModel) {
+                      return HorizontalProductsListWidget(items: item.products, type: item.type);
+                    } else if (item is AllProductsViewItem) {
+                      return ProductsListDisplayWidget(title: item.type.title ?? '', products: homeController.products);
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ),
+              if (homeController.isLoading.value)  LoadingOverlayWidget(isLoading: true,),
+            ],
           ),
         ),
       ),

@@ -29,10 +29,7 @@ class DeliveryAddressRepositoryImpl implements DeliveryAddressRepository {
   }
 
   @override
-  Future<Either<Failure, CitiesResponseEntity>> getCities(
-    country,
-    state,
-  ) async {
+  Future<Either<Failure, CitiesResponseEntity>> getCities(country, state) async {
     try {
       final response = await apiService.getCities(country, state);
       final entities = response.map((dto) => dto.toEntity);
@@ -46,7 +43,7 @@ class DeliveryAddressRepositoryImpl implements DeliveryAddressRepository {
   }
 
   @override
-  Future<Either<Failure, List<StatesEntity>>> getStates(country) async {
+  Future<Either<Failure, List<StatesEntity>>> getStates(String country) async {
     try {
       final response = await apiService.getStates(country);
       final entities = response.data.states.map((dto) => dto.toEntity).toList();

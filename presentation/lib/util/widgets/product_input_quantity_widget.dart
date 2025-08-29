@@ -73,9 +73,4 @@ class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget>
   }
 }
 
-/*onQtyChanged: (val) {
-setState(() {
-_currentValue = val;
-});
-widget.onChanged(val);
-},*/
+

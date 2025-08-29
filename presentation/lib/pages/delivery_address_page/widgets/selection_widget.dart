@@ -5,13 +5,19 @@ import 'package:presentation/view/base_view_model.dart';
 import '../../../util/routing/app_pop_up.dart';
 
 class SelectionViewModel extends BaseViewModel {
+  final String? keyId;
   final String title;
   final List<String> options;
   final RxString selectedValue;
   final Function(String)? onSelectionChanged;
 
-  SelectionViewModel({required this.title, required this.options, String? initialValue, this.onSelectionChanged})
-    : selectedValue = (initialValue ?? (options.isNotEmpty ? options.first : '')).obs {
+  SelectionViewModel({
+    this.keyId,
+    required this.title,
+    required this.options,
+    String? initialValue,
+    this.onSelectionChanged,
+  }) : selectedValue = (initialValue ?? (options.isNotEmpty ? options.first : '')).obs {
     selectedValue.listen((value) {
       if (onSelectionChanged != null) {
         onSelectionChanged!(value);
@@ -36,6 +42,7 @@ class SelectionWidget extends StatelessWidget {
           const SizedBox(height: 4),
           Obx(
             () => InkWell(
+              splashColor: Colors.transparent,
               onTap: () => AppPopUp.showSelection(
                 title: itemViewModel.title,
                 options: itemViewModel.options,

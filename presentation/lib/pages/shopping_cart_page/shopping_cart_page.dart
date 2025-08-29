@@ -78,7 +78,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         ProductInputQuantityWidget(
-                          key: ValueKey('${index}_${item.quantity}'),
                           minValue: 0,
                           initialValue: item.quantity,
                           onChanged: (val) async {
@@ -92,7 +91,8 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                               if (shouldDelete) {
                                 cartController.cartItems.removeAt(index);
                               } else {
-                                item.quantity = 1;
+                                val=1;
+                                item.quantity = val;
                                 cartController.cartItems[index] = item;
                                 cartController.cartItems.refresh();
                               }

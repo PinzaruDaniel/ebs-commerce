@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:presentation/util/widgets/option_picker_widget.dart';
 import 'package:presentation/util/widgets/payment_method_selection_widget.dart';
 import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
-import '../../controllers/controller_imports.dart';
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
 import '../resources/app_colors.dart';
