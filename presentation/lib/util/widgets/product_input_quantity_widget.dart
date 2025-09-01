@@ -50,12 +50,12 @@ class ProductInputQuantityWidget extends StatelessWidget {
               icon: Icon(
                 Icons.remove_rounded,
                 size: 24,
-                color: currentValue.value <= minValue ? Colors.grey : AppColors.primary,
+                color: currentValue.value == minValue ? Colors.grey : AppColors.primary,
               ),
             ),
           ),
-          SizedBox(
-            width: 50,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
             child: TextField(
               readOnly: true,
               controller: controller,
@@ -82,7 +82,6 @@ class ProductInputQuantityWidget extends StatelessWidget {
             ),
             child: IconButton(
               highlightColor: Colors.transparent,
-
               padding: EdgeInsets.zero,
               onPressed: currentValue.value >= (maxValue ?? double.maxFinite.toInt())
                   ? null

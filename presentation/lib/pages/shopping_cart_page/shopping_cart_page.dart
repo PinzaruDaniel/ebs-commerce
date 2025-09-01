@@ -1,7 +1,6 @@
 import 'package:presentation/pages/shopping_cart_page/widgets/shopping_cart_title_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';

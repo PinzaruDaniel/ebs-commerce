@@ -22,6 +22,5 @@ extension DeliveryTypeMapper on DeliveryType {
       case DeliveryType.dhl:
         return Image.asset('assets/icons/dhl.png');
     }
-    return null;
   }
 }
