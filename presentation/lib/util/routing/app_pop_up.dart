@@ -86,6 +86,7 @@ class AppPopUp {
     String? content,
     String confirmText = AppTexts.ok,
     String cancelText = 'Cancel',
+
   }) async {
     return await showDialog<bool>(
       context: context,

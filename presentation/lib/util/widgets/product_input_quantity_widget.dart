@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:input_quantity/input_quantity.dart';
-
+import 'package:get/get.dart';
+import 'package:presentation/util/resources/app_text_styles.dart';
 import '../resources/app_colors.dart';
 
-class ProductInputQuantityWidget extends StatefulWidget {
+class ProductInputQuantityWidget extends StatelessWidget {
   const ProductInputQuantityWidget({
     super.key,
     required this.initialValue,
@@ -18,59 +18,88 @@ class ProductInputQuantityWidget extends StatefulWidget {
   final Function(int) onChanged;
 
   @override
-  State<ProductInputQuantityWidget> createState() => _ProductInputQuantityWidgetState();
-}
-
-class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget> {
-   int _currentValue=1;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentValue = widget.initialValue.clamp(widget.minValue, widget.maxValue!);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final isAtMin = _currentValue <= widget.minValue;
-    final isAtMax = _currentValue >= widget.maxValue!;
+    final RxInt currentValue = initialValue.clamp(minValue, maxValue ?? double.maxFinite.toInt()).obs;
+    final controller = TextEditingController(text: currentValue.value.toString());
 
-    return InputQty.int(
-      initVal: _currentValue,
-      minVal: widget.minValue,
-      maxVal: widget.maxValue!,
-      onQtyChanged: (val) {
-        _currentValue = val;
-        widget.onChanged(val);
-      },
-      qtyFormProps: QtyFormProps(enableTyping: false),
-      decoration: QtyDecorationProps(
-        btnColor: AppColors.primary,
-        enabledBorder: InputBorder.none,
-        isBordered: false,
-        width: 8,
-        borderShape: BorderShapeBtn.none,
-        plusBtn: Container(
-          height: 26,
-          width: 26,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            border: Border.all(color: Colors.grey.shade300),
+    ever(currentValue, (value) {
+      controller.text = value.toString();
+    });
+
+    return Obx(
+      () => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 26,
+            width: 26,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: IconButton(
+              highlightColor: Colors.transparent,
+              padding: EdgeInsets.zero,
+              onPressed: currentValue.value <= minValue
+                  ? null
+                  : () {
+                      final value = currentValue.value - 1;
+                      currentValue.value = value;
+                      onChanged(value);
+                    },
+              icon: Icon(
+                Icons.remove_rounded,
+                size: 24,
+                color: currentValue.value <= minValue ? Colors.grey : AppColors.primary,
+              ),
+            ),
           ),
-          child: Icon(Icons.add_rounded, size: 24, color: isAtMax ? Colors.grey : AppColors.primary),
-        ),
-        minusBtn: Container(
-          height: 26,
-          width: 26,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            border: Border.all(color: Colors.grey.shade300),
+          SizedBox(
+            width: 50,
+            child: TextField(
+              readOnly: true,
+              controller: controller,
+              textAlign: TextAlign.center,
+              style: AppTextsStyle.bold(size: 16),
+              decoration: const InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.zero),
+              onChanged: (value) {
+                final intValue = int.tryParse(value) ?? currentValue.value;
+                final clampedValue = intValue.clamp(minValue, maxValue ?? double.maxFinite.toInt());
+                if (intValue != clampedValue) {
+                  controller.text = clampedValue.toString();
+                }
+                currentValue.value = clampedValue;
+                onChanged(clampedValue);
+              },
+            ),
           ),
-          child: Icon(Icons.remove_rounded, size: 24, color: isAtMin ? Colors.grey : AppColors.primary),
-        ),
+          Container(
+            height: 26,
+            width: 26,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: IconButton(
+              highlightColor: Colors.transparent,
+
+              padding: EdgeInsets.zero,
+              onPressed: currentValue.value >= (maxValue ?? double.maxFinite.toInt())
+                  ? null
+                  : () {
+                      final value = currentValue.value + 1;
+                      currentValue.value = value;
+                      onChanged(value);
+                    },
+              icon: Icon(
+                Icons.add_rounded,
+                size: 24,
+                color: currentValue.value >= (maxValue ?? double.maxFinite.toInt()) ? Colors.grey : AppColors.primary,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-
-

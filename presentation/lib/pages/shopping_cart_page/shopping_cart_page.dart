@@ -77,27 +77,18 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        ProductInputQuantityWidget(
-                          minValue: 0,
-                          initialValue: item.quantity,
-                          onChanged: (val) async {
-                            if (val == 0) {
-                              final shouldDelete = await AppPopUp.showConfirmationDialog(
-                                context: context,
-                                title: 'Remove Item?',
-                                content: 'Do you want to remove this item from your cart?',
-                              );
-
-                              if (shouldDelete) {
-                                cartController.cartItems.removeAt(index);
-                              } else {
-                                item.quantity = 1;
-                              }
-                            } else {
-                              item.quantity = val;
-                            }
-                          },
-                          maxValue: item.stock,
+                        Obx(
+                          () => ProductInputQuantityWidget(
+                            key: ValueKey(
+                              '${cartController.cartItems[index].id}_${cartController.cartItems[index].quantity}',
+                            ),
+                            minValue: 0,
+                            initialValue: cartController.cartItems[index].quantity,
+                            onChanged: (val) {
+                              cartController.updateQuantity(index, val, context);
+                            },
+                            maxValue: cartController.cartItems[index].stock,
+                          ),
                         ),
                       ],
                     ),
