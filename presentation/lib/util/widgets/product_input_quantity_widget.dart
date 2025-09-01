@@ -22,7 +22,7 @@ class ProductInputQuantityWidget extends StatefulWidget {
 }
 
 class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget> {
-  late int _currentValue;
+   int _currentValue=1;
 
   @override
   void initState() {

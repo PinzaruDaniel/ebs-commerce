@@ -91,15 +91,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                               if (shouldDelete) {
                                 cartController.cartItems.removeAt(index);
                               } else {
-                                val=1;
-                                item.quantity = val;
-                                cartController.cartItems[index] = item;
-                                cartController.cartItems.refresh();
+                                item.quantity = 1;
                               }
                             } else {
                               item.quantity = val;
-                              cartController.cartItems[index] = item;
-                              cartController.cartItems.refresh();
                             }
                           },
                           maxValue: item.stock,

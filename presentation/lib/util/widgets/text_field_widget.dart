@@ -6,9 +6,11 @@ class TextFieldViewModel extends BaseViewModel {
   final String title;
   final String? keyId;
   final TextInputType? textInputType;
+  final bool? needValidation;
   String placeholder;
 
   TextFieldViewModel({
+    this.needValidation,
     this.keyId,
     required this.title, this.textInputType, String initialValue = ''}) : placeholder = initialValue;
 }
@@ -54,8 +56,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           const SizedBox(height: 4),
           TextFormField(
             validator: (text) {
-              if (text == null || text.isEmpty) {
-                return "This field is required";
+              if (widget.itemViewModel.needValidation == null) {
+                if (text == null || text.isEmpty) {
+                  return "This field is required";
+                }
               }
               return null;
             },
@@ -68,18 +72,25 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             textInputAction: TextInputAction.done,
             decoration: InputDecoration(
               isDense: true,
+
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(color: AppColors.red, width: 2.0),
               ),
+
+
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(color: AppColors.redText, width: 1.0),
               ),
+
+
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
               ),
+
+
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(color: AppColors.secondary, width: 2.0),

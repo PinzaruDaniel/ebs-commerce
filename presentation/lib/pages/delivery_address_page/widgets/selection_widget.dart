@@ -17,13 +17,7 @@ class SelectionViewModel extends BaseViewModel {
     required this.options,
     String? initialValue,
     this.onSelectionChanged,
-  }) : selectedValue = (initialValue ?? (options.isNotEmpty ? options.first : '')).obs {
-    selectedValue.listen((value) {
-      if (onSelectionChanged != null) {
-        onSelectionChanged!(value);
-      }
-    });
-  }
+  }) : selectedValue = (initialValue ?? (options.isNotEmpty ? options.first : '')).obs;
 }
 
 class SelectionWidget extends StatelessWidget {

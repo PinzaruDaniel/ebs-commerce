@@ -70,6 +70,7 @@ class AppPopUp {
   }) async {
     if (Get.context != null) {
       return await showCustomBottomSheet(
+        isDismissible: false,
         child: OptionPickerWidget(
           title: title,
           options: options,
@@ -85,7 +86,6 @@ class AppPopUp {
     String? content,
     String confirmText = AppTexts.ok,
     String cancelText = 'Cancel',
-    VoidCallback? onCancel,
   }) async {
     return await showDialog<bool>(
       context: context,
@@ -96,7 +96,6 @@ class AppPopUp {
         actions: [
           TextButton(
             onPressed: () {
-              onCancel?.call();
               Navigator.of(context).pop(false);
             },
             child: Text(cancelText),
