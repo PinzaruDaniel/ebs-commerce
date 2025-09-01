@@ -17,7 +17,10 @@ class OptionPickerWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('Choose ${title.toLowerCase()}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+
+        ),
         SizedBox(
           height: Get.height * 0.25,
           child: CupertinoPicker(

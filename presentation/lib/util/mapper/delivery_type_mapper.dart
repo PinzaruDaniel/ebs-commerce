@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import '../enum/delivery_type.dart';
 
 extension DeliveryTypeMapper on DeliveryType {
@@ -12,7 +13,15 @@ extension DeliveryTypeMapper on DeliveryType {
     }
   }
 
-  static DeliveryType fromLabel(String label) {
-    return DeliveryType.values.firstWhere((e) => e.label == label);
+  Image? get image {
+    switch (this) {
+      case DeliveryType.pickup:
+        return null;
+      case DeliveryType.fanCourier:
+        return Image.asset('assets/icons/fan_courier.png');
+      case DeliveryType.dhl:
+        return Image.asset('assets/icons/dhl.png');
+    }
+    return null;
   }
 }
