@@ -6,6 +6,7 @@ class PromoCodeViewModel{
       'SAVE10',
       'WELCOME5',
       'FREESHIP',
+      'DANIELLOH6869',
       mockString(8).toUpperCase(),
     ];
   }
