@@ -13,6 +13,7 @@ abstract class ProductApiDto with _$ProductApiDto {
     required List<String>? marks,
     required int? stock,
     required String? description,
+    //@JsonKey(name: 'attributes') required List<SpecificationResponseApiDto>? specification,
     required List<SpecificationApiDto>? specification,
     @JsonKey(name: 'categories') required List<List<CategoryApiDto>>? category,
   }) = _ProductApiDto;

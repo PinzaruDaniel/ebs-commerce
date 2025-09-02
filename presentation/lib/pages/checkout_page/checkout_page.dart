@@ -33,7 +33,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
     contactInformationController.toUserViewModel();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

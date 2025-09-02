@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProductApiDto {
 
- int get id; String get name; Map<String, dynamic>? get brand; String? get price;@JsonKey(name: 'discount_percent', defaultValue: null) String? get discount;@JsonKey(name: 'discounted_price', defaultValue: null) String? get discountedPrice;@JsonKey(name: 'attachments') List<String>? get imageUrl; List<String>? get marks; int? get stock; String? get description; List<SpecificationApiDto>? get specification;@JsonKey(name: 'categories') List<List<CategoryApiDto>>? get category;
+ int get id; String get name; Map<String, dynamic>? get brand; String? get price;@JsonKey(name: 'discount_percent', defaultValue: null) String? get discount;@JsonKey(name: 'discounted_price', defaultValue: null) String? get discountedPrice;@JsonKey(name: 'attachments') List<String>? get imageUrl; List<String>? get marks; int? get stock; String? get description;//@JsonKey(name: 'attributes') required List<SpecificationResponseApiDto>? specification,
+ List<SpecificationApiDto>? get specification;@JsonKey(name: 'categories') List<List<CategoryApiDto>>? get category;
 /// Create a copy of ProductApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -257,7 +258,9 @@ class _ProductApiDto implements ProductApiDto {
 
 @override final  int? stock;
 @override final  String? description;
+//@JsonKey(name: 'attributes') required List<SpecificationResponseApiDto>? specification,
  final  List<SpecificationApiDto>? _specification;
+//@JsonKey(name: 'attributes') required List<SpecificationResponseApiDto>? specification,
 @override List<SpecificationApiDto>? get specification {
   final value = _specification;
   if (value == null) return null;

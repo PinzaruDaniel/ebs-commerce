@@ -54,8 +54,8 @@ class ProductInputQuantityWidget extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
+          SizedBox(
+            width: Get.height * 0.05,
             child: TextField(
               readOnly: true,
               controller: controller,

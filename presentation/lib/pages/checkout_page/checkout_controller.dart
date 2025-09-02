@@ -36,26 +36,24 @@ class CheckoutController extends GetxController {
     userModel.value = contactInformationController.toUserViewModel();
     deliveryModel.value = deliveryAddressController.toDeliveryAddressViewModel();
 
-    final subtotal = _calculateSubtotal();
-    final orderSummary = _buildOrderSummary(subtotal);
-    final userInfoItems = _buildUserInfo(userModel.value);
-    final deliveryInfoItems = _buildDeliveryInfo(deliveryModel.value);
-
     allItems.value = [
       HeaderTitleViewModel(title: AppTexts.orderSummary),
       ...cartController.selectedItems,
+
       HeaderTitleViewModel(title: AppTexts.contactInformation),
       CheckoutInfoContainerViewModel(
         titleKey: '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''}',
-        infoItems: userInfoItems,
+        infoItems: _buildUserInfo(userModel.value),
         onTap: AppRouter.openContactInformationPage,
       ),
+
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
         titleKey: deliveryModel.value?.deliveryType ?? '',
-        infoItems: deliveryInfoItems,
+        infoItems: _buildDeliveryInfo(deliveryModel.value),
         onTap: AppRouter.openDeliveryAddressPage,
       ),
+
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
       CheckoutInfoContainerViewModel(
         placeholder: AppTexts.choosePaymentMethod,
@@ -72,19 +70,20 @@ class CheckoutController extends GetxController {
         },
         infoItems: {},
       ),
+
       CheckoutInfoContainerViewModel(
         placeholder: AppTexts.enterYourVoucher,
         isPromoValid: true,
         showRemoveButton: voucherCode.value.isNotEmpty,
         titleKey: voucherCode.value,
-        onTap: _handleVoucherTap,
+        onTap: _voucherTap,
         onRemoveTap: () {
           voucherCode.value = '';
           initAllItems();
         },
         infoItems: {},
       ),
-      orderSummary,
+      _buildOrderSummary(_calculateSubtotal()),
     ];
 
     allItems.refresh();
@@ -124,11 +123,11 @@ class CheckoutController extends GetxController {
     summary.shippingFee.value =
         (deliveryModel.value?.deliveryType == 'DHL' || deliveryModel.value?.deliveryType == 'Fan courier') ? 5.0 : 0.0;
     summary.voucherDiscount.value = voucherCode.value.isNotEmpty ? 10.0 : 0.0;
-    summary.total.value = subtotal + summary.shippingFee.value + summary.adminFee.value - summary.voucherDiscount.value;
+    summary.total.value = subtotal + summary.shippingFee.value + summary.adminFee - summary.voucherDiscount.value;
     return summary;
   }
 
-  void _handleVoucherTap() {
+  void _voucherTap() {
     final textViewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
     AppPopUp.voucherCode(
       textViewModel: textViewModel,

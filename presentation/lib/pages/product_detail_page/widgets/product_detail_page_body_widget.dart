@@ -21,6 +21,7 @@ class _ProductDetailPageBodyWidgetState extends State<ProductDetailPageBodyWidge
     return Container(
       color: Colors.white,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ProductDetailTitleWidget(item: widget.item),

@@ -39,7 +39,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   void _scrollListener() {
-    final collapsed = scrollController.hasClients && scrollController.offset > (300 - 140);
+    final collapsed = scrollController.hasClients && scrollController.offset > 200;
     if (collapsed != isCollapsed) {
       setState(() => isCollapsed = collapsed);
     }
@@ -65,7 +65,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             pinned: true,
             centerTitle: false,
             title: AnimatedOpacity(
-              curve: Curves.easeOut,
+              curve: Curves.easeIn,
               opacity: isCollapsed ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 500),
               child: isCollapsed ? ProductDetailCollapsedAppBarWidget(item: widget.item!) : const SizedBox.shrink(),
@@ -81,13 +81,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),
           ),
           SliverToBoxAdapter(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
-              child: Material(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                elevation: 0,
-                child: ProductDetailPageBodyWidget(item: widget.item!),
-              ),
+            child: Material(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+              elevation: 0,
+              child: ProductDetailPageBodyWidget(item: widget.item!),
             ),
           ),
         ],

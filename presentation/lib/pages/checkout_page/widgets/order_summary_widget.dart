@@ -9,7 +9,7 @@ import '../../../controllers/controller_imports.dart';
 class OrderSummaryViewModel extends BaseViewModel {
   final RxDouble subtotal = RxDouble(0.0);
   final RxDouble shippingFee = RxDouble(0.0);
-  final RxDouble adminFee = RxDouble(2.0);
+  final double adminFee = 2.0;
   final RxDouble voucherDiscount = RxDouble(0.0);
   final RxDouble total = RxDouble(0.0);
 
@@ -32,26 +32,26 @@ class OrderSummaryWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSummaryRow(
+              buildSummaryRow(
                 'Subtotal',
                 '\$${orderSummary.subtotal.value}',
               ),
               if (orderSummary.shippingFee.value > 0)
-                _buildSummaryRow(
+                buildSummaryRow(
                   'Shipping Fee',
                   '\$${orderSummary.shippingFee.value}',
                 ),
-              _buildSummaryRow(
+              buildSummaryRow(
                 'Admin Fee',
-                '\$${orderSummary.adminFee.value}',
+                '\$${orderSummary.adminFee}',
               ),
               if (orderSummary.voucherDiscount.value > 0)
-                _buildSummaryRow(
+                buildSummaryRow(
                   'Voucher Code',
                   '- \$${orderSummary.voucherDiscount.value}',
                   color: AppColors.redText,
                 ),
-              _buildSummaryRow(
+              buildSummaryRow(
                 'Total',
                 '\$${orderSummary.total.value}',
               ),
@@ -62,7 +62,7 @@ class OrderSummaryWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryRow(String label, String value, {Color? color}) {
+  Widget buildSummaryRow(String label, String value, {Color? color}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
