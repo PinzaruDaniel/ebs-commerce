@@ -15,8 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProductApiDto {
 
- int get id; String get name; Map<String, dynamic>? get brand; String? get price;@JsonKey(name: 'discount_percent', defaultValue: null) String? get discount;@JsonKey(name: 'discounted_price', defaultValue: null) String? get discountedPrice;@JsonKey(name: 'attachments') List<String>? get imageUrl; List<String>? get marks; int? get stock; String? get description;@JsonKey(name: 'attributes') List<SpecificationDataApiDto> get specification;//required List<SpecificationApiDto>? specification,
-@JsonKey(name: 'categories') List<List<CategoryApiDto>>? get category;
+ int get id; String get name; Map<String, dynamic>? get brand; String? get price;@JsonKey(name: 'discount_percent', defaultValue: null) String? get discount;@JsonKey(name: 'discounted_price', defaultValue: null) String? get discountedPrice;@JsonKey(name: 'attachments') List<String>? get imageUrl; List<String>? get marks; int? get stock; String? get description;@JsonKey(name: 'attributes') List<SpecificationDataApiDto> get specification;@JsonKey(name: 'categories') List<List<CategoryApiDto>>? get category;
 /// Create a copy of ProductApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -265,9 +264,7 @@ class _ProductApiDto implements ProductApiDto {
   return EqualUnmodifiableListView(_specification);
 }
 
-//required List<SpecificationApiDto>? specification,
  final  List<List<CategoryApiDto>>? _category;
-//required List<SpecificationApiDto>? specification,
 @override@JsonKey(name: 'categories') List<List<CategoryApiDto>>? get category {
   final value = _category;
   if (value == null) return null;

@@ -13,18 +13,6 @@ Map<String, dynamic> _$SpecificationApiDtoToJson(
   _SpecificationApiDto instance,
 ) => <String, dynamic>{'name': instance.name};
 
-_SpecificationResponseApiDto _$SpecificationResponseApiDtoFromJson(
-  Map<String, dynamic> json,
-) => _SpecificationResponseApiDto(
-  specifications: (json['specifications'] as List<dynamic>)
-      .map((e) => SpecificationDataApiDto.fromJson(e as Map<String, dynamic>))
-      .toList(),
-);
-
-Map<String, dynamic> _$SpecificationResponseApiDtoToJson(
-  _SpecificationResponseApiDto instance,
-) => <String, dynamic>{'specifications': instance.specifications};
-
 _SpecificationDataApiDto _$SpecificationDataApiDtoFromJson(
   Map<String, dynamic> json,
 ) => _SpecificationDataApiDto(
