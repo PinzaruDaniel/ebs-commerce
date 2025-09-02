@@ -1,3 +1,4 @@
+/*
 import 'package:data/mapper/product_mapper.dart';
 import 'package:domain/modules/products/models/index.dart';
 import 'package:objectbox/objectbox.dart';
@@ -25,4 +26,4 @@ class ProductsLocalDataSource {
   Future<void> deleteProduct(int id) async {
     _box.remove(id);
   }
-}
+}*/
