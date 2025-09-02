@@ -7,6 +7,7 @@
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/_fe_analyzer_shared-86.0.0/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/_fe_analyzer_shared-85.0.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/_fe_analyzer_shared-88.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -15,6 +16,7 @@
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/analyzer-8.0.0/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/analyzer-7.7.1/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/analyzer-8.1.1/lib" />
             </list>
           </value>
         </entry>
@@ -50,6 +52,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build-3.0.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build-3.1.0/lib" />
             </list>
           </value>
         </entry>
@@ -57,6 +60,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_config-1.1.2/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_config-1.2.0/lib" />
             </list>
           </value>
         </entry>
@@ -71,6 +75,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_resolvers-3.0.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_resolvers-3.0.3/lib" />
             </list>
           </value>
         </entry>
@@ -78,6 +83,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner-2.6.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner-2.7.1/lib" />
             </list>
           </value>
         </entry>
@@ -85,6 +91,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner_core-9.2.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner_core-9.3.1/lib" />
             </list>
           </value>
         </entry>
@@ -257,6 +264,13 @@
             </list>
           </value>
         </entry>
+        <entry key="flat_buffers">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flat_buffers-23.5.26/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="flutter">
           <value>
             <list>
@@ -275,6 +289,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_hooks-0.21.2/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_hooks-0.21.3+1/lib" />
             </list>
           </value>
         </entry>
@@ -366,7 +381,6 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http-1.5.0/lib" />
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http-1.4.0/lib" />
             </list>
           </value>
         </entry>
@@ -519,6 +533,27 @@
             </list>
           </value>
         </entry>
+        <entry key="objectbox">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/objectbox-4.3.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="objectbox_flutter_libs">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/objectbox_flutter_libs-4.3.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="objectbox_generator">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/objectbox_generator-4.3.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="octo_image">
           <value>
             <list>
@@ -558,6 +593,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_android-2.2.17/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_android-2.2.18/lib" />
             </list>
           </value>
         </entry>
@@ -565,6 +601,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.2/lib" />
             </list>
           </value>
         </entry>
@@ -593,6 +630,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/petitparser-6.1.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/petitparser-7.0.1/lib" />
             </list>
           </value>
         </entry>
@@ -607,6 +645,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="pointycastle">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/pointycastle-4.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -656,7 +701,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/retrofit-4.7.1/lib" />
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/retrofit-4.7.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/retrofit-4.7.2/lib" />
             </list>
           </value>
         </entry>
@@ -846,7 +891,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_core-30.2.4/lib" />
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_core-30.1.42/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_core-30.2.7/lib" />
             </list>
           </value>
         </entry>
@@ -854,7 +899,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_sliders-30.2.4/lib" />
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_sliders-30.1.42/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_sliders-30.2.7/lib" />
             </list>
           </value>
         </entry>
@@ -935,6 +980,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.17/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.19/lib" />
             </list>
           </value>
         </entry>
@@ -957,6 +1003,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/watcher-1.1.2/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/watcher-1.1.3/lib" />
             </list>
           </value>
         </entry>
@@ -999,6 +1046,7 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/xml-6.5.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/xml-6.6.1/lib" />
             </list>
           </value>
         </entry>
@@ -1014,18 +1062,25 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/_fe_analyzer_shared-85.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/_fe_analyzer_shared-86.0.0/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/_fe_analyzer_shared-88.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/analyzer-7.7.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/analyzer-8.0.0/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/analyzer-8.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/args-2.7.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/async-2.13.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/awesome_dialog-3.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/boolean_selector-2.1.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build-3.0.0/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build-3.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_config-1.1.2/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_config-1.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_daemon-4.0.4/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_resolvers-3.0.0/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_resolvers-3.0.3/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner-2.6.0/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner-2.7.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner_core-9.2.0/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner_core-9.3.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/built_collection-5.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/built_value-8.11.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/cached_network_image-3.4.1/lib" />
@@ -1051,8 +1106,10 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/ffi-2.1.4/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/file-7.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/fixnum-1.1.1/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flat_buffers-23.5.26/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_cache_manager-3.4.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_hooks-0.21.2/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_hooks-0.21.3+1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_lints-6.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_staggered_grid_view-0.7.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_svg-2.2.0/lib" />
@@ -1063,7 +1120,6 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/get_it-8.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/glob-2.1.3/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/graphs-2.3.2/lib" />
-      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http-1.4.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http-1.5.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http_multi_server-3.2.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http_parser-4.1.2/lib" />
@@ -1088,27 +1144,34 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/mime-2.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/mock_data-2.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/node_preamble-2.0.2/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/objectbox-4.3.1/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/objectbox_flutter_libs-4.3.1/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/objectbox_generator-4.3.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/octo_image-2.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/package_config-2.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path-1.9.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_parsing-1.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider-2.1.5/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_android-2.2.17/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_android-2.2.18/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_platform_interface-2.1.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/petitparser-6.1.0/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/petitparser-7.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/platform-3.1.6/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/pointycastle-4.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/pool-1.5.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/protobuf-4.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/pub_semver-2.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/pubspec_parse-1.5.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/pull_to_refresh_flutter3-2.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/readmore-3.0.0/lib" />
-      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/retrofit-4.7.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/retrofit-4.7.1/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/retrofit-4.7.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/retrofit_generator-10.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/rive-0.13.20/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/rive_common-0.4.15/lib" />
@@ -1134,10 +1197,10 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/stream_channel-2.1.4/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/stream_transform-2.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/string_scanner-1.4.1/lib" />
-      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_core-30.1.42/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_core-30.2.4/lib" />
-      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_sliders-30.1.42/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_core-30.2.7/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_sliders-30.2.4/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/syncfusion_flutter_sliders-30.2.7/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/synchronized-3.4.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/term_glyph-1.2.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test-1.25.15/lib" />
@@ -1152,16 +1215,19 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics-1.1.19/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics_codec-1.1.13/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.17/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.19/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vm_service-15.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vm_service-15.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/watcher-1.1.2/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/watcher-1.1.3/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/web-1.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/web_socket-1.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/web_socket_channel-3.0.3/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/webkit_inspection_protocol-1.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/xdg_directories-1.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/xml-6.5.0/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/xml-6.6.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/yaml-3.1.3/lib" />
       <root url="file://$PROJECT_DIR$/../fluttersdk/flutter/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$PROJECT_DIR$/../fluttersdk/flutter/packages/flutter/lib" />
