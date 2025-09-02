@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SpecificationApiDto {
 
- String get name; String get value;
+ String get name;
 /// Create a copy of SpecificationApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $SpecificationApiDtoCopyWith<SpecificationApiDto> get copyWith => _$Specificatio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpecificationApiDto&&(identical(other.name, name) || other.name == name)&&(identical(other.value, value) || other.value == value));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpecificationApiDto&&(identical(other.name, name) || other.name == name));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,value);
+int get hashCode => Object.hash(runtimeType,name);
 
 @override
 String toString() {
-  return 'SpecificationApiDto(name: $name, value: $value)';
+  return 'SpecificationApiDto(name: $name)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $SpecificationApiDtoCopyWith<$Res>  {
   factory $SpecificationApiDtoCopyWith(SpecificationApiDto value, $Res Function(SpecificationApiDto) _then) = _$SpecificationApiDtoCopyWithImpl;
 @useResult
 $Res call({
- String name, String value
+ String name
 });
 
 
@@ -65,10 +65,9 @@ class _$SpecificationApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of SpecificationApiDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? value = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -154,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String value)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SpecificationApiDto() when $default != null:
-return $default(_that.name,_that.value);case _:
+return $default(_that.name);case _:
   return orElse();
 
 }
@@ -175,10 +174,10 @@ return $default(_that.name,_that.value);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String value)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name)  $default,) {final _that = this;
 switch (_that) {
 case _SpecificationApiDto():
-return $default(_that.name,_that.value);case _:
+return $default(_that.name);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +194,10 @@ return $default(_that.name,_that.value);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String value)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name)?  $default,) {final _that = this;
 switch (_that) {
 case _SpecificationApiDto() when $default != null:
-return $default(_that.name,_that.value);case _:
+return $default(_that.name);case _:
   return null;
 
 }
@@ -210,11 +209,10 @@ return $default(_that.name,_that.value);case _:
 @JsonSerializable()
 
 class _SpecificationApiDto implements SpecificationApiDto {
-  const _SpecificationApiDto({required this.name, required this.value});
+  const _SpecificationApiDto({required this.name});
   factory _SpecificationApiDto.fromJson(Map<String, dynamic> json) => _$SpecificationApiDtoFromJson(json);
 
 @override final  String name;
-@override final  String value;
 
 /// Create a copy of SpecificationApiDto
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +227,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpecificationApiDto&&(identical(other.name, name) || other.name == name)&&(identical(other.value, value) || other.value == value));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpecificationApiDto&&(identical(other.name, name) || other.name == name));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,value);
+int get hashCode => Object.hash(runtimeType,name);
 
 @override
 String toString() {
-  return 'SpecificationApiDto(name: $name, value: $value)';
+  return 'SpecificationApiDto(name: $name)';
 }
 
 
@@ -249,7 +247,7 @@ abstract mixin class _$SpecificationApiDtoCopyWith<$Res> implements $Specificati
   factory _$SpecificationApiDtoCopyWith(_SpecificationApiDto value, $Res Function(_SpecificationApiDto) _then) = __$SpecificationApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String value
+ String name
 });
 
 
@@ -266,10 +264,9 @@ class __$SpecificationApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of SpecificationApiDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? value = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,}) {
   return _then(_SpecificationApiDto(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -550,7 +547,7 @@ as List<SpecificationDataApiDto>,
 /// @nodoc
 mixin _$SpecificationDataApiDto {
 
- SpecificationApiDto get attribute;
+ SpecificationApiDto get attribute; String get value;
 /// Create a copy of SpecificationDataApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -563,16 +560,16 @@ $SpecificationDataApiDtoCopyWith<SpecificationDataApiDto> get copyWith => _$Spec
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpecificationDataApiDto&&(identical(other.attribute, attribute) || other.attribute == attribute));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpecificationDataApiDto&&(identical(other.attribute, attribute) || other.attribute == attribute)&&(identical(other.value, value) || other.value == value));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,attribute);
+int get hashCode => Object.hash(runtimeType,attribute,value);
 
 @override
 String toString() {
-  return 'SpecificationDataApiDto(attribute: $attribute)';
+  return 'SpecificationDataApiDto(attribute: $attribute, value: $value)';
 }
 
 
@@ -583,7 +580,7 @@ abstract mixin class $SpecificationDataApiDtoCopyWith<$Res>  {
   factory $SpecificationDataApiDtoCopyWith(SpecificationDataApiDto value, $Res Function(SpecificationDataApiDto) _then) = _$SpecificationDataApiDtoCopyWithImpl;
 @useResult
 $Res call({
- SpecificationApiDto attribute
+ SpecificationApiDto attribute, String value
 });
 
 
@@ -600,10 +597,11 @@ class _$SpecificationDataApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of SpecificationDataApiDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? attribute = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? attribute = null,Object? value = null,}) {
   return _then(_self.copyWith(
 attribute: null == attribute ? _self.attribute : attribute // ignore: cast_nullable_to_non_nullable
-as SpecificationApiDto,
+as SpecificationApiDto,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 /// Create a copy of SpecificationDataApiDto
@@ -697,10 +695,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SpecificationApiDto attribute)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SpecificationApiDto attribute,  String value)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SpecificationDataApiDto() when $default != null:
-return $default(_that.attribute);case _:
+return $default(_that.attribute,_that.value);case _:
   return orElse();
 
 }
@@ -718,10 +716,10 @@ return $default(_that.attribute);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SpecificationApiDto attribute)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SpecificationApiDto attribute,  String value)  $default,) {final _that = this;
 switch (_that) {
 case _SpecificationDataApiDto():
-return $default(_that.attribute);case _:
+return $default(_that.attribute,_that.value);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -738,10 +736,10 @@ return $default(_that.attribute);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SpecificationApiDto attribute)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SpecificationApiDto attribute,  String value)?  $default,) {final _that = this;
 switch (_that) {
 case _SpecificationDataApiDto() when $default != null:
-return $default(_that.attribute);case _:
+return $default(_that.attribute,_that.value);case _:
   return null;
 
 }
@@ -753,10 +751,11 @@ return $default(_that.attribute);case _:
 @JsonSerializable()
 
 class _SpecificationDataApiDto implements SpecificationDataApiDto {
-  const _SpecificationDataApiDto({required this.attribute});
+  const _SpecificationDataApiDto({required this.attribute, required this.value});
   factory _SpecificationDataApiDto.fromJson(Map<String, dynamic> json) => _$SpecificationDataApiDtoFromJson(json);
 
 @override final  SpecificationApiDto attribute;
+@override final  String value;
 
 /// Create a copy of SpecificationDataApiDto
 /// with the given fields replaced by the non-null parameter values.
@@ -771,16 +770,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpecificationDataApiDto&&(identical(other.attribute, attribute) || other.attribute == attribute));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpecificationDataApiDto&&(identical(other.attribute, attribute) || other.attribute == attribute)&&(identical(other.value, value) || other.value == value));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,attribute);
+int get hashCode => Object.hash(runtimeType,attribute,value);
 
 @override
 String toString() {
-  return 'SpecificationDataApiDto(attribute: $attribute)';
+  return 'SpecificationDataApiDto(attribute: $attribute, value: $value)';
 }
 
 
@@ -791,7 +790,7 @@ abstract mixin class _$SpecificationDataApiDtoCopyWith<$Res> implements $Specifi
   factory _$SpecificationDataApiDtoCopyWith(_SpecificationDataApiDto value, $Res Function(_SpecificationDataApiDto) _then) = __$SpecificationDataApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- SpecificationApiDto attribute
+ SpecificationApiDto attribute, String value
 });
 
 
@@ -808,10 +807,11 @@ class __$SpecificationDataApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of SpecificationDataApiDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? attribute = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? attribute = null,Object? value = null,}) {
   return _then(_SpecificationDataApiDto(
 attribute: null == attribute ? _self.attribute : attribute // ignore: cast_nullable_to_non_nullable
-as SpecificationApiDto,
+as SpecificationApiDto,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

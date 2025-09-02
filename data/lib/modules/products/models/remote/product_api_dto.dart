@@ -5,7 +5,7 @@ abstract class ProductApiDto with _$ProductApiDto {
   const factory ProductApiDto({
     required int id,
     required String name,
-     required Map<String, dynamic>? brand,
+    required Map<String, dynamic>? brand,
     required String? price,
     @JsonKey(name: 'discount_percent', defaultValue: null) String? discount,
     @JsonKey(name: 'discounted_price', defaultValue: null) String? discountedPrice,
@@ -13,8 +13,7 @@ abstract class ProductApiDto with _$ProductApiDto {
     required List<String>? marks,
     required int? stock,
     required String? description,
-    @JsonKey(name: 'attributes') required List<SpecificationResponseApiDto> specification,
-    //required List<SpecificationApiDto>? specification,
+    @JsonKey(name: 'attributes') required List<SpecificationDataApiDto> specification,
     @JsonKey(name: 'categories') required List<List<CategoryApiDto>>? category,
   }) = _ProductApiDto;
 

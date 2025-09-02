@@ -7,14 +7,11 @@ part of 'index.dart';
 // **************************************************************************
 
 _SpecificationApiDto _$SpecificationApiDtoFromJson(Map<String, dynamic> json) =>
-    _SpecificationApiDto(
-      name: json['name'] as String,
-      value: json['value'] as String,
-    );
+    _SpecificationApiDto(name: json['name'] as String);
 
 Map<String, dynamic> _$SpecificationApiDtoToJson(
   _SpecificationApiDto instance,
-) => <String, dynamic>{'name': instance.name, 'value': instance.value};
+) => <String, dynamic>{'name': instance.name};
 
 _SpecificationResponseApiDto _$SpecificationResponseApiDtoFromJson(
   Map<String, dynamic> json,
@@ -34,8 +31,12 @@ _SpecificationDataApiDto _$SpecificationDataApiDtoFromJson(
   attribute: SpecificationApiDto.fromJson(
     json['attribute'] as Map<String, dynamic>,
   ),
+  value: json['value'] as String,
 );
 
 Map<String, dynamic> _$SpecificationDataApiDtoToJson(
   _SpecificationDataApiDto instance,
-) => <String, dynamic>{'attribute': instance.attribute};
+) => <String, dynamic>{
+  'attribute': instance.attribute,
+  'value': instance.value,
+};
