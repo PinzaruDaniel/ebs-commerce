@@ -1,6 +1,7 @@
 import 'package:data/mapper/category_mapper.dart';
-import 'package:data/mapper/specification_mapper.dart';
+import 'package:data/mapper/specification_response_mapper.dart';
 import 'package:domain/modules/products/models/index.dart';
+import 'package:domain/modules/specifications/specification_entity.dart';
 import '../modules/products/models/remote/index.dart';
 
 extension ProductApiDtoMapper on ProductApiDto {
@@ -15,7 +16,9 @@ extension ProductApiDtoMapper on ProductApiDto {
       discountedPrice: discountedPrice,
       stock: stock,
       description: description,
-      specification: specification?.map((e) => e.toEntity()).toList() ?? [],
+      specification: specification
+          ?.expand<SpecificationEntity>((e) => e.toEntity())
+          .toList() ?? [],
       category: category?.expand((list) => list).map((e) => e.toEntity()).toList() ?? [],
       brand: brand,
     );

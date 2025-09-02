@@ -22,8 +22,11 @@ _ProductApiDto _$ProductApiDtoFromJson(Map<String, dynamic> json) =>
           .toList(),
       stock: (json['stock'] as num?)?.toInt(),
       description: json['description'] as String?,
-      specification: (json['specification'] as List<dynamic>?)
-          ?.map((e) => SpecificationApiDto.fromJson(e as Map<String, dynamic>))
+      specification: (json['attributes'] as List<dynamic>)
+          .map(
+            (e) =>
+                SpecificationResponseApiDto.fromJson(e as Map<String, dynamic>),
+          )
           .toList(),
       category: (json['categories'] as List<dynamic>?)
           ?.map(
@@ -46,7 +49,7 @@ Map<String, dynamic> _$ProductApiDtoToJson(_ProductApiDto instance) =>
       'marks': instance.marks,
       'stock': instance.stock,
       'description': instance.description,
-      'specification': instance.specification,
+      'attributes': instance.specification,
       'categories': instance.category,
     };
 
