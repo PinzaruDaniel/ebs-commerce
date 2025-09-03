@@ -15,7 +15,7 @@ extension ProductApiDtoMapper on ProductApiDto {
       discountedPrice: discountedPrice,
       stock: stock,
       description: description,
-      specification: specification?.map((e) => e.toEntity()).toList() ?? [],
+      specification: specification.map((e) => e.toEntity()).toList(),
       category: category?.expand((list) => list).map((e) => e.toEntity()).toList() ?? [],
       brand: brand,
     );

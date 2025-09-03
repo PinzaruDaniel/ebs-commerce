@@ -55,6 +55,7 @@ class DeliveryAddressController extends GetxController {
   List<String> pickupLocations = ['Posta moldovei, Armeneasca 2', 'undeva departe'];
 
   Future<void> initItems() async {
+    //TODO: de sters
     updateAllItems();
     if (countries.isEmpty) {
       await loadCountries();
@@ -82,25 +83,25 @@ class DeliveryAddressController extends GetxController {
         showFailureSnackBar(failure);
       },
       (list) {
+        isLoading.value = false;
         countries.value = list.map((c) => c.toViewModel).toList();
+
+        if (selectedCountry.value == null && countries.isNotEmpty) {
+          selectedCountry.value = countries.first;
+          selectedState.value = null;
+          selectedCity.value = null;
+          states.clear();
+          loadStates(selectedCountry.value!);
+        }
       },
     );
-    isLoading.value = false;
-    if (selectedCountry.value == null && countries.isNotEmpty) {
-      selectedCountry.value = countries.first;
-      selectedState.value = null;
-      selectedCity.value = null;
-      states.clear();
-      cities.clear();
-      loadStates(selectedCountry.value!);
-    }
+
   }
 
   Future<void> loadStates(CountryViewModel country) async {
     if (country.name.isEmpty) return;
 
     isLoading.value = true;
-    states.clear();
 
     final params = GetStatesUseCaseParams(country: country.iso2);
     final result = await getStatesUseCase(params);
@@ -131,7 +132,6 @@ class DeliveryAddressController extends GetxController {
     if (country.name.isEmpty || state.code.isEmpty) return;
 
     isLoading.value = true;
-    cities.clear();
 
     final params = GetCitiesUseCaseParams(country: country.name, state: state.name);
     final result = await getCitiesUseCase(params);
@@ -157,6 +157,7 @@ class DeliveryAddressController extends GetxController {
   }
 
   void updateAllItems() {
+    print('dahuia');
     allItems.clear();
     allItems.add(deliveryTypeVM.value);
 
