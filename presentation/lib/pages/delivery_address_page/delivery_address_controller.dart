@@ -9,6 +9,7 @@ import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_w
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/mapper/cities_response_entity_mapper.dart';
 import 'package:presentation/util/mapper/countries_entity_mapper.dart';
+import 'package:presentation/util/mapper/map_delivery_type.dart';
 import 'package:presentation/util/mapper/states_entity_mapper.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -21,22 +22,7 @@ import '../../util/enum/delivery_type.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 
 
-extension DeliveryTypeExtension on DeliveryType {
-  String get label {
-    switch (this) {
-      case DeliveryType.pickup:
-        return 'Ridicare la sediu';
-      case DeliveryType.fanCourier:
-        return 'Fan courier';
-      case DeliveryType.dhl:
-        return 'DHL';
-    }
-  }
 
-  static DeliveryType fromLabel(String label) {
-    return DeliveryType.values.firstWhere((e) => e.label == label);
-  }
-}
 
 class DeliveryAddressController extends GetxController {
 
@@ -78,7 +64,7 @@ class DeliveryAddressController extends GetxController {
 
       deliveryTypeVM.value.selected.listen((_) {
         updateAllItems();
-        final selectedType = DeliveryTypeExtension.fromLabel(deliveryTypeVM.value.selected.value);
+        final selectedType = MapDeliveryType.fromLabel(deliveryTypeVM.value.selected.value);
         if (selectedType != DeliveryType.pickup) {
           if (countries.isEmpty) {
             loadCountries();
@@ -185,7 +171,7 @@ class DeliveryAddressController extends GetxController {
     allItems.clear();
     allItems.add(deliveryTypeVM.value);
 
-    final selectedType = DeliveryTypeExtension.fromLabel(deliveryTypeVM.value.selected.value);
+    final selectedType = MapDeliveryType.fromLabel(deliveryTypeVM.value.selected.value);
 
     if (selectedType == DeliveryType.pickup) {
       _addPickupFields();
@@ -243,7 +229,7 @@ class DeliveryAddressController extends GetxController {
   }
 
   DeliveryAddressViewModel toDeliveryAddressViewModel() {
-    final type = DeliveryTypeExtension.fromLabel(deliveryTypeVM.value.selected.value);
+    final type = MapDeliveryType.fromLabel(deliveryTypeVM.value.selected.value);
 
     if (type == DeliveryType.pickup) {
       final pickupLocation = getViewModel<SelectionViewModel>('Sediu').selectedValue.value;

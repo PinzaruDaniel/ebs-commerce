@@ -412,6 +412,13 @@
             </list>
           </value>
         </entry>
+        <entry key="implicitly_animated_reorderable_list_2">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/implicitly_animated_reorderable_list_2-0.6.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="infinite_scroll_pagination">
           <value>
             <list>
@@ -1139,6 +1146,7 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http-1.5.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http_multi_server-3.2.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http_parser-4.1.2/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/implicitly_animated_reorderable_list_2-0.6.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/infinite_scroll_pagination-5.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/input_quantity-2.5.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/intl-0.20.2/lib" />

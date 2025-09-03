@@ -296,6 +296,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "implicitly_animated_reorderable_list_2",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/implicitly_animated_reorderable_list_2-0.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "infinite_scroll_pagination",
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/infinite_scroll_pagination-5.1.0",
       "packageUri": "lib/",
