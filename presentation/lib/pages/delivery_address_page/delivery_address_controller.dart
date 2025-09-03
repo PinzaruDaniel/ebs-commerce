@@ -55,7 +55,6 @@ class DeliveryAddressController extends GetxController {
   List<String> pickupLocations = ['Posta moldovei, Armeneasca 2', 'undeva departe'];
 
   Future<void> initItems() async {
-    //TODO: de sters
     updateAllItems();
     if (countries.isEmpty) {
       await loadCountries();
@@ -69,8 +68,6 @@ class DeliveryAddressController extends GetxController {
     if (selectedCountry.value != null && (states.isEmpty || cities.isEmpty)) {
       await loadStates(selectedCountry.value!);
     }
-
-    updateAllItems();
   }
 
   Future<void> loadCountries() async {
@@ -124,8 +121,6 @@ class DeliveryAddressController extends GetxController {
     if (selectedState.value != null) {
       await loadCities(country, selectedState.value!);
     }
-
-    updateAllItems();
   }
 
   Future<void> loadCities(CountryViewModel country, StateViewModel state) async {

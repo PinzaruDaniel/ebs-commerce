@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -19,6 +20,9 @@ class DeliveryTypeViewModel extends BaseViewModel {
   final List<DeliveryOptionViewModel> options;
 
   DeliveryTypeViewModel({required this.options});
+  DeliveryOptionViewModel? get selected {
+    return options.firstWhereOrNull((option) => option.isSelected);
+  }
 }
 
 class DeliveryTypeWidget extends StatefulWidget {
