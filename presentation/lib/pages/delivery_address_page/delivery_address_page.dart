@@ -9,6 +9,7 @@ import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class DeliveryAddressPage extends StatefulWidget {
   const DeliveryAddressPage({super.key});
@@ -19,10 +20,6 @@ class DeliveryAddressPage extends StatefulWidget {
 
 class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   final _formKey = GlobalKey<FormState>();
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +35,51 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
       ),
       body: SafeArea(
         child: Obx(
-              () => Form(
+          () => Form(
             key: _formKey,
             child: ListView.builder(
               padding: const EdgeInsets.only(bottom: 10),
               itemCount: deliveryAddressController.allItems.length,
               itemBuilder: (context, index) {
                 var item = deliveryAddressController.allItems[index];
+                Widget widget;
+                String keyValue = '${deliveryAddressController.deliveryTypeVM.value.selected.value}_$index';
                 if (item is DeliveryTypeViewModel) {
-                  return DeliveryTypeWidget(itemViewModel: item);
+                  widget = DeliveryTypeWidget(itemViewModel: item);
+                  keyValue = 'delivery_type_${item.selected.value}_$index';
                 } else if (item is SelectionViewModel) {
-                  return SelectionWidget(itemViewModel: item);
+                  widget = SelectionWidget(itemViewModel: item);
+                  keyValue =
+                      'selection_${item.title}_${deliveryAddressController.deliveryTypeVM.value.selected.value}_$index';
                 } else if (item is TextFieldViewModel) {
-                  return TextFieldWidget(itemViewModel: item);
+                  widget = TextFieldWidget(itemViewModel: item);
+                  keyValue =
+                      'text_field_${item.title}_${deliveryAddressController.deliveryTypeVM.value.selected.value}_$index';
+                } else {
+                  widget = const SizedBox.shrink();
                 }
-                return const SizedBox.shrink();
+                return KeyedSubtree(
+                  key: ValueKey(keyValue),
+                  child: item is DeliveryTypeViewModel
+                      ? widget
+                      : widget
+                            .animate()
+                            .fadeIn(duration: 500.ms, delay: (100 * index).ms)
+                            .slideY(
+                              begin: 0.5,
+                              end: 0.0,
+                              duration: 500.ms,
+                              delay: (200  * index).ms,
+                              curve: Curves.easeInOut,
+                            )
+                            .scaleXY(
+                              begin: 0.8,
+                              end: 1.0,
+                              duration: 500.ms,
+                              delay: (100 * index).ms,
+                              curve: Curves.easeInOut,
+                            ),
+                );
               },
             ),
           ),
@@ -61,7 +88,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
       bottomNavigationBar: BottomNavigationBarWidget(
         title: deliveryAddressController.isLoading.value ? AppTexts.loading : AppTexts.save,
         showIcon: false,
-        onTap: ()  {
+        onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
             checkoutController.initAllItems();
             deliveryAddressController.onInit();

@@ -15,6 +15,7 @@
         "di",
         "domain",
         "flutter",
+        "flutter_animate",
         "flutter_hooks",
         "flutter_svg",
         "get",
@@ -582,6 +583,8 @@
         "freezed_annotation",
         "json_annotation",
         "logger",
+        "objectbox",
+        "objectbox_flutter_libs",
         "retrofit"
       ]
     },
@@ -928,6 +931,17 @@
       "dependencies": []
     },
     {
+      "name": "objectbox",
+      "version": "4.3.1",
+      "dependencies": [
+        "collection",
+        "ffi",
+        "flat_buffers",
+        "meta",
+        "path"
+      ]
+    },
+    {
       "name": "logging",
       "version": "1.3.0",
       "dependencies": []
@@ -1136,6 +1150,11 @@
       ]
     },
     {
+      "name": "flat_buffers",
+      "version": "23.5.26",
+      "dependencies": []
+    },
+    {
       "name": "synchronized",
       "version": "3.4.0",
       "dependencies": []
@@ -1151,6 +1170,31 @@
       "dependencies": [
         "meta",
         "path"
+      ]
+    },
+    {
+      "name": "flutter_animate",
+      "version": "4.5.2",
+      "dependencies": [
+        "flutter",
+        "flutter_shaders"
+      ]
+    },
+    {
+      "name": "flutter_shaders",
+      "version": "0.1.3",
+      "dependencies": [
+        "flutter",
+        "vector_math"
+      ]
+    },
+    {
+      "name": "objectbox_flutter_libs",
+      "version": "4.3.1",
+      "dependencies": [
+        "flutter",
+        "objectbox",
+        "path_provider"
       ]
     }
   ],
