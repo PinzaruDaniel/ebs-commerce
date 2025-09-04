@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
-import 'package:implicitly_animated_reorderable_list_2/transitions.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_item_build_widget.dart';
-import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
-import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
-import 'package:presentation/util/widgets/text_field_widget.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
@@ -49,41 +44,19 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               shrinkWrap: true,
               areItemsTheSame: (a, b) => false,
               removeItemBuilder: (context, animation, oldItem) {
-                Widget widget = buildWidgetForItem(oldItem);
-                return oldItem is DeliveryTypeViewModel
-                    ? widget
-                    : FadeTransition(
-                  opacity: animation,
-                  child: widget.animate().fadeOut(duration: 200.ms),
+                return DeliveryItemBuilder.buildAnimatedItem(
+                  item: oldItem,
+                  animation: animation,
+                  index: 0, // Not important for removal
+                  isRemoval: true,
                 );
               },
+
               itemBuilder: (context, animation, item, index) {
-                final built = buildItemWidget(item, index);
-                Future.delayed(Duration(seconds: 1));
-                return SizeFadeTransition(
+                return DeliveryItemBuilder.buildAnimatedItem(
+                  item: item,
                   animation: animation,
-                  child: KeyedSubtree(
-                    key: ValueKey(built.key),
-                    child: item is DeliveryTypeViewModel
-                        ? built.widget
-                        : built.widget
-                        .animate()
-                        .fadeIn(duration: 700.ms, delay: (150 * index).ms)
-                        .slideY(
-                      begin: 0.8,
-                      end: 0.0,
-                      duration: 600.ms,
-                      delay: (100 * index).ms,
-                      curve: Curves.easeInOut,
-                    )
-                        .scaleXY(
-                      begin: 0.7,
-                      end: 1,
-                      duration: 800.ms,
-                      delay: (100 * index).ms,
-                      curve: Curves.easeInOut,
-                    ),
-                  ),
+                  index: index,
                 );
               },
             ),
@@ -105,15 +78,5 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         contentDialog: AppTexts.noProductsToShow,
       ),
     );
-  }
-  Widget buildWidgetForItem(BaseViewModel item) {
-    if (item is DeliveryTypeViewModel) {
-      return DeliveryTypeWidget(itemViewModel: item);
-    } else if (item is SelectionViewModel) {
-      return SelectionWidget(itemViewModel: item);
-    } else if (item is TextFieldViewModel) {
-      return TextFieldWidget(itemViewModel: item);
-    }
-    return SizedBox.shrink();
   }
 }
