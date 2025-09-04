@@ -63,7 +63,6 @@ class DeliveryAddressController extends GetxController {
     final selectedType = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
     if (selectedType != DeliveryType.pickup && countries.isEmpty) {
       await loadCountries();
-
     }
 
     if (selectedCountry.value != null && (states.isEmpty || cities.isEmpty)) {
@@ -93,7 +92,6 @@ class DeliveryAddressController extends GetxController {
         }
       },
     );
-
   }
 
   Future<void> loadStates(CountryViewModel country) async {
@@ -111,7 +109,6 @@ class DeliveryAddressController extends GetxController {
       },
       (list) {
         states.value = list.map((e) => e.toViewModel).toList();
-
 
         isLoading.value = false;
         selectedState.value = states.isNotEmpty ? states.first : null;
@@ -151,14 +148,19 @@ class DeliveryAddressController extends GetxController {
   DeliveryType fromLabel(String label) {
     return DeliveryType.values.firstWhere((e) => e.label == label);
   }
+  Future<void> updateAllItems({bool withAnimation = false}) async {
+    final deliveryItem = deliveryTypeVM.value;
 
-  void updateAllItems() {
-    print('dahuia');
-    allItems.clear();
-    allItems.add(deliveryTypeVM.value);
+    allItems.value = [deliveryItem];
+    allItems.refresh();
 
-    final selectedType = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
+    if (withAnimation) {
+      await Future.delayed(const Duration(milliseconds: 200));
+    }
 
+    final selectedType = fromLabel(
+      deliveryItem.options.firstWhere((e) => e.isSelected).titleKey,
+    );
 
     if (selectedType == DeliveryType.pickup) {
       _addPickupFields();
@@ -168,6 +170,7 @@ class DeliveryAddressController extends GetxController {
 
     allItems.refresh();
   }
+
 
   void _addPickupFields() {
     allItems.add(
@@ -229,7 +232,6 @@ class DeliveryAddressController extends GetxController {
 
   DeliveryAddressViewModel toDeliveryAddressViewModel() {
     final type = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
-
 
     if (type == DeliveryType.pickup) {
       final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? '';

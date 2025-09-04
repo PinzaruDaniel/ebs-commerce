@@ -62,7 +62,7 @@ class _DeliveryTypeWidgetState extends State<DeliveryTypeWidget> {
                   for (var e in widget.itemViewModel.options) {
                     e.isSelected = (e.deliveryType == option.deliveryType);
                   }
-                  deliveryAddressController.updateAllItems();
+                  deliveryAddressController.updateAllItems(withAnimation: true);
                   setState(() {});
                 },
                 child: Container(

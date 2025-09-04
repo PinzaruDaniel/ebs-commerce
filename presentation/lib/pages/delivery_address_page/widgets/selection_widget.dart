@@ -11,6 +11,7 @@ class SelectionViewModel extends BaseViewModel {
   final RxString selectedValue;
   final Function(String)? onSelectionChanged;
 
+
   SelectionViewModel({
     this.keyId,
     required this.title,

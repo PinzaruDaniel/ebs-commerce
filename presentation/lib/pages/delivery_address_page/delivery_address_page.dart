@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
 import 'package:implicitly_animated_reorderable_list_2/transitions.dart';
+import 'package:presentation/pages/delivery_address_page/widgets/delivery_item_build_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
@@ -46,90 +47,42 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               items: items,
               padding: const EdgeInsets.only(bottom: 10),
               shrinkWrap: true,
-              areItemsTheSame: (a, b) {
-                if (a.runtimeType != b.runtimeType) return false;
-                if (a is SelectionViewModel && b is SelectionViewModel) {
-                  return a.keyId == b.keyId;
-                } else if (a is TextFieldViewModel && b is TextFieldViewModel) {
-                  return a.keyId == b.keyId;
-                } else if (a is DeliveryTypeViewModel && b is DeliveryTypeViewModel) {
-                  return true;
-                }
-                return false;
-              },
+              areItemsTheSame: (a, b) => false,
               removeItemBuilder: (context, animation, oldItem) {
-                Widget widget;
-                String keyValue;
-
-                if (oldItem is DeliveryTypeViewModel) {
-                  widget = DeliveryTypeWidget(itemViewModel: oldItem);
-                  keyValue = 'delivery_type';
-                } else if (oldItem is SelectionViewModel) {
-                  widget = SelectionWidget(itemViewModel: oldItem);
-                  keyValue = 'selection_${oldItem.keyId}';
-                } else if (oldItem is TextFieldViewModel) {
-                  widget = TextFieldWidget(itemViewModel: oldItem);
-                  keyValue = 'text_field_${oldItem.keyId}';
-                } else {
-                  widget = const SizedBox.shrink();
-                  keyValue = 'unknown_remove';
-                }
-
-                return AnimatedBuilder(
-                  animation: animation,
-                  builder: (context, child) {
-                    final fadeValue = animation.value;
-                    final scaleValue = 0.7 + 0.3 * fadeValue;
-
-                    return Opacity(
-                      opacity: fadeValue,
-                      child: Transform.scale(scale: scaleValue, child: child),
-                    );
-                  },
-                  child: KeyedSubtree(key: ValueKey(keyValue), child: widget),
+                Widget widget = buildWidgetForItem(oldItem);
+                return oldItem is DeliveryTypeViewModel
+                    ? widget
+                    : FadeTransition(
+                  opacity: animation,
+                  child: widget.animate().fadeOut(duration: 200.ms),
                 );
               },
               itemBuilder: (context, animation, item, index) {
-                Widget widget;
-                String keyValue;
-
-                if (item is DeliveryTypeViewModel) {
-                  widget = DeliveryTypeWidget(itemViewModel: item);
-                  keyValue = 'delivery_type';
-                } else if (item is SelectionViewModel) {
-                  widget = SelectionWidget(itemViewModel: item);
-                  keyValue = 'selection_${item.keyId}';
-                } else if (item is TextFieldViewModel) {
-                  widget = TextFieldWidget(itemViewModel: item);
-                  keyValue = 'text_field_${item.keyId}';
-                } else {
-                  widget = const SizedBox.shrink();
-                  keyValue = 'unknown_$index';
-                }
-
+                final built = buildItemWidget(item, index);
+                Future.delayed(Duration(seconds: 1));
                 return SizeFadeTransition(
                   animation: animation,
                   child: KeyedSubtree(
-                    key: ValueKey(keyValue),
+                    key: ValueKey(built.key),
                     child: item is DeliveryTypeViewModel
-                        ? widget
-                        : widget
-                              .animate()
-                              .fadeIn(duration: 500.ms, delay: (50 * index).ms)
-                              .slideY(
-                                begin: 0.8,
-                                end: 0.0,
-                                duration: 500.ms,
-                                delay: (100 * index).ms,
-                                curve: Curves.easeInOut,
-                              )
-                              .scaleXY(
-                                begin: 0.7,
-                                end: 1,
-                                duration: 500.ms,
-                                delay: (75 * index).ms,
-                                curve: Curves.easeInOut,
-                              ),
+                        ? built.widget
+                        : built.widget
+                        .animate()
+                        .fadeIn(duration: 700.ms, delay: (150 * index).ms)
+                        .slideY(
+                      begin: 0.8,
+                      end: 0.0,
+                      duration: 600.ms,
+                      delay: (100 * index).ms,
+                      curve: Curves.easeInOut,
+                    )
+                        .scaleXY(
+                      begin: 0.7,
+                      end: 1,
+                      duration: 800.ms,
+                      delay: (100 * index).ms,
+                      curve: Curves.easeInOut,
+                    ),
                   ),
                 );
               },
@@ -152,5 +105,15 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         contentDialog: AppTexts.noProductsToShow,
       ),
     );
+  }
+  Widget buildWidgetForItem(BaseViewModel item) {
+    if (item is DeliveryTypeViewModel) {
+      return DeliveryTypeWidget(itemViewModel: item);
+    } else if (item is SelectionViewModel) {
+      return SelectionWidget(itemViewModel: item);
+    } else if (item is TextFieldViewModel) {
+      return TextFieldWidget(itemViewModel: item);
+    }
+    return SizedBox.shrink();
   }
 }
