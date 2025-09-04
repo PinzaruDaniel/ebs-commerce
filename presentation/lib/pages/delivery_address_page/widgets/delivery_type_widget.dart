@@ -64,7 +64,6 @@ class _DeliveryTypeWidgetState extends State<DeliveryTypeWidget> {
                   }
                   deliveryAddressController.updateAllItems();
                   setState(() {});
-                  // TODO: din afara callback
                 },
                 child: Container(
                   padding: const EdgeInsets.only(left: 8.0, right: 36, top: 8, bottom: 8),

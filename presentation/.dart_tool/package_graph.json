@@ -20,6 +20,7 @@
         "flutter_svg",
         "get",
         "get_it",
+        "implicitly_animated_reorderable_list_2",
         "infinite_scroll_pagination",
         "input_quantity",
         "intl",
@@ -219,6 +220,23 @@
         "flutter_staggered_grid_view",
         "meta",
         "sliver_tools"
+      ]
+    },
+    {
+      "name": "flutter_animate",
+      "version": "4.5.2",
+      "dependencies": [
+        "flutter",
+        "flutter_shaders"
+      ]
+    },
+    {
+      "name": "implicitly_animated_reorderable_list_2",
+      "version": "0.6.0",
+      "dependencies": [
+        "async",
+        "flutter",
+        "meta"
       ]
     },
     {
@@ -958,6 +976,15 @@
       "dependencies": []
     },
     {
+      "name": "objectbox_flutter_libs",
+      "version": "4.3.1",
+      "dependencies": [
+        "flutter",
+        "objectbox",
+        "path_provider"
+      ]
+    },
+    {
       "name": "objectbox",
       "version": "4.3.1",
       "dependencies": [
@@ -1197,23 +1224,6 @@
       "dependencies": [
         "meta",
         "path"
-      ]
-    },
-    {
-      "name": "flutter_animate",
-      "version": "4.5.2",
-      "dependencies": [
-        "flutter",
-        "flutter_shaders"
-      ]
-    },
-    {
-      "name": "objectbox_flutter_libs",
-      "version": "4.3.1",
-      "dependencies": [
-        "flutter",
-        "objectbox",
-        "path_provider"
       ]
     }
   ],

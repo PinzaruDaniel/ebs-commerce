@@ -110,13 +110,14 @@ class DeliveryAddressController extends GetxController {
       },
       (list) {
         states.value = list.map((e) => e.toViewModel).toList();
+
+
+        isLoading.value = false;
+        selectedState.value = states.isNotEmpty ? states.first : null;
+        selectedCity.value = null;
+        cities.clear();
       },
     );
-
-    isLoading.value = false;
-    selectedState.value = states.isNotEmpty ? states.first : null;
-    selectedCity.value = null;
-    cities.clear();
 
     if (selectedState.value != null) {
       await loadCities(country, selectedState.value!);
@@ -138,12 +139,11 @@ class DeliveryAddressController extends GetxController {
       },
       (entity) {
         cities.value = entity.toViewModelList;
+
+        isLoading.value = false;
+        selectedCity.value = cities.isNotEmpty ? cities.first : null;
       },
     );
-
-    isLoading.value = false;
-    selectedCity.value = cities.isNotEmpty ? cities.first : null;
-
     updateAllItems();
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
+import 'package:implicitly_animated_reorderable_list_2/transitions.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
@@ -37,48 +39,46 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         child: Obx(
           () => Form(
             key: _formKey,
-            child: ListView.builder(
+            child: ImplicitlyAnimatedReorderableList(
               padding: const EdgeInsets.only(bottom: 10),
-              itemCount: deliveryAddressController.allItems.length,
-              itemBuilder: (context, index) {
-                var item = deliveryAddressController.allItems[index];
+              items: deliveryAddressController.allItems.toList(),
+              areItemsTheSame: (oldItem, newItem) => oldItem.hashCode == newItem.hashCode,
+              onReorderFinished: (item, from, to, newItems) {
+
+                setState(() {
+                  deliveryAddressController.allItems.toList()..clear()..addAll(newItems);
+                });
+              },
+              itemBuilder: (context, itemAnimation, item, index) {
                 Widget widget;
-                String keyValue = '${deliveryAddressController.deliveryTypeVM.value.selected}_$index';
+                String keyValue;
+
                 if (item is DeliveryTypeViewModel) {
                   widget = DeliveryTypeWidget(itemViewModel: item);
-                  keyValue = 'delivery_type_${item.selected}_$index';
+                  keyValue = 'delivery_type';
                 } else if (item is SelectionViewModel) {
                   widget = SelectionWidget(itemViewModel: item);
-                  keyValue =
-                      'selection_${item.title}_${deliveryAddressController.deliveryTypeVM.value.selected}_$index';
+                  keyValue = 'selection_${item.keyId}';
                 } else if (item is TextFieldViewModel) {
                   widget = TextFieldWidget(itemViewModel: item);
-                  keyValue =
-                      'text_field_${item.title}_${deliveryAddressController.deliveryTypeVM.value.selected}_$index';
+                  keyValue = 'text_field_${item.keyId}';
                 } else {
                   widget = const SizedBox.shrink();
+                  keyValue = 'unknown_$index';
                 }
-                return KeyedSubtree(
+
+                return Reorderable(
                   key: ValueKey(keyValue),
-                  child: item is DeliveryTypeViewModel
-                      ? widget
-                      : widget
-                            .animate()
-                            .fadeIn(duration: 600.ms, delay: (100  * index).ms)
-                            .slideY(
-                              begin: 0.8,
-                              end: 0.0,
-                              duration: 600.ms,
-                              delay: (100 * index).ms,
-                              curve: Curves.easeInOut,
-                            )
-                            .scaleXY(
-                              begin: 0.7,
-                              end: 1,
-                              duration: 600.ms,
-                              delay: (150 * index).ms,
-                              curve: Curves.easeInOut,
-                            ),
+                  builder: (context, dragAnimation, inDrag) {
+                    return SizeFadeTransition(
+                      sizeFraction: 0.7,
+                      curve: Curves.easeInOut,
+                      animation: itemAnimation,
+                      child: item is DeliveryTypeViewModel
+                          ? widget
+                          : widget,
+                    );
+                  },
                 );
               },
             ),
@@ -91,13 +91,14 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
             checkoutController.initAllItems();
-            deliveryAddressController.onInit();
+            deliveryAddressController.initItems();
             Navigator.pop(context);
           }
         },
         titleDialog: AppTexts.oops,
         contentDialog: AppTexts.noProductsToShow,
       ),
+
     );
   }
 }
