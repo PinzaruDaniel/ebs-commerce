@@ -8,9 +8,11 @@ import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
+import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
+import '../../util/routing/app_router.dart';
 
 class ProductDetailPage extends StatefulWidget {
   const ProductDetailPage({super.key, required this.item});
@@ -24,6 +26,7 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   late ScrollController scrollController;
   bool isCollapsed = false;
+
   AddToCartController get addCartController => Get.find();
 
   @override
@@ -36,7 +39,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   void _scrollListener() {
-    final collapsed = scrollController.hasClients && scrollController.offset > (300 - 140);
+    final collapsed = scrollController.hasClients && scrollController.offset > 200;
     if (collapsed != isCollapsed) {
       setState(() => isCollapsed = collapsed);
     }
@@ -62,7 +65,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             pinned: true,
             centerTitle: false,
             title: AnimatedOpacity(
-              curve: Curves.easeOut,
+              curve: Curves.easeIn,
               opacity: isCollapsed ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 500),
               child: isCollapsed ? ProductDetailCollapsedAppBarWidget(item: widget.item!) : const SizedBox.shrink(),
@@ -78,13 +81,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),
           ),
           SliverToBoxAdapter(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
-              child: Material(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                elevation: 0,
-                child: ProductDetailPageBodyWidget(item: widget.item!),
-              ),
+            child: Material(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+              elevation: 0,
+              child: ProductDetailPageBodyWidget(item: widget.item!),
             ),
           ),
         ],
@@ -96,10 +96,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         showIcon: widget.item?.price != null && widget.item?.stock != null,
         titleDialog: AppTexts.oops,
         contentDialog: AppTexts.cantAddToCart,
-        onTap: () async {
-          WidgetsBinding.instance.addPostFrameCallback((_){
-            AppPopUp.showCartInfoPopUp(item: widget.item!);
-          });
+        onTap: () {
+          AppPopUp.showCartInfoPopUp(
+            item: widget.item!,
+            onAdd: (int quantity) {
+              addCartController.cartItem.value?.quantity = quantity;
+
+              final item = addCartController.cartItem.value;
+
+                mainAppController.addToCart(item!);
+                AppRouter.openShoppingCartPage();
+            }, maxValue: addCartController.cartItem.value!.stock,
+          );
         },
       ),
     );

@@ -35,7 +35,7 @@ class HeaderTitleWidget extends StatelessWidget {
                 onPressed: () {
                   AppRouter.openProductsDisplayPage(type: itemViewModel.type!, title: itemViewModel.title);
                 },
-                child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 11, color: AppColors.primary)),
+                child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 14, color: AppColors.primary)),
               ),
           ],
         ),

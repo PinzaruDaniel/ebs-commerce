@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:input_quantity/input_quantity.dart';
-
+import 'package:get/get.dart';
+import 'package:presentation/util/resources/app_text_styles.dart';
 import '../resources/app_colors.dart';
 
 class ProductInputQuantityWidget extends StatelessWidget {
@@ -15,31 +14,91 @@ class ProductInputQuantityWidget extends StatelessWidget {
 
   final int initialValue;
   final int minValue;
-  final dynamic maxValue;
+  final int? maxValue;
   final Function(int) onChanged;
 
   @override
   Widget build(BuildContext context) {
-    final bool isOutOfStock = maxValue == null;
-    final int adjustMax = isOutOfStock ? 0 : maxValue;
-    final int adjustMin = isOutOfStock ? 0 : minValue;
-    final int initialVal=initialValue.clamp(adjustMin, adjustMax);
+    final RxInt currentValue = initialValue.clamp(minValue, maxValue ?? double.maxFinite.toInt()).obs;
+    final controller = TextEditingController(text: currentValue.value.toString());
 
-    return InputQty.int(
-      qtyFormProps: QtyFormProps(enableTyping: false),
-      decoration: QtyDecorationProps(
-        btnColor: AppColors.primary,
-        enabledBorder: InputBorder.none,
-        isBordered: false,
-        width: 8,
-        borderShape: BorderShapeBtn.circle,
+    ever(currentValue, (value) {
+      controller.text = value.toString();
+    });
+
+    return Obx(
+      () => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 26,
+            width: 26,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: IconButton(
+              highlightColor: Colors.transparent,
+              padding: EdgeInsets.zero,
+              onPressed: currentValue.value <= minValue
+                  ? null
+                  : () {
+                      final value = currentValue.value - 1;
+                      currentValue.value = value;
+                      onChanged(value);
+                    },
+              icon: Icon(
+                Icons.remove_rounded,
+                size: 24,
+                color: currentValue.value == minValue ? Colors.grey : AppColors.primary,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: Get.height * 0.05,
+            child: TextField(
+              readOnly: true,
+              controller: controller,
+              textAlign: TextAlign.center,
+              style: AppTextsStyle.bold(size: 16),
+              decoration: const InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.zero),
+              onChanged: (value) {
+                final intValue = int.tryParse(value) ?? currentValue.value;
+                final clampedValue = intValue.clamp(minValue, maxValue ?? double.maxFinite.toInt());
+                if (intValue != clampedValue) {
+                  controller.text = clampedValue.toString();
+                }
+                currentValue.value = clampedValue;
+                onChanged(clampedValue);
+              },
+            ),
+          ),
+          Container(
+            height: 26,
+            width: 26,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: IconButton(
+              highlightColor: Colors.transparent,
+              padding: EdgeInsets.zero,
+              onPressed: currentValue.value >= (maxValue ?? double.maxFinite.toInt())
+                  ? null
+                  : () {
+                      final value = currentValue.value + 1;
+                      currentValue.value = value;
+                      onChanged(value);
+                    },
+              icon: Icon(
+                Icons.add_rounded,
+                size: 24,
+                color: currentValue.value >= (maxValue ?? double.maxFinite.toInt()) ? Colors.grey : AppColors.primary,
+              ),
+            ),
+          ),
+        ],
       ),
-      initVal: initialVal,
-      minVal: adjustMin,
-      maxVal: adjustMax,
-      onQtyChanged: (val) {
-        onChanged(val);
-      },
     );
   }
 }

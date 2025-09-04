@@ -129,7 +129,7 @@ class _CategoryPageState extends State<CategoryPage> {
         title: categoryController.categories.isEmpty ? AppTexts.goHome : AppTexts.apply,
         showIcon: false,
         onTap: () {
-          categoryController.categories.isEmpty? AppRouter.openHomePage() : Get.back;
+          categoryController.categories.isEmpty? AppRouter.openHomePage() : Get.back();
         },
         addToCart: null,
       ),

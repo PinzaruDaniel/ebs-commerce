@@ -52,6 +52,7 @@ dependencies:
   flutter_svg: ^2.0.5
   awesome_dialog: ^3.2.1
   mock_data: ^2.0.1
+  liquid_glass_renderer: ^0.1.1-dev.10
   flutter:
     sdk: flutter
 

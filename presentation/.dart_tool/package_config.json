@@ -152,6 +152,12 @@
       "languageVersion": "3.8"
     },
     {
+      "name": "equatable",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/equatable-2.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "fake_async",
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/fake_async-1.3.3",
       "packageUri": "lib/",
@@ -360,6 +366,12 @@
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/lints-6.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.8"
+    },
+    {
+      "name": "liquid_glass_renderer",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/liquid_glass_renderer-0.1.1-dev.10",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "logger",

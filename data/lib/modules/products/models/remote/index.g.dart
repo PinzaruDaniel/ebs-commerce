@@ -6,33 +6,32 @@ part of 'index.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_ProductApiDto _$ProductApiDtoFromJson(Map<String, dynamic> json) =>
-    _ProductApiDto(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      brand: json['brand'] as Map<String, dynamic>?,
-      price: json['price'] as String?,
-      discount: json['discount_percent'] as String?,
-      discountedPrice: json['discounted_price'] as String?,
-      imageUrl: (json['attachments'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      marks: (json['marks'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      stock: (json['stock'] as num?)?.toInt(),
-      description: json['description'] as String?,
-      specification: (json['specification'] as List<dynamic>?)
-          ?.map((e) => SpecificationApiDto.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      category: (json['categories'] as List<dynamic>?)
-          ?.map(
-            (e) => (e as List<dynamic>)
-                .map((e) => CategoryApiDto.fromJson(e as Map<String, dynamic>))
-                .toList(),
-          )
-          .toList(),
-    );
+_ProductApiDto _$ProductApiDtoFromJson(
+  Map<String, dynamic> json,
+) => _ProductApiDto(
+  id: (json['id'] as num).toInt(),
+  name: json['name'] as String,
+  brand: json['brand'] as Map<String, dynamic>?,
+  price: json['price'] as String?,
+  discount: json['discount_percent'] as String?,
+  discountedPrice: json['discounted_price'] as String?,
+  imageUrl: (json['attachments'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
+  marks: (json['marks'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  stock: (json['stock'] as num?)?.toInt(),
+  description: json['description'] as String?,
+  specification: (json['attributes'] as List<dynamic>)
+      .map((e) => SpecificationDataApiDto.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  category: (json['categories'] as List<dynamic>?)
+      ?.map(
+        (e) => (e as List<dynamic>)
+            .map((e) => CategoryApiDto.fromJson(e as Map<String, dynamic>))
+            .toList(),
+      )
+      .toList(),
+);
 
 Map<String, dynamic> _$ProductApiDtoToJson(_ProductApiDto instance) =>
     <String, dynamic>{
@@ -46,7 +45,7 @@ Map<String, dynamic> _$ProductApiDtoToJson(_ProductApiDto instance) =>
       'marks': instance.marks,
       'stock': instance.stock,
       'description': instance.description,
-      'specification': instance.specification,
+      'attributes': instance.specification,
       'categories': instance.category,
     };
 

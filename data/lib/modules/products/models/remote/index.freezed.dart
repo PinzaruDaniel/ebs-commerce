@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProductApiDto {
 
- int get id; String get name; Map<String, dynamic>? get brand; String? get price;@JsonKey(name: 'discount_percent', defaultValue: null) String? get discount;@JsonKey(name: 'discounted_price', defaultValue: null) String? get discountedPrice;@JsonKey(name: 'attachments') List<String>? get imageUrl; List<String>? get marks; int? get stock; String? get description; List<SpecificationApiDto>? get specification;@JsonKey(name: 'categories') List<List<CategoryApiDto>>? get category;
+ int get id; String get name; Map<String, dynamic>? get brand; String? get price;@JsonKey(name: 'discount_percent', defaultValue: null) String? get discount;@JsonKey(name: 'discounted_price', defaultValue: null) String? get discountedPrice;@JsonKey(name: 'attachments') List<String>? get imageUrl; List<String>? get marks; int? get stock; String? get description;@JsonKey(name: 'attributes') List<SpecificationDataApiDto> get specification;@JsonKey(name: 'categories') List<List<CategoryApiDto>>? get category;
 /// Create a copy of ProductApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $ProductApiDtoCopyWith<$Res>  {
   factory $ProductApiDtoCopyWith(ProductApiDto value, $Res Function(ProductApiDto) _then) = _$ProductApiDtoCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, Map<String, dynamic>? brand, String? price,@JsonKey(name: 'discount_percent', defaultValue: null) String? discount,@JsonKey(name: 'discounted_price', defaultValue: null) String? discountedPrice,@JsonKey(name: 'attachments') List<String>? imageUrl, List<String>? marks, int? stock, String? description, List<SpecificationApiDto>? specification,@JsonKey(name: 'categories') List<List<CategoryApiDto>>? category
+ int id, String name, Map<String, dynamic>? brand, String? price,@JsonKey(name: 'discount_percent', defaultValue: null) String? discount,@JsonKey(name: 'discounted_price', defaultValue: null) String? discountedPrice,@JsonKey(name: 'attachments') List<String>? imageUrl, List<String>? marks, int? stock, String? description,@JsonKey(name: 'attributes') List<SpecificationDataApiDto> specification,@JsonKey(name: 'categories') List<List<CategoryApiDto>>? category
 });
 
 
@@ -65,7 +65,7 @@ class _$ProductApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of ProductApiDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? brand = freezed,Object? price = freezed,Object? discount = freezed,Object? discountedPrice = freezed,Object? imageUrl = freezed,Object? marks = freezed,Object? stock = freezed,Object? description = freezed,Object? specification = freezed,Object? category = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? brand = freezed,Object? price = freezed,Object? discount = freezed,Object? discountedPrice = freezed,Object? imageUrl = freezed,Object? marks = freezed,Object? stock = freezed,Object? description = freezed,Object? specification = null,Object? category = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -77,8 +77,8 @@ as String?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: 
 as List<String>?,marks: freezed == marks ? _self.marks : marks // ignore: cast_nullable_to_non_nullable
 as List<String>?,stock: freezed == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
 as int?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,specification: freezed == specification ? _self.specification : specification // ignore: cast_nullable_to_non_nullable
-as List<SpecificationApiDto>?,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as String?,specification: null == specification ? _self.specification : specification // ignore: cast_nullable_to_non_nullable
+as List<SpecificationDataApiDto>,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as List<List<CategoryApiDto>>?,
   ));
 }
@@ -164,7 +164,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  Map<String, dynamic>? brand,  String? price, @JsonKey(name: 'discount_percent', defaultValue: null)  String? discount, @JsonKey(name: 'discounted_price', defaultValue: null)  String? discountedPrice, @JsonKey(name: 'attachments')  List<String>? imageUrl,  List<String>? marks,  int? stock,  String? description,  List<SpecificationApiDto>? specification, @JsonKey(name: 'categories')  List<List<CategoryApiDto>>? category)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  Map<String, dynamic>? brand,  String? price, @JsonKey(name: 'discount_percent', defaultValue: null)  String? discount, @JsonKey(name: 'discounted_price', defaultValue: null)  String? discountedPrice, @JsonKey(name: 'attachments')  List<String>? imageUrl,  List<String>? marks,  int? stock,  String? description, @JsonKey(name: 'attributes')  List<SpecificationDataApiDto> specification, @JsonKey(name: 'categories')  List<List<CategoryApiDto>>? category)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductApiDto() when $default != null:
 return $default(_that.id,_that.name,_that.brand,_that.price,_that.discount,_that.discountedPrice,_that.imageUrl,_that.marks,_that.stock,_that.description,_that.specification,_that.category);case _:
@@ -185,7 +185,7 @@ return $default(_that.id,_that.name,_that.brand,_that.price,_that.discount,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  Map<String, dynamic>? brand,  String? price, @JsonKey(name: 'discount_percent', defaultValue: null)  String? discount, @JsonKey(name: 'discounted_price', defaultValue: null)  String? discountedPrice, @JsonKey(name: 'attachments')  List<String>? imageUrl,  List<String>? marks,  int? stock,  String? description,  List<SpecificationApiDto>? specification, @JsonKey(name: 'categories')  List<List<CategoryApiDto>>? category)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  Map<String, dynamic>? brand,  String? price, @JsonKey(name: 'discount_percent', defaultValue: null)  String? discount, @JsonKey(name: 'discounted_price', defaultValue: null)  String? discountedPrice, @JsonKey(name: 'attachments')  List<String>? imageUrl,  List<String>? marks,  int? stock,  String? description, @JsonKey(name: 'attributes')  List<SpecificationDataApiDto> specification, @JsonKey(name: 'categories')  List<List<CategoryApiDto>>? category)  $default,) {final _that = this;
 switch (_that) {
 case _ProductApiDto():
 return $default(_that.id,_that.name,_that.brand,_that.price,_that.discount,_that.discountedPrice,_that.imageUrl,_that.marks,_that.stock,_that.description,_that.specification,_that.category);case _:
@@ -205,7 +205,7 @@ return $default(_that.id,_that.name,_that.brand,_that.price,_that.discount,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  Map<String, dynamic>? brand,  String? price, @JsonKey(name: 'discount_percent', defaultValue: null)  String? discount, @JsonKey(name: 'discounted_price', defaultValue: null)  String? discountedPrice, @JsonKey(name: 'attachments')  List<String>? imageUrl,  List<String>? marks,  int? stock,  String? description,  List<SpecificationApiDto>? specification, @JsonKey(name: 'categories')  List<List<CategoryApiDto>>? category)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  Map<String, dynamic>? brand,  String? price, @JsonKey(name: 'discount_percent', defaultValue: null)  String? discount, @JsonKey(name: 'discounted_price', defaultValue: null)  String? discountedPrice, @JsonKey(name: 'attachments')  List<String>? imageUrl,  List<String>? marks,  int? stock,  String? description, @JsonKey(name: 'attributes')  List<SpecificationDataApiDto> specification, @JsonKey(name: 'categories')  List<List<CategoryApiDto>>? category)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductApiDto() when $default != null:
 return $default(_that.id,_that.name,_that.brand,_that.price,_that.discount,_that.discountedPrice,_that.imageUrl,_that.marks,_that.stock,_that.description,_that.specification,_that.category);case _:
@@ -220,7 +220,7 @@ return $default(_that.id,_that.name,_that.brand,_that.price,_that.discount,_that
 @JsonSerializable()
 
 class _ProductApiDto implements ProductApiDto {
-  const _ProductApiDto({required this.id, required this.name, required final  Map<String, dynamic>? brand, required this.price, @JsonKey(name: 'discount_percent', defaultValue: null) this.discount, @JsonKey(name: 'discounted_price', defaultValue: null) this.discountedPrice, @JsonKey(name: 'attachments') required final  List<String>? imageUrl, required final  List<String>? marks, required this.stock, required this.description, required final  List<SpecificationApiDto>? specification, @JsonKey(name: 'categories') required final  List<List<CategoryApiDto>>? category}): _brand = brand,_imageUrl = imageUrl,_marks = marks,_specification = specification,_category = category;
+  const _ProductApiDto({required this.id, required this.name, required final  Map<String, dynamic>? brand, required this.price, @JsonKey(name: 'discount_percent', defaultValue: null) this.discount, @JsonKey(name: 'discounted_price', defaultValue: null) this.discountedPrice, @JsonKey(name: 'attachments') required final  List<String>? imageUrl, required final  List<String>? marks, required this.stock, required this.description, @JsonKey(name: 'attributes') required final  List<SpecificationDataApiDto> specification, @JsonKey(name: 'categories') required final  List<List<CategoryApiDto>>? category}): _brand = brand,_imageUrl = imageUrl,_marks = marks,_specification = specification,_category = category;
   factory _ProductApiDto.fromJson(Map<String, dynamic> json) => _$ProductApiDtoFromJson(json);
 
 @override final  int id;
@@ -257,13 +257,11 @@ class _ProductApiDto implements ProductApiDto {
 
 @override final  int? stock;
 @override final  String? description;
- final  List<SpecificationApiDto>? _specification;
-@override List<SpecificationApiDto>? get specification {
-  final value = _specification;
-  if (value == null) return null;
+ final  List<SpecificationDataApiDto> _specification;
+@override@JsonKey(name: 'attributes') List<SpecificationDataApiDto> get specification {
   if (_specification is EqualUnmodifiableListView) return _specification;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
+  return EqualUnmodifiableListView(_specification);
 }
 
  final  List<List<CategoryApiDto>>? _category;
@@ -309,7 +307,7 @@ abstract mixin class _$ProductApiDtoCopyWith<$Res> implements $ProductApiDtoCopy
   factory _$ProductApiDtoCopyWith(_ProductApiDto value, $Res Function(_ProductApiDto) _then) = __$ProductApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, Map<String, dynamic>? brand, String? price,@JsonKey(name: 'discount_percent', defaultValue: null) String? discount,@JsonKey(name: 'discounted_price', defaultValue: null) String? discountedPrice,@JsonKey(name: 'attachments') List<String>? imageUrl, List<String>? marks, int? stock, String? description, List<SpecificationApiDto>? specification,@JsonKey(name: 'categories') List<List<CategoryApiDto>>? category
+ int id, String name, Map<String, dynamic>? brand, String? price,@JsonKey(name: 'discount_percent', defaultValue: null) String? discount,@JsonKey(name: 'discounted_price', defaultValue: null) String? discountedPrice,@JsonKey(name: 'attachments') List<String>? imageUrl, List<String>? marks, int? stock, String? description,@JsonKey(name: 'attributes') List<SpecificationDataApiDto> specification,@JsonKey(name: 'categories') List<List<CategoryApiDto>>? category
 });
 
 
@@ -326,7 +324,7 @@ class __$ProductApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of ProductApiDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? brand = freezed,Object? price = freezed,Object? discount = freezed,Object? discountedPrice = freezed,Object? imageUrl = freezed,Object? marks = freezed,Object? stock = freezed,Object? description = freezed,Object? specification = freezed,Object? category = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? brand = freezed,Object? price = freezed,Object? discount = freezed,Object? discountedPrice = freezed,Object? imageUrl = freezed,Object? marks = freezed,Object? stock = freezed,Object? description = freezed,Object? specification = null,Object? category = freezed,}) {
   return _then(_ProductApiDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -338,8 +336,8 @@ as String?,imageUrl: freezed == imageUrl ? _self._imageUrl : imageUrl // ignore:
 as List<String>?,marks: freezed == marks ? _self._marks : marks // ignore: cast_nullable_to_non_nullable
 as List<String>?,stock: freezed == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
 as int?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,specification: freezed == specification ? _self._specification : specification // ignore: cast_nullable_to_non_nullable
-as List<SpecificationApiDto>?,category: freezed == category ? _self._category : category // ignore: cast_nullable_to_non_nullable
+as String?,specification: null == specification ? _self._specification : specification // ignore: cast_nullable_to_non_nullable
+as List<SpecificationDataApiDto>,category: freezed == category ? _self._category : category // ignore: cast_nullable_to_non_nullable
 as List<List<CategoryApiDto>>?,
   ));
 }

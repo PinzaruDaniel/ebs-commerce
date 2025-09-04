@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
+import 'package:implicitly_animated_reorderable_list_2/transitions.dart';
+
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
@@ -23,11 +26,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -40,71 +38,49 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         ),
       ),
       body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: Obx(
-                () => ImplicitlyAnimatedList<BaseViewModel>(
+        child: Obx(
+          () => Form(
+            key: _formKey,
+            child: ImplicitlyAnimatedReorderableList(
               padding: const EdgeInsets.only(bottom: 10),
               items: deliveryAddressController.allItems.toList(),
-              insertDuration: const Duration(milliseconds: 800),
-              removeDuration: const Duration(milliseconds: 800),
-              updateDuration: const Duration(milliseconds: 800),
-              areItemsTheSame: (a, b) {
-                if (a.runtimeType != b.runtimeType) return false;
-                if (a is DeliveryTypeViewModel && b is DeliveryTypeViewModel) {
-                  print('${a.selected.value} siiasta ${b.selected.value}');
-                  return a.selected.value == b.selected.value;
-                }
-                if (a is SelectionViewModel && b is SelectionViewModel) {
-                  print('${a.title} nimica ${b.title}');
+              areItemsTheSame: (oldItem, newItem) => oldItem.hashCode == newItem.hashCode,
+              onReorderFinished: (item, from, to, newItems) {
 
-                  return a.title == b.title;
-                }
-                if (a is TextFieldViewModel && b is TextFieldViewModel) {
-                  return a.title == b.title;
-                }
-                return false;
+                setState(() {
+                  deliveryAddressController.allItems.toList()..clear()..addAll(newItems);
+                });
               },
-              itemBuilder: (context, animation, item, index) {
+              itemBuilder: (context, itemAnimation, item, index) {
                 Widget widget;
-                String keyValue =
-                    '${deliveryAddressController.deliveryTypeVM.value.selected.value}_${item.runtimeType}_${item.hashCode}_$index';
+                String keyValue;
+
                 if (item is DeliveryTypeViewModel) {
                   widget = DeliveryTypeWidget(itemViewModel: item);
-                  keyValue = 'delivery_type_${item.selected.value}_$index';
+                  keyValue = 'delivery_type';
                 } else if (item is SelectionViewModel) {
                   widget = SelectionWidget(itemViewModel: item);
-                  keyValue =
-                  'selection_${item.title}_${deliveryAddressController.deliveryTypeVM.value.selected.value}_${item.hashCode}_$index';
+                  keyValue = 'selection_${item.keyId}';
                 } else if (item is TextFieldViewModel) {
                   widget = TextFieldWidget(itemViewModel: item);
-                  keyValue =
-                  'text_field_${item.title}_${deliveryAddressController.deliveryTypeVM.value.selected.value}_${item.hashCode}_$index';
+                  keyValue = 'text_field_${item.keyId}';
                 } else {
                   widget = const SizedBox.shrink();
+                  keyValue = 'unknown_$index';
                 }
-                return KeyedSubtree(
+
+                return Reorderable(
                   key: ValueKey(keyValue),
-                  child: item is DeliveryTypeViewModel
-                      ? widget
-                      : SizeTransition(
-                    sizeFactor: animation,
-                    child: FadeTransition(
-                      opacity: animation,
-                      child: SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(1.0, 1.0), // Slide from bottom-right
-                          end: Offset.zero,
-                        ).animate(
-                          CurvedAnimation(
-                            parent: animation,
-                            curve: Curves.easeInOut,
-                          ),
-                        ),
-                        child: widget,
-                      ),
-                    ),
-                  ),
+                  builder: (context, dragAnimation, inDrag) {
+                    return SizeFadeTransition(
+                      sizeFraction: 0.7,
+                      curve: Curves.easeInOut,
+                      animation: itemAnimation,
+                      child: item is DeliveryTypeViewModel
+                          ? widget
+                          : widget,
+                    );
+                  },
                 );
               },
             ),
@@ -112,18 +88,19 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
-        title: deliveryAddressController.isLoading.value ? AppTexts.loading : AppTexts.save,
+        title:  AppTexts.save,
         showIcon: false,
         onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
             checkoutController.initAllItems();
-            deliveryAddressController.onInit();
+            deliveryAddressController.initItems();
             Navigator.pop(context);
           }
         },
         titleDialog: AppTexts.oops,
         contentDialog: AppTexts.noProductsToShow,
       ),
+
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
-import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
@@ -27,14 +26,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   void initState() {
     super.initState();
-    deliveryAddressController.onInit();
+    deliveryAddressController.initItems();
     deliveryAddressController.toDeliveryAddressViewModel();
     checkoutController.initAllItems();
     contactInformationController.initAllItems();
     contactInformationController.toUserViewModel();
   }
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +66,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     return CheckoutInfoContainerWidget(item: item);
                   }
                   if (item is OrderSummaryViewModel) {
-                    print(' thisd is${checkoutController.hasIncompleteUserInfo()}');
                     return OrderSummaryWidget();
                   }
                   return SizedBox();
@@ -80,6 +77,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBarWidget(
+          titleDialog: AppTexts.oops,
+          contentDialog: AppTexts.enterAllData,
           title: checkoutController.selectedPaymentMethod.isNotEmpty && !checkoutController.hasIncompleteUserInfo()
               ? AppTexts.createOrder
               : AppTexts.enterAllData,

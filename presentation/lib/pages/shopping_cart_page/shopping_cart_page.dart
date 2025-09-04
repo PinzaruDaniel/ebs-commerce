@@ -76,13 +76,18 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        ProductInputQuantityWidget(
-                          initialValue: item.quantity,
-                          onChanged: (val) {
-                            item.quantity = val;
-                            cartController.cartItems.refresh();
-                          },
-                          maxValue: item.stock,
+                        Obx(
+                          () => ProductInputQuantityWidget(
+                            key: ValueKey(
+                              '${cartController.cartItems[index].id}_${cartController.cartItems[index].quantity}',
+                            ),
+                            minValue: 0,
+                            initialValue: cartController.cartItems[index].quantity,
+                            onChanged: (val) {
+                              cartController.updateQuantity(index, val, context);
+                            },
+                            maxValue: cartController.cartItems[index].stock,
+                          ),
                         ),
                       ],
                     ),

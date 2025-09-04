@@ -1,7 +1,7 @@
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_icons.dart';
-import 'package:presentation/util/resources/app_texts.dart';
+import 'package:presentation/util/routing/app_pop_up.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
   final String title;
@@ -40,19 +40,10 @@ class BottomNavigationBarWidget extends StatelessWidget {
           if (addToCart == true) {
             onTap?.call();
           } else if (addToCart == false) {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                backgroundColor: Colors.white,
-                title: Text(titleDialog ?? ''),
-                content: Text(contentDialog ?? ''),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(AppTexts.ok, style: TextStyle(color: AppColors.primary)),
-                  ),
-                ],
-              ),
+             AppPopUp.showConfirmationDialog(
+            context: context,
+            title: titleDialog,
+            content: contentDialog,
             );
           } else {
             onTap?.call();
