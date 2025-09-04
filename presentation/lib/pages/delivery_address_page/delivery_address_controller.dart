@@ -63,6 +63,7 @@ class DeliveryAddressController extends GetxController {
     final selectedType = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
     if (selectedType != DeliveryType.pickup && countries.isEmpty) {
       await loadCountries();
+
     }
 
     if (selectedCountry.value != null && (states.isEmpty || cities.isEmpty)) {
@@ -158,6 +159,7 @@ class DeliveryAddressController extends GetxController {
 
     final selectedType = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
 
+
     if (selectedType == DeliveryType.pickup) {
       _addPickupFields();
     } else {
@@ -227,6 +229,7 @@ class DeliveryAddressController extends GetxController {
 
   DeliveryAddressViewModel toDeliveryAddressViewModel() {
     final type = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
+
 
     if (type == DeliveryType.pickup) {
       final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? '';

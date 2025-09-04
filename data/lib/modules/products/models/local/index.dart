@@ -4,3 +4,4 @@ part 'product_local_dto.dart';
 
 part 'index.freezed.dart';
 part 'index.g.dart';
+

@@ -605,6 +605,14 @@
       ]
     },
     {
+      "name": "flutter_shaders",
+      "version": "0.1.3",
+      "dependencies": [
+        "flutter",
+        "vector_math"
+      ]
+    },
+    {
       "name": "dio",
       "version": "5.9.0",
       "dependencies": [
