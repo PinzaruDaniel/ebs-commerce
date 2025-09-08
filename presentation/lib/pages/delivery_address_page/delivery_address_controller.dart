@@ -68,6 +68,7 @@ class DeliveryAddressController extends GetxController {
     if (selectedCountry.value != null && (states.isEmpty || cities.isEmpty)) {
       await loadStates(selectedCountry.value!);
     }
+    toDeliveryAddressViewModel();
   }
 
   Future<void> loadCountries() async {
@@ -148,19 +149,16 @@ class DeliveryAddressController extends GetxController {
   DeliveryType fromLabel(String label) {
     return DeliveryType.values.firstWhere((e) => e.label == label);
   }
-  Future<void> updateAllItems({bool withAnimation = false}) async {
+
+  Future<void> updateAllItems({bool isAnimated = false}) async {
     final deliveryItem = deliveryTypeVM.value;
 
     allItems.value = [deliveryItem];
     allItems.refresh();
 
-    if (withAnimation) {
-      await Future.delayed(const Duration(milliseconds: 200));
-    }
+      Future.delayed(Duration(milliseconds: 400));
 
-    final selectedType = fromLabel(
-      deliveryItem.options.firstWhere((e) => e.isSelected).titleKey,
-    );
+    final selectedType = fromLabel(deliveryItem.options.firstWhere((e) => e.isSelected).titleKey);
 
     if (selectedType == DeliveryType.pickup) {
       _addPickupFields();
@@ -170,7 +168,6 @@ class DeliveryAddressController extends GetxController {
 
     allItems.refresh();
   }
-
 
   void _addPickupFields() {
     allItems.add(
@@ -234,7 +231,7 @@ class DeliveryAddressController extends GetxController {
     final type = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
 
     if (type == DeliveryType.pickup) {
-      final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? '';
+      final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? pickupLocations.first;
       final model = DeliveryAddressViewModel(deliveryType: type.label, pickupLocation: pickupLocation);
       addressVM.value = model;
       return model;

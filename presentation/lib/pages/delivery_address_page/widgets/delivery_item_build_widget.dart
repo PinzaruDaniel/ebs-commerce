@@ -6,81 +6,72 @@ import 'package:presentation/pages/delivery_address_page/widgets/selection_widge
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
-class DeliveryItemBuildWidget {
-  final Widget widget;
-  final String key;
+class DeliveryItemBuildWidget extends StatefulWidget {
+  final BaseViewModel item;
+  final Animation<double> animation;
+  final int index;
+  final bool isRemoval;
+  final Function onCallBack;
 
-  DeliveryItemBuildWidget({
-    required this.widget,
-    required this.key,
+  const DeliveryItemBuildWidget({
+    super.key,
+    required this.item,
+    required this.animation,
+    required this.index,
+    this.isRemoval = false,
+    required this.onCallBack,
   });
+
+  @override
+  State<DeliveryItemBuildWidget> createState() => _DeliveryItemBuildWidgetState();
 }
 
-class DeliveryItemBuilder {
-  static DeliveryItemBuildWidget buildItemWidget(BaseViewModel item, [int? index]) {
-    final Widget widget;
+class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final Widget child;
     final String keyValue;
 
-    if (item is DeliveryTypeViewModel) {
-      widget = DeliveryTypeWidget(itemViewModel: item);
+    if (widget.item is DeliveryTypeViewModel) {
+      final viewModel = widget.item as DeliveryTypeViewModel;
+      child = DeliveryTypeWidget(itemViewModel: viewModel, onCallBack: widget.onCallBack);
       keyValue = 'delivery_type';
-    } else if (item is SelectionViewModel) {
-      widget = SelectionWidget(itemViewModel: item);
-      keyValue = 'selection_${item.keyId}_${item.title}';
-    } else if (item is TextFieldViewModel) {
-      widget = TextFieldWidget(itemViewModel: item);
-      keyValue = 'text_field_${item.keyId}';
+    } else if (widget.item is SelectionViewModel) {
+      final viewModel = widget.item as SelectionViewModel;
+
+      child = SelectionWidget(itemViewModel: viewModel);
+      keyValue = 'selection_${viewModel.keyId}_${viewModel.title}';
+    } else if (widget.item is TextFieldViewModel) {
+
+      final viewModel = widget.item as TextFieldViewModel;
+      child = TextFieldWidget(itemViewModel: viewModel);
+      keyValue = 'text_field_${viewModel.keyId}';
     } else {
-      widget = const SizedBox.shrink();
-      keyValue = 'unknown_${index ?? 'x'}';
+      child = const SizedBox.shrink();
+      keyValue = 'unknown_${widget.index}';
     }
 
-    return DeliveryItemBuildWidget(widget: widget, key: keyValue);
-  }
-
-  static Widget buildAnimatedItem({
-    required BaseViewModel item,
-    required Animation<double> animation,
-    required int index,
-    bool isRemoval = false,
-  }) {
-    final built = buildItemWidget(item, index);
-
-    if (item is DeliveryTypeViewModel) {
-      return built.widget;
+    if (widget.item is DeliveryTypeViewModel) {
+      return child;
     }
 
-    if (isRemoval) {
+    if (widget.isRemoval) {
       return FadeTransition(
-        opacity: animation,
-        child: built.widget.animate().fadeOut(duration: 200.ms),
+        opacity: widget.animation,
+        child: child.animate().fadeOut(duration: 200.ms),
       );
     }
 
     return SizeFadeTransition(
-      animation: animation,
+      animation: widget.animation,
       child: KeyedSubtree(
-        key: ValueKey(built.key),
-        child: built.widget
+        key: ValueKey(keyValue),
+        child: child
             .animate()
-            .fadeIn(duration: 700.ms, delay: (150 * index).ms)
-            .slideY(
-          begin: 0.8,
-          end: 0.0,
-          duration: 600.ms,
-          delay: (100 * index).ms,
-          curve: Curves.easeInOut,
-        )
-            .scaleXY(
-          begin: 0.7,
-          end: 1,
-          duration: 800.ms,
-          delay: (100 * index).ms,
-          curve: Curves.easeInOut,
-        ),
+            .fadeIn(duration: 700.ms, delay: (150 * widget.index).ms)
+            .slideY(begin: 0.8, end: 0.0, duration: 600.ms, delay: (100 * widget.index).ms, curve: Curves.easeInOut)
+            .scaleXY(begin: 0.7, end: 1, duration: 800.ms, delay: (100 * widget.index).ms, curve: Curves.easeInOut),
       ),
     );
   }
 }
-
-

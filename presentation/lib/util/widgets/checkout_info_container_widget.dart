@@ -93,7 +93,7 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                                   }),
                                 if ((item.infoItems == null || item.infoItems!.isEmpty) &&
                                     (item.titleKey?.trim().isEmpty ?? true))
-                                  Text(item.placeholder==null ? 'Enter your data here': item.placeholder!),
+                                  Text(item.placeholder == null ? 'Enter your data here' : item.placeholder!),
                               ],
                             ),
                           ),

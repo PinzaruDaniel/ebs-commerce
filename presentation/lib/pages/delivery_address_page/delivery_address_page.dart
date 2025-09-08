@@ -21,6 +21,14 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      deliveryAddressController.initItems();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -44,16 +52,22 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               shrinkWrap: true,
               areItemsTheSame: (a, b) => false,
               removeItemBuilder: (context, animation, oldItem) {
-                return DeliveryItemBuilder.buildAnimatedItem(
+                return DeliveryItemBuildWidget(
+                  onCallBack: () {
+                    deliveryAddressController.updateAllItems(isAnimated: true);
+                  },
                   item: oldItem,
                   animation: animation,
-                  index: 0, // Not important for removal
+                  index: 0,
                   isRemoval: true,
                 );
               },
 
               itemBuilder: (context, animation, item, index) {
-                return DeliveryItemBuilder.buildAnimatedItem(
+                return DeliveryItemBuildWidget(
+                  onCallBack: () {
+                    deliveryAddressController.updateAllItems(isAnimated: true);
+                  },
                   item: item,
                   animation: animation,
                   index: index,

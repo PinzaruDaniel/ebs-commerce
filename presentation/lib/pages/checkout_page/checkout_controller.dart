@@ -10,6 +10,7 @@ import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
 
 import '../../controllers/controller_imports.dart';
+import '../../util/enum/delivery_type.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/routing/app_router.dart';
@@ -49,7 +50,7 @@ class CheckoutController extends GetxController {
 
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
-        titleKey: deliveryModel.value?.deliveryType ?? '',
+        titleKey: deliveryModel.value?.deliveryType ??'',
         infoItems: _buildDeliveryInfo(deliveryModel.value),
         onTap: AppRouter.openDeliveryAddressPage,
       ),
@@ -98,7 +99,9 @@ class CheckoutController extends GetxController {
   }
 
   Map<String, String> _buildDeliveryInfo(DeliveryAddressViewModel? model) {
-    if (model?.deliveryType == 'Ridicare la sediu') {
+
+    if (deliveryAddressController.fromLabel(model?.deliveryType ?? '') == DeliveryType.pickup) {
+      print(model?.pickupLocation);
       return {'Pickup Location: ${model?.pickupLocation ?? ''}': ''};
     }
     return {

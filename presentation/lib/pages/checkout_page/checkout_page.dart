@@ -26,11 +26,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   void initState() {
     super.initState();
-    deliveryAddressController.initItems();
-    deliveryAddressController.toDeliveryAddressViewModel();
     checkoutController.initAllItems();
-    contactInformationController.initAllItems();
-    contactInformationController.toUserViewModel();
   }
 
   @override
