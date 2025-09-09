@@ -9,24 +9,16 @@ class SelectionViewModel extends BaseViewModel {
   final String title;
   final List<String> options;
   final RxString selectedValue;
-  final Function(String)? onSelectionChanged;
 
-
-  SelectionViewModel({
-    this.keyId,
-    required this.title,
-    required this.options,
-    String? initialValue,
-    this.onSelectionChanged,
-  }) : selectedValue = (initialValue ?? (options.isNotEmpty ? options.first : '')).obs;
+  SelectionViewModel({this.keyId, required this.title, required this.options, String? initialValue})
+    : selectedValue = (initialValue ?? (options.isNotEmpty ? options.first : '')).obs;
 }
 
 class SelectionWidget extends StatelessWidget {
   final SelectionViewModel itemViewModel;
+  final Function(String)? onSelectionChanged;
 
-
-
-  const SelectionWidget({super.key, required this.itemViewModel});
+  const SelectionWidget({super.key, required this.itemViewModel, this.onSelectionChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +36,7 @@ class SelectionWidget extends StatelessWidget {
                 title: itemViewModel.title,
                 options: itemViewModel.options,
                 selectedValue: itemViewModel.selectedValue,
-                onSelectionChanged: itemViewModel.onSelectionChanged,
+                onSelectionChanged: onSelectionChanged,
               ),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),

@@ -185,39 +185,18 @@ class DeliveryAddressController extends GetxController {
         title: 'Country',
         options: countries.map((c) => c.name).toList(),
         initialValue: selectedCountry.value?.name ?? (countries.isNotEmpty ? countries.first.name : ''),
-        onSelectionChanged: (value) {
-          final country = countries.firstWhere((c) => c.name == value);
-          selectedCountry.value = country;
-          selectedState.value = null;
-          selectedCity.value = null;
-          states.clear();
-          cities.clear();
-          loadStates(country);
-        },
       ),
       SelectionViewModel(
         keyId: 'region',
         title: 'Region',
         options: states.map((s) => s.name).toList(),
         initialValue: selectedState.value?.name ?? (states.isNotEmpty ? states.first.name : ''),
-        onSelectionChanged: (value) {
-          final state = states.firstWhere((s) => s.name == value);
-          selectedState.value = state;
-          selectedCity.value = null;
-          cities.clear();
-          if (selectedCountry.value != null) {
-            loadCities(selectedCountry.value!, state);
-          }
-        },
       ),
       SelectionViewModel(
         keyId: 'city',
         title: 'City',
         options: cities.map((c) => c.name).toList(),
         initialValue: selectedCity.value?.name ?? (cities.isNotEmpty ? cities.first.name : ''),
-        onSelectionChanged: (value) {
-          selectedCity.value = cities.firstWhere((c) => c.name == value);
-        },
       ),
       TextFieldViewModel(
         keyId: 'postal_code',
