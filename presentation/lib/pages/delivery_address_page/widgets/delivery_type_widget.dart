@@ -66,12 +66,12 @@ class _DeliveryTypeWidgetState extends State<DeliveryTypeWidget> {
             itemBuilder: (context, index) {
               final option = widget.itemViewModel.options[index];
               return InkWell(
-                onTap: () {
+                onTap: () async {
                   for (var e in widget.itemViewModel.options) {
                     e.isSelected = (e.deliveryType == option.deliveryType);
                   }
-                  setState(() {});
                   widget.onCallBack.call();
+                  setState(() {});
                 },
                 child: Container(
                   padding: const EdgeInsets.only(left: 8.0, right: 36, top: 8, bottom: 8),

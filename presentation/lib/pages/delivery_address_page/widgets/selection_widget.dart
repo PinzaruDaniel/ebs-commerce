@@ -24,6 +24,8 @@ class SelectionViewModel extends BaseViewModel {
 class SelectionWidget extends StatelessWidget {
   final SelectionViewModel itemViewModel;
 
+
+
   const SelectionWidget({super.key, required this.itemViewModel});
 
   @override

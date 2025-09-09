@@ -62,16 +62,28 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
       );
     }
 
-    return SizeFadeTransition(
-      animation: widget.animation,
-      child: KeyedSubtree(
-        key: ValueKey(keyValue),
-        child: child
-            .animate()
-            .fadeIn(duration: 700.ms, delay: (150 * widget.index).ms)
-            .slideY(begin: 0.8, end: 0.0, duration: 600.ms, delay: (100 * widget.index).ms, curve: Curves.easeInOut)
-            .scaleXY(begin: 0.7, end: 1, duration: 800.ms, delay: (100 * widget.index).ms, curve: Curves.easeInOut),
-      ),
+    return  SizeFadeTransition(
+        animation: widget.animation,
+        child: KeyedSubtree(
+          key: ValueKey(keyValue),
+          child: child
+              .animate()
+              .fadeIn(duration: 500.ms, delay: (150 * widget.index).ms)
+              .slideY(
+            begin: 0.8,
+            end: 0.0,
+            duration: 500.ms,
+            delay: (100 * widget.index).ms,
+            curve: Curves.easeInOut,
+          )
+              .scaleXY(
+            begin: 0.7,
+            end: 1,
+            duration: 400.ms,
+            delay: (100 * widget.index).ms,
+            curve: Curves.easeInOut,
+          ),
+        ),
     );
   }
 }

@@ -23,7 +23,7 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       categoryController.getCategories();
     });
   }
@@ -38,14 +38,18 @@ class _CategoryPageState extends State<CategoryPage> {
         actions: [AppBarIconShoppingCartWidget()],
       ),
       body: Obx(() {
-        if (categoryController.isLoading.value==true){
-          return Center(child: CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75)));
+        if (categoryController.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicatorWidget(
+              boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75),
+            ),
+          );
         }
 
         final parentCategories = categoryController.groupedCategories[null];
 
         if (parentCategories == null || parentCategories.isEmpty) {
-          return EmptyWidget();
+          return const EmptyWidget();
         }
 
         return ListView.builder(
@@ -53,99 +57,113 @@ class _CategoryPageState extends State<CategoryPage> {
           itemBuilder: (context, index) {
             final parent = parentCategories[index];
             final hasChildren = categoryController.groupedCategories.containsKey(parent.id);
-            final selected = categoryController.getCategorySelectionState(parent.id);
 
             return ExpansionTile(
-              shape: Border(),
+              shape: const Border(),
               iconColor: hasChildren ? AppColors.primary : Colors.transparent,
               collapsedIconColor: hasChildren ? Colors.black : Colors.transparent,
-              title: CheckboxCategoryWidget(
-                title: parent.name,
-                textStyle: AppTextsStyle.bold(),
-                selected: selected,
-                onChanged: (v) {
-                  categoryController.toggleCategoryRecursive(parent.id, v ?? false);
-                  if (hasChildren && v == true) {
-                    for (var child in categoryController.groupedCategories[parent.id]!) {
-                      categoryController.toggleCategory(child.id, true);
-                      if (categoryController.groupedCategories.containsKey(child.id)) {
-                        for (var grand in categoryController.groupedCategories[child.id]!) {
-                          categoryController.toggleCategory(grand.id, true);
-                        }
-                      }
-                    }
-                  }
-                },
-              ),
-              children: hasChildren
-                  ? List.generate(categoryController.groupedCategories[parent.id]!.length, (childIndex) {
-                final child = categoryController.groupedCategories[parent.id]![childIndex];
-                final hasGrandChildren = categoryController.groupedCategories.containsKey(child.id);
-                final selectedChild = categoryController.getCategorySelectionState(child.id);
-
-                return hasGrandChildren
-                    ? ExpansionTile(
-                  shape: Border(),
-                  iconColor: AppColors.primary,
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: CheckboxCategoryWidget(
-                      title: child.name,
-                      textStyle: AppTextsStyle.medium,
-                      selected: selectedChild,
-                      onChanged: (v) {
-                        categoryController.toggleCategoryRecursive(child.id, v ?? false);
-                        if (hasGrandChildren && v == true) {
+              title: Obx(() {
+                final selected = categoryController.getCategorySelectionState(parent.id);
+                return CheckboxCategoryWidget(
+                  title: parent.name,
+                  textStyle: AppTextsStyle.bold(),
+                  selected: selected,
+                  onChanged: (v) {
+                    categoryController.toggleCategoryRecursive(parent.id, v ?? false);
+                    if (hasChildren && v == true) {
+                      for (var child in categoryController.groupedCategories[parent.id]!) {
+                        categoryController.toggleCategory(child.id, true);
+                        if (categoryController.groupedCategories.containsKey(child.id)) {
                           for (var grand in categoryController.groupedCategories[child.id]!) {
                             categoryController.toggleCategory(grand.id, true);
                           }
                         }
+                      }
+                    }
+                  },
+                );
+              }),
+              children: hasChildren
+                  ? List.generate(
+                categoryController.groupedCategories[parent.id]!.length,
+                    (childIndex) {
+                  final child = categoryController.groupedCategories[parent.id]![childIndex];
+                  final hasGrandChildren = categoryController.groupedCategories.containsKey(child.id);
+
+                  return hasGrandChildren
+                      ? ExpansionTile(
+                    shape: const Border(),
+                    iconColor: AppColors.primary,
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Obx(() {
+                        final selectedChild = categoryController.getCategorySelectionState(child.id);
+                        return CheckboxCategoryWidget(
+                          title: child.name,
+                          textStyle: AppTextsStyle.medium,
+                          selected: selectedChild,
+                          onChanged: (v) {
+                            categoryController.toggleCategoryRecursive(child.id, v ?? false);
+                            if (v == true) {
+                              for (var grand in categoryController.groupedCategories[child.id]!) {
+                                categoryController.toggleCategory(grand.id, true);
+                              }
+                            }
+                          },
+                        );
+                      }),
+                    ),
+                    children: List.generate(
+                      categoryController.groupedCategories[child.id]!.length,
+                          (grandIndex) {
+                        final grand = categoryController.groupedCategories[child.id]![grandIndex];
+                        return ListTile(
+                          shape: const Border(),
+                          title: Padding(
+                            padding: const EdgeInsets.only(left: 32.0),
+                            child: Obx(() {
+                              final selectedGrand = categoryController.selectedCategoryId.contains(grand.id);
+                              return CheckboxCategoryWidget(
+                                title: grand.name,
+                                textStyle: AppTextsStyle.medium.copyWith(fontSize: 12),
+                                selected: selectedGrand,
+                                onChanged: (v) => categoryController.toggleCategory(grand.id, v ?? false),
+                              );
+                            }),
+                          ),
+                        );
                       },
                     ),
-                  ),
-                  children: List.generate(categoryController.groupedCategories[child.id]!.length, (grandIndex) {
-                    final grand = categoryController.groupedCategories[child.id]![grandIndex];
-                    final selectedGrand = categoryController.selectedCategoryId.contains(grand.id);
-                    return ListTile(
-                      shape: Border(),
-                      title: Padding(
-                        padding: const EdgeInsets.only(left: 32.0),
-                        child: CheckboxCategoryWidget(
-                          title: grand.name,
-                          textStyle: AppTextsStyle.medium.copyWith(fontSize: 12),
-                          selected: selectedGrand,
-                          onChanged: (v) => categoryController.toggleCategory(grand.id, v ?? false),
-                        ),
-                      ),
-                    );
-                  }),
-                )
-                    : ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: CheckboxCategoryWidget(
-                      title: child.name,
-                      textStyle: AppTextsStyle.medium,
-                      selected: selectedChild,
-                      onChanged: (v) => categoryController.toggleCategory(child.id, v ?? false),
+                  )
+                      : ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Obx(() {
+                        final selectedChild = categoryController.getCategorySelectionState(child.id);
+                        return CheckboxCategoryWidget(
+                          title: child.name,
+                          textStyle: AppTextsStyle.medium,
+                          selected: selectedChild,
+                          onChanged: (v) => categoryController.toggleCategory(child.id, v ?? false),
+                        );
+                      }),
                     ),
-                  ),
-                );
-              })
+                  );
+                },
+              )
                   : [],
             );
           },
         );
       }),
-
-      bottomNavigationBar: BottomNavigationBarWidget(
+      bottomNavigationBar: Obx(() => BottomNavigationBarWidget(
         title: categoryController.categories.isEmpty ? AppTexts.goHome : AppTexts.apply,
         showIcon: false,
         onTap: () {
-          categoryController.categories.isEmpty? AppRouter.openHomePage() : Get.back();
+          categoryController.categories.isEmpty ? AppRouter.openHomePage() : Get.back();
         },
         addToCart: null,
-      ),
+      )),
     );
   }
 }

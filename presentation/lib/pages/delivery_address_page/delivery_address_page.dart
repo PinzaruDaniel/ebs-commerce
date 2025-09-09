@@ -65,7 +65,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
 
               itemBuilder: (context, animation, item, index) {
                 return DeliveryItemBuildWidget(
-                  onCallBack: () {
+                  onCallBack: () async{
                     deliveryAddressController.updateAllItems(isAnimated: true);
                   },
                   item: item,

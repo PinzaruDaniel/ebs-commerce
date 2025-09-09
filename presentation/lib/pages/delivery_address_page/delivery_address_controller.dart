@@ -124,6 +124,7 @@ class DeliveryAddressController extends GetxController {
   }
 
   Future<void> loadCities(CountryViewModel country, StateViewModel state) async {
+    print('muutle');
     if (country.name.isEmpty || state.code.isEmpty) return;
 
     isLoading.value = true;
@@ -150,13 +151,15 @@ class DeliveryAddressController extends GetxController {
     return DeliveryType.values.firstWhere((e) => e.label == label);
   }
 
-  Future<void> updateAllItems({bool isAnimated = false}) async {
+  Future<void> updateAllItems({bool isAnimated=false}) async {
     final deliveryItem = deliveryTypeVM.value;
 
     allItems.value = [deliveryItem];
     allItems.refresh();
 
-      Future.delayed(Duration(milliseconds: 400));
+    if(isAnimated){
+      await Future.delayed(Duration(milliseconds: 200));
+    }
 
     final selectedType = fromLabel(deliveryItem.options.firstWhere((e) => e.isSelected).titleKey);
 
