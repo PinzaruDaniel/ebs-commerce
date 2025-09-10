@@ -145,15 +145,17 @@ class CheckoutController extends GetxController {
           initAllItems();
           Get.back();
         }
-        Future.delayed(Duration(milliseconds: 500), () {
+        Future.delayed(Duration(milliseconds: 200), () {
           Get.snackbar(
+            duration: Duration(milliseconds: 1750),
             isValid ? AppTexts.success : AppTexts.invalidCode,
             isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: isValid ? AppColors.primary : AppColors.red,
             colorText: Colors.white,
             forwardAnimationCurve: Curves.easeOutBack,
-            margin: EdgeInsets.all(14),
+            reverseAnimationCurve: Curves.easeInOutBack,
+            margin: EdgeInsets.symmetric(vertical: 50 , horizontal: 16),
           );
         });
       },
