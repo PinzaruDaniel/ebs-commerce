@@ -56,9 +56,8 @@ class DeliveryAddressController extends GetxController {
 
   Future<void> initItems() async {
     updateAllItems();
-    if (countries.isEmpty) {
       await loadCountries();
-    }
+
 
     final selectedType = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
     if (selectedType != DeliveryType.pickup && countries.isEmpty) {
@@ -85,12 +84,15 @@ class DeliveryAddressController extends GetxController {
         countries.value = list.map((c) => c.toViewModel).toList();
 
         if (selectedCountry.value == null && countries.isNotEmpty) {
-          selectedCountry.value = countries.first;
+          selectedCountry.value = null;
           selectedState.value = null;
           selectedCity.value = null;
           states.clear();
-          loadStates(selectedCountry.value!);
+          cities.clear();
+          updateAllItems();
+
         }
+
       },
     );
   }
@@ -104,27 +106,22 @@ class DeliveryAddressController extends GetxController {
     final result = await getStatesUseCase(params);
 
     result.fold(
-      (failure) {
+          (failure) {
         isLoading.value = false;
         showFailureSnackBar(failure);
       },
-      (list) {
+          (list) {
         states.value = list.map((e) => e.toViewModel).toList();
-
         isLoading.value = false;
-        selectedState.value = states.isNotEmpty ? states.first : null;
+        selectedState.value = null;
         selectedCity.value = null;
         cities.clear();
+        updateAllItems();
       },
     );
-
-    if (selectedState.value != null) {
-      await loadCities(country, selectedState.value!);
-    }
   }
 
   Future<void> loadCities(CountryViewModel country, StateViewModel state) async {
-    print('muutle');
     if (country.name.isEmpty || state.code.isEmpty) return;
 
     isLoading.value = true;
@@ -133,18 +130,17 @@ class DeliveryAddressController extends GetxController {
     final result = await getCitiesUseCase(params);
 
     result.fold(
-      (failure) {
+          (failure) {
         isLoading.value = false;
         showFailureSnackBar(failure);
       },
-      (entity) {
+          (entity) {
         cities.value = entity.toViewModelList;
-
         isLoading.value = false;
-        selectedCity.value = cities.isNotEmpty ? cities.first : null;
+        selectedCity.value = null;
+        updateAllItems();
       },
     );
-    updateAllItems();
   }
 
   DeliveryType fromLabel(String label) {
@@ -152,6 +148,7 @@ class DeliveryAddressController extends GetxController {
   }
 
   Future<void> updateAllItems({bool isAnimated=false}) async {
+    print('multe');
     final deliveryItem = deliveryTypeVM.value;
 
     allItems.value = [deliveryItem];
@@ -183,20 +180,20 @@ class DeliveryAddressController extends GetxController {
       SelectionViewModel(
         keyId: 'country',
         title: 'Country',
-        options: countries.map((c) => c.name).toList(),
-        initialValue: selectedCountry.value?.name ?? (countries.isNotEmpty ? countries.first.name : ''),
+        options: ['Select country', ...countries.map((c) => c.name)],
+        initialValue: selectedCountry.value?.name ?? 'Select country',
       ),
       SelectionViewModel(
         keyId: 'region',
         title: 'Region',
-        options: states.map((s) => s.name).toList(),
-        initialValue: selectedState.value?.name ?? (states.isNotEmpty ? states.first.name : ''),
+        options: ['Select region', ...states.map((s) => s.name)],
+        initialValue: selectedState.value?.name ?? 'Select region',
       ),
       SelectionViewModel(
         keyId: 'city',
         title: 'City',
-        options: cities.map((c) => c.name).toList(),
-        initialValue: selectedCity.value?.name ?? (cities.isNotEmpty ? cities.first.name : ''),
+        options: ['Select city', ...cities.map((c) => c.name)],
+        initialValue: selectedCity.value?.name ?? 'Select city',
       ),
       TextFieldViewModel(
         keyId: 'postal_code',

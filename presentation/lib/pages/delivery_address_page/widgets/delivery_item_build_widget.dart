@@ -44,6 +44,8 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
         itemViewModel: viewModel,
         onSelectionChanged: (value) {
           if (viewModel.keyId == 'country') {
+
+            if (value == 'Select country') return;
             final country = deliveryAddressController.countries.firstWhere((c) => c.name == value);
             deliveryAddressController.selectedCountry.value = country;
             deliveryAddressController.selectedState.value = null;
@@ -51,18 +53,21 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
             deliveryAddressController.states.clear();
             deliveryAddressController.cities.clear();
             deliveryAddressController.loadStates(country);
-          } else if (viewModel.keyId == 'region') {
+          }
+
+          else if (viewModel.keyId == 'region') {
+            if (value == 'Select region') return;
             final state = deliveryAddressController.states.firstWhere((s) => s.name == value);
             deliveryAddressController.selectedState.value = state;
             deliveryAddressController.selectedCity.value = null;
             deliveryAddressController.cities.clear();
-            if (deliveryAddressController.selectedCountry.value != null) {
-              deliveryAddressController.loadCities(deliveryAddressController.selectedCountry.value!, state);
-            }
-          } else if (viewModel.keyId == 'city') {
-            deliveryAddressController.selectedCity.value = deliveryAddressController.cities.firstWhere(
-              (c) => c.name == value,
-            );
+            deliveryAddressController.loadCities(deliveryAddressController.selectedCountry.value!, state);
+          }
+
+          else if (viewModel.keyId == 'city') {
+            if (value == 'Select city') return;
+            deliveryAddressController.selectedCity.value =
+                deliveryAddressController.cities.firstWhere((c) => c.name == value);
           }
         },
       );
