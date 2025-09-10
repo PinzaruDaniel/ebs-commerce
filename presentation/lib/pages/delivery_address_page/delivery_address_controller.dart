@@ -55,11 +55,9 @@ class DeliveryAddressController extends GetxController {
   List<String> pickupLocations = ['Posta moldovei, Armeneasca 2', 'undeva departe'];
 
   Future<void> initItems() async {
-    //TODO: de sters
     updateAllItems();
-    if (countries.isEmpty) {
       await loadCountries();
-    }
+
 
     final selectedType = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
     if (selectedType != DeliveryType.pickup && countries.isEmpty) {
@@ -69,8 +67,7 @@ class DeliveryAddressController extends GetxController {
     if (selectedCountry.value != null && (states.isEmpty || cities.isEmpty)) {
       await loadStates(selectedCountry.value!);
     }
-
-    updateAllItems();
+    toDeliveryAddressViewModel();
   }
 
   Future<void> loadCountries() async {
@@ -87,15 +84,17 @@ class DeliveryAddressController extends GetxController {
         countries.value = list.map((c) => c.toViewModel).toList();
 
         if (selectedCountry.value == null && countries.isNotEmpty) {
-          selectedCountry.value = countries.first;
+          selectedCountry.value = null;
           selectedState.value = null;
           selectedCity.value = null;
           states.clear();
-          loadStates(selectedCountry.value!);
+          cities.clear();
+          updateAllItems();
+
         }
+
       },
     );
-
   }
 
   Future<void> loadStates(CountryViewModel country) async {
@@ -107,25 +106,19 @@ class DeliveryAddressController extends GetxController {
     final result = await getStatesUseCase(params);
 
     result.fold(
-      (failure) {
+          (failure) {
         isLoading.value = false;
         showFailureSnackBar(failure);
       },
-      (list) {
+          (list) {
         states.value = list.map((e) => e.toViewModel).toList();
+        isLoading.value = false;
+        selectedState.value = null;
+        selectedCity.value = null;
+        cities.clear();
+        updateAllItems();
       },
     );
-
-    isLoading.value = false;
-    selectedState.value = states.isNotEmpty ? states.first : null;
-    selectedCity.value = null;
-    cities.clear();
-
-    if (selectedState.value != null) {
-      await loadCities(country, selectedState.value!);
-    }
-
-    updateAllItems();
   }
 
   Future<void> loadCities(CountryViewModel country, StateViewModel state) async {
@@ -137,31 +130,34 @@ class DeliveryAddressController extends GetxController {
     final result = await getCitiesUseCase(params);
 
     result.fold(
-      (failure) {
+          (failure) {
         isLoading.value = false;
         showFailureSnackBar(failure);
       },
-      (entity) {
+          (entity) {
         cities.value = entity.toViewModelList;
+        isLoading.value = false;
+        selectedCity.value = null;
+        updateAllItems();
       },
     );
-
-    isLoading.value = false;
-    selectedCity.value = cities.isNotEmpty ? cities.first : null;
-
-    updateAllItems();
   }
 
   DeliveryType fromLabel(String label) {
     return DeliveryType.values.firstWhere((e) => e.label == label);
   }
 
-  void updateAllItems() {
-    print('dahuia');
-    allItems.clear();
-    allItems.add(deliveryTypeVM.value);
+  Future<void> updateAllItems({bool isAnimated=false}) async {
+    final deliveryItem = deliveryTypeVM.value;
 
-    final selectedType = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
+    allItems.value = [deliveryItem];
+    allItems.refresh();
+
+    if(isAnimated){
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+
+    final selectedType = fromLabel(deliveryItem.options.firstWhere((e) => e.isSelected).titleKey);
 
     if (selectedType == DeliveryType.pickup) {
       _addPickupFields();
@@ -183,41 +179,20 @@ class DeliveryAddressController extends GetxController {
       SelectionViewModel(
         keyId: 'country',
         title: 'Country',
-        options: countries.map((c) => c.name).toList(),
-        initialValue: selectedCountry.value?.name ?? (countries.isNotEmpty ? countries.first.name : ''),
-        onSelectionChanged: (value) {
-          final country = countries.firstWhere((c) => c.name == value);
-          selectedCountry.value = country;
-          selectedState.value = null;
-          selectedCity.value = null;
-          states.clear();
-          cities.clear();
-          loadStates(country);
-        },
+        options: ['Select country', ...countries.map((c) => c.name)],
+        initialValue: selectedCountry.value?.name ?? 'Select country',
       ),
       SelectionViewModel(
         keyId: 'region',
         title: 'Region',
-        options: states.map((s) => s.name).toList(),
-        initialValue: selectedState.value?.name ?? (states.isNotEmpty ? states.first.name : ''),
-        onSelectionChanged: (value) {
-          final state = states.firstWhere((s) => s.name == value);
-          selectedState.value = state;
-          selectedCity.value = null;
-          cities.clear();
-          if (selectedCountry.value != null) {
-            loadCities(selectedCountry.value!, state);
-          }
-        },
+        options: ['Select region', ...states.map((s) => s.name)],
+        initialValue: selectedState.value?.name ?? 'Select region',
       ),
       SelectionViewModel(
         keyId: 'city',
         title: 'City',
-        options: cities.map((c) => c.name).toList(),
-        initialValue: selectedCity.value?.name ?? (cities.isNotEmpty ? cities.first.name : ''),
-        onSelectionChanged: (value) {
-          selectedCity.value = cities.firstWhere((c) => c.name == value);
-        },
+        options: ['Select city', ...cities.map((c) => c.name)],
+        initialValue: selectedCity.value?.name ?? 'Select city',
       ),
       TextFieldViewModel(
         keyId: 'postal_code',
@@ -234,7 +209,7 @@ class DeliveryAddressController extends GetxController {
     final type = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
 
     if (type == DeliveryType.pickup) {
-      final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? '';
+      final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? pickupLocations.first;
       final model = DeliveryAddressViewModel(deliveryType: type.label, pickupLocation: pickupLocation);
       addressVM.value = model;
       return model;

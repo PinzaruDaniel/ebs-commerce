@@ -3,6 +3,7 @@ import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
+import 'package:presentation/util/widgets/open_container_animation_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
 import '../enum/product_type.dart';
@@ -31,11 +32,18 @@ class HeaderTitleWidget extends StatelessWidget {
             Text(itemViewModel.title, style: AppTextsStyle.bold(size: 11)),
             Spacer(),
             if (itemViewModel.showSeeAll)
-              TextButton(
-                onPressed: () {
-                  AppRouter.openProductsDisplayPage(type: itemViewModel.type!, title: itemViewModel.title);
-                },
-                child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 14, color: AppColors.primary)),
+              OpenContainerAnimation(
+                openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
+                  type: itemViewModel.type!,
+                  title: itemViewModel.title,
+                ),
+                closedBuilder: (context, openContainer) => TextButton(
+                  onPressed: openContainer,
+                  child: Text(
+                    AppTexts.seeAll,
+                    style: AppTextsStyle.bold(size: 14, color: AppColors.primary),
+                  ),
+                ),
               ),
           ],
         ),

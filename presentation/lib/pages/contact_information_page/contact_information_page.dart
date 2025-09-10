@@ -19,6 +19,10 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      contactInformationController.initAllItems();
+      contactInformationController.toUserViewModel();
+    });
   }
 
   @override

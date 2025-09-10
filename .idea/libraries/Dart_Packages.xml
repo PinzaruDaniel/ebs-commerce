@@ -285,6 +285,13 @@
             </list>
           </value>
         </entry>
+        <entry key="flutter_animate">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_animate-4.5.2/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="flutter_cache_manager">
           <value>
             <list>
@@ -409,6 +416,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http_parser-4.1.2/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="implicitly_animated_reorderable_list_2">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/implicitly_animated_reorderable_list_2-0.6.0/lib" />
             </list>
           </value>
         </entry>
@@ -1129,6 +1143,7 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/file-7.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/fixnum-1.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flat_buffers-23.5.26/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_animate-4.5.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_cache_manager-3.4.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_hooks-0.21.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_hooks-0.21.3+1/lib" />
@@ -1146,6 +1161,7 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http-1.5.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http_multi_server-3.2.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/http_parser-4.1.2/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/implicitly_animated_reorderable_list_2-0.6.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/infinite_scroll_pagination-5.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/input_quantity-2.5.1/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/intl-0.20.2/lib" />

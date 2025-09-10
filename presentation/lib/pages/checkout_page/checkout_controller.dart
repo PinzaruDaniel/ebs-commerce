@@ -10,6 +10,7 @@ import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
 
 import '../../controllers/controller_imports.dart';
+import '../../util/enum/delivery_type.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/routing/app_router.dart';
@@ -49,7 +50,7 @@ class CheckoutController extends GetxController {
 
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
-        titleKey: deliveryModel.value?.deliveryType ?? '',
+        titleKey: deliveryModel.value?.deliveryType ??'',
         infoItems: _buildDeliveryInfo(deliveryModel.value),
         onTap: AppRouter.openDeliveryAddressPage,
       ),
@@ -98,7 +99,9 @@ class CheckoutController extends GetxController {
   }
 
   Map<String, String> _buildDeliveryInfo(DeliveryAddressViewModel? model) {
-    if (model?.deliveryType == 'Ridicare la sediu') {
+
+    if (deliveryAddressController.fromLabel(model?.deliveryType ?? '') == DeliveryType.pickup) {
+      print(model?.pickupLocation);
       return {'Pickup Location: ${model?.pickupLocation ?? ''}': ''};
     }
     return {
@@ -142,15 +145,17 @@ class CheckoutController extends GetxController {
           initAllItems();
           Get.back();
         }
-        Future.delayed(Duration(milliseconds: 500), () {
+        Future.delayed(Duration(milliseconds: 200), () {
           Get.snackbar(
+            duration: Duration(milliseconds: 1750),
             isValid ? AppTexts.success : AppTexts.invalidCode,
             isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: isValid ? AppColors.primary : AppColors.red,
             colorText: Colors.white,
             forwardAnimationCurve: Curves.easeOutBack,
-            margin: EdgeInsets.all(14),
+            reverseAnimationCurve: Curves.easeInOutBack,
+            margin: EdgeInsets.symmetric(vertical: 50 , horizontal: 16),
           );
         });
       },

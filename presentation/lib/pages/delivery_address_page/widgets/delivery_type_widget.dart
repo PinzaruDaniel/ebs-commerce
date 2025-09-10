@@ -1,9 +1,10 @@
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/base_view_model.dart';
 
-import '../../../controllers/controller_imports.dart';
 import '../../../util/enum/delivery_type.dart';
 
 class DeliveryOptionViewModel extends BaseViewModel {
@@ -12,19 +13,30 @@ class DeliveryOptionViewModel extends BaseViewModel {
   final Image? icon;
   bool isSelected;
 
-  DeliveryOptionViewModel({required this.titleKey, this.icon, required this.isSelected, required this.deliveryType});
+  DeliveryOptionViewModel({
+    required this.titleKey,
+    this.icon,
+    required this.isSelected,
+    required this.deliveryType,
+  });
 }
 
 class DeliveryTypeViewModel extends BaseViewModel {
   final List<DeliveryOptionViewModel> options;
 
   DeliveryTypeViewModel({required this.options});
+
+  DeliveryOptionViewModel? get selected {
+    return options.firstWhereOrNull((option) => option.isSelected);
+  }
 }
 
 class DeliveryTypeWidget extends StatefulWidget {
-  const DeliveryTypeWidget({super.key, required this.itemViewModel});
+  const DeliveryTypeWidget({super.key, required this.itemViewModel, required this.onCallBack});
 
   final DeliveryTypeViewModel itemViewModel;
+  final Function onCallBack;
+
 
   @override
   State<DeliveryTypeWidget> createState() => _DeliveryTypeWidgetState();
@@ -54,20 +66,19 @@ class _DeliveryTypeWidgetState extends State<DeliveryTypeWidget> {
             itemBuilder: (context, index) {
               final option = widget.itemViewModel.options[index];
               return InkWell(
-                onTap: () {
+                onTap: () async {
                   for (var e in widget.itemViewModel.options) {
                     e.isSelected = (e.deliveryType == option.deliveryType);
                   }
-                  deliveryAddressController.updateAllItems();
+                  widget.onCallBack.call();
                   setState(() {});
-                  // TODO: din afara callback
                 },
                 child: Container(
                   padding: const EdgeInsets.only(left: 8.0, right: 36, top: 8, bottom: 8),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: option.isSelected ? AppColors.primary : Colors.grey.shade300),
+                    border: Border.all(color: option.isSelected ? AppColors.primary : Colors.grey.shade400),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

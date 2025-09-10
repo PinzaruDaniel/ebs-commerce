@@ -4,6 +4,7 @@ import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart'
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/mapper/map_text_product_type.dart';
 import 'package:presentation/util/resources/app_icons.dart';
+import 'package:presentation/util/widgets/open_container_animation_widget.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
@@ -43,11 +44,15 @@ class _HomePageState extends State<HomePage> {
         showBorder: true,
         leading: AppIcons.companyIcon,
         actions: [
-          IconButton(
-            onPressed: () {
-              AppRouter.openFilterPage();
+          OpenContainerAnimation(
+            closedShape: CircleBorder(),
+            closedBuilder: (context, openContainer) {
+              return IconButton(
+                icon: AppIcons.filtersIcon,
+                onPressed: openContainer,
+              );
             },
-            icon: AppIcons.filtersIcon,
+            openBuilder: (context, _) => AppRouter.openFilterPage(),
           ),
           AppBarIconShoppingCartWidget(),
         ],
@@ -81,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
-              if (homeController.isLoading.value)  LoadingOverlayWidget(isLoading: true,),
+              if (homeController.isLoading.value) LoadingOverlayWidget(isLoading: true),
             ],
           ),
         ),
