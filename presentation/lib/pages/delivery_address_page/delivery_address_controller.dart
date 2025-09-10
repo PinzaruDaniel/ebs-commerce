@@ -148,7 +148,6 @@ class DeliveryAddressController extends GetxController {
   }
 
   Future<void> updateAllItems({bool isAnimated=false}) async {
-    print('multe');
     final deliveryItem = deliveryTypeVM.value;
 
     allItems.value = [deliveryItem];
