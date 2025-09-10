@@ -155,7 +155,7 @@ class DeliveryAddressController extends GetxController {
     allItems.refresh();
 
     if(isAnimated){
-      await Future.delayed(Duration(milliseconds: 150));
+      await Future.delayed(Duration(milliseconds: 100));
     }
 
     final selectedType = fromLabel(deliveryItem.options.firstWhere((e) => e.isSelected).titleKey);

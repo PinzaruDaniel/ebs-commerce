@@ -53,7 +53,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               areItemsTheSame: (a, b) => false,
               removeItemBuilder: (context, animation, oldItem) {
                 return DeliveryItemBuildWidget(
-                  onCallBack: () {
+                  onCallBack: ()  {
                     deliveryAddressController.updateAllItems(isAnimated: true);
                   },
                   item: oldItem,
@@ -65,7 +65,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
 
               itemBuilder: (context, animation, item, index) {
                 return DeliveryItemBuildWidget(
-                  onCallBack: () async{
+                  onCallBack: () {
                     deliveryAddressController.updateAllItems(isAnimated: true);
                   },
                   item: item,

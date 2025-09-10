@@ -44,7 +44,6 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
         itemViewModel: viewModel,
         onSelectionChanged: (value) {
           if (viewModel.keyId == 'country') {
-
             if (value == 'Select country') return;
             final country = deliveryAddressController.countries.firstWhere((c) => c.name == value);
             deliveryAddressController.selectedCountry.value = country;
@@ -53,21 +52,18 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
             deliveryAddressController.states.clear();
             deliveryAddressController.cities.clear();
             deliveryAddressController.loadStates(country);
-          }
-
-          else if (viewModel.keyId == 'region') {
+          } else if (viewModel.keyId == 'region') {
             if (value == 'Select region') return;
             final state = deliveryAddressController.states.firstWhere((s) => s.name == value);
             deliveryAddressController.selectedState.value = state;
             deliveryAddressController.selectedCity.value = null;
             deliveryAddressController.cities.clear();
             deliveryAddressController.loadCities(deliveryAddressController.selectedCountry.value!, state);
-          }
-
-          else if (viewModel.keyId == 'city') {
+          } else if (viewModel.keyId == 'city') {
             if (value == 'Select city') return;
-            deliveryAddressController.selectedCity.value =
-                deliveryAddressController.cities.firstWhere((c) => c.name == value);
+            deliveryAddressController.selectedCity.value = deliveryAddressController.cities.firstWhere(
+              (c) => c.name == value,
+            );
           }
         },
       );
@@ -88,8 +84,12 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
     if (widget.isRemoval) {
       return FadeTransition(
         opacity: widget.animation,
-        child: child.animate().fadeOut(duration: 200.ms),
+        child: child.animate()
+            .fadeOut(duration: 400.ms, curve: Curves.easeInOut)
+            .slideY(begin: 0, end: 0.2, duration: 400.ms, curve: Curves.easeInOut)
+            .scaleXY(begin: 1, end: 0.85, duration: 400.ms, curve: Curves.easeInOut),
       );
+
     }
 
     return SizeFadeTransition(
@@ -98,9 +98,15 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
         key: ValueKey(keyValue),
         child: child
             .animate()
-            .fadeIn(duration: 500.ms, delay: (150 * widget.index).ms)
-            .slideY(begin: 0.8, end: 0.0, duration: 500.ms, delay: (100 * widget.index).ms, curve: Curves.easeInOut)
-            .scaleXY(begin: 0.7, end: 1, duration: 400.ms, delay: (100 * widget.index).ms, curve: Curves.easeInOut),
+            .fadeIn(duration: 200.ms, delay: (100+200 * widget.index).ms)
+            .slideY(begin: 1, end: 0.0, duration: 400.ms, delay: (200 * widget.index).ms, curve: Curves.easeInOut)
+            .scaleXY(
+              begin: 0.1,
+              end: 1,
+              duration: 400.ms,
+              delay: (200 * widget.index).ms,
+              curve: Curves.easeInOut,
+            ),
       ),
     );
   }

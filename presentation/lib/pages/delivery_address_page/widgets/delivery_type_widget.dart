@@ -78,7 +78,7 @@ class _DeliveryTypeWidgetState extends State<DeliveryTypeWidget> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: option.isSelected ? AppColors.primary : Colors.grey.shade300),
+                    border: Border.all(color: option.isSelected ? AppColors.primary : Colors.grey.shade400),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
