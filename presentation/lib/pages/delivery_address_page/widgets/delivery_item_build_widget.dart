@@ -98,7 +98,7 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
         key: ValueKey(keyValue),
         child: child
             .animate()
-            .fadeIn(duration: 300.ms, delay: (300+100 * widget.index).ms)
+            .fadeIn(duration: 300.ms, delay: (300+200 * widget.index).ms)
             .slideY(begin: 1, end: 0.0, duration: 400.ms, delay: (200 * widget.index).ms, curve: Curves.easeInOut)
             .scaleXY(
               begin: 0.1,
