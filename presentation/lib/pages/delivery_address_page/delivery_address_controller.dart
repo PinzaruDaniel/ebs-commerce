@@ -146,6 +146,8 @@ class DeliveryAddressController extends GetxController {
   DeliveryType fromLabel(String label) {
     return DeliveryType.values.firstWhere((e) => e.label == label);
   }
+
+
   Future<void> removeAllItemsAnimated() async {
     while (allItems.length > 1) {
       final _ = allItems.removeLast();
