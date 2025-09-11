@@ -64,9 +64,8 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               },
 
               removeItemBuilder: (context, animation, oldItem) {
-
                 return DeliveryItemBuildWidget(
-                  onCallBack: ()  async {
+                  onCallBack: () async {
                     await deliveryAddressController.removeAllItemsAnimated();
                     deliveryAddressController.updateAllItems();
                   },
