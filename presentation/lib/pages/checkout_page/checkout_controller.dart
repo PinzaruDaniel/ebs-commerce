@@ -4,6 +4,7 @@ import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.da
 import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
+import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
@@ -145,17 +146,11 @@ class CheckoutController extends GetxController {
           initAllItems();
           Get.back();
         }
-        Future.delayed(Duration(milliseconds: 200), () {
-          Get.snackbar(
-            duration: Duration(milliseconds: 1750),
-            isValid ? AppTexts.success : AppTexts.invalidCode,
-            isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: isValid ? AppColors.primary : AppColors.red,
-            colorText: Colors.white,
-            forwardAnimationCurve: Curves.easeOutBack,
-            reverseAnimationCurve: Curves.easeInOutBack,
-            margin: EdgeInsets.symmetric(vertical: 50 , horizontal: 16),
+        Future.delayed( Duration(milliseconds: 200), () {
+          showFailureSnackBar(
+            title: isValid ? AppTexts.success : AppTexts.invalidCode,
+            fallbackMessage: isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
+            isError: !isValid,
           );
         });
       },

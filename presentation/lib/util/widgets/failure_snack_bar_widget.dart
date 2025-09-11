@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:common/constants/failure_class.dart';
 import 'package:get/get.dart';
 
-void showFailureSnackBar(Failure failure) {
-  if (Get.context != null) {
-    final snackBar = SnackBar(
-      content: Text(failure.message),
-      backgroundColor: Colors.red,
-      duration: const Duration(seconds: 3),
-      behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.only(bottom: 50, left:10, right: 10),
-      padding: EdgeInsets.all(20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(35))),
-    );
-    ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
-  }
-}
+import '../resources/app_colors.dart';
 
+void showFailureSnackBar({Failure? failure, String? fallbackMessage, String? title, bool isError = true}) {
+  final message = failure?.message ?? fallbackMessage;
+
+  Get.snackbar(
+    title ?? 'Error',
+    message!,
+    backgroundColor: isError ? AppColors.red : AppColors.primary,
+    colorText: Colors.white,
+    snackPosition: SnackPosition.BOTTOM,
+    duration: const Duration(seconds: 2),
+    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
+    padding: const EdgeInsets.all(16),
+    borderRadius: 20,
+    icon: Icon(
+      isError ? Icons.error : Icons.check_circle,
+      color: Colors.white,
+    ),
+  );
+}

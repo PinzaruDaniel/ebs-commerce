@@ -73,7 +73,7 @@ class ProductsDisplayController extends GetxController {
       (failure) {
         isLoading.value = false;
         isLoadingMore.value = false;
-        showFailureSnackBar(failure);
+        showFailureSnackBar(failure: failure);
       },
       (list) {
         final newItems = list.map((e) => e.toModel).toList();
@@ -93,7 +93,7 @@ class ProductsDisplayController extends GetxController {
       (failure) {
         isLoading.value = false;
         isLoadingMore.value = false;
-        showFailureSnackBar(failure);
+        showFailureSnackBar(failure: failure);
       },
       (list) {
         final newItems = list.map((e) => e.toModel).toList();

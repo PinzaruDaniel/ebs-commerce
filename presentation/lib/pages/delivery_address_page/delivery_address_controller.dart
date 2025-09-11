@@ -77,7 +77,7 @@ class DeliveryAddressController extends GetxController {
     result.fold(
       (failure) {
         isLoading.value = false;
-        showFailureSnackBar(failure);
+        showFailureSnackBar(failure: failure);
       },
       (list) {
         isLoading.value = false;
@@ -108,7 +108,7 @@ class DeliveryAddressController extends GetxController {
     result.fold(
           (failure) {
         isLoading.value = false;
-        showFailureSnackBar(failure);
+        showFailureSnackBar(failure: failure);
       },
           (list) {
         states.value = list.map((e) => e.toViewModel).toList();
@@ -132,7 +132,7 @@ class DeliveryAddressController extends GetxController {
     result.fold(
           (failure) {
         isLoading.value = false;
-        showFailureSnackBar(failure);
+        showFailureSnackBar(failure: failure);
       },
           (entity) {
         cities.value = entity.toViewModelList;

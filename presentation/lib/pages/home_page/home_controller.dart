@@ -46,7 +46,7 @@ class HomeController extends GetxController {
           (failure) {
         isLoading.value = false;
         isLoadingMore.value = false;
-        showFailureSnackBar(failure);
+        showFailureSnackBar(failure: failure);
       },
           (list) async {
         final newItems = list.map((e) => e.toModel).toList();
