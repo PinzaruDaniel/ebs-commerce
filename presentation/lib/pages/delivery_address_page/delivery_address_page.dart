@@ -54,7 +54,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               removeItemBuilder: (context, animation, oldItem) {
                 return DeliveryItemBuildWidget(
                   onCallBack: ()  {
-                    deliveryAddressController.updateAllItems(isAnimated: true);
+                    deliveryAddressController.updateAllItems();
                   },
                   item: oldItem,
                   animation: animation,
@@ -66,7 +66,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               itemBuilder: (context, animation, item, index) {
                 return DeliveryItemBuildWidget(
                   onCallBack: () {
-                    deliveryAddressController.updateAllItems(isAnimated: true);
+                    deliveryAddressController.updateAllItems();
                   },
                   item: item,
                   animation: animation,

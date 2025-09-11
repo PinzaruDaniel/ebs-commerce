@@ -147,16 +147,11 @@ class DeliveryAddressController extends GetxController {
     return DeliveryType.values.firstWhere((e) => e.label == label);
   }
 
-  Future<void> updateAllItems({bool isAnimated=false}) async {
+  Future<void> updateAllItems() async {
     final deliveryItem = deliveryTypeVM.value;
 
     allItems.value = [deliveryItem];
     allItems.refresh();
-
-    if(isAnimated){
-      await Future.delayed(Duration(milliseconds: 100));
-    }
-
     final selectedType = fromLabel(deliveryItem.options.firstWhere((e) => e.isSelected).titleKey);
 
     if (selectedType == DeliveryType.pickup) {
