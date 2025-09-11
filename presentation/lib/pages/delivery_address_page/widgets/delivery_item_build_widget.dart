@@ -88,7 +88,7 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
         child: child.animate()
             .fadeOut(duration: 100.ms, curve: Curves.easeInOut)
             .slideY(begin: 0, end: 0.2, duration: 100.ms, curve: Curves.easeInOut)
-            .scaleXY(begin: 1, end: 0.85, duration: 100.ms, curve: Curves.easeInOut),
+            .scaleXY(begin: 1, end: 0.8, duration: 100.ms, curve: Curves.easeInOut),
       );
 
     }
@@ -105,7 +105,7 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
               begin: 0.1,
               end: 1,
               duration: 400.ms,
-              delay: (150 * widget.index).ms,
+              delay: (200 * widget.index).ms,
               curve: Curves.easeInOut,
             ),
       ),
