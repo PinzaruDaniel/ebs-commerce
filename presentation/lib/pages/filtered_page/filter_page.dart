@@ -22,7 +22,11 @@ class FilterPage extends StatefulWidget {
 
 class _FilterPageState extends State<FilterPage> {
 
-
+  @override
+  void dispose() {
+    filterController.resetFilters();
+    super.dispose();
+  }
   @override
   void initState() {
     super.initState();
