@@ -152,7 +152,7 @@ class DeliveryAddressController extends GetxController {
     while (allItems.length > 1) {
       final _ = allItems.removeLast();
       update();
-      await Future.delayed(const Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 100));
     }
   }
 

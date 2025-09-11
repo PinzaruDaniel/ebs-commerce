@@ -67,11 +67,12 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
           }
         },
       );
-      keyValue = 'selection_${viewModel.keyId}_${viewModel.title}';
+      keyValue = '${viewModel.keyId}_${viewModel.title}';
     } else if (widget.item is TextFieldViewModel) {
       final viewModel = widget.item as TextFieldViewModel;
       child = TextFieldWidget(itemViewModel: viewModel);
-      keyValue = 'text_field_${viewModel.keyId}';
+
+      keyValue = '${viewModel.keyId}';
     } else {
       child = const SizedBox.shrink();
       keyValue = 'unknown_${widget.index}';
@@ -98,13 +99,13 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
         key: ValueKey(keyValue),
         child: child
             .animate()
-            .fadeIn(duration: 300.ms, delay: (200 * widget.index).ms)
-            .slideY(begin: 1, end: 0.0, duration: 400.ms, delay: (200 * widget.index).ms, curve: Curves.easeInOut)
+            .fadeIn(duration: 400.ms, delay: (100+100 * widget.index).ms)
+            .slideY(begin: 1, end: 0.0, duration: 400.ms, delay: (150 * widget.index).ms, curve: Curves.easeInOut)
             .scaleXY(
               begin: 0.1,
               end: 1,
               duration: 400.ms,
-              delay: (200 * widget.index).ms,
+              delay: (150 * widget.index).ms,
               curve: Curves.easeInOut,
             ),
       ),
