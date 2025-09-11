@@ -169,8 +169,6 @@ class DeliveryAddressController extends GetxController {
     } else {
       _addDeliveryFields();
     }
-
-    allItems.refresh();
   }
 
   void _addPickupFields() {
