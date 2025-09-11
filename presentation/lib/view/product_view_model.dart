@@ -31,18 +31,3 @@ class ProductViewModel extends BaseViewModel {
     required this.category,
   });
 }
-
-ProductViewModel get dummyProduct => ProductViewModel(
-  id: -1,
-  title: 'dummy',
-  company: {},
-  imageUrl: [],
-  marks: [],
-  price: null,
-  stock: null,
-  discount: null,
-  discountedPrice: null,
-  description: '',
-  specification: [],
-  category: [],
-);

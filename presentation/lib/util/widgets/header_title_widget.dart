@@ -15,7 +15,7 @@ class HeaderTitleViewModel extends BaseViewModel {
   final bool showSeeAll;
   final ProductListType? type;
 
-  HeaderTitleViewModel({required this.title,  this.showDivider=true, this.showSeeAll=false, this.type});
+  HeaderTitleViewModel({required this.title,  this.showDivider=true, this.showSeeAll=false, this.type,});
 }
 
 class HeaderTitleWidget extends StatelessWidget {
