@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
 import '../../../util/resources/app_icons.dart';
@@ -41,13 +42,19 @@ class SelectionWidget extends StatelessWidget {
 
                 return InkWell(
                 splashColor: Colors.transparent,
-                onTap: () =>
+                onTap: () {
+                  if(itemViewModel.options.length>1) {
                     AppPopUp.showSelection(
                       title: itemViewModel.title,
                       options: itemViewModel.options,
                       selectedValue: itemViewModel.selectedValue,
                       onSelectionChanged: onSelectionChanged,
-                    ),
+                    );
+                  }
+                  else{
+
+                  }
+                },
                 child: Container(
                   padding:  EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                   decoration: BoxDecoration(

@@ -146,6 +146,14 @@ class DeliveryAddressController extends GetxController {
   DeliveryType fromLabel(String label) {
     return DeliveryType.values.firstWhere((e) => e.label == label);
   }
+  Future<void> removeAllItemsAnimated() async {
+    while (allItems.length > 1) {
+      final _ = allItems.removeLast();
+      update();
+      await Future.delayed(const Duration(milliseconds: 200));
+    }
+  }
+
 
   Future<void> updateAllItems() async {
     final deliveryItem = deliveryTypeVM.value;

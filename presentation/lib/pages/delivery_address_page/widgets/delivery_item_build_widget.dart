@@ -85,9 +85,9 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
       return FadeTransition(
         opacity: widget.animation,
         child: child.animate()
-            .fadeOut(duration: 400.ms, curve: Curves.easeInOut)
-            .slideY(begin: 0, end: 0.2, duration: 400.ms, curve: Curves.easeInOut)
-            .scaleXY(begin: 1, end: 0.85, duration: 400.ms, curve: Curves.easeInOut),
+            .fadeOut(duration: 100.ms, curve: Curves.easeInOut)
+            .slideY(begin: 0, end: 0.2, duration: 100.ms, curve: Curves.easeInOut)
+            .scaleXY(begin: 1, end: 0.85, duration: 100.ms, curve: Curves.easeInOut),
       );
 
     }
@@ -98,7 +98,7 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
         key: ValueKey(keyValue),
         child: child
             .animate()
-            .fadeIn(duration: 300.ms, delay: (300+200 * widget.index).ms)
+            .fadeIn(duration: 300.ms, delay: (200 * widget.index).ms)
             .slideY(begin: 1, end: 0.0, duration: 400.ms, delay: (200 * widget.index).ms, curve: Curves.easeInOut)
             .scaleXY(
               begin: 0.1,

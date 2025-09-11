@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_item_build_widget.dart';
+import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
+import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
+import 'package:presentation/util/widgets/text_field_widget.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
@@ -50,10 +53,21 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               items: items,
               padding: const EdgeInsets.only(bottom: 10),
               shrinkWrap: true,
-              areItemsTheSame: (a, b) => false,
+              areItemsTheSame: (a, b) {
+                if (a.runtimeType != b.runtimeType) return false;
+
+                if (a is SelectionViewModel && b is SelectionViewModel) return a.keyId == b.keyId;
+                if (a is TextFieldViewModel && b is TextFieldViewModel) return a.keyId == b.keyId;
+                if (a is DeliveryTypeViewModel && b is DeliveryTypeViewModel) return a.selected == b.selected;
+
+                return false;
+              },
+
               removeItemBuilder: (context, animation, oldItem) {
+
                 return DeliveryItemBuildWidget(
-                  onCallBack: ()  {
+                  onCallBack: ()  async {
+                    await deliveryAddressController.removeAllItemsAnimated();
                     deliveryAddressController.updateAllItems();
                   },
                   item: oldItem,
@@ -65,7 +79,8 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
 
               itemBuilder: (context, animation, item, index) {
                 return DeliveryItemBuildWidget(
-                  onCallBack: () {
+                  onCallBack: () async {
+                    await deliveryAddressController.removeAllItemsAnimated();
                     deliveryAddressController.updateAllItems();
                   },
                   item: item,
