@@ -34,6 +34,7 @@ class ContactInformationController extends GetxController {
       initialValue: existingUser?.email ?? '',
     ),
   ];
+  toUserViewModel();
 }
 
   UserViewModel? toUserViewModel() {

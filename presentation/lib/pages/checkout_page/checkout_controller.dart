@@ -101,7 +101,6 @@ class CheckoutController extends GetxController {
   Map<String, String> _buildDeliveryInfo(DeliveryAddressViewModel? model) {
 
     if (deliveryAddressController.fromLabel(model?.deliveryType ?? '') == DeliveryType.pickup) {
-      print(model?.pickupLocation);
       return {'Pickup Location: ${model?.pickupLocation ?? ''}': ''};
     }
     return {

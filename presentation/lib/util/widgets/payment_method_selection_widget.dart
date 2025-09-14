@@ -10,17 +10,26 @@ class PaymentMethodSelectionWidget extends StatelessWidget {
   final RxString selectedMethod;
   final Function(String) onSelected;
   final List<String> methods;
-  const PaymentMethodSelectionWidget({super.key, required this.selectedMethod, required this.onSelected, required this.methods});
 
+  const PaymentMethodSelectionWidget({
+    super.key,
+    required this.selectedMethod,
+    required this.onSelected,
+    required this.methods,
+  });
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(child: Text(AppTexts.choosePaymentMethod, style: AppTextsStyle.bold(size: 18))),
+        Center(
+          child: Text(
+            AppTexts.choosePaymentMethod,
+            style: AppTextsStyle.bold(size: 18),
+          ),
+        ),
         Obx(() {
           final selected = selectedMethod.value;
           return Padding(
@@ -36,11 +45,20 @@ class PaymentMethodSelectionWidget extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 2.0),
                     child: Container(
-                      padding: const EdgeInsets.only(left: 8.0, right: 36, top: 8, bottom: 8),
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 36,
+                        top: 8,
+                        bottom: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
+                        border: Border.all(
+                          color: isSelected
+                              ? AppColors.primary
+                              : Colors.grey.shade300,
+                        ),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
@@ -50,7 +68,9 @@ class PaymentMethodSelectionWidget extends StatelessWidget {
                             Text(
                               option,
                               style: AppTextsStyle.medium.copyWith(
-                                color: isSelected ? AppColors.primary : Colors.black,
+                                color: isSelected
+                                    ? AppColors.primary
+                                    : Colors.black,
                               ),
                             ),
                           ],
@@ -66,8 +86,7 @@ class PaymentMethodSelectionWidget extends StatelessWidget {
         BottomNavigationBarWidget(
           title: AppTexts.save,
           onTap: () {
-            checkoutController.initAllItems();
-            Navigator.pop(Get.context!);
+            Get.back();
           },
           showIcon: false,
         ),

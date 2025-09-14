@@ -97,9 +97,8 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         showIcon: false,
         onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
-            checkoutController.initAllItems();
             deliveryAddressController.onInit();
-            Navigator.pop(context);
+            Get.back();
           }
         },
         titleDialog: AppTexts.oops,

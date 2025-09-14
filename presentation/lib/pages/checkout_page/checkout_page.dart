@@ -23,10 +23,15 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+
+
+
   @override
   void initState() {
     super.initState();
-    checkoutController.initAllItems();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkoutController.initAllItems();
+    });
   }
 
   @override

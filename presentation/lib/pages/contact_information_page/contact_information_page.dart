@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
@@ -16,12 +18,12 @@ class ContactInformationPage extends StatefulWidget {
 
 class _ContactInformationPageState extends State<ContactInformationPage> {
   final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       contactInformationController.initAllItems();
-      contactInformationController.toUserViewModel();
     });
   }
 
@@ -37,35 +39,35 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Form(
-                key: _formKey,
-                child: Expanded(
-                  child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: contactInformationController.allItems.length,
-                    itemBuilder: (context, index) {
-                      var item = contactInformationController.allItems[index];
-                      if (item is TextFieldViewModel) {
-                        return TextFieldWidget(itemViewModel: item);
-                      }
-                      return null;
-                    },
-                  ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: contactInformationController.allItems.length,
+                  itemBuilder: (context, index) {
+                    var item = contactInformationController.allItems[index];
+                    if (item is TextFieldViewModel) {
+                      return TextFieldWidget(itemViewModel: item);
+                    }
+                    return  SizedBox.shrink();
+                  },
                 ),
               ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
         title: AppTexts.save,
         showIcon: false,
-        onTap: ()  {
+        onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
-            checkoutController.initAllItems();
             contactInformationController.initAllItems();
-            Navigator.pop(context);
+            checkoutController.initAllItems();
+            Get.back();
           }
         },
         titleDialog: AppTexts.oops,
