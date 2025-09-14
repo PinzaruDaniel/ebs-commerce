@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/base_view_model.dart';
-
-import '../../../util/enum/delivery_type.dart';
+import '../../../util/enum/enums.dart';
 
 class DeliveryOptionViewModel extends BaseViewModel {
   final String titleKey;

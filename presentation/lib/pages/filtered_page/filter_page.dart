@@ -9,7 +9,7 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/selected_category_button_widget.dart';
-import '../../util/enum/product_type.dart';
+import '../../util/enum/enums.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
 

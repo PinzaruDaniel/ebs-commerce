@@ -7,9 +7,9 @@ import 'package:domain/modules/delivery_address/use_cases/countries/get_countrie
 import 'package:domain/modules/delivery_address/use_cases/states/get_states_use_case.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
+import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/mapper/cities_response_entity_mapper.dart';
 import 'package:presentation/util/mapper/countries_entity_mapper.dart';
-import 'package:presentation/util/mapper/delivery_type_mapper.dart';
 import 'package:presentation/util/mapper/states_entity_mapper.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -17,7 +17,7 @@ import 'package:presentation/view/country_view_model.dart';
 import 'package:presentation/view/state_view_model.dart';
 import 'package:presentation/view/city_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
-import '../../util/enum/delivery_type.dart';
+import '../../util/enum/enums.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 
 class DeliveryAddressController extends GetxController {

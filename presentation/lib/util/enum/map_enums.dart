@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import '../enum/delivery_type.dart';
+import '../resources/app_texts.dart';
+import 'enums.dart';
 
 extension DeliveryTypeMapper on DeliveryType {
   String get label {
@@ -12,6 +13,9 @@ extension DeliveryTypeMapper on DeliveryType {
         return 'DHL';
     }
   }
+  DeliveryType fromLabel(String label) {
+    return DeliveryType.values.firstWhere((e) => e.label == label);
+  }
 
   Image? get image {
     switch (this) {
@@ -21,6 +25,21 @@ extension DeliveryTypeMapper on DeliveryType {
         return Image.asset('assets/icons/fan_courier.png');
       case DeliveryType.dhl:
         return Image.asset('assets/icons/dhl.png');
+    }
+  }
+}
+
+extension MapTextProductType on ProductListType {
+  String? get title {
+    switch (this) {
+      case ProductListType.newProducts:
+        return AppTexts.newProducts;
+      case ProductListType.saleProducts:
+        return AppTexts.saleProducts;
+      case ProductListType.allProducts:
+        return AppTexts.allProducts;
+      default:
+        return null;
     }
   }
 }

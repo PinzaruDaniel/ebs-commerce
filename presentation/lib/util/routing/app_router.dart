@@ -11,7 +11,7 @@ import '../../pages/product_detail_page/product_detail_page.dart';
 import '../../pages/shopping_cart_page/shopping_cart_page.dart';
 import '../../view/cart_products_view_model.dart';
 import '../../view/product_view_model.dart';
-import '../enum/product_type.dart';
+import '../enum/enums.dart';
 import 'package:animations/animations.dart';
 
 Route<T> createSharedAxisRoute<T>({required Widget page, SharedAxisTransitionType? transitionType}) {

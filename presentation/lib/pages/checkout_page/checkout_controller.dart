@@ -11,8 +11,7 @@ import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
 
 import '../../controllers/controller_imports.dart';
-import '../../util/enum/delivery_type.dart';
-import '../../util/resources/app_colors.dart';
+import '../../util/enum/enums.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/routing/app_router.dart';
 import '../../util/widgets/text_field_widget.dart';

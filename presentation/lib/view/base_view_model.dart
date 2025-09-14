@@ -1,6 +1,7 @@
 import 'package:presentation/view/product_view_model.dart';
 
-import '../util/enum/product_type.dart';
+import '../util/enum/enums.dart';
+
 
 abstract class BaseViewModel {}
 

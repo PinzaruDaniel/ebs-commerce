@@ -6,7 +6,8 @@ import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/open_container_animation_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
-import '../enum/product_type.dart';
+import '../enum/enums.dart';
+
 
 
 class HeaderTitleViewModel extends BaseViewModel {

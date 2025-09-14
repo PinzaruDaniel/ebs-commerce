@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import '../../controllers/controller_imports.dart';
-import '../../util/enum/product_type.dart';
+import '../../util/enum/enums.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../view/product_view_model.dart';
 
