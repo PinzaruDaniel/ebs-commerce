@@ -13,6 +13,8 @@ import '../../util/enum/enums.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
 
+import '../../util/widgets/open_container_animation_widget.dart';
+
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
 
@@ -33,7 +35,6 @@ class _FilterPageState extends State<FilterPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       filterController.getFilteredProducts(page: 1);
     });
-    filterController.filteredProducts;
   }
 
   @override
@@ -113,24 +114,25 @@ class _FilterPageState extends State<FilterPage> {
           final hasProducts = filterController.filteredProducts.isNotEmpty;
           final filteredCount = filterController.filteredCount.value;
 
-          return BottomNavigationBarWidget(
-            title: isLoading
-                ? AppTexts.loading
-                : (filteredCount > 0
-                ? '${AppTexts.showResults}($filteredCount)'
-                : AppTexts.noProductsToShow),
-            showIcon: false,
-            addToCart: hasProducts,
-            onTap: isLoading || !hasProducts
-                ? null
-                : () {
-              AppRouter.openProductsDisplayPage(
-                type: ProductListType.filteredProducts,
-                title: AppTexts.filteredProducts,
+          return OpenContainerAnimation(
+            openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
+              type: ProductListType.filteredProducts,
+              title: AppTexts.filteredProducts,
+            ),
+            closedBuilder: (context, openContainer) {
+              return BottomNavigationBarWidget(
+                title: isLoading
+                    ? AppTexts.loading
+                    : (filteredCount > 0
+                    ? '${AppTexts.showResults}($filteredCount)'
+                    : AppTexts.noProductsToShow),
+                showIcon: false,
+                addToCart: hasProducts,
+                onTap: isLoading || !hasProducts ? null : openContainer,
+                titleDialog: AppTexts.oops,
+                contentDialog: AppTexts.noProductsToShow,
               );
             },
-            titleDialog: AppTexts.oops,
-            contentDialog: AppTexts.noProductsToShow,
           );
         })
 
