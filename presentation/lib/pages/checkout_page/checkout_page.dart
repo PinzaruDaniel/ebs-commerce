@@ -14,6 +14,7 @@ import '../../util/routing/app_pop_up.dart';
 import '../../util/routing/app_router.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
+import '../../util/widgets/text_field_widget.dart';
 
 class CheckoutPage extends StatefulWidget {
   final List<CartViewModel> items;
@@ -66,21 +67,47 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     return CheckoutInfoContainerWidget(
                       item: item,
                       onTap: () {
-                        if(item.keyId== 'user_contact_info'){
-                          print('tapped');
+                        if (item.keyId == 'user_contact_info') {
                           AppRouter.openContactInformationPage();
                         }
 
-                        if(item.keyId=='payment_method') {
-                          AppPopUp.paymentMethod(
-                          selectedMethod: '',
-                          onSelected: (value) {
-                            checkoutController.selectedPaymentMethod = value;
-                            checkoutController.initAllItems();
-                            Navigator.pop(Get.context!);
-                          },
-                        );
+                        else if (item.keyId == 'user_delivery_info') {
+                          AppRouter.openDeliveryAddressPage();
                         }
+                        else if (item.keyId == 'payment_method') {
+                          AppPopUp.paymentMethod(
+                            selectedMethod: '',
+                            onSelected: (value) {
+                              checkoutController.selectedPaymentMethod = value;
+                              checkoutController.initAllItems();
+                              Navigator.pop(Get.context!);
+                            },
+                          );
+                        }
+
+                       /* else if(item.keyId=='voucher_code'){
+                          final textViewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
+                          AppPopUp.voucherCode(
+                            textViewModel: textViewModel,
+                            onTap: () {
+                              final enteredCode = textViewModel.placeholder.trim().toUpperCase();
+
+                              final isValid = promoCodes.contains(enteredCode);
+                              if (isValid) {
+                                voucherCode.value = enteredCode;
+                                initAllItems();
+                                Get.back();
+                              }
+                              Future.delayed( Duration(milliseconds: 200), () {
+                                showFailureSnackBar(
+                                  title: isValid ? AppTexts.success : AppTexts.invalidCode,
+                                  fallbackMessage: isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
+                                  isError: !isValid,
+                                );
+                              });
+                            },
+                          );
+                        }*/
                       },
                       onRemoveTap: () {},
                     );
@@ -102,9 +129,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         return BottomNavigationBarWidget(
           titleDialog: AppTexts.oops,
           contentDialog: AppTexts.enterAllData,
-          title: hasSelectedPayment && hasCompleteInfo
-              ? AppTexts.createOrder
-              : AppTexts.enterAllData,
+          title: hasSelectedPayment && hasCompleteInfo ? AppTexts.createOrder : AppTexts.enterAllData,
           addToCart: hasSelectedPayment && hasCompleteInfo,
           onTap: () {
             AwesomeDialog(

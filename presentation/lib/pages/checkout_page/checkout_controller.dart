@@ -132,26 +132,6 @@ class CheckoutController extends GetxController {
   }
 
   void _voucherTap() {
-    final textViewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
-    AppPopUp.voucherCode(
-      textViewModel: textViewModel,
-      onTap: () {
-        final enteredCode = textViewModel.placeholder.trim().toUpperCase();
 
-        final isValid = promoCodes.contains(enteredCode);
-        if (isValid) {
-          voucherCode.value = enteredCode;
-          initAllItems();
-          Get.back();
-        }
-        Future.delayed( Duration(milliseconds: 200), () {
-          showFailureSnackBar(
-            title: isValid ? AppTexts.success : AppTexts.invalidCode,
-            fallbackMessage: isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
-            isError: !isValid,
-          );
-        });
-      },
-    );
   }
 }

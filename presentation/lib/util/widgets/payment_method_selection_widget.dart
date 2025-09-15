@@ -8,8 +8,6 @@ import 'bottom_navigation_bar_widget.dart';
 class PaymentMethodSelectionWidget extends StatelessWidget {
   final String selectedMethod;
   final Function(String) onSelected;
-
-
   final List<String> methods;
 
   const PaymentMethodSelectionWidget({
@@ -21,6 +19,7 @@ class PaymentMethodSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selected = selectedMethod;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,9 +30,7 @@ class PaymentMethodSelectionWidget extends StatelessWidget {
             style: AppTextsStyle.bold(size: 18),
           ),
         ),
-        Obx(() {
-          final selected = selectedMethod;
-          return Padding(
+           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40),
             child: Column(
               children: methods.map((option) {
@@ -82,8 +79,7 @@ class PaymentMethodSelectionWidget extends StatelessWidget {
                 );
               }).toList(),
             ),
-          );
-        }),
+          ),
         BottomNavigationBarWidget(
           title: AppTexts.save,
           onTap: () {
