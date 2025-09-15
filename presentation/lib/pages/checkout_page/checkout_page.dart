@@ -10,6 +10,8 @@ import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
+import '../../util/routing/app_pop_up.dart';
+import '../../util/routing/app_router.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 
@@ -23,9 +25,6 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
-
-
-
   @override
   void initState() {
     super.initState();
@@ -64,7 +63,27 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     return CheckoutProductViewWidget(item: item);
                   }
                   if (item is CheckoutInfoContainerViewModel) {
-                    return CheckoutInfoContainerWidget(item: item);
+                    return CheckoutInfoContainerWidget(
+                      item: item,
+                      onTap: () {
+                        if(item.keyId== 'user_contact_info'){
+                          print('tapped');
+                          AppRouter.openContactInformationPage();
+                        }
+
+                        if(item.keyId=='payment_method') {
+                          AppPopUp.paymentMethod(
+                          selectedMethod: '',
+                          onSelected: (value) {
+                            checkoutController.selectedPaymentMethod = value;
+                            checkoutController.initAllItems();
+                            Navigator.pop(Get.context!);
+                          },
+                        );
+                        }
+                      },
+                      onRemoveTap: () {},
+                    );
                   }
                   if (item is OrderSummaryViewModel) {
                     return OrderSummaryWidget();
@@ -76,14 +95,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
           ),
         ),
       ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBarWidget(
+      bottomNavigationBar: Obx(() {
+        final hasSelectedPayment = checkoutController.selectedPaymentMethod.isNotEmpty;
+        final hasCompleteInfo = !checkoutController.hasIncompleteUserInfo();
+
+        return BottomNavigationBarWidget(
           titleDialog: AppTexts.oops,
           contentDialog: AppTexts.enterAllData,
-          title: checkoutController.selectedPaymentMethod.isNotEmpty && !checkoutController.hasIncompleteUserInfo()
+          title: hasSelectedPayment && hasCompleteInfo
               ? AppTexts.createOrder
               : AppTexts.enterAllData,
-          addToCart: checkoutController.selectedPaymentMethod.isNotEmpty && !checkoutController.hasIncompleteUserInfo(),
+          addToCart: hasSelectedPayment && hasCompleteInfo,
           onTap: () {
             AwesomeDialog(
               context: context,
@@ -96,8 +118,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ).show();
           },
           showIcon: false,
-        ),
-      ),
+        );
+      }),
     );
   }
 }

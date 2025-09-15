@@ -44,7 +44,7 @@ class AppPopUp {
     );
   }
 
-  static Future<void> paymentMethod({required RxString selectedMethod, required Function(String) onSelected}) async {
+  static Future<void> paymentMethod({required String selectedMethod, required Function(String) onSelected}) async {
     if (Get.context == null) return;
 
     final methods = ['PayPal', 'Plata Numerar'];

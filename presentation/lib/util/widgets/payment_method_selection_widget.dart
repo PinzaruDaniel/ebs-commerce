@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controllers/controller_imports.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_text_styles.dart';
 import '../resources/app_texts.dart';
 import 'bottom_navigation_bar_widget.dart';
 
 class PaymentMethodSelectionWidget extends StatelessWidget {
-  final RxString selectedMethod;
+  final String selectedMethod;
   final Function(String) onSelected;
+
+
   final List<String> methods;
 
   const PaymentMethodSelectionWidget({
@@ -31,7 +32,7 @@ class PaymentMethodSelectionWidget extends StatelessWidget {
           ),
         ),
         Obx(() {
-          final selected = selectedMethod.value;
+          final selected = selectedMethod;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40),
             child: Column(

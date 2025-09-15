@@ -7,6 +7,8 @@ import 'bottom_navigation_bar_widget.dart';
 
 class VoucherCodeInputWidget extends StatelessWidget {
   final Function()? onTap;
+
+  //todo init value instead of model
   final TextFieldViewModel textViewModel;
   const VoucherCodeInputWidget({super.key, required this.onTap, required this.textViewModel});
 

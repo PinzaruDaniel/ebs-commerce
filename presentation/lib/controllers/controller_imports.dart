@@ -9,8 +9,9 @@ import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'main_app_controller.dart';
 
 final MainAppController mainAppController = Get.find();
-final CheckoutController checkoutController = Get.find();
 final CartController cartController =Get.find();
+
+final CheckoutController checkoutController = Get.find();
 final DeliveryAddressController deliveryAddressController = Get.find();
 final ContactInformationController contactInformationController=Get.find();
 final CategoryController categoryController = Get.find();

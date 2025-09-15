@@ -5,20 +5,19 @@ import 'package:presentation/util/resources/app_text_styles.dart';
 import '../../../util/resources/app_colors.dart';
 
 class CheckoutInfoContainerViewModel extends BaseViewModel {
+  final String keyId;
   final Map<String, dynamic>? infoItems;
   final String? placeholder;
   final String? titleKey;
-  final VoidCallback? onTap;
-  final VoidCallback? onRemoveTap;
   final bool showRemoveButton;
   final bool isPromoValid;
 
   CheckoutInfoContainerViewModel({
+    required this.keyId,
     this.infoItems,
     this.titleKey,
     this.placeholder,
-    this.onTap,
-    this.onRemoveTap,
+
     this.showRemoveButton = false,
     this.isPromoValid = false,
   });
@@ -27,7 +26,10 @@ class CheckoutInfoContainerViewModel extends BaseViewModel {
 class CheckoutInfoContainerWidget extends StatelessWidget {
   final CheckoutInfoContainerViewModel item;
 
-  const CheckoutInfoContainerWidget({super.key, required this.item});
+  final Function()? onTap;
+  final Function()? onRemoveTap;
+
+  const CheckoutInfoContainerWidget({super.key, required this.item, this.onTap, this.onRemoveTap});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                 child: InkWell(
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
-                  onTap: item.onTap,
+                  onTap: () => onTap?.call(),
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade300),
@@ -101,7 +103,7 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                             children: [
                               if (item.showRemoveButton)
                                 InkWell(
-                                  onTap: item.onRemoveTap,
+                                  onTap: onRemoveTap,
                                   child: Padding(
                                     padding: const EdgeInsets.all(2.0),
                                     child: Text(
