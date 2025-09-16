@@ -109,8 +109,4 @@ class CheckoutController extends GetxController {
     summary.total.value = subtotal + summary.shippingFee.value + summary.adminFee - summary.voucherDiscount.value;
     return summary;
   }
-
-  void _voucherTap() {
-
-  }
 }

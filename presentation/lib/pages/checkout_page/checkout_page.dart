@@ -17,7 +17,6 @@ import '../../util/routing/app_router.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
-import '../../util/widgets/text_field_widget.dart';
 
 class CheckoutPage extends StatefulWidget {
   final List<CartViewModel> items;

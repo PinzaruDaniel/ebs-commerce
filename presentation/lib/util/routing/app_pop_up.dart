@@ -7,7 +7,6 @@ import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_t
 import '../../view/product_view_model.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_texts.dart';
-import '../widgets/text_field_widget.dart';
 
 class AppPopUp {
   static Future<void> showCustomBottomSheet({
