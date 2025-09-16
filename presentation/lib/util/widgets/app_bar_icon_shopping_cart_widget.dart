@@ -34,7 +34,7 @@ class AppBarIconShoppingCartWidget extends StatelessWidget {
             icon: AppIcons.cartIcon,
           ),
           Obx(
-            () => cartController.cartItems.isEmpty
+            () => mainAppController.cartItems.isEmpty
                 ? const SizedBox()
                 : Positioned(
                     top: 12,
@@ -43,7 +43,7 @@ class AppBarIconShoppingCartWidget extends StatelessWidget {
                       radius: 8,
                       backgroundColor: AppColors.red,
                       child: Text(
-                        '${cartController.cartItems.length}',
+                        '${mainAppController.cartItems.length}',
                         style: AppTextsStyle.bold(size: 9, color: Colors.white),
                       ),
                     ),

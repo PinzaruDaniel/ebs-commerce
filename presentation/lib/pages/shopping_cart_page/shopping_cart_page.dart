@@ -12,6 +12,7 @@ import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
+import 'cart_controller.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   const ShoppingCartPage({super.key});
@@ -21,9 +22,12 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
+  CartController get cartController=>Get.find();
+
   @override
   void initState() {
     super.initState();
+    Get.put(CartController());
   }
 
   @override

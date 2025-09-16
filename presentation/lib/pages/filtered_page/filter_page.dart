@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/category_page/category_controller.dart';
 import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/pages/filtered_page/widgets/add_to_category_button_widget.dart';

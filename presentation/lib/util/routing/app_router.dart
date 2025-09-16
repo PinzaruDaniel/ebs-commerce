@@ -86,9 +86,9 @@ class AppRouter {
     }
   }
 
-  static void openDeliveryAddressPage() {
+  static void openDeliveryAddressPage({required Function onSave}) {
     if (Get.context != null) {
-      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => DeliveryAddressPage()));
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => DeliveryAddressPage(onSave: onSave)));
     }
   }
 }

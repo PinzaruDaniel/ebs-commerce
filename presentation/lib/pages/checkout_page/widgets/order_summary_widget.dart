@@ -5,7 +5,6 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/base_view_model.dart';
 
-import '../../../controllers/controller_imports.dart';
 
 class OrderSummaryViewModel extends BaseViewModel {
   final RxDouble subtotal = RxDouble(0.0);

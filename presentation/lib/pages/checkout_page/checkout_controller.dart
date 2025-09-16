@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
-import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -8,30 +7,43 @@ import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
 import '../../util/enum/enums.dart';
 import '../../util/resources/app_texts.dart';
-import '../contact_information_page/contact_information_controller.dart';
-import '../delivery_address_page/delivery_address_controller.dart';
+import '../../view/cart_products_view_model.dart';
 
 class CheckoutController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
-  String selectedPaymentMethod = '';
+  RxString selectedPaymentMethod = ''.obs;
   RxString voucherCode = RxString('');
+  RxList<CartViewModel> productItems=RxList([]);
 
-  CartController get cartController => Get.find();
 
-  bool hasIncompleteUserInfo() {/*
-    final user = contactInformationController.toUserViewModel();
+  void initProductItems(List<CartViewModel> productItems){
+    this.productItems.value=productItems;
+    this.productItems.refresh();
+    allItems.refresh();
+
+  }
+
+
+  void setUserModel(UserViewModel? userVM){
+    userModel.value = userVM;
+
+  }
+  void setDeliveryModel(DeliveryAddressViewModel deliveryVM){
+    deliveryModel.value=deliveryVM;
+  }
+
+  bool hasIncompleteUserInfo() {
+    final user = userModel.value;
     if (user == null) return true;
-    userModel.value = user;
-    return user.surname.isEmpty || user.number.isEmpty || user.name.isEmpty || user.email.isEmpty;*/
-    return true;
+    return user.surname.isEmpty || user.number.isEmpty || user.name.isEmpty || user.email.isEmpty;
   }
 
   void initAllItems() {
     allItems.value = [
       HeaderTitleViewModel(title: AppTexts.orderSummary),
-      ...cartController.selectedItems,
+      ...productItems.value,
 
       HeaderTitleViewModel(title: AppTexts.contactInformation),
       CheckoutInfoContainerViewModel(
@@ -44,14 +56,14 @@ class CheckoutController extends GetxController {
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.deliveryAddressInfo,
         titleKey: '${deliveryModel.value?.deliveryType ?? ''}',
-        infoItems: _buildDeliveryInfo(deliveryModel.value),
+        infoItems: buildDeliveryInfo(deliveryModel.value),
       ),
 
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.paymentMethod,
         placeholder: AppTexts.choosePaymentMethod,
-        titleKey: selectedPaymentMethod,
+        titleKey: selectedPaymentMethod.value,
         infoItems: {},
       ),
 
@@ -68,9 +80,8 @@ class CheckoutController extends GetxController {
 
     allItems.refresh();
   }
-
   double _calculateSubtotal() {
-    return cartController.selectedItems.fold(0.0, (sum, item) {
+    return productItems.value.fold(0.0, (sum, item) {
       final priceString = item.discountedPrice ?? item.price;
       final price = double.tryParse(priceString ?? '') ?? 0.0;
       return sum + price * item.quantity;
@@ -102,20 +113,20 @@ class CheckoutController extends GetxController {
     allItems.refresh();
   }
 
-  Map<String, String> _buildDeliveryInfo(DeliveryAddressViewModel? model) {
-    //deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true
+  Map<String, String> buildDeliveryInfo(DeliveryAddressViewModel? model) {
 
     var isPickUpType = model?.deliveryType == DeliveryType.pickup;
     if (isPickUpType) {
-    return {'Pickup Location: ${model?.pickupLocation ?? ''}': ''};
-  }
-    return {
+    return{
       'Country: ${model?.country ?? ''}': '',
       'Region: ${model?.region ?? ''}': '',
       'City: ${model?.city ?? ''}': '',
       'Postal Code: ${model?.postalCode ?? ''}': '',
       'Street: ${model?.address ?? ''}': '',
     };
+  }
+
+    return {'Pickup Location: ${model?.pickupLocation ?? model?.pickupLocation.}': ''};
   }
 
   Map<String, String> _buildUserInfo(UserViewModel? model) {

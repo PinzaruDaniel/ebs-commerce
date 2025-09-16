@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
+import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_item_build_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
-import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
@@ -15,13 +15,16 @@ import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../view/base_view_model.dart';
 
 class DeliveryAddressPage extends StatefulWidget {
-  const DeliveryAddressPage({super.key});
+  final Function onSave;
+
+  const DeliveryAddressPage({super.key, required this.onSave});
 
   @override
   State<DeliveryAddressPage> createState() => _DeliveryAddressPageState();
 }
 
 class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
+  CheckoutController get checkoutController=>Get.find();
   DeliveryAddressController get deliveryAddressController=>Get.find();
   final _formKey = GlobalKey<FormState>();
 
@@ -101,6 +104,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
             deliveryAddressController.onInit();
+            widget.onSave.call(deliveryAddressController.toDeliveryAddressViewModel());
             Get.back();
           }
         },

@@ -9,8 +9,8 @@ import 'package:presentation/util/enum/enums.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
+import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
-import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
@@ -30,12 +30,14 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
-  CheckoutController get checkoutController=>Get.find();
+  CheckoutController get checkoutController => Get.find();
+
   @override
   void initState() {
     super.initState();
     Get.put(CheckoutController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkoutController.initProductItems(widget.items);
       checkoutController.initAllItems();
     });
   }
@@ -75,35 +77,43 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       onTap: () {
                         if (item.keyId == CheckoutWidgetsType.userContactInfo) {
                           AppRouter.openContactInformationPage(
-                              onSave: (UserViewModel? userVM) {
-                                if (userVM == null) {
-                                  print('userVM is null');
-                                  return;
-                                }
-                                checkoutController.userModel.value = userVM;
-                                print('Name: ${userVM.name}');
-                                print('Surname: ${userVM.surname}');
-                                print('Number: ${userVM.number}');
-                                print('Email: ${userVM.email}');
-                                final updatedInfo = {
-                                  if (userVM.number.isNotEmpty) userVM.number: '',
-                                  if (userVM.email.isNotEmpty) userVM.email: '',
-                                };
-
-                                checkoutController.updateCheckoutInfoItem(
-                                  keyId: CheckoutWidgetsType.userContactInfo,
-                                  titleKey: '${userVM.name} ${userVM.surname}',
-                                  infoItems: updatedInfo,
-                                );
+                            onSave: (UserViewModel? userVM) {
+                              if (userVM == null) {
+                                print('userVM is null');
+                                return;
                               }
+                              checkoutController.userModel.value = userVM;
+                              print('Name: ${userVM.name}');
+                              print('Surname: ${userVM.surname}');
+                              print('Number: ${userVM.number}');
+                              print('Email: ${userVM.email}');
+                              final updatedInfo = {
+                                if (userVM.number.isNotEmpty) userVM.number: '',
+                                if (userVM.email.isNotEmpty) userVM.email: '',
+                              };
+
+                              checkoutController.updateCheckoutInfoItem(
+                                keyId: CheckoutWidgetsType.userContactInfo,
+                                titleKey: '${userVM.name} ${userVM.surname}',
+                                infoItems: updatedInfo,
+                              );
+                            },
                           );
                         } else if (item.keyId == CheckoutWidgetsType.deliveryAddressInfo) {
-                          AppRouter.openDeliveryAddressPage();
+                          AppRouter.openDeliveryAddressPage(
+                            onSave: (DeliveryAddressViewModel? deliveryVM) {
+                              checkoutController.updateCheckoutInfoItem(
+                                keyId: CheckoutWidgetsType.deliveryAddressInfo,
+                                titleKey: '${deliveryVM?.deliveryType ?? ''}',
+                                infoItems: checkoutController.buildDeliveryInfo(deliveryVM),
+                              );
+                            },
+                          );
                         } else if (item.keyId == CheckoutWidgetsType.paymentMethod) {
                           AppPopUp.paymentMethod(
                             selectedMethod: '',
                             onSelected: (value) {
-                              checkoutController.selectedPaymentMethod = value;
+                              checkoutController.selectedPaymentMethod.value = value;
                               checkoutController.initAllItems();
                               Navigator.pop(Get.context!);
                             },
@@ -143,7 +153,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ),
       ),
       bottomNavigationBar: Obx(() {
-        final hasSelectedPayment = checkoutController.selectedPaymentMethod.isNotEmpty;
+        final hasSelectedPayment = checkoutController.selectedPaymentMethod.value.isNotEmpty;
         final hasCompleteInfo = !checkoutController.hasIncompleteUserInfo();
 
         return BottomNavigationBarWidget(
