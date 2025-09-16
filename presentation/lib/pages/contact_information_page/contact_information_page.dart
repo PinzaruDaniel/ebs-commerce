@@ -10,7 +10,9 @@ import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/text_field_widget.dart';
 
 class ContactInformationPage extends StatefulWidget {
-  const ContactInformationPage({super.key});
+  const ContactInformationPage({super.key, required this.onSave});
+
+  final Function onSave;
 
   @override
   State<ContactInformationPage> createState() => _ContactInformationPageState();
@@ -65,8 +67,9 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         showIcon: false,
         onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
-            contactInformationController.initAllItems();
-            checkoutController.initAllItems();
+            //contactInformationController.initAllItems();
+            //checkoutController.initAllItems();
+            widget.onSave.call(contactInformationController.toUserViewModel());
             Get.back();
           }
         },

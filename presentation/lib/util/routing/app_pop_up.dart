@@ -9,7 +9,6 @@ import '../resources/app_colors.dart';
 import '../resources/app_texts.dart';
 import '../widgets/text_field_widget.dart';
 
-
 class AppPopUp {
   static Future<void> showCustomBottomSheet({
     required Widget child,
@@ -54,11 +53,11 @@ class AppPopUp {
     );
   }
 
-  static Future<void> voucherCode({required Function()? onTap, required TextFieldViewModel textViewModel}) async {
+  static Future<void> voucherCode({required String initialValue, required Function(String) onSubmit}) async {
     if (Get.context != null) {
       await showCustomBottomSheet(
         isScrollControlled: true,
-        child: VoucherCodeInputWidget(onTap: onTap, textViewModel: textViewModel),
+        child: VoucherCodeInputWidget(initialValue: initialValue, onSubmit: onSubmit),
       );
     }
   }
@@ -81,36 +80,34 @@ class AppPopUp {
       );
     }
   }
+
   static Future<bool> showConfirmationDialog({
     required BuildContext context,
     String? title,
     String? content,
     String confirmText = AppTexts.ok,
     String cancelText = 'Cancel',
-
   }) async {
     return await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: Text(title ?? 'Confirm'),
-        content: Text(content ?? 'Are you sure?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: Text(cancelText),
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: Colors.white,
+            title: Text(title ?? 'Confirm'),
+            content: Text(content ?? 'Are you sure?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: Text(cancelText),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(confirmText, style: TextStyle(color: AppColors.primary)),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(
-              confirmText,
-              style: TextStyle(color: AppColors.primary),
-            ),
-          ),
-        ],
-      ),
-    ) ?? false;
+        ) ??
+        false;
   }
 }

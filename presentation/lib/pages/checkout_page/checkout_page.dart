@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:common/constants/promocode_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
@@ -6,6 +7,7 @@ import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.da
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
+import 'package:presentation/view/user_view_model.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
@@ -14,6 +16,7 @@ import '../../util/routing/app_pop_up.dart';
 import '../../util/routing/app_router.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
+import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../util/widgets/text_field_widget.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -68,13 +71,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       item: item,
                       onTap: () {
                         if (item.keyId == 'user_contact_info') {
-                          AppRouter.openContactInformationPage();
-                        }
-
-                        else if (item.keyId == 'user_delivery_info') {
+                          //enum
+                          AppRouter.openContactInformationPage(
+                            onSave: (UserViewModel? userVM) {
+                              //update this section with data from info page
+                            },
+                          );
+                        } else if (item.keyId == 'user_delivery_info') {
                           AppRouter.openDeliveryAddressPage();
-                        }
-                        else if (item.keyId == 'payment_method') {
+                        } else if (item.keyId == 'payment_method') {
                           AppPopUp.paymentMethod(
                             selectedMethod: '',
                             onSelected: (value) {
@@ -83,22 +88,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               Navigator.pop(Get.context!);
                             },
                           );
-                        }
-
-                       /* else if(item.keyId=='voucher_code'){
-                          final textViewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
+                        } else if (item.keyId == 'voucher_code') {
                           AppPopUp.voucherCode(
-                            textViewModel: textViewModel,
-                            onTap: () {
-                              final enteredCode = textViewModel.placeholder.trim().toUpperCase();
-
+                            initialValue: checkoutController.voucherCode.value,
+                            onSubmit: (enteredCode) {
                               final isValid = promoCodes.contains(enteredCode);
                               if (isValid) {
-                                voucherCode.value = enteredCode;
-                                initAllItems();
+                                checkoutController.voucherCode.value = enteredCode;
+                                checkoutController.initAllItems();
                                 Get.back();
                               }
-                              Future.delayed( Duration(milliseconds: 200), () {
+                              Future.delayed(Duration(milliseconds: 200), () {
                                 showFailureSnackBar(
                                   title: isValid ? AppTexts.success : AppTexts.invalidCode,
                                   fallbackMessage: isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
@@ -107,7 +107,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               });
                             },
                           );
-                        }*/
+                        }
+
                       },
                       onRemoveTap: () {},
                     );

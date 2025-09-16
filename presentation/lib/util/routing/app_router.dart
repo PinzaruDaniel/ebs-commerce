@@ -80,9 +80,9 @@ class AppRouter {
     }
   }
 
-  static void openContactInformationPage() {
+  static void openContactInformationPage({required Function onSave}) {
     if (Get.context != null) {
-      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ContactInformationPage()));
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ContactInformationPage(onSave: onSave,)));
     }
   }
 
