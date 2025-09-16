@@ -11,11 +11,11 @@ class RootBinding extends Bindings {
   @override
   Future<void> dependencies() async {
     await Get.putAsync<MainAppController>(() async => MainAppController(), permanent: true);
-    await Get.putAsync<CheckoutController>(() async => CheckoutController(), permanent: true);
+   // await Get.putAsync<CheckoutController>(() async => CheckoutController(), permanent: true);
     await Get.putAsync<CartController>(() async => CartController());
-    await Get.putAsync<DeliveryAddressController>(() async => DeliveryAddressController());
-    await Get.putAsync<CategoryController>(() async => CategoryController());
+    //await Get.putAsync<DeliveryAddressController>(() async => DeliveryAddressController());
+  /*  await Get.putAsync<CategoryController>(() async => CategoryController());
     await Get.putAsync<ContactInformationController>(() async => ContactInformationController());
-    await Get.putAsync<FilterController>(() async => FilterController());
+    await Get.putAsync<FilterController>(() async => FilterController());*/
   }
 }

@@ -213,7 +213,7 @@ class DeliveryAddressController extends GetxController {
 
     if (type == DeliveryType.pickup) {
       final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? pickupLocations.first;
-      final model = DeliveryAddressViewModel(deliveryType: type.label, pickupLocation: pickupLocation);
+      final model = DeliveryAddressViewModel(deliveryType: type, pickupLocation: pickupLocation);
       addressVM.value = model;
       return model;
     } else {
@@ -227,13 +227,13 @@ class DeliveryAddressController extends GetxController {
       final areFieldsEmpty = country.isEmpty || region.isEmpty || city.isEmpty || postalCode.isEmpty || address.isEmpty;
       if (areFieldsEmpty) {
         final pickupLocation = pickupLocations.first;
-        final model = DeliveryAddressViewModel(deliveryType: DeliveryType.pickup.label, pickupLocation: pickupLocation);
+        final model = DeliveryAddressViewModel(deliveryType: DeliveryType.pickup, pickupLocation: pickupLocation);
         addressVM.value = model;
         return model;
       }
 
       final model = DeliveryAddressViewModel(
-        deliveryType: type.label,
+        deliveryType: type,
         country: country,
         region: region,
         city: city,

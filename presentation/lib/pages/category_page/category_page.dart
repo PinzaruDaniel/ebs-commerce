@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/pages/category_page/category_controller.dart';
 import 'package:presentation/pages/category_page/widgets/checkbox_category_widget.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
@@ -20,9 +20,11 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  CategoryController get categoryController=>Get.find();
   @override
   void initState() {
     super.initState();
+    Get.put(CategoryController);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       categoryController.getCategories();
     });

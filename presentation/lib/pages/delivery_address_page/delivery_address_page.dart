@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
+import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_item_build_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
@@ -21,11 +22,13 @@ class DeliveryAddressPage extends StatefulWidget {
 }
 
 class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
+  DeliveryAddressController get deliveryAddressController=>Get.find();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+    Get.put(DeliveryAddressController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       deliveryAddressController.initItems();
     });

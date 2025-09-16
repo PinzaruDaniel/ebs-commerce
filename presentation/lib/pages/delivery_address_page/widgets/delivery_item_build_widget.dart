@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list_2/transitions.dart';
-import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
@@ -28,6 +29,7 @@ class DeliveryItemBuildWidget extends StatefulWidget {
 }
 
 class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
+  DeliveryAddressController get deliveryAddressController=>Get.find();
   @override
   Widget build(BuildContext context) {
     final Widget child;

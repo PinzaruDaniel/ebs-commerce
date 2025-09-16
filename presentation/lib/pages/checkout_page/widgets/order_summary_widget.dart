@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -14,6 +15,7 @@ class OrderSummaryViewModel extends BaseViewModel {
   final RxDouble total = RxDouble(0.0);
 
 }
+CheckoutController get checkoutController=>Get.find();
 
 
 class OrderSummaryWidget extends StatelessWidget {

@@ -6,9 +6,10 @@ import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
-import '../../controllers/controller_imports.dart';
 import '../../util/enum/enums.dart';
 import '../../util/resources/app_texts.dart';
+import '../contact_information_page/contact_information_controller.dart';
+import '../delivery_address_page/delivery_address_controller.dart';
 
 class CheckoutController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
@@ -18,6 +19,8 @@ class CheckoutController extends GetxController {
   RxString voucherCode = RxString('');
 
   CartController get cartController => Get.find();
+  ContactInformationController get contactInformationController=>Get.find();
+  DeliveryAddressController get deliveryAddressController=>Get.find();
 
   bool hasIncompleteUserInfo() {
     final user = contactInformationController.toUserViewModel();
@@ -43,7 +46,7 @@ class CheckoutController extends GetxController {
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.deliveryAddressInfo,
-        titleKey: deliveryModel.value?.deliveryType ?? '',
+        titleKey: '${deliveryModel.value?.deliveryType ?? ''}',
         infoItems: _buildDeliveryInfo(deliveryModel.value),
       ),
 
@@ -82,8 +85,6 @@ class CheckoutController extends GetxController {
     String? titleKey,
     String? placeholder,
     Map<String, String>? infoItems,
-    bool? isPromoValid,
-    bool? showRemoveButton,
   }) {
     final index = allItems.indexWhere((item) => item is CheckoutInfoContainerViewModel && item.keyId == keyId);
 
@@ -96,8 +97,8 @@ class CheckoutController extends GetxController {
       titleKey: titleKey ?? oldItem.titleKey,
       placeholder: placeholder ?? oldItem.placeholder,
       infoItems: infoItems ?? oldItem.infoItems,
-      isPromoValid: isPromoValid ?? oldItem.isPromoValid,
-      showRemoveButton: showRemoveButton ?? oldItem.showRemoveButton,
+      isPromoValid: oldItem.isPromoValid,
+      showRemoveButton: oldItem.showRemoveButton,
     );
 
     allItems[index] = newItem;
@@ -105,9 +106,12 @@ class CheckoutController extends GetxController {
   }
 
   Map<String, String> _buildDeliveryInfo(DeliveryAddressViewModel? model) {
-    if (deliveryAddressController.fromLabel(model?.deliveryType ?? '') == DeliveryType.pickup) {
-      return {'Pickup Location: ${model?.pickupLocation ?? ''}': ''};
-    }
+    //deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true
+
+    var isPickUpType = model?.deliveryType == DeliveryType.pickup;
+    if (isPickUpType) {
+    return {'Pickup Location: ${model?.pickupLocation ?? ''}': ''};
+  }
     return {
       'Country: ${model?.country ?? ''}': '',
       'Region: ${model?.region ?? ''}': '',

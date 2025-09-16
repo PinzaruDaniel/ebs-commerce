@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/pages/category_page/category_controller.dart';
+import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/pages/filtered_page/widgets/add_to_category_button_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/price_slider_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
@@ -23,6 +25,8 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
+  FilterController get filterController=>Get.find();
+  CategoryController get categoryController=>Get.find();
 
   @override
   void dispose() {
@@ -32,7 +36,10 @@ class _FilterPageState extends State<FilterPage> {
   @override
   void initState() {
     super.initState();
+    Get.put(FilterController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.put(CategoryController());
+
       filterController.getFilteredProducts(page: 1);
     });
   }

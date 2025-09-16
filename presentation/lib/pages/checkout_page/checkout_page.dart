@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:common/constants/promocode_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
 import 'package:presentation/util/enum/enums.dart';
@@ -29,9 +30,11 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  CheckoutController get checkoutController=>Get.find();
   @override
   void initState() {
     super.initState();
+    Get.put(CheckoutController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkoutController.initAllItems();
     });
@@ -73,8 +76,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         if (item.keyId == CheckoutWidgetsType.userContactInfo) {
                           AppRouter.openContactInformationPage(
                               onSave: (UserViewModel? userVM) {
-                                checkoutController.initAllItems();
-                                /*if (userVM == null) {
+                                if (userVM == null) {
                                   print('userVM is null');
                                   return;
                                 }
@@ -92,7 +94,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                   keyId: CheckoutWidgetsType.userContactInfo,
                                   titleKey: '${userVM.name} ${userVM.surname}',
                                   infoItems: updatedInfo,
-                                );*/
+                                );
                               }
                           );
                         } else if (item.keyId == CheckoutWidgetsType.deliveryAddressInfo) {

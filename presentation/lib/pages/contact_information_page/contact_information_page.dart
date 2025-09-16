@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
@@ -18,11 +19,13 @@ class ContactInformationPage extends StatefulWidget {
 }
 
 class _ContactInformationPageState extends State<ContactInformationPage> {
+  ContactInformationController get contactInformationController=>Get.find();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+    Get.put(ContactInformationController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       contactInformationController.initAllItems();
     });
@@ -65,6 +68,7 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         title: AppTexts.save,
         showIcon: false,
         onTap: () {
+          //TODO: to be validation for each field + regexp for email and number
           if (_formKey.currentState?.validate() ?? false) {
             final user = contactInformationController.toUserViewModel();
             print('User: ${user?.name} ${user?.surname}, ${user?.email}, ${user?.number}');
