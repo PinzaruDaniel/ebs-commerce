@@ -19,19 +19,16 @@ class CheckoutController extends GetxController {
   RxString voucherCode = RxString('');
 
   CartController get cartController => Get.find();
-  ContactInformationController get contactInformationController=>Get.find();
-  DeliveryAddressController get deliveryAddressController=>Get.find();
 
-  bool hasIncompleteUserInfo() {
+  bool hasIncompleteUserInfo() {/*
     final user = contactInformationController.toUserViewModel();
     if (user == null) return true;
     userModel.value = user;
-    return user.surname.isEmpty || user.number.isEmpty || user.name.isEmpty || user.email.isEmpty;
+    return user.surname.isEmpty || user.number.isEmpty || user.name.isEmpty || user.email.isEmpty;*/
+    return true;
   }
 
   void initAllItems() {
-    deliveryModel.value = deliveryAddressController.toDeliveryAddressViewModel();
-
     allItems.value = [
       HeaderTitleViewModel(title: AppTexts.orderSummary),
       ...cartController.selectedItems,
