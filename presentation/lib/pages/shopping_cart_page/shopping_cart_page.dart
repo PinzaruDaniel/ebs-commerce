@@ -24,10 +24,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   @override
   void initState() {
     super.initState();
-    deliveryAddressController.onInit();
-    deliveryAddressController.toDeliveryAddressViewModel();
-    contactInformationController.initAllItems();
-    contactInformationController.toUserViewModel();
   }
 
   @override

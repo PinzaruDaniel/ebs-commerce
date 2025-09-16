@@ -27,7 +27,6 @@ class CheckoutController extends GetxController {
   }
 
   void initAllItems() {
-    userModel.value = contactInformationController.toUserViewModel();
     deliveryModel.value = deliveryAddressController.toDeliveryAddressViewModel();
 
     allItems.value = [
@@ -36,29 +35,28 @@ class CheckoutController extends GetxController {
 
       HeaderTitleViewModel(title: AppTexts.contactInformation),
       CheckoutInfoContainerViewModel(
-        keyId: 'user_contact_info',
+        keyId: CheckoutWidgetsType.userContactInfo,
         titleKey: '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''}',
         infoItems: _buildUserInfo(userModel.value),
-       // onTap: AppRouter.openContactInformationPage,
       ),
 
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
-        keyId: 'user_delivery_info',
-        titleKey: deliveryModel.value?.deliveryType ??'',
+        keyId: CheckoutWidgetsType.deliveryAddressInfo,
+        titleKey: deliveryModel.value?.deliveryType ?? '',
         infoItems: _buildDeliveryInfo(deliveryModel.value),
       ),
 
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
       CheckoutInfoContainerViewModel(
-        keyId: 'payment_method',
+        keyId: CheckoutWidgetsType.paymentMethod,
         placeholder: AppTexts.choosePaymentMethod,
         titleKey: selectedPaymentMethod,
         infoItems: {},
       ),
 
       CheckoutInfoContainerViewModel(
-        keyId: 'voucher_code',
+        keyId: CheckoutWidgetsType.voucherCode,
         placeholder: AppTexts.enterYourVoucher,
         isPromoValid: true,
         showRemoveButton: voucherCode.value.isNotEmpty,
@@ -79,8 +77,34 @@ class CheckoutController extends GetxController {
     });
   }
 
-  Map<String, String> _buildDeliveryInfo(DeliveryAddressViewModel? model) {
+  void updateCheckoutInfoItem({
+    required CheckoutWidgetsType keyId,
+    String? titleKey,
+    String? placeholder,
+    Map<String, String>? infoItems,
+    bool? isPromoValid,
+    bool? showRemoveButton,
+  }) {
+    final index = allItems.indexWhere((item) => item is CheckoutInfoContainerViewModel && item.keyId == keyId);
 
+    if (index == -1) return;
+
+    final oldItem = allItems[index] as CheckoutInfoContainerViewModel;
+
+    final newItem = CheckoutInfoContainerViewModel(
+      keyId: oldItem.keyId,
+      titleKey: titleKey ?? oldItem.titleKey,
+      placeholder: placeholder ?? oldItem.placeholder,
+      infoItems: infoItems ?? oldItem.infoItems,
+      isPromoValid: isPromoValid ?? oldItem.isPromoValid,
+      showRemoveButton: showRemoveButton ?? oldItem.showRemoveButton,
+    );
+
+    allItems[index] = newItem;
+    allItems.refresh();
+  }
+
+  Map<String, String> _buildDeliveryInfo(DeliveryAddressViewModel? model) {
     if (deliveryAddressController.fromLabel(model?.deliveryType ?? '') == DeliveryType.pickup) {
       return {'Pickup Location: ${model?.pickupLocation ?? ''}': ''};
     }

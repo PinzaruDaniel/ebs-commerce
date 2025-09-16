@@ -66,9 +66,9 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         showIcon: false,
         onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
-            //contactInformationController.initAllItems();
-            //checkoutController.initAllItems();
-            widget.onSave.call(contactInformationController.toUserViewModel());
+            final user = contactInformationController.toUserViewModel();
+            print('User: ${user?.name} ${user?.surname}, ${user?.email}, ${user?.number}');
+            widget.onSave.call(user);
             Get.back();
           }
         },

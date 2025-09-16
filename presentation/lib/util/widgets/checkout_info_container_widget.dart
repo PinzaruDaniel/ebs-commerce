@@ -1,3 +1,5 @@
+import 'package:presentation/util/enum/enums.dart';
+
 import '../../view/base_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_icons.dart';
@@ -5,7 +7,7 @@ import 'package:presentation/util/resources/app_text_styles.dart';
 import '../../../util/resources/app_colors.dart';
 
 class CheckoutInfoContainerViewModel extends BaseViewModel {
-  final String keyId;
+  final CheckoutWidgetsType keyId;
   final Map<String, dynamic>? infoItems;
   final String? placeholder;
   final String? titleKey;
