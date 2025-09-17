@@ -1,5 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:common/constants/promocode_constants.dart';
+import 'package:common/constants/constant_lists_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_controller.dart';
@@ -78,28 +78,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         if (item.keyId == CheckoutWidgetsType.userContactInfo) {
                           AppRouter.openContactInformationPage(
                             onSave: (UserViewModel? userVM) {
-                              if (userVM == null) {
-                                print('userVM is null');
-                                return;
-                              }
-                              checkoutController.userModel.value = userVM;
-                              print('Name: ${userVM.name}');
-                              print('Surname: ${userVM.surname}');
-                              print('Number: ${userVM.number}');
-                              print('Email: ${userVM.email}');
-                              final updatedInfo = {
-                                if (userVM.number.isNotEmpty) userVM.number: '',
-                                if (userVM.email.isNotEmpty) userVM.email: '',
-                              };
-
                               checkoutController.updateCheckoutInfoItem(
                                 keyId: CheckoutWidgetsType.userContactInfo,
-                                titleKey: '${userVM.name} ${userVM.surname}',
-                                infoItems: updatedInfo,
+                                titleKey: '${userVM?.name} ${userVM?.surname}',
+                                infoItems: checkoutController.buildUserInfo(userVM),
                               );
                             },
                           );
-                        } else if (item.keyId == CheckoutWidgetsType.deliveryAddressInfo) {
+                        }
+                        else if (item.keyId == CheckoutWidgetsType.deliveryAddressInfo) {
                           AppRouter.openDeliveryAddressPage(
                             onSave: (DeliveryAddressViewModel? deliveryVM) {
                               checkoutController.updateCheckoutInfoItem(

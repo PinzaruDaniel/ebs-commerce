@@ -9,12 +9,25 @@ class ContactInformationController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> user = Rxn<UserViewModel>();
 
+  void setUser(UserViewModel userModel) {
+    user.value = userModel;
+  }
+
   void initAllItems() {
     final existingUser = user.value;
+    print('Name: ${existingUser?.name}');
 
     allItems.value = [
-      TextFieldViewModel(keyId: 'name', title: 'Name', initialValue: existingUser?.name ?? ''),
-      TextFieldViewModel(keyId: 'surname', title: 'Surname', initialValue: existingUser?.surname ?? ''),
+      TextFieldViewModel(
+        keyId: 'name',
+        title: 'Name',
+        initialValue: existingUser?.name ?? '',
+      ),
+      TextFieldViewModel(
+        keyId: 'surname',
+        title: 'Surname',
+        initialValue: existingUser?.surname ?? '',
+      ),
       TextFieldViewModel(
         keyId: 'phone',
         title: 'Phone',
@@ -31,17 +44,20 @@ class ContactInformationController extends GetxController {
   }
 
   UserViewModel? toUserViewModel() {
-    final items = allItems.whereType<TextFieldViewModel>().toList();
+    String getPlaceholderByKeyId(String keyId) {
+      final item = allItems.firstWhere(
+            (element) => element is TextFieldViewModel && element.keyId == keyId,
+        orElse: () => TextFieldViewModel(title: '', initialValue: ''),
+      ) as TextFieldViewModel;
 
-    final name = items.firstWhereOrNull((e) => e.keyId == 'name')?.placeholder ?? '';
-    final surname = items.firstWhereOrNull((e) => e.keyId == 'surname')?.placeholder ?? '';
-    final number = items.firstWhereOrNull((e) => e.keyId == 'phone')?.placeholder ?? '';
-    final email = items.firstWhereOrNull((e) => e.keyId == 'email')?.placeholder ?? '';
+      return item.placeholder;
+    }
 
-    print('name: $name, surname: $surname, number: $number, email: $email');
-
-    if (name.isEmpty && surname.isEmpty && number.isEmpty && email.isEmpty) return null;
-
-    return UserViewModel(name: name, surname: surname, number: number, email: email);
+    return user.value = UserViewModel(
+      name: getPlaceholderByKeyId('name'),
+      surname: getPlaceholderByKeyId('surname'),
+      number: getPlaceholderByKeyId('phone'),
+      email: getPlaceholderByKeyId('email'),
+    );
   }
 }

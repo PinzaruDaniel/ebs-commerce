@@ -1,3 +1,4 @@
+import 'package:common/constants/constant_lists_string.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
@@ -15,25 +16,13 @@ class CheckoutController extends GetxController {
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
   RxString selectedPaymentMethod = ''.obs;
   RxString voucherCode = RxString('');
-  RxList<CartViewModel> productItems=RxList([]);
+  RxList<CartViewModel> productItems = RxList([]);
 
-
-  void initProductItems(List<CartViewModel> productItems){
-    this.productItems.value=productItems;
+  void initProductItems(List<CartViewModel> productItems) {
+    this.productItems.value = productItems;
     this.productItems.refresh();
     allItems.refresh();
-
   }
-
-
-  void setUserModel(UserViewModel? userVM){
-    userModel.value = userVM;
-
-  }
-  void setDeliveryModel(DeliveryAddressViewModel deliveryVM){
-    deliveryModel.value=deliveryVM;
-  }
-
   bool hasIncompleteUserInfo() {
     final user = userModel.value;
     if (user == null) return true;
@@ -49,13 +38,13 @@ class CheckoutController extends GetxController {
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.userContactInfo,
         titleKey: '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''}',
-        infoItems: _buildUserInfo(userModel.value),
+        infoItems: buildUserInfo(userModel.value),
       ),
 
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.deliveryAddressInfo,
-        titleKey: '${deliveryModel.value?.deliveryType ?? ''}',
+        titleKey: '${deliveryModel.value?.deliveryType ?? 'Ridicare la sediu'}',
         infoItems: buildDeliveryInfo(deliveryModel.value),
       ),
 
@@ -80,6 +69,7 @@ class CheckoutController extends GetxController {
 
     allItems.refresh();
   }
+
   double _calculateSubtotal() {
     return productItems.value.fold(0.0, (sum, item) {
       final priceString = item.discountedPrice ?? item.price;
@@ -114,10 +104,11 @@ class CheckoutController extends GetxController {
   }
 
   Map<String, String> buildDeliveryInfo(DeliveryAddressViewModel? model) {
-
     var isPickUpType = model?.deliveryType == DeliveryType.pickup;
-    if (isPickUpType) {
-    return{
+    if (isPickUpType || model?.deliveryType == null) {
+      return {'Pickup Location: ${model?.pickupLocation ?? pickupLocations.first}': ''};
+    }
+    return {
       'Country: ${model?.country ?? ''}': '',
       'Region: ${model?.region ?? ''}': '',
       'City: ${model?.city ?? ''}': '',
@@ -126,10 +117,7 @@ class CheckoutController extends GetxController {
     };
   }
 
-    return {'Pickup Location: ${model?.pickupLocation ?? model?.pickupLocation.}': ''};
-  }
-
-  Map<String, String> _buildUserInfo(UserViewModel? model) {
+  Map<String, String> buildUserInfo(UserViewModel? model) {
     final info = <String, String>{};
     if (model?.number.isNotEmpty ?? false) info[model!.number] = '';
     if (model?.email.isNotEmpty ?? false) info[model!.email] = '';
@@ -140,7 +128,10 @@ class CheckoutController extends GetxController {
     final summary = OrderSummaryViewModel();
     summary.subtotal.value = subtotal;
     summary.shippingFee.value =
-        (deliveryModel.value?.deliveryType == 'DHL' || deliveryModel.value?.deliveryType == 'Fan courier') ? 5.0 : 0.0;
+        (deliveryModel.value?.deliveryType == DeliveryType.dhl ||
+            deliveryModel.value?.deliveryType == DeliveryType.fanCourier)
+        ? 5.0
+        : 0.0;
     summary.voucherDiscount.value = voucherCode.value.isNotEmpty ? 10.0 : 0.0;
     summary.total.value = subtotal + summary.shippingFee.value + summary.adminFee - summary.voucherDiscount.value;
     return summary;

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:common/constants/constant_lists_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -52,7 +53,6 @@ class DeliveryAddressController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-  List<String> pickupLocations = ['Posta moldovei, Armeneasca 2', 'undeva departe'];
 
   Future<void> initItems() async {
     updateAllItems();
@@ -209,9 +209,9 @@ class DeliveryAddressController extends GetxController {
   }
 
   DeliveryAddressViewModel toDeliveryAddressViewModel() {
-    final type = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
-
-    if (type == DeliveryType.pickup) {
+    final type = DeliveryTypeMapper.fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected).titleKey);
+    print(type);
+    if (type == DeliveryType.pickup ) {
       final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? pickupLocations.first;
       final model = DeliveryAddressViewModel(deliveryType: type, pickupLocation: pickupLocation);
       addressVM.value = model;

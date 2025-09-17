@@ -13,7 +13,7 @@ extension DeliveryTypeMapper on DeliveryType {
         return 'DHL';
     }
   }
-  DeliveryType fromLabel(String label) {
+  static DeliveryType fromLabel(String label) {
     return DeliveryType.values.firstWhere((e) => e.label == label);
   }
 
