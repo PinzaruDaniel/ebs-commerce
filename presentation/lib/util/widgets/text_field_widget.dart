@@ -6,13 +6,18 @@ class TextFieldViewModel extends BaseViewModel {
   final String title;
   final String? keyId;
   final TextInputType? textInputType;
-  final bool? needValidation;
+  final bool isRequired;
+  final String? Function(String?)? customValidator; // NEW
   String placeholder;
 
   TextFieldViewModel({
-    this.needValidation,
     this.keyId,
-    required this.title, this.textInputType, String initialValue = ''}) : placeholder = initialValue;
+    required this.title,
+    this.textInputType,
+    this.customValidator,
+    this.isRequired = true,
+    String initialValue = '',
+  }) : placeholder = initialValue;
 }
 
 class TextFieldWidget extends StatefulWidget {
@@ -56,10 +61,11 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           const SizedBox(height: 4),
           TextFormField(
             validator: (text) {
-              if (widget.itemViewModel.needValidation == null) {
-                if (text == null || text.isEmpty) {
-                  return "This field is required";
-                }
+              if (widget.itemViewModel.isRequired && (text == null || text.isEmpty)) {
+                return "This field is required";
+              }
+              if (widget.itemViewModel.customValidator != null) {
+                return widget.itemViewModel.customValidator!(text);
               }
               return null;
             },

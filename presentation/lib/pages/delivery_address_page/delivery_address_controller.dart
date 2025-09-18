@@ -233,7 +233,7 @@ class DeliveryAddressController extends GetxController {
         keyId: 'other_comments',
         title: 'Other Comments',
         initialValue: '',
-        needValidation: false,
+        isRequired: false,
       ),
     ]);
   }

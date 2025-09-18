@@ -33,12 +33,24 @@ class ContactInformationController extends GetxController {
         title: 'Phone',
         textInputType: TextInputType.phone,
         initialValue: existingUser?.number ?? '',
+        customValidator: (text) {
+          if (text == null || text.isEmpty) return "Phone number is required";
+          final phoneRegex = RegExp(r'^[0-9]{8,15}$');
+          if (!phoneRegex.hasMatch(text)) return "Enter a valid phone number";
+          return null;
+        },
       ),
       TextFieldViewModel(
         keyId: 'email',
         title: 'Email',
         textInputType: TextInputType.emailAddress,
         initialValue: existingUser?.email ?? '',
+        customValidator: (text) {
+          if (text == null || text.isEmpty) return "Email is required";
+          final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+          if (!emailRegex.hasMatch(text)) return "Enter a valid email";
+          return null;
+        },
       ),
     ];
   }
