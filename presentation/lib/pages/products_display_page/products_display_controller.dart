@@ -15,8 +15,6 @@ import '../../view/product_view_model.dart';
 
 class ProductsDisplayController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
-  final GetSaleProductsUseCase getSaleProductsUseCase = GetIt.instance<GetSaleProductsUseCase>();
-  final GetNewProductsUseCase getNewProductsUseCase = GetIt.instance<GetNewProductsUseCase>();
   RxBool isLoading = true.obs;
   List<ProductViewModel> products = RxList([]);
 
@@ -65,7 +63,7 @@ class ProductsDisplayController extends GetxController {
   }
 
   Future<void> getSaleProducts(bool loadMore) async {
-    final either = await getSaleProductsUseCase.call(GetSaleProductsParams(page: currentPage.value, perPage: perPage));
+    final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage, marks: 'sale'));
     either.fold(
       (failure) {
         isLoading.value = false;
@@ -84,7 +82,7 @@ class ProductsDisplayController extends GetxController {
   }
 
   Future<void> getNewProducts(bool loadMore) async {
-    final either = await getNewProductsUseCase.call(GetNewProductsParams(page: currentPage.value, perPage: perPage));
+    final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage, marks: 'new'));
 
     either.fold(
       (failure) {

@@ -46,6 +46,7 @@ class ProductInputQuantityWidget extends StatelessWidget {
                       final value = currentValue.value - 1;
                       currentValue.value = value;
                       onChanged(value);
+
                     },
               icon: Icon(
                 Icons.remove_rounded,

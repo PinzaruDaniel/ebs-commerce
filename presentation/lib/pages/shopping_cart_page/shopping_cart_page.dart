@@ -9,6 +9,7 @@ import 'package:presentation/util/widgets/select_checkbox_widget.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
+import '../../util/routing/app_pop_up.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
 import 'cart_controller.dart';
@@ -83,7 +84,19 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                             minValue: 0,
                             initialValue: cartController.cartItems[index].quantity,
                             onChanged: (val) {
-                              cartController.updateQuantity(index, val, context);
+                              if(val==0){
+                                AppPopUp.showConfirmationDialog(
+                                  context: context,
+                                  title: 'Remove Item?',
+                                  content: 'Do you want to remove this item from your cart?',
+                                  onSave: (){
+                                    cartController.removeItem(index);
+                                  }
+                                );
+                              }
+                              else {
+                                cartController.updateQuantity(index, val, context);
+                              }
                             },
                             maxValue: cartController.cartItems[index].stock,
                           ),

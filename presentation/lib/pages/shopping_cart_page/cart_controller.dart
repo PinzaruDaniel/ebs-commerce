@@ -8,9 +8,9 @@ import '../../util/routing/app_pop_up.dart';
 
 class CartController extends GetxController {
   RxList<CartViewModel> cartItems = mainAppController.cartItems;
-
+//TODO: to not display 0
   void updateQuantity(int index, int newQuantity, BuildContext context) async {
-    if (newQuantity == 0) {
+    /*if (newQuantity == 0) {
       final shouldDelete = await AppPopUp.showConfirmationDialog(
         context: context,
         title: 'Remove Item?',
@@ -22,12 +22,16 @@ class CartController extends GetxController {
         cartItems[index].quantity = 1;
         cartItems.refresh();
       }
-    } else {
+    }*/
       cartItems[index].quantity = newQuantity;
       cartItems.refresh();
-    }
   }
-  List<CartViewModel> get selectedItems=>cartItems.where((e)=>e.isSelected==true).toList();
-  bool get hasSelectedItems=>selectedItems.isNotEmpty;
+
+  void removeItem(int index){
+    cartItems.removeAt(index);
+    cartItems.refresh();
+  }
+
+  List<CartViewModel> get selectedItems => cartItems.where((e) => e.isSelected == true).toList();
 
 }

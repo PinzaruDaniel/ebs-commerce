@@ -102,6 +102,7 @@ class AppPopUp {
     String? content,
     String confirmText = AppTexts.ok,
     String cancelText = 'Cancel',
+     Function? onSave,
   }) async {
     return await showDialog<bool>(
           context: context,
@@ -117,7 +118,10 @@ class AppPopUp {
                 child: Text(cancelText),
               ),
               TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
+                onPressed: () {
+                  onSave?.call();
+                  Navigator.of(context).pop(true);
+                },
                 child: Text(
                   confirmText,
                   style: TextStyle(color: AppColors.primary),
