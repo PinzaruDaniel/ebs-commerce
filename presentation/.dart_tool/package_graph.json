@@ -252,7 +252,9 @@
         "data",
         "dio",
         "domain",
-        "get_it"
+        "get_it",
+        "objectbox",
+        "objectbox_flutter_libs"
       ]
     },
     {
@@ -558,6 +560,26 @@
         "http_parser",
         "meta",
         "mime",
+        "path"
+      ]
+    },
+    {
+      "name": "objectbox_flutter_libs",
+      "version": "4.3.1",
+      "dependencies": [
+        "flutter",
+        "objectbox",
+        "path_provider"
+      ]
+    },
+    {
+      "name": "objectbox",
+      "version": "4.3.1",
+      "dependencies": [
+        "collection",
+        "ffi",
+        "flat_buffers",
+        "meta",
         "path"
       ]
     },
@@ -964,24 +986,14 @@
       "dependencies": []
     },
     {
-      "name": "objectbox_flutter_libs",
-      "version": "4.3.1",
-      "dependencies": [
-        "flutter",
-        "objectbox",
-        "path_provider"
-      ]
+      "name": "ffi",
+      "version": "2.1.4",
+      "dependencies": []
     },
     {
-      "name": "objectbox",
-      "version": "4.3.1",
-      "dependencies": [
-        "collection",
-        "ffi",
-        "flat_buffers",
-        "meta",
-        "path"
-      ]
+      "name": "flat_buffers",
+      "version": "23.5.26",
+      "dependencies": []
     },
     {
       "name": "vm_service",
@@ -994,11 +1006,6 @@
       "dependencies": [
         "collection"
       ]
-    },
-    {
-      "name": "ffi",
-      "version": "2.1.4",
-      "dependencies": []
     },
     {
       "name": "petitparser",
@@ -1195,11 +1202,6 @@
       "dependencies": [
         "meta"
       ]
-    },
-    {
-      "name": "flat_buffers",
-      "version": "23.5.26",
-      "dependencies": []
     },
     {
       "name": "synchronized",

@@ -1,3 +1,7 @@
+import 'package:data/core/objectbox_store.dart';
+import 'package:data/modules/products/models/local/product_box.dart';
+import 'package:objectbox/objectbox.dart';
+
 import 'package:data/modules/categories/sources/remote/categories_api_service.dart';
 import 'package:data/modules/delivery_address/delivery_address_repository_impl.dart';
 import 'package:data/modules/delivery_address/sources/remote/delivery_address_api_service.dart';
@@ -11,9 +15,15 @@ import 'package:get_it/get_it.dart';
 
 Future<void> init() async {
   var dataDi = GetIt.instance;
+  final store = await ObjectBoxStore.getStore();
+
+  dataDi.registerLazySingleton<Box<ProductBox>>(() => store.box<ProductBox>());
 
   dataDi.registerLazySingleton<ProductsRepository>(
-    () => ProductsRepositoryImpl(apiService: dataDi<ProductsApiService>()),
+        () => ProductsRepositoryImpl(
+      apiService: dataDi<ProductsApiService>(),
+      productBox: dataDi<Box<ProductBox>>(),
+    ),
   );
 
   dataDi.registerLazySingleton<CategoriesRepository>(

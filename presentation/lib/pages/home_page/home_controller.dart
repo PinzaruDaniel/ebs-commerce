@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:common/constants/failure_class.dart';
+import 'package:domain/modules/products/products_repository.dart';
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
@@ -23,10 +26,17 @@ class HomeController extends GetxController {
   RxInt currentPage = 1.obs;
   int perPage = 20;
   RxBool isLoadingMore = false.obs;
+  StreamSubscription? _productsStreamSub;
 
   void initItems() {
     items.clear();
     items.add(AdBannerViewModel());
+    /*_productsStreamSub??=GetIt.instance<ProductsRepository>().watchProducts().listen((entities){
+      final models= entities.map((e)=> e.toModel).toList();
+      products.assignAll(models);
+      items.value=[AdBannerViewModel(),
+      ];
+    });*/
     getProducts();
   }
 

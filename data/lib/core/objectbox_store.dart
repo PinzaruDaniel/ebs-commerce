@@ -1,6 +1,4 @@
-/*
-import 'package:objectbox/objectbox.dart';
-import 'objectbox.g.dart';
+import '../objectbox.g.dart';
 
 class ObjectBoxStore {
   static Store? _store;
@@ -14,4 +12,4 @@ class ObjectBoxStore {
     _store?.close();
     _store = null;
   }
-}*/
+}

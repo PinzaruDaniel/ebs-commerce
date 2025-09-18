@@ -1,19 +1,31 @@
-part of 'index.dart';
+import 'package:objectbox/objectbox.dart';
 
 @Entity()
-@freezed
-abstract class ProductBox with _$ProductBox{
-  const factory ProductBox({
-    @Id(assignable: true) required int id,
-    required String name,
-    required String? price,
-    required String? discount,
-    required String? discountedPrice,
-    required List<String>? imageUrl,
-    required List<String>? marks,
-    required int? stock,
-    required String? description,
-  }) = _ProductBox;
+class ProductBox {
+  @Id(assignable: true)
+  int id;
 
-  factory ProductBox.fromJson(Map<String, dynamic> json) => _$ProductBoxFromJson(json);
+  String name;
+
+  String? price;
+  String? discount;
+  String? discountedPrice;
+
+  String? imageUrl;
+  String? marks;
+
+  int? stock;
+  String? description;
+
+  ProductBox({
+    this.id = 0,
+    required this.name,
+    this.price,
+    this.discount,
+    this.discountedPrice,
+    this.imageUrl,
+    this.marks,
+    this.stock,
+    this.description,
+  });
 }

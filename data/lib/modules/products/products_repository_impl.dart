@@ -7,11 +7,15 @@ import 'package:data/modules/products/sources/remote/products_api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/modules/products/models/index.dart';
 import 'package:domain/modules/products/products_repository.dart';
+import 'package:objectbox/objectbox.dart';
+
+import 'models/local/product_box.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
   final ProductsApiService apiService;
+  final Box<ProductBox> productBox;
 
-  ProductsRepositoryImpl({required this.apiService});
+  ProductsRepositoryImpl( {required this.apiService, required this.productBox,});
 
   @override
   Future<Either<Failure, ProductResponseEntity>> getFilteredProducts(page, priceGte, priceLte, categoriesId) async {
@@ -32,11 +36,16 @@ class ProductsRepositoryImpl implements ProductsRepository {
     }
   }
 
+  Stream<List<ProductEntity>> watchProducts(){
+    return productBox.query().watch(triggerImmediately: true).map((query)=>query.find().map((e)=>e.toEntity()).toList());
+  }
+
   @override
   Future<Either<Failure, List<ProductEntity>>> getProducts(page, perPage) async {
     try {
       final response = await apiService.getProducts({'page': page, 'per_page': perPage});
       final entities = response.results.map((dto) => dto.toEntity()).toList();
+      productBox.putMany(entities.map((e)=>e.toBox()).toList());
       return Right(entities);
     } catch (e, stackTrace) {
       if (e is DioException) {
