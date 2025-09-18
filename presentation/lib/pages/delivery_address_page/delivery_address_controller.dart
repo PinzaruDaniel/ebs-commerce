@@ -22,7 +22,8 @@ import '../../util/enum/enums.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 
 class DeliveryAddressController extends GetxController {
-  final GetCountriesUseCase getCountriesUseCase = GetIt.instance<GetCountriesUseCase>();
+  final GetCountriesUseCase getCountriesUseCase =
+      GetIt.instance<GetCountriesUseCase>();
   final GetStatesUseCase getStatesUseCase = GetIt.instance<GetStatesUseCase>();
   final GetCitiesUseCase getCitiesUseCase = GetIt.instance<GetCitiesUseCase>();
 
@@ -41,7 +42,8 @@ class DeliveryAddressController extends GetxController {
         .toList(),
   ).obs);
 
-  final Rxn<DeliveryAddressViewModel> addressVM = Rxn<DeliveryAddressViewModel>();
+  final Rxn<DeliveryAddressViewModel> addressVM =
+      Rxn<DeliveryAddressViewModel>();
 
   RxList<CountryViewModel> countries = RxList([]);
   RxList<StateViewModel> states = RxList([]);
@@ -53,20 +55,25 @@ class DeliveryAddressController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-
   Future<void> initItems() async {
     updateAllItems();
-      await loadCountries();
 
+    unawaited(loadCountries());
 
-    final selectedType = fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected == true).titleKey);
+    final selectedType = fromLabel(
+      deliveryTypeVM.value.options
+          .firstWhere((e) => e.isSelected == true)
+          .titleKey,
+    );
+
     if (selectedType != DeliveryType.pickup && countries.isEmpty) {
-      await loadCountries();
+      unawaited(loadCountries());
     }
 
     if (selectedCountry.value != null && (states.isEmpty || cities.isEmpty)) {
-      await loadStates(selectedCountry.value!);
+      unawaited(loadStates(selectedCountry.value!));
     }
+
     toDeliveryAddressViewModel();
   }
 
@@ -89,10 +96,12 @@ class DeliveryAddressController extends GetxController {
           selectedCity.value = null;
           states.clear();
           cities.clear();
-          updateAllItems();
-
+          if (deliveryTypeVM.value.options.any(
+            (e) => e.isSelected && fromLabel(e.titleKey) != DeliveryType.pickup,
+          )) {
+            updateAllItems();
+          }
         }
-
       },
     );
   }
@@ -106,11 +115,11 @@ class DeliveryAddressController extends GetxController {
     final result = await getStatesUseCase(params);
 
     result.fold(
-          (failure) {
+      (failure) {
         isLoading.value = false;
         showFailureSnackBar(failure: failure);
       },
-          (list) {
+      (list) {
         states.value = list.map((e) => e.toViewModel).toList();
         isLoading.value = false;
         selectedState.value = null;
@@ -121,20 +130,26 @@ class DeliveryAddressController extends GetxController {
     );
   }
 
-  Future<void> loadCities(CountryViewModel country, StateViewModel state) async {
+  Future<void> loadCities(
+    CountryViewModel country,
+    StateViewModel state,
+  ) async {
     if (country.name.isEmpty || state.code.isEmpty) return;
 
     isLoading.value = true;
 
-    final params = GetCitiesUseCaseParams(country: country.name, state: state.name);
+    final params = GetCitiesUseCaseParams(
+      country: country.name,
+      state: state.name,
+    );
     final result = await getCitiesUseCase(params);
 
     result.fold(
-          (failure) {
+      (failure) {
         isLoading.value = false;
         showFailureSnackBar(failure: failure);
       },
-          (entity) {
+      (entity) {
         cities.value = entity.toViewModelList;
         isLoading.value = false;
         selectedCity.value = null;
@@ -147,7 +162,6 @@ class DeliveryAddressController extends GetxController {
     return DeliveryType.values.firstWhere((e) => e.label == label);
   }
 
-
   Future<void> removeAllItemsAnimated() async {
     while (allItems.length > 1) {
       final _ = allItems.removeLast();
@@ -156,13 +170,14 @@ class DeliveryAddressController extends GetxController {
     }
   }
 
-
   Future<void> updateAllItems() async {
     final deliveryItem = deliveryTypeVM.value;
 
     allItems.value = [deliveryItem];
     allItems.refresh();
-    final selectedType = fromLabel(deliveryItem.options.firstWhere((e) => e.isSelected).titleKey);
+    final selectedType = fromLabel(
+      deliveryItem.options.firstWhere((e) => e.isSelected).titleKey,
+    );
 
     if (selectedType == DeliveryType.pickup) {
       _addPickupFields();
@@ -179,7 +194,8 @@ class DeliveryAddressController extends GetxController {
         keyId: 'sediu',
         title: 'Sediu',
         options: pickupLocations,
-        initialValue: previousPickup ??
+        initialValue:
+            previousPickup ??
             getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ??
             pickupLocations.first,
       ),
@@ -213,29 +229,56 @@ class DeliveryAddressController extends GetxController {
         textInputType: TextInputType.number,
       ),
       TextFieldViewModel(keyId: 'address', title: 'Address', initialValue: ''),
-      TextFieldViewModel(keyId: 'other_comments', title: 'Other Comments', initialValue: '', needValidation: false),
+      TextFieldViewModel(
+        keyId: 'other_comments',
+        title: 'Other Comments',
+        initialValue: '',
+        needValidation: false,
+      ),
     ]);
   }
 
   DeliveryAddressViewModel toDeliveryAddressViewModel() {
-    final type = DeliveryTypeMapper.fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected).titleKey);
-    if (type == DeliveryType.pickup ) {
-      final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? pickupLocations.first;
-      final model = DeliveryAddressViewModel(deliveryType: type.value, pickupLocation: pickupLocation);
+    final type = DeliveryTypeMapper.fromLabel(
+      deliveryTypeVM.value.options.firstWhere((e) => e.isSelected).titleKey,
+    );
+    if (type == DeliveryType.pickup) {
+      final pickupLocation =
+          getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ??
+          pickupLocations.first;
+      final model = DeliveryAddressViewModel(
+        deliveryType: type.value,
+        pickupLocation: pickupLocation,
+      );
       addressVM.value = model;
       return model;
     } else {
-      final country = getViewModel<SelectionViewModel>('country')?.selectedValue.value ?? '';
-      final region = getViewModel<SelectionViewModel>('region')?.selectedValue.value ?? '';
-      final city = getViewModel<SelectionViewModel>('city')?.selectedValue.value ?? '';
-      final postalCode = getViewModel<TextFieldViewModel>('postal_code')?.placeholder ?? '';
-      final address = getViewModel<TextFieldViewModel>('address')?.placeholder ?? '';
-      final comments = getViewModel<TextFieldViewModel>('other_comments')?.placeholder ?? '';
+      final country =
+          getViewModel<SelectionViewModel>('country')?.selectedValue.value ??
+          '';
+      final region =
+          getViewModel<SelectionViewModel>('region')?.selectedValue.value ?? '';
+      final city =
+          getViewModel<SelectionViewModel>('city')?.selectedValue.value ?? '';
+      final postalCode =
+          getViewModel<TextFieldViewModel>('postal_code')?.placeholder ?? '';
+      final address =
+          getViewModel<TextFieldViewModel>('address')?.placeholder ?? '';
+      final comments =
+          getViewModel<TextFieldViewModel>('other_comments')?.placeholder ?? '';
 
-      final areFieldsEmpty = country.isEmpty || region.isEmpty || city.isEmpty || postalCode.isEmpty || address.isEmpty;
+      final areFieldsEmpty =
+          country.isEmpty ||
+          region.isEmpty ||
+          city.isEmpty ||
+          postalCode.isEmpty ||
+          address.isEmpty;
       if (areFieldsEmpty) {
         final pickupLocation = pickupLocations.first;
-        final model = DeliveryAddressViewModel(deliveryType: DeliveryType.pickup.value, pickupLocation: pickupLocation);
+        final model = DeliveryAddressViewModel(
+          deliveryType: DeliveryType.pickup.value,
+          pickupLocation: pickupLocation,
+        );
         addressVM.value = model;
         return model;
       }
@@ -255,6 +298,9 @@ class DeliveryAddressController extends GetxController {
   }
 
   T? getViewModel<T extends BaseViewModel>(String keyId) {
-    return allItems.firstWhereOrNull((item) => item is T && (item as dynamic).keyId == keyId) as T?;
+    return allItems.firstWhereOrNull(
+          (item) => item is T && (item as dynamic).keyId == keyId,
+        )
+        as T?;
   }
 }
