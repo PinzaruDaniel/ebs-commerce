@@ -1,4 +1,5 @@
 List<String> promoCodes = ['SAVE10', 'WELCOME5', 'FREESHIP', 'DANIELLOH6869'];
+List<String> paymentMethods = ['PayPal', 'Plata Numerar'];
 List<String> pickupLocations = [
   'Posta moldovei, Armeneasca 2',
   'Undeva departe',

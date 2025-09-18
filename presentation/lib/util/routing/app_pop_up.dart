@@ -1,3 +1,4 @@
+import 'package:common/constants/constant_lists_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/util/widgets/option_picker_widget.dart';
@@ -24,7 +25,10 @@ class AppPopUp {
         isScrollControlled: isScrollControlled,
         enableDrag: enableDrag,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(16),
+            topLeft: Radius.circular(16),
+          ),
         ),
         context: Get.context!,
         builder: (_) => child,
@@ -38,25 +42,38 @@ class AppPopUp {
     required int? maxValue,
   }) async {
     await showCustomBottomSheet(
-      child: ProductDetailAddToCartBottomSheetWidget(item: item, onAdd: onAdd, maxValue: maxValue),
+      child: ProductDetailAddToCartBottomSheetWidget(
+        item: item,
+        onAdd: onAdd,
+        maxValue: maxValue,
+      ),
     );
   }
 
-  static Future<void> paymentMethod({required String selectedMethod, required Function(String) onSelected}) async {
+  static Future<void> paymentMethod({
+    required Function(String) onSelected,
+    String? initialMethod,
+  }) async {
     if (Get.context == null) return;
-
-    final methods = ['PayPal', 'Plata Numerar'];
-
     await showCustomBottomSheet(
-      child: PaymentMethodSelectionWidget(selectedMethod: selectedMethod, onSelected: onSelected, methods: methods),
+      child: PaymentMethodSelectionWidget(
+        onSelected: onSelected,
+        initialMethod: initialMethod,
+      ),
     );
   }
 
-  static Future<void> voucherCode({required String initialValue, required Function(String) onSubmit}) async {
+  static Future<void> voucherCode({
+    required String initialValue,
+    required Function(String) onSubmit,
+  }) async {
     if (Get.context != null) {
       await showCustomBottomSheet(
         isScrollControlled: true,
-        child: VoucherCodeInputWidget(initialValue: initialValue, onSubmit: onSubmit),
+        child: VoucherCodeInputWidget(
+          initialValue: initialValue,
+          onSubmit: onSubmit,
+        ),
       );
     }
   }
@@ -102,7 +119,10 @@ class AppPopUp {
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text(confirmText, style: TextStyle(color: AppColors.primary)),
+                child: Text(
+                  confirmText,
+                  style: TextStyle(color: AppColors.primary),
+                ),
               ),
             ],
           ),

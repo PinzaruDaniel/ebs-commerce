@@ -81,44 +81,60 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               checkoutController.updateCheckoutInfoItem(
                                 keyId: CheckoutWidgetsType.userContactInfo,
                                 titleKey: '${userVM?.name} ${userVM?.surname}',
-                                infoItems: checkoutController.buildUserInfo(userVM),
+                                infoItems: checkoutController.buildUserInfo(
+                                  userVM,
+                                ),
                               );
                             },
                           );
-                        }
-                        else if (item.keyId == CheckoutWidgetsType.deliveryAddressInfo) {
+                        } else if (item.keyId ==
+                            CheckoutWidgetsType.deliveryAddressInfo) {
                           AppRouter.openDeliveryAddressPage(
                             onSave: (DeliveryAddressViewModel? deliveryVM) {
                               checkoutController.updateCheckoutInfoItem(
                                 keyId: CheckoutWidgetsType.deliveryAddressInfo,
                                 titleKey: '${deliveryVM?.deliveryType ?? ''}',
-                                infoItems: checkoutController.buildDeliveryInfo(deliveryVM),
+                                infoItems: checkoutController.buildDeliveryInfo(
+                                  deliveryVM,
+                                ),
                               );
                             },
                           );
-                        } else if (item.keyId == CheckoutWidgetsType.paymentMethod) {
+                        } else if (item.keyId ==
+                            CheckoutWidgetsType.paymentMethod) {
                           AppPopUp.paymentMethod(
-                            selectedMethod: '',
+                            initialMethod: checkoutController.selectedPaymentMethod.value,
                             onSelected: (value) {
                               checkoutController.selectedPaymentMethod.value = value;
-                              checkoutController.initAllItems();
-                              Navigator.pop(Get.context!);
+                              checkoutController.updateCheckoutInfoItem(
+                                keyId: CheckoutWidgetsType.paymentMethod,
+                                titleKey: value,
+                              );
+                              Get.back();
+
                             },
                           );
-                        } else if (item.keyId == CheckoutWidgetsType.voucherCode) {
+                        } else if (item.keyId ==
+                            CheckoutWidgetsType.voucherCode) {
                           AppPopUp.voucherCode(
                             initialValue: checkoutController.voucherCode.value,
                             onSubmit: (enteredCode) {
                               final isValid = promoCodes.contains(enteredCode);
                               if (isValid) {
-                                checkoutController.voucherCode.value = enteredCode;
-                                checkoutController.initAllItems();
+                                checkoutController.updateCheckoutInfoItem(
+                                  keyId: CheckoutWidgetsType.voucherCode,
+                                  titleKey: enteredCode,
+                                );
                                 Get.back();
                               }
                               Future.delayed(Duration(milliseconds: 200), () {
                                 showFailureSnackBar(
-                                  title: isValid ? AppTexts.success : AppTexts.invalidCode,
-                                  fallbackMessage: isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
+                                  title: isValid
+                                      ? AppTexts.success
+                                      : AppTexts.invalidCode,
+                                  fallbackMessage: isValid
+                                      ? AppTexts.promoValid
+                                      : AppTexts.promoNotValid,
                                   isError: !isValid,
                                 );
                               });
@@ -140,13 +156,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ),
       ),
       bottomNavigationBar: Obx(() {
-        final hasSelectedPayment = checkoutController.selectedPaymentMethod.value.isNotEmpty;
+        final hasSelectedPayment =
+            checkoutController.selectedPaymentMethod.value.isNotEmpty;
         final hasCompleteInfo = !checkoutController.hasIncompleteUserInfo();
 
         return BottomNavigationBarWidget(
           titleDialog: AppTexts.oops,
           contentDialog: AppTexts.enterAllData,
-          title: hasSelectedPayment && hasCompleteInfo ? AppTexts.createOrder : AppTexts.enterAllData,
+          title: hasSelectedPayment && hasCompleteInfo
+              ? AppTexts.createOrder
+              : AppTexts.enterAllData,
           addToCart: hasSelectedPayment && hasCompleteInfo,
           onTap: () {
             AwesomeDialog(

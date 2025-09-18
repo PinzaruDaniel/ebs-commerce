@@ -44,7 +44,8 @@ class CheckoutController extends GetxController {
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.deliveryAddressInfo,
-        titleKey: '${deliveryModel.value?.deliveryType ?? 'Ridicare la sediu'}',
+        placeholder: 'Choose your Delivery Address',
+        titleKey: '${deliveryModel.value?.deliveryType ?? ''}',
         infoItems: buildDeliveryInfo(deliveryModel.value),
       ),
 
@@ -103,18 +104,20 @@ class CheckoutController extends GetxController {
     allItems.refresh();
   }
 
-  Map<String, String> buildDeliveryInfo(DeliveryAddressViewModel? model) {
+  Map<String, String>? buildDeliveryInfo(DeliveryAddressViewModel? model) {
     var isPickUpType = model?.deliveryType == DeliveryType.pickup;
-    if (isPickUpType || model?.deliveryType == null) {
+    if (isPickUpType) {
       return {'Pickup Location: ${model?.pickupLocation ?? pickupLocations.first}': ''};
     }
-    return {
-      'Country: ${model?.country ?? ''}': '',
-      'Region: ${model?.region ?? ''}': '',
-      'City: ${model?.city ?? ''}': '',
-      'Postal Code: ${model?.postalCode ?? ''}': '',
-      'Street: ${model?.address ?? ''}': '',
-    };
+    else if (!isPickUpType && model?.deliveryType!=null ){
+      return
+        {'Country: ${model?.country ?? ''}': '',
+          'Region: ${model?.region ?? ''}': '',
+          'City: ${model?.city ?? ''}': '',
+          'Postal Code: ${model?.postalCode ?? ''}': '',
+          'Street: ${model?.address ?? ''}': '',};
+    }
+    return null;
   }
 
   Map<String, String> buildUserInfo(UserViewModel? model) {
