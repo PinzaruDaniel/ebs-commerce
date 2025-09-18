@@ -172,8 +172,17 @@ class DeliveryAddressController extends GetxController {
   }
 
   void _addPickupFields() {
+    final previousPickup = addressVM.value?.pickupLocation;
+
     allItems.add(
-      SelectionViewModel(keyId: 'sediu', title: 'Sediu', options: pickupLocations, initialValue: pickupLocations.first),
+      SelectionViewModel(
+        keyId: 'sediu',
+        title: 'Sediu',
+        options: pickupLocations,
+        initialValue: previousPickup ??
+            getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ??
+            pickupLocations.first,
+      ),
     );
   }
 
