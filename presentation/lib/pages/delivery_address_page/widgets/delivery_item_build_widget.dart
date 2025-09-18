@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:implicitly_animated_reorderable_list_2/transitions.dart';
-import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
+import 'package:presentation/util/widgets/animated_list_items_build_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
@@ -31,7 +28,8 @@ class DeliveryItemBuildWidget extends StatefulWidget {
 }
 
 class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
-  DeliveryAddressController get deliveryAddressController=>Get.find();
+  DeliveryAddressController get deliveryAddressController => Get.find();
+
   @override
   Widget build(BuildContext context) {
     final Widget child;
@@ -84,34 +82,11 @@ class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
     if (widget.item is DeliveryTypeViewModel) {
       return child;
     }
-
-    if (widget.isRemoval) {
-      return FadeTransition(
-        opacity: widget.animation,
-        child: child.animate()
-            .fadeOut(duration: 400.ms, curve: Curves.easeInOut)
-            .slideY(begin: 0, end: 0.2, duration: 400.ms, curve: Curves.easeInOut)
-            .scaleXY(begin: 1, end: 0.85, duration: 400.ms, curve: Curves.easeInOut),
-      );
-
-    }
-
-    return SizeFadeTransition(
+    return AnimatedListItemWrapper(
       animation: widget.animation,
-      child: KeyedSubtree(
-        key: ValueKey(keyValue),
-        child: child
-            .animate()
-            .fadeIn(duration: 200.ms, delay: (100+200 * widget.index).ms)
-            .slideY(begin: 1, end: 0.0, duration: 400.ms, delay: (200 * widget.index).ms, curve: Curves.easeInOut)
-            .scaleXY(
-              begin: 0.1,
-              end: 1,
-              duration: 400.ms,
-              delay: (200 * widget.index).ms,
-              curve: Curves.easeInOut,
-            ),
-      ),
+      index: widget.index,
+      isRemoval: widget.isRemoval,
+      child: child,
     );
   }
 }

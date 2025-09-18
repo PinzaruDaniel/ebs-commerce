@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import '../../view/cart_products_view_model.dart';
 import '../resources/app_texts.dart';
 import 'enums.dart';
 
@@ -28,6 +29,17 @@ extension DeliveryTypeMapper on DeliveryType {
     }
   }
 }
+extension CartViewModelExtension on CartViewModel {
+  double get unitPrice {
+    final priceString = discountedPrice ?? price;
+    return double.tryParse(priceString ?? '') ?? 0.0;
+  }
+  double get totalPrice {
+    final total = unitPrice * quantity;
+    return double.tryParse(total.toStringAsFixed(2)) ?? 0.0;
+  }
+}
+
 
 extension MapTextProductType on ProductListType {
   String? get title {

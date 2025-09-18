@@ -5,7 +5,6 @@ import 'package:presentation/pages/delivery_address_page/delivery_address_page.d
 import 'package:presentation/pages/filtered_page/filter_page.dart';
 import 'package:presentation/pages/home_page/home_page.dart';
 import 'package:presentation/pages/products_display_page/products_display_page.dart';
-import 'package:presentation/view/user_view_model.dart';
 import '../../pages/category_page/category_page.dart';
 import '../../pages/contact_information_page/contact_information_page.dart';
 import '../../pages/product_detail_page/product_detail_page.dart';

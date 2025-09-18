@@ -6,7 +6,6 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/product_image_widget.dart';
 import 'package:presentation/util/widgets/select_checkbox_widget.dart';
-import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';

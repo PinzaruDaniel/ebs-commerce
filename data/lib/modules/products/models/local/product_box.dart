@@ -2,7 +2,7 @@ part of 'index.dart';
 
 @Entity()
 @freezed
-abstract class ProductBox with _$ProductLocalDto {
+abstract class ProductBox with _$ProductBox{
   const factory ProductBox({
     @Id(assignable: true) required int id,
     required String name,

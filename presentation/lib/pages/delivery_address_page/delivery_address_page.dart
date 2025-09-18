@@ -9,7 +9,6 @@ import 'package:presentation/util/widgets/text_field_widget.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
-import '../../util/widgets/animated_list_items_build_widget.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../view/base_view_model.dart';

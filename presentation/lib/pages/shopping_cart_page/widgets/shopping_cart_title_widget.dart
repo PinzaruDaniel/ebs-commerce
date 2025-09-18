@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/util/enum/map_enums.dart';
 import '../../../util/resources/app_text_styles.dart';
 import '../../../view/cart_products_view_model.dart';
 
@@ -8,16 +9,6 @@ class ShoppingCartTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final priceString = (item.discountedPrice != null )
-        ? item.discountedPrice
-        : item.price;
-
-    final price = double.tryParse(priceString ?? '') ?? 0.0;
-
-    final rawTotalPrice=price*item.quantity;
-
-    final totalPrice=double.tryParse(rawTotalPrice.toStringAsFixed(2));
     return Padding(
       padding: const EdgeInsets.only(left:8.0, top:8, ),
       child: Column(
@@ -30,12 +21,12 @@ class ShoppingCartTitleWidget extends StatelessWidget {
             style: AppTextsStyle.medium.copyWith(fontSize: 11, fontWeight: FontWeight.w400),
           ),
           Text(
-            '\$$price',
+            '\$${item.unitPrice}',
             style: AppTextsStyle.bold(size: 14, color: Colors.grey.shade500),
           ),
           SizedBox(height: 4),
           Text(
-            'Total: $totalPrice ',
+            'Total: \$${item.totalPrice}',
             style: AppTextsStyle.bold(size: 14),
           ),
         ],

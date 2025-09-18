@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -9,26 +8,23 @@ import 'package:presentation/view/base_view_model.dart';
 class OrderSummaryViewModel extends BaseViewModel {
   final RxDouble subtotal = RxDouble(0.0);
   final RxDouble shippingFee = RxDouble(0.0);
-  final double adminFee = 2.0;
+  final RxDouble adminFee = RxDouble(2.0);
   final RxDouble voucherDiscount = RxDouble(0.0);
   final RxDouble total = RxDouble(0.0);
 
 }
-CheckoutController get checkoutController=>Get.find();
-
 
 class OrderSummaryWidget extends StatelessWidget {
-  final orderSummary = checkoutController.allItems
-      .whereType<OrderSummaryViewModel>()
-      .first;
-   OrderSummaryWidget({super.key});
+  final OrderSummaryViewModel orderSummary;
+
+  const OrderSummaryWidget({super.key, required this.orderSummary});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Obx(
-        () => Padding(
+            () => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

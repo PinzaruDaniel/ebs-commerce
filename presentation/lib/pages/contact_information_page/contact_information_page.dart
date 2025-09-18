@@ -8,6 +8,7 @@ import '../../util/widgets/animated_list_items_build_widget.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
+import '../../util/widgets/text_field_widget.dart';
 import '../../view/base_view_model.dart';
 
 class ContactInformationPage extends StatefulWidget {
@@ -56,13 +57,19 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
                     padding: const EdgeInsets.only(bottom: 10),
                     areItemsTheSame: (a, b) => a.hashCode == b.hashCode,
                     itemBuilder: (context, animation, item, index) {
-                      return AnimatedListItemsBuildWidget(
-                        item: item,
+                      if (item is! TextFieldViewModel) {
+                        return const SizedBox.shrink();
+                      }
+
+                      return AnimatedListItemWrapper(
                         animation: animation,
                         index: index,
+                        keyValue: 'text_field_${item.keyId}',
+                        child: TextFieldWidget(itemViewModel: item),
                       );
                     },
                   );
+
                 }),
 
               ),
@@ -74,7 +81,6 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         title: AppTexts.save,
         showIcon: false,
         onTap: () {
-          //TODO: to be validation for each field + regexp for email and number
           if (_formKey.currentState?.validate() ?? false) {
             widget.onSave.call(contactInformationController.toUserViewModel());
             Get.back();

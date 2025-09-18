@@ -1,6 +1,9 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:common/constants/constant_lists_string.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
+import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -17,12 +20,14 @@ class CheckoutController extends GetxController {
   RxString selectedPaymentMethod = ''.obs;
   RxString voucherCode = RxString('');
   RxList<CartViewModel> productItems = RxList([]);
+  final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
 
   void initProductItems(List<CartViewModel> productItems) {
     this.productItems.value = productItems;
     this.productItems.refresh();
     allItems.refresh();
   }
+
   bool hasIncompleteUserInfo() {
     final user = userModel.value;
     if (user == null) return true;
@@ -30,6 +35,8 @@ class CheckoutController extends GetxController {
   }
 
   void initAllItems() {
+    updateOrderSummary(calculateSubtotal());
+
     allItems.value = [
       HeaderTitleViewModel(title: AppTexts.orderSummary),
       ...productItems.value,
@@ -45,7 +52,7 @@ class CheckoutController extends GetxController {
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.deliveryAddressInfo,
         placeholder: 'Choose your Delivery Address',
-        titleKey: '${deliveryModel.value?.deliveryType ?? ''}',
+        titleKey: deliveryModel.value?.deliveryType ?? '',
         infoItems: buildDeliveryInfo(deliveryModel.value),
       ),
 
@@ -65,18 +72,14 @@ class CheckoutController extends GetxController {
         titleKey: voucherCode.value,
         infoItems: {},
       ),
-      _buildOrderSummary(_calculateSubtotal()),
+      orderSummary,
     ];
 
     allItems.refresh();
   }
 
-  double _calculateSubtotal() {
-    return productItems.value.fold(0.0, (sum, item) {
-      final priceString = item.discountedPrice ?? item.price;
-      final price = double.tryParse(priceString ?? '') ?? 0.0;
-      return sum + price * item.quantity;
-    });
+  double calculateSubtotal() {
+    return productItems.value.fold(0.0, (sum, item) => sum + item.totalPrice);
   }
 
   void updateCheckoutInfoItem({
@@ -105,17 +108,17 @@ class CheckoutController extends GetxController {
   }
 
   Map<String, String>? buildDeliveryInfo(DeliveryAddressViewModel? model) {
-    var isPickUpType = model?.deliveryType == DeliveryType.pickup.value;
+    var isPickUpType = model?.deliveryType == DeliveryType.pickup.label;
     if (isPickUpType) {
       return {'Pickup Location: ${model?.pickupLocation ?? pickupLocations.first}': ''};
-    }
-    else if (!isPickUpType && model?.deliveryType!=null){
-      return
-        {'Country: ${model?.country ?? ''}': '',
-          'Region: ${model?.region ?? ''}': '',
-          'City: ${model?.city ?? ''}': '',
-          'Postal Code: ${model?.postalCode ?? ''}': '',
-          'Street: ${model?.address ?? ''}': '',};
+    } else if (!isPickUpType && model?.deliveryType != null) {
+      return {
+        'Country: ${model?.country ?? ''}': '',
+        'Region: ${model?.region ?? ''}': '',
+        'City: ${model?.city ?? ''}': '',
+        'Postal Code: ${model?.postalCode ?? ''}': '',
+        'Street: ${model?.address ?? ''}': '',
+      };
     }
     return null;
   }
@@ -127,16 +130,18 @@ class CheckoutController extends GetxController {
     return info;
   }
 
-  OrderSummaryViewModel _buildOrderSummary(double subtotal) {
-    final summary = OrderSummaryViewModel();
-    summary.subtotal.value = subtotal;
-    summary.shippingFee.value =
-        (deliveryModel.value?.deliveryType == DeliveryType.dhl ||
-            deliveryModel.value?.deliveryType == DeliveryType.fanCourier)
+  void updateOrderSummary(double subtotal) {
+    orderSummary.subtotal.value = subtotal;
+
+    orderSummary.shippingFee.value =
+        (deliveryModel.value?.deliveryType == DeliveryType.dhl.label ||
+            deliveryModel.value?.deliveryType == DeliveryType.fanCourier.label)
         ? 5.0
         : 0.0;
-    summary.voucherDiscount.value = voucherCode.value.isNotEmpty ? 10.0 : 0.0;
-    summary.total.value = subtotal + summary.shippingFee.value + summary.adminFee - summary.voucherDiscount.value;
-    return summary;
+
+    orderSummary.voucherDiscount.value = voucherCode.value.isNotEmpty ? 10.0 : 0.0;
+
+    orderSummary.total.value =
+        subtotal + orderSummary.shippingFee.value + orderSummary.adminFee.value - orderSummary.voucherDiscount.value;
   }
 }

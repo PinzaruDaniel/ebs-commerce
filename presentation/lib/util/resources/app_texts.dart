@@ -58,4 +58,8 @@ class AppTexts {
   static const String goHome='Go Home';
   static const String createOrder='Create Order';
   static const String orderSuccess='Order has been placed Successfully';
+  static const String numberIsRequired='Phone number is required';
+  static const String invalidNumberPhone='Enter a valid phone number';
+  static const String emailIsRequired='Email is required';
+  static const String invalidEmail='Enter a valid email';
 }

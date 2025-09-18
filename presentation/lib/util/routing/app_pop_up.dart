@@ -1,4 +1,3 @@
-import 'package:common/constants/constant_lists_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/util/widgets/option_picker_widget.dart';
