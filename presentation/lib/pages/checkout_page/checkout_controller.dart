@@ -105,11 +105,11 @@ class CheckoutController extends GetxController {
   }
 
   Map<String, String>? buildDeliveryInfo(DeliveryAddressViewModel? model) {
-    var isPickUpType = model?.deliveryType == DeliveryType.pickup;
+    var isPickUpType = model?.deliveryType == DeliveryType.pickup.value;
     if (isPickUpType) {
       return {'Pickup Location: ${model?.pickupLocation ?? pickupLocations.first}': ''};
     }
-    else if (!isPickUpType && model?.deliveryType!=null ){
+    else if (!isPickUpType && model?.deliveryType!=null){
       return
         {'Country: ${model?.country ?? ''}': '',
           'Region: ${model?.region ?? ''}': '',

@@ -2,7 +2,8 @@ import 'package:presentation/util/enum/enums.dart';
 import 'package:presentation/view/base_view_model.dart';
 
 class DeliveryAddressViewModel extends BaseViewModel {
-  final DeliveryType deliveryType;
+  //final DeliveryType deliveryType;
+  final String deliveryType;
   final String? comments;
 
 

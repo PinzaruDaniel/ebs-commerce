@@ -1,4 +1,11 @@
-enum DeliveryType { pickup, fanCourier, dhl }
+enum DeliveryType {
+  pickup('Ridicare la sediu'),
+  fanCourier('Fan Courier'),
+  dhl('DHL');
+
+const DeliveryType(this.value);
+final String value;
+}
 
 enum DeliveryTypes {
   fanCourier('fan_courier');

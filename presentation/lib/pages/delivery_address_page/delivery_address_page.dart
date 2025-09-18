@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
 import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
+import 'package:presentation/pages/delivery_address_page/widgets/delivery_item_build_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
@@ -68,7 +69,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               },
 
               removeItemBuilder: (context, animation, oldItem) {
-                return AnimatedListItemsBuildWidget(
+                return DeliveryItemBuildWidget(
                   onCallBack: () async {
                     await deliveryAddressController.removeAllItemsAnimated();
                     deliveryAddressController.updateAllItems();
@@ -81,7 +82,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               },
 
               itemBuilder: (context, animation, item, index) {
-                return AnimatedListItemsBuildWidget(
+                return DeliveryItemBuildWidget(
                   onCallBack: () async {
                     await deliveryAddressController.removeAllItemsAnimated();
                     deliveryAddressController.updateAllItems();
