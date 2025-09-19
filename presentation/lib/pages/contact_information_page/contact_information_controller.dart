@@ -50,7 +50,6 @@ class ContactInformationController extends GetxController {
                 orElse: () => TextFieldViewModel(title: '', initialValue: ''),
               )
               as TextFieldViewModel;
-
       return item.placeholder;
     }
 

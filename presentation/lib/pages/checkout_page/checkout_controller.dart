@@ -51,7 +51,7 @@ class CheckoutController extends GetxController {
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.deliveryAddressInfo,
-        placeholder: 'Choose your Delivery Address',
+        placeholder: AppTexts.chooseDeliveryAddress,
         titleKey: deliveryModel.value?.deliveryType ?? '',
         infoItems: buildDeliveryInfo(deliveryModel.value),
       ),

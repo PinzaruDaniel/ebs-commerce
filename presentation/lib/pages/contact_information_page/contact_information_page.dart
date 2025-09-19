@@ -15,12 +15,13 @@ class ContactInformationPage extends StatefulWidget {
   const ContactInformationPage({super.key, required this.onSave});
 
   final Function onSave;
+
   @override
   State<ContactInformationPage> createState() => _ContactInformationPageState();
 }
 
 class _ContactInformationPageState extends State<ContactInformationPage> {
-  ContactInformationController get contactInformationController=>Get.find();
+  ContactInformationController get contactInformationController => Get.find();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -69,9 +70,7 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
                       );
                     },
                   );
-
                 }),
-
               ),
             ],
           ),

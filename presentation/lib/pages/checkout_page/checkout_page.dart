@@ -121,7 +121,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                   titleKey: enteredCode,
                                 );
                                 checkoutController.updateOrderSummary(checkoutController.calculateSubtotal());
-
                                 Get.back();
                               }
                               Future.delayed(Duration(milliseconds: 200), () {

@@ -101,21 +101,22 @@ class AppPopUp {
     String? title,
     String? content,
     String confirmText = AppTexts.ok,
-    String cancelText = 'Cancel',
      Function? onSave,
+    Function? onCancel,
   }) async {
     return await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
             backgroundColor: Colors.white,
-            title: Text(title ?? 'Confirm'),
-            content: Text(content ?? 'Are you sure?'),
+            title: Text(title ?? AppTexts.confirm),
+            content: Text(content ?? AppTexts.areYouSure),
             actions: [
               TextButton(
                 onPressed: () {
+                  onCancel?.call();
                   Navigator.of(context).pop(false);
                 },
-                child: Text(cancelText),
+                child: Text('Cancel'),
               ),
               TextButton(
                 onPressed: () {

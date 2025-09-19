@@ -62,4 +62,11 @@ class AppTexts {
   static const String invalidNumberPhone='Enter a valid phone number';
   static const String emailIsRequired='Email is required';
   static const String invalidEmail='Enter a valid email';
+  static const String areYouSure='Are you sure?';
+  static const String confirm='Confirm';
+  static const String removeItem= 'Remove Item?';
+  static const String removeItemQuestion='Do you want to remove this item from your cart?';
+  static const String chooseDeliveryAddress= 'Choose your Delivery Address';
+  //static const String
+  //static const String
 }

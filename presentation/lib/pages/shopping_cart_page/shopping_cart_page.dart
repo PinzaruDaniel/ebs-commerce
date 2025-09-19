@@ -22,7 +22,7 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
-  CartController get cartController=>Get.find();
+  CartController get cartController => Get.find();
 
   @override
   void initState() {
@@ -81,20 +81,22 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                             key: ValueKey(
                               '${cartController.cartItems[index].id}_${cartController.cartItems[index].quantity}',
                             ),
-                            minValue: 0,
+                            minValue: 1,
                             initialValue: cartController.cartItems[index].quantity,
                             onChanged: (val) {
-                              if(val==0){
+                              if (val == 0) {
                                 AppPopUp.showConfirmationDialog(
                                   context: context,
-                                  title: 'Remove Item?',
-                                  content: 'Do you want to remove this item from your cart?',
-                                  onSave: (){
+                                  title: AppTexts.removeItem,
+                                  content: AppTexts.removeItemQuestion,
+                                  onSave: () {
                                     cartController.removeItem(index);
-                                  }
+                                  },
+                                  onCancel: () {
+                                    cartController.cartItems.refresh();
+                                  },
                                 );
-                              }
-                              else {
+                              } else {
                                 cartController.updateQuantity(index, val, context);
                               }
                             },
