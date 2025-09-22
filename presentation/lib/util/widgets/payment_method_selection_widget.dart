@@ -26,7 +26,7 @@ class _PaymentMethodSelectionWidgetState extends State<PaymentMethodSelectionWid
   @override
   void initState() {
     super.initState();
-    selectedMethod = widget.initialMethod; // 👈 prefill
+    selectedMethod = widget.initialMethod;
   }
   @override
   Widget build(BuildContext context) {

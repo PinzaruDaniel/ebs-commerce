@@ -68,5 +68,5 @@ class AppTexts {
   static const String removeItem= 'Remove Item?';
   static const String removeItemQuestion='Do you want to remove this item from your cart?';
   static const String chooseDeliveryAddress= 'Choose your Delivery Address';
-  //static const String
+  static const String cancel='Cancel';
 }

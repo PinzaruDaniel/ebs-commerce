@@ -7,7 +7,7 @@ import 'package:presentation/util/widgets/animated_list_items_build_widget.dart'
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
-class DeliveryItemBuildWidget extends StatefulWidget {
+class DeliveryItemBuildWidget extends StatelessWidget {
   final BaseViewModel item;
   final Animation<double> animation;
   final int index;
@@ -24,68 +24,71 @@ class DeliveryItemBuildWidget extends StatefulWidget {
   });
 
   @override
-  State<DeliveryItemBuildWidget> createState() => _DeliveryItemBuildWidgetState();
-}
-
-class _DeliveryItemBuildWidgetState extends State<DeliveryItemBuildWidget> {
-  DeliveryAddressController get deliveryAddressController => Get.find();
-
-  @override
   Widget build(BuildContext context) {
     final Widget child;
     final String keyValue;
 
-    if (widget.item is DeliveryTypeViewModel) {
-      final viewModel = widget.item as DeliveryTypeViewModel;
-      child = DeliveryTypeWidget(itemViewModel: viewModel, onCallBack: widget.onCallBack);
+    if (item is DeliveryTypeViewModel) {
+      final viewModel = item as DeliveryTypeViewModel;
+      child = DeliveryTypeWidget(itemViewModel: viewModel, onCallBack: onCallBack);
       keyValue = 'delivery_type';
-    } else if (widget.item is SelectionViewModel) {
-      final viewModel = widget.item as SelectionViewModel;
-
+    } else if (item is SelectionViewModel) {
+      final viewModel = item as SelectionViewModel;
       child = SelectionWidget(
         itemViewModel: viewModel,
         onSelectionChanged: (value) {
+          final controller = Get.find<DeliveryAddressController>();
           if (viewModel.keyId == 'country') {
             if (value == 'Select country') return;
-            final country = deliveryAddressController.countries.firstWhere((c) => c.name == value);
-            deliveryAddressController.selectedCountry.value = country;
-            deliveryAddressController.selectedState.value = null;
-            deliveryAddressController.selectedCity.value = null;
-            deliveryAddressController.states.clear();
-            deliveryAddressController.cities.clear();
-            deliveryAddressController.loadStates(country);
+            final country = controller.countries.firstWhere((c) => c.name == value);
+            controller.selectedCountry.value = country;
+            controller.selectedState.value = null;
+            controller.selectedCity.value = null;
+            controller.states.clear();
+            controller.cities.clear();
+            controller.loadStates(country);
           } else if (viewModel.keyId == 'region') {
             if (value == 'Select region') return;
-            final state = deliveryAddressController.states.firstWhere((s) => s.name == value);
-            deliveryAddressController.selectedState.value = state;
-            deliveryAddressController.selectedCity.value = null;
-            deliveryAddressController.cities.clear();
-            deliveryAddressController.loadCities(deliveryAddressController.selectedCountry.value!, state);
+            final state = Get.find<DeliveryAddressController>()
+                .states
+                .firstWhere((s) => s.name == value);
+            Get.find<DeliveryAddressController>().selectedState.value = state;
+            Get.find<DeliveryAddressController>().selectedCity.value = null;
+            Get.find<DeliveryAddressController>().cities.clear();
+            Get.find<DeliveryAddressController>()
+                .loadCities(Get.find<DeliveryAddressController>().selectedCountry.value!, state);
           } else if (viewModel.keyId == 'city') {
-            if (value == 'Select city') return;
-            deliveryAddressController.selectedCity.value = deliveryAddressController.cities.firstWhere(
-              (c) => c.name == value,
-            );
+            Get.find<DeliveryAddressController>().selectedCity.value =
+                Get.find<DeliveryAddressController>()
+                    .cities
+                    .firstWhere((c) => c.name == value);
           }
         },
       );
       keyValue = 'selection_${viewModel.keyId}_${viewModel.title}';
-    } else if (widget.item is TextFieldViewModel) {
-      final viewModel = widget.item as TextFieldViewModel;
+    } else if (item is TextFieldViewModel) {
+      final viewModel = item as TextFieldViewModel;
       child = TextFieldWidget(itemViewModel: viewModel);
       keyValue = 'text_field_${viewModel.keyId}';
     } else {
       child = const SizedBox.shrink();
-      keyValue = 'unknown_${widget.index}';
+      keyValue = 'unknown_$index';
     }
 
-    if (widget.item is DeliveryTypeViewModel) {
-      return child;
+    // Skip animation if animation hasn't started yet (first build)
+    final skipAnimation = animation.status == AnimationStatus.dismissed;
+
+    if (item is DeliveryTypeViewModel || skipAnimation) {
+      return KeyedSubtree(
+        key: ValueKey(keyValue),
+        child: child,
+      );
     }
+
     return AnimatedListItemWrapper(
-      animation: widget.animation,
-      index: widget.index,
-      isRemoval: widget.isRemoval,
+      animation: animation,
+      index: index,
+      isRemoval: isRemoval,
       child: child,
     );
   }
