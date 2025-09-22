@@ -23,8 +23,9 @@ class DeliveryAddressPage extends StatefulWidget {
 }
 
 class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
-  DeliveryAddressController get deliveryAddressController=>Get.find();
+  DeliveryAddressController get deliveryAddressController => Get.find();
   final _formKey = GlobalKey<FormState>();
+  bool _showAnimatedList = false;
 
   @override
   void initState() {
@@ -32,6 +33,9 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
     Get.put(DeliveryAddressController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       deliveryAddressController.initItems();
+      setState(() {
+        _showAnimatedList = true;
+      });
     });
   }
 
@@ -53,45 +57,61 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
 
           return Form(
             key: _formKey,
-            child: ImplicitlyAnimatedList<BaseViewModel>(
-              items: items,
-              padding: const EdgeInsets.only(bottom: 10),
-              shrinkWrap: true,
-              areItemsTheSame: (a, b) {
-                if (a.runtimeType != b.runtimeType) return false;
+            child: _showAnimatedList
+                ? ImplicitlyAnimatedList<BaseViewModel>(
+                    items: items,
+                    padding: const EdgeInsets.only(bottom: 10),
+                    shrinkWrap: true,
+                    areItemsTheSame: (a, b) {
+                      if (a.runtimeType != b.runtimeType) return false;
 
-                if (a is SelectionViewModel && b is SelectionViewModel) return a.keyId == b.keyId;
-                if (a is TextFieldViewModel && b is TextFieldViewModel) return a.keyId == b.keyId;
-                if (a is DeliveryTypeViewModel && b is DeliveryTypeViewModel) return a.selected == b.selected;
+                      if (a is SelectionViewModel && b is SelectionViewModel) return a.keyId == b.keyId;
+                      if (a is TextFieldViewModel && b is TextFieldViewModel) return a.keyId == b.keyId;
+                      if (a is DeliveryTypeViewModel && b is DeliveryTypeViewModel) return a.selected == b.selected;
 
-                return false;
-              },
+                      return false;
+                    },
 
-              removeItemBuilder: (context, animation, oldItem) {
-                return DeliveryItemBuildWidget(
-                  onCallBack: () async {
-                    await deliveryAddressController.removeAllItemsAnimated();
-                    deliveryAddressController.updateAllItems();
-                  },
-                  item: oldItem,
-                  animation: animation,
-                  index: 0,
-                  isRemoval: true,
-                );
-              },
+                    removeItemBuilder: (context, animation, oldItem) {
+                      return DeliveryItemBuildWidget(
+                        onCallBack: () async {
+                          await deliveryAddressController.removeAllItemsAnimated();
+                          deliveryAddressController.updateAllItems();
+                        },
+                        item: oldItem,
+                        animation: animation,
+                        index: 0,
+                        isRemoval: true,
+                      );
+                    },
 
-              itemBuilder: (context, animation, item, index) {
-                return DeliveryItemBuildWidget(
-                  onCallBack: () async {
-                    await deliveryAddressController.removeAllItemsAnimated();
-                    deliveryAddressController.updateAllItems();
-                  },
-                  item: item,
-                  animation: animation,
-                  index: index,
-                );
-              },
-            ),
+                    itemBuilder: (context, animation, item, index) {
+                      return DeliveryItemBuildWidget(
+                        onCallBack: () async {
+                          await deliveryAddressController.removeAllItemsAnimated();
+                          deliveryAddressController.updateAllItems();
+                        },
+                        item: item,
+                        animation: animation,
+                        index: index,
+                      );
+                    },
+                  )
+                : ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      return DeliveryItemBuildWidget(
+                        item: item,
+                        animation: kAlwaysDismissedAnimation,
+                        index: index,
+                        onCallBack: () async {
+                          await deliveryAddressController.removeAllItemsAnimated();
+                          deliveryAddressController.updateAllItems();
+                        },
+                      );
+                    },
+                  ),
           );
         }),
       ),

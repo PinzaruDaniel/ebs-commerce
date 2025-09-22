@@ -4,12 +4,9 @@ import 'package:presentation/pages/contact_information_page/contact_information_
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
-import '../../util/widgets/animated_list_items_build_widget.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
-import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
 import '../../util/widgets/text_field_widget.dart';
-import '../../view/base_view_model.dart';
 
 class ContactInformationPage extends StatefulWidget {
   const ContactInformationPage({super.key, required this.onSave});
@@ -34,6 +31,7 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
@@ -53,21 +51,17 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
                 child: Obx(() {
                   final items = contactInformationController.allItems.toList();
 
-                  return ImplicitlyAnimatedList<BaseViewModel>(
-                    items: items,
+                  return ListView.builder(
                     padding: const EdgeInsets.only(bottom: 10),
-                    areItemsTheSame: (a, b) => a.hashCode == b.hashCode,
-                    itemBuilder: (context, animation, item, index) {
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+
                       if (item is! TextFieldViewModel) {
                         return const SizedBox.shrink();
                       }
 
-                      return AnimatedListItemWrapper(
-                        animation: animation,
-                        index: index,
-                        keyValue: 'text_field_${item.keyId}',
-                        child: TextFieldWidget(itemViewModel: item),
-                      );
+                      return TextFieldWidget(itemViewModel: item);
                     },
                   );
                 }),
