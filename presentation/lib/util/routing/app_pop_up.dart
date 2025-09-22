@@ -53,7 +53,6 @@ class AppPopUp {
     required Function(String) onSelected,
     String? initialMethod,
   }) async {
-    if (Get.context == null) return;
     await showCustomBottomSheet(
       child: PaymentMethodSelectionWidget(
         onSelected: onSelected,
@@ -66,15 +65,13 @@ class AppPopUp {
     required String initialValue,
     required Function(String) onSubmit,
   }) async {
-    if (Get.context != null) {
-      await showCustomBottomSheet(
-        isScrollControlled: true,
-        child: VoucherCodeInputWidget(
-          initialValue: initialValue,
-          onSubmit: onSubmit,
-        ),
-      );
-    }
+    await showCustomBottomSheet(
+      isScrollControlled: true,
+      child: VoucherCodeInputWidget(
+        initialValue: initialValue,
+        onSubmit: onSubmit,
+      ),
+    );
   }
 
   static Future<void> showSelection({
@@ -83,17 +80,15 @@ class AppPopUp {
     required RxString selectedValue,
     Function(String)? onSelectionChanged,
   }) async {
-    if (Get.context != null) {
-      return await showCustomBottomSheet(
-        isDismissible: false,
-        child: OptionPickerWidget(
-          title: title,
-          options: options,
-          selectedValue: selectedValue,
-          onSelectionChanged: onSelectionChanged,
-        ),
-      );
-    }
+    return await showCustomBottomSheet(
+      isDismissible: false,
+      child: OptionPickerWidget(
+        title: title,
+        options: options,
+        selectedValue: selectedValue,
+        onSelectionChanged: onSelectionChanged,
+      ),
+    );
   }
 
   static Future<bool> showConfirmationDialog({
@@ -101,7 +96,7 @@ class AppPopUp {
     String? title,
     String? content,
     String confirmText = AppTexts.ok,
-     Function? onSave,
+    Function? onSave,
     Function? onCancel,
   }) async {
     return await showDialog<bool>(
@@ -116,7 +111,7 @@ class AppPopUp {
                   onCancel?.call();
                   Navigator.of(context).pop(false);
                 },
-                child: Text('Cancel'),
+                child: Text(AppTexts.cancel),
               ),
               TextButton(
                 onPressed: () {
