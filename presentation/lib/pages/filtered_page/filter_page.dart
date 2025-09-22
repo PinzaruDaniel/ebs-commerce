@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/pages/category_page/category_controller.dart';
 import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/pages/filtered_page/widgets/add_to_category_button_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/price_slider_widget.dart';
@@ -25,8 +24,6 @@ class FilterPage extends StatefulWidget {
 
 class _FilterPageState extends State<FilterPage> {
   FilterController get filterController=>Get.find();
-  //TODO: TO REMOVE IT!!!
-  CategoryController get categoryController=>Get.find();
 
   @override
   void dispose() {
@@ -37,10 +34,8 @@ class _FilterPageState extends State<FilterPage> {
   void initState() {
     super.initState();
     Get.put(FilterController());
-    Get.put(CategoryController());
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      filterController.getFilteredProducts(page: 1);
+      filterController.initItems();
     });
   }
 
@@ -92,7 +87,7 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                 ),
                 Obx(() {
-                  final selected = categoryController.selectedCategoryId.toList();
+                  final selected = filterController.selectedCategoryId.toList();
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Wrap(
@@ -103,7 +98,7 @@ class _FilterPageState extends State<FilterPage> {
                           SelectedCategoryButtonWidget(
                             id: id,
                             name: _nameFor(id),
-                            onRemove: () => categoryController.toggleCategory(id, false),
+                            onRemove: () => filterController.toggleCategory(id, false),
                           ),
                         AddToCategoryButtonWidget(),
                       ],
@@ -147,7 +142,7 @@ class _FilterPageState extends State<FilterPage> {
   }
 
   String _nameFor(int id) {
-    final c = categoryController.categories.firstWhereOrNull((e) => e.id == id);
+    final c = filterController.categories.firstWhereOrNull((e) => e.id == id);
     return c!.name;
   }
 }
