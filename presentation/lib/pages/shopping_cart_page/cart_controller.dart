@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 class CartController extends GetxController {
   RxList<CartViewModel> cartItems = mainAppController.cartItems;
   void updateQuantity(int index, int newQuantity, BuildContext context) async {
-
       cartItems[index].quantity = newQuantity;
       cartItems.refresh();
   }

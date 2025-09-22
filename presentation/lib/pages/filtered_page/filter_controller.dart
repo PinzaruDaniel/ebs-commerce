@@ -8,6 +8,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class FilterController extends GetxController {
   final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();
+  //TODO: REMOVE HERE TOO!!!
   CategoryController get categoryController=>Get.find();
 
   final RxList<ProductViewModel> filteredProducts = RxList([]);

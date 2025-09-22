@@ -25,6 +25,7 @@ class FilterPage extends StatefulWidget {
 
 class _FilterPageState extends State<FilterPage> {
   FilterController get filterController=>Get.find();
+  //TODO: TO REMOVE IT!!!
   CategoryController get categoryController=>Get.find();
 
   @override
@@ -36,9 +37,9 @@ class _FilterPageState extends State<FilterPage> {
   void initState() {
     super.initState();
     Get.put(FilterController());
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.put(CategoryController());
+    Get.put(CategoryController());
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       filterController.getFilteredProducts(page: 1);
     });
   }

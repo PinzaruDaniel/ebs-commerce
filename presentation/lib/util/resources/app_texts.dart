@@ -58,6 +58,7 @@ class AppTexts {
   static const String goHome='Go Home';
   static const String createOrder='Create Order';
   static const String orderSuccess='Order has been placed Successfully';
+  static const String requiredField ='This field is required';
   static const String numberIsRequired='Phone number is required';
   static const String invalidNumberPhone='Enter a valid phone number';
   static const String emailIsRequired='Email is required';
@@ -67,6 +68,5 @@ class AppTexts {
   static const String removeItem= 'Remove Item?';
   static const String removeItemQuestion='Do you want to remove this item from your cart?';
   static const String chooseDeliveryAddress= 'Choose your Delivery Address';
-  //static const String
   //static const String
 }

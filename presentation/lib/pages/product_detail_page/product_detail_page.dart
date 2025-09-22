@@ -100,6 +100,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           AppPopUp.showCartInfoPopUp(
             item: widget.item!,
             onAdd: (int quantity) {
+              //TODO: maxvalue from outside
               addCartController.cartItem.value?.quantity = quantity;
 
               final item = addCartController.cartItem.value;

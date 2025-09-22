@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_colors.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/base_view_model.dart';
 
 class TextFieldViewModel extends BaseViewModel {
   final String title;
   final String? keyId;
   final TextInputType? textInputType;
-  final bool isRequired;
-  final String? Function(String?)? customValidator; // NEW
+  final bool isRequiredValidation;
+  final String? Function(String?)? customValidator;
   String placeholder;
+  int? minLines;
 
   TextFieldViewModel({
     this.keyId,
     required this.title,
     this.textInputType,
     this.customValidator,
-    this.isRequired = true,
+    this.isRequiredValidation = true,
     String initialValue = '',
+    this.minLines,
   }) : placeholder = initialValue;
 }
 
@@ -60,9 +63,11 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           Text(widget.itemViewModel.title),
           const SizedBox(height: 4),
           TextFormField(
+            minLines: widget.itemViewModel.minLines ?? 1,
+            maxLines: widget.itemViewModel.minLines != null ? null : 1,
             validator: (text) {
-              if (widget.itemViewModel.isRequired && (text == null || text.isEmpty)) {
-                return "This field is required";
+              if (widget.itemViewModel.isRequiredValidation && (text == null || text.isEmpty)) {
+                return AppTexts.requiredField;
               }
               if (widget.itemViewModel.customValidator != null) {
                 return widget.itemViewModel.customValidator!(text);
@@ -84,18 +89,15 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                 borderSide: BorderSide(color: AppColors.red, width: 2.0),
               ),
 
-
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(color: AppColors.redText, width: 1.0),
               ),
 
-
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
               ),
-
 
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
