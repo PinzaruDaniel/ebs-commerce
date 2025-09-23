@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/filtered_page/filter_controller.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/category_view_model.dart';
 
 import '../../../util/resources/app_text_styles.dart';
@@ -33,7 +34,7 @@ class AddToCategoryButtonWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min ,
           children: [
             Text(
-              'Add Category',
+              AppTexts.addCategory,
               style: AppTextsStyle.medium.copyWith(
                 color: Color(0xff6b6d81),
                 fontWeight: FontWeight.bold,

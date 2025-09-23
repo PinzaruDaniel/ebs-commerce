@@ -30,7 +30,7 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
 
     return PullDownButton(
       itemBuilder: (context) => supportedLocales.map((locale) {
-        return PullDownMenuItem(
+        return PullDownMenuItem.selectable(
           onTap: () {
             context.setLocale(locale);
             Get.updateLocale(locale);

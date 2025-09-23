@@ -66,5 +66,25 @@
   "removeItem": "Удалить товар?",
   "removeItemQuestion": "Вы хотите удалить этот товар из корзины?",
   "chooseDeliveryAddress": "Выберите адрес доставки",
-  "cancel": "Отмена"
+  "cancel": "Отмена",
+  "nothingToShow": "Сейчас нечего показывать",
+  "name": "Имя",
+  "surname": "Фамилия",
+  "phone": "Телефон",
+  "email": "Электронная почта",
+  "enterYourData": "Введите ваши данные",
+  "office": "Офис",
+  "country": "Страна",
+  "selectCountry": "Выберите страну",
+  "region": "Регион",
+  "selectRegion": "Выберите регион",
+  "city": "Город",
+  "selectCity": "Выберите город",
+  "postalCode": "Почтовый индекс",
+  "address": "Адрес",
+  "otherComments": "Другие комментарии",
+  "ridicareLaSediu": "Забрать в офисе",
+  "addCategory": "Добавить категорию",
+  "cashPaymentMethod": "оплата наличными"
+
 }

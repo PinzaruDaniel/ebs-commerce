@@ -13,11 +13,11 @@ class ContactInformationController extends GetxController {
   void initAllItems() {
     final existingUser = user.value;
     allItems.value = [
-      TextFieldViewModel(keyId: 'name', title: 'Name', initialValue: existingUser?.name ?? ''),
-      TextFieldViewModel(keyId: 'surname', title: 'Surname', initialValue: existingUser?.surname ?? ''),
+      TextFieldViewModel(keyId: 'name', title: AppTexts.name, initialValue: existingUser?.name ?? ''),
+      TextFieldViewModel(keyId: 'surname', title: AppTexts.surname, initialValue: existingUser?.surname ?? ''),
       TextFieldViewModel(
         keyId: 'phone',
-        title: 'Phone',
+        title: AppTexts.phone,
         textInputType: TextInputType.phone,
         initialValue: existingUser?.number ?? '',
         customValidator: (text) {
@@ -29,7 +29,7 @@ class ContactInformationController extends GetxController {
       ),
       TextFieldViewModel(
         keyId: 'email',
-        title: 'Email',
+        title: AppTexts.email,
         textInputType: TextInputType.emailAddress,
         initialValue: existingUser?.email ?? '',
         customValidator: (text) {

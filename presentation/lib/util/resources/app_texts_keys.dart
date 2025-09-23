@@ -67,4 +67,24 @@ class AppTextKeys {
   static const String removeItemQuestion = 'removeItemQuestion';
   static const String chooseDeliveryAddress = 'chooseDeliveryAddress';
   static const String cancel = 'cancel';
+  static const String nothingToShow='nothingToShow';
+  static const String name='name';
+  static const String surname='surname';
+  static const String phone='phone';
+  static const String email='email';
+  static const String enterYourData='enterYourData';
+  static const String office='office';
+  static const String country='country';
+  static const String selectCountry='selectCountry';
+  static const String region='region';
+  static const String selectRegion='selectRegion';
+  static const String city='city';
+  static const String selectCity='selectCity';
+  static const String postalCode='postalCode';
+  static const String address='address';
+  static const String otherComments='otherComments';
+  static const String ridicareLaSediu = 'ridicareLaSediu';
+  static const String addCategory='addCategory';
+  static const String cashPaymentMethod='cashPaymentMethod';
+
 }

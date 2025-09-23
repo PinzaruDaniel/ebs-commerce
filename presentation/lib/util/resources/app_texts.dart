@@ -71,4 +71,23 @@ class AppTexts {
   static String get removeItemQuestion => AppTextKeys.removeItemQuestion.tr();
   static String get chooseDeliveryAddress => AppTextKeys.chooseDeliveryAddress.tr();
   static String get cancel => AppTextKeys.cancel.tr();
+  static String get nothingToShow=> AppTexts.nothingToShow.tr();
+  static String get name=>AppTextKeys.name.tr();
+  static String get surname=>AppTextKeys.surname.tr();
+  static String get phone=>AppTextKeys.phone.tr();
+  static String get email=>AppTextKeys.email.tr();
+  static String get enterYourData=>AppTextKeys.enterYourData.tr();
+  static String get office=>AppTextKeys.office.tr();
+  static String get country=>AppTextKeys.country.tr();
+  static String get selectCountry=>AppTextKeys.selectCountry.tr();
+  static String get region=>AppTextKeys.region.tr();
+  static String get selectRegion=>AppTextKeys.selectRegion.tr();
+  static String get city=>AppTextKeys.city.tr();
+  static String get selectCity=>AppTextKeys.selectCity.tr();
+  static String get postalCode=>AppTextKeys.postalCode.tr();
+  static String get address=>AppTextKeys.address.tr();
+  static String get otherComments=>AppTextKeys.otherComments.tr();
+  static String get ridicareLaSediu=>AppTextKeys.ridicareLaSediu.tr();
+  static String get addCategory=>AppTextKeys.addCategory.tr();
+  static String get cashPaymentMethod=>AppTextKeys.cashPaymentMethod.tr();
 }
