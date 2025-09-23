@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'E-commerce ebs app',
       debugShowCheckedModeBanner: false,
 
@@ -50,7 +50,9 @@ class MyApp extends StatelessWidget {
       ),
 
       initialRoute: '/',
-      routes: {'/': (context) => const HomePage()},
+      getPages: [
+        GetPage(name: '/', page: ()=>HomePage())
+      ],
     );
   }
 }

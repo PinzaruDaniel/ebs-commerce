@@ -1,12 +1,11 @@
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class LanguageDropdown extends StatefulWidget {
-  final Function onSave;
 
-  const LanguageDropdown({super.key, required this.onSave});
+  const LanguageDropdown({super.key});
 
   @override
   State<LanguageDropdown> createState() => _LanguageDropdownState();
@@ -34,7 +33,7 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
         return PullDownMenuItem(
           onTap: () {
             context.setLocale(locale);
-            widget.onSave.call();
+            Get.updateLocale(locale);
           },
           title: languageNames[locale.languageCode] ??
               locale.languageCode.toUpperCase(),

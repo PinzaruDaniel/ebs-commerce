@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
@@ -52,10 +51,7 @@ class _HomePageState extends State<HomePage> {
         showBorder: true,
         leading: AppIcons.companyIcon,
         actions: [
-          LanguageDropdown(onSave: () async {
-            await homeController.getProducts(loadMore: false);
-
-          }),
+          LanguageDropdown(),
           OpenContainerAnimation(
             closedShape: CircleBorder(),
             closedBuilder: (context, openContainer) {
