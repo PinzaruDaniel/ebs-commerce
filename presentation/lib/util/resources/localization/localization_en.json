@@ -36,11 +36,6 @@
   "contactInformation": "CONTACT INFORMATION",
   "deliveryAddress": "DELIVERY ADDRESS",
   "paymentMethod": "PAYMENT METHOD",
-  "subTotal": "Subtotal",
-  "shippingFee": "Shipping Fee",
-  "adminFee": "Admin Fee",
-  "voucherCode": "Voucher Code",
-  "total": "Total",
   "contactInfo": "Contact info",
   "save": "Save",
   "choosePaymentMethod": "Choose your payment method",
@@ -85,5 +80,12 @@
   "otherComments": "Other comments",
   "ridicareLaSediu": "Pickup at office",
   "addCategory": "Add category",
-  "cashPaymentMethod": "Cash Payment"
+  "cashPaymentMethod": "Cash Payment",
+  "subtotal": "Subtotal",
+  "shippingFee": "Shipping Fee",
+  "adminFee": "Admin Fee",
+  "voucherCode": "Voucher Code",
+  "total": "Total",
+  "deliveryType": "Delivery Type"
+
 }

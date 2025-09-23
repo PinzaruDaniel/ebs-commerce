@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/util/enum/map_enums.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import '../../../util/resources/app_text_styles.dart';
 import '../../../view/cart_products_view_model.dart';
 
@@ -26,7 +27,7 @@ class ShoppingCartTitleWidget extends StatelessWidget {
           ),
           SizedBox(height: 4),
           Text(
-            'Total: \$${item.totalPrice}',
+            '${AppTexts.total}: \$${item.totalPrice}',
             style: AppTextsStyle.bold(size: 14),
           ),
         ],

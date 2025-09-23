@@ -36,11 +36,7 @@ class AppTextKeys {
   static const String contactInformation = 'contactInformation';
   static const String deliveryAddress = 'deliveryAddress';
   static const String paymentMethod = 'paymentMethod';
-  static const String subTotal = 'subTotal';
-  static const String shippingFee = 'shippingFee';
-  static const String adminFee = 'adminFee';
-  static const String voucherCode = 'voucherCode';
-  static const String total = 'total';
+
   static const String contactInfo = 'contactInfo';
   static const String save = 'save';
   static const String choosePaymentMethod = 'choosePaymentMethod';
@@ -84,7 +80,16 @@ class AppTextKeys {
   static const String address='address';
   static const String otherComments='otherComments';
   static const String ridicareLaSediu = 'ridicareLaSediu';
+  static const String dhl='DHL';
+  static const String fanCourier=' Fan Courier';
   static const String addCategory='addCategory';
   static const String cashPaymentMethod='cashPaymentMethod';
+  static const String subtotal = 'subtotal';
+  static const String shippingFee = 'shippingFee';
+  static const String adminFee = 'adminFee';
+  static const String voucherCode = 'voucherCode';
+  static const String total = 'total';
+  static const String deliveryType = 'deliveryType';
+
 
 }

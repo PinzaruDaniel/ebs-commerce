@@ -40,11 +40,7 @@ class AppTexts {
   static String get contactInformation => AppTextKeys.contactInformation.tr();
   static String get deliveryAddress => AppTextKeys.deliveryAddress.tr();
   static String get paymentMethod => AppTextKeys.paymentMethod.tr();
-  static String get subTotal => AppTextKeys.subTotal.tr();
-  static String get shippingFee => AppTextKeys.shippingFee.tr();
-  static String get adminFee => AppTextKeys.adminFee.tr();
-  static String get voucherCode => AppTextKeys.voucherCode.tr();
-  static String get total => AppTextKeys.total.tr();
+
   static String get contactInfo => AppTextKeys.contactInfo.tr();
   static String get save => AppTextKeys.save.tr();
   static String get choosePaymentMethod => AppTextKeys.choosePaymentMethod.tr();
@@ -88,6 +84,14 @@ class AppTexts {
   static String get address=>AppTextKeys.address.tr();
   static String get otherComments=>AppTextKeys.otherComments.tr();
   static String get ridicareLaSediu=>AppTextKeys.ridicareLaSediu.tr();
+  static String get dhl=>AppTextKeys.dhl;
+  static String get fanCourier=>AppTextKeys.fanCourier;
   static String get addCategory=>AppTextKeys.addCategory.tr();
   static String get cashPaymentMethod=>AppTextKeys.cashPaymentMethod.tr();
+  static String get subtotal => AppTextKeys.subtotal.tr();
+  static String get shippingFee => AppTextKeys.shippingFee.tr();
+  static String get adminFee => AppTextKeys.adminFee.tr();
+  static String get voucherCode => AppTextKeys.voucherCode.tr();
+  static String get total => AppTextKeys.total.tr();
+  static String get deliveryType=>AppTextKeys.deliveryType.tr();
 }

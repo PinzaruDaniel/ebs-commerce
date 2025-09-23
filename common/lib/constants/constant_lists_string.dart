@@ -1,5 +1,7 @@
+import 'package:presentation/util/resources/app_texts.dart';
+
 List<String> promoCodes = ['SAVE10', 'WELCOME5', 'FREESHIP', 'DANIELLOH6869'];
-List<String> paymentMethods = ['PayPal', AppTexts.];
+List<String> paymentMethods = ['PayPal', AppTexts.cashPaymentMethod];
 List<String> pickupLocations = [
   'Posta moldovei, Armeneasca 2',
   'Undeva departe',

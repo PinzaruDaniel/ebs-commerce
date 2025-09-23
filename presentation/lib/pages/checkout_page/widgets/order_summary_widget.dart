@@ -4,6 +4,7 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/view/base_view_model.dart';
 
+import '../../../util/resources/app_texts.dart';
 
 class OrderSummaryViewModel extends BaseViewModel {
   final RxDouble subtotal = RxDouble(0.0);
@@ -11,7 +12,6 @@ class OrderSummaryViewModel extends BaseViewModel {
   final RxDouble adminFee = RxDouble(2.0);
   final RxDouble voucherDiscount = RxDouble(0.0);
   final RxDouble total = RxDouble(0.0);
-
 }
 
 class OrderSummaryWidget extends StatelessWidget {
@@ -24,34 +24,25 @@ class OrderSummaryWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Obx(
-            () => Padding(
+        () => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildSummaryRow(
-                'Subtotal',
-                '\$${orderSummary.subtotal.value}',
-              ),
+              buildSummaryRow(AppTexts.subtotal, '\$${orderSummary.subtotal.value}'),
+
               if (orderSummary.shippingFee.value > 0)
-                buildSummaryRow(
-                  'Shipping Fee',
-                  '\$${orderSummary.shippingFee.value}',
-                ),
-              buildSummaryRow(
-                'Admin Fee',
-                '\$${orderSummary.adminFee}',
-              ),
+                buildSummaryRow(AppTexts.shippingFee, '\$${orderSummary.shippingFee.value}'),
+              buildSummaryRow(AppTexts.adminFee, '\$${orderSummary.adminFee}'),
+
               if (orderSummary.voucherDiscount.value > 0)
                 buildSummaryRow(
-                  'Voucher Code',
+                  AppTexts.voucherCode,
                   '- \$${orderSummary.voucherDiscount.value}',
                   color: AppColors.redText,
                 ),
-              buildSummaryRow(
-                'Total',
-                '\$${orderSummary.total.value}',
-              ),
+
+              buildSummaryRow(AppTexts.total, '\$${orderSummary.total.value}'),
             ],
           ),
         ),
@@ -65,14 +56,8 @@ class OrderSummaryWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            label,
-            style: AppTextsStyle.medium,
-          ),
-          Text(
-            value,
-            style: AppTextsStyle.bold(size: 14).copyWith(color: color),
-          ),
+          Text(label, style: AppTextsStyle.medium),
+          Text(value, style: AppTextsStyle.bold(size: 14).copyWith(color: color)),
         ],
       ),
     );

@@ -211,7 +211,7 @@ class DeliveryAddressController extends GetxController {
         initialValue: '',
         textInputType: TextInputType.number,
       ),
-      TextFieldViewModel(keyId: 'address', title: 'Address', initialValue: ''),
+      TextFieldViewModel(keyId: 'address', title: AppTexts.address, initialValue: ''),
       TextFieldViewModel(keyId: 'other_comments', title: AppTexts.otherComments, initialValue: '', isRequiredValidation: false, minLines: 3),
     ]);
   }

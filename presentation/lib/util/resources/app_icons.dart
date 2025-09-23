@@ -11,6 +11,8 @@ class AppIcons {
   static SvgPicture filtersIcon = SvgPicture.asset('assets/icons/filters.svg');
   static Image companyIcon = Image(image: AssetImage('assets/icons/icon.png'));
   static SvgPicture toCartIcon = SvgPicture.asset('assets/icons/Union.svg', height: 14);
+  static Image fanCourier=Image(image: AssetImage('assets/icons/fan_courier.png'));
+  static Image dhl=Image(image: AssetImage('assets/icons/dhl.png'));
 
   //default images
   static  Image noImage({double? height, double? width}) => Image(image: AssetImage('assets/products/noimage.png'), width: width, height: height, fit: BoxFit.cover,);

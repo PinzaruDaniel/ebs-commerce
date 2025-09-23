@@ -36,11 +36,6 @@
   "contactInformation": "КОНТАКТНАЯ ИНФОРМАЦИЯ",
   "deliveryAddress": "АДРЕС ДОСТАВКИ",
   "paymentMethod": "СПОСОБ ОПЛАТЫ",
-  "subTotal": "Промежуточный итог",
-  "shippingFee": "Стоимость доставки",
-  "adminFee": "Административный сбор",
-  "voucherCode": "Код ваучера",
-  "total": "Итого",
   "contactInfo": "Контактная информация",
   "save": "Сохранить",
   "choosePaymentMethod": "Выберите способ оплаты",
@@ -85,6 +80,11 @@
   "otherComments": "Другие комментарии",
   "ridicareLaSediu": "Забрать в офисе",
   "addCategory": "Добавить категорию",
-  "cashPaymentMethod": "оплата наличными"
-
+  "cashPaymentMethod": "оплата наличными",
+  "subtotal": "Промежуточный итог",
+  "shippingFee": "Стоимость доставки",
+  "adminFee": "Административный сбор",
+  "voucherCode": "Промокод",
+  "total": "Итого",
+  "deliveryType": "Способ доставки"
 }
