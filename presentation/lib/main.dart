@@ -38,8 +38,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
       theme: ThemeData(
-        bottomSheetTheme:
-        BottomSheetThemeData(dragHandleColor: Colors.grey.shade300),
+        bottomSheetTheme: BottomSheetThemeData(dragHandleColor: Colors.grey.shade300),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Nunito-sans',
         useMaterial3: true,
@@ -51,11 +50,7 @@ class MyApp extends StatelessWidget {
       ),
 
       initialRoute: '/',
-      routes: {
-        '/': (context) => const HomePage(),
-      },
+      routes: {'/': (context) => const HomePage()},
     );
   }
 }
-
-
