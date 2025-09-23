@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
+import 'package:presentation/pages/home_page/widgets/language_dropdown_widget.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/resources/app_icons.dart';
@@ -37,6 +39,13 @@ class _HomePageState extends State<HomePage> {
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('language has changed');
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -44,6 +53,10 @@ class _HomePageState extends State<HomePage> {
         showBorder: true,
         leading: AppIcons.companyIcon,
         actions: [
+          LanguageDropdown(onSave: () async {
+            await homeController.getProducts(loadMore: false);
+
+          }),
           OpenContainerAnimation(
             closedShape: CircleBorder(),
             closedBuilder: (context, openContainer) {

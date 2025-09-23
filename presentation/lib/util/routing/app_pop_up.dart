@@ -95,7 +95,7 @@ class AppPopUp {
     required BuildContext context,
     String? title,
     String? content,
-    String confirmText = AppTexts.ok,
+    String? confirmText,
     Function? onSave,
     Function? onCancel,
   }) async {
@@ -119,7 +119,7 @@ class AppPopUp {
                   Navigator.of(context).pop(true);
                 },
                 child: Text(
-                  confirmText,
+                  confirmText?? AppTexts.ok,
                   style: TextStyle(color: AppColors.primary),
                 ),
               ),
