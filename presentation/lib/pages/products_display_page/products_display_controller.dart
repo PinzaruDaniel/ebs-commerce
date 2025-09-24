@@ -106,8 +106,6 @@ class ProductsDisplayController extends GetxController {
       },
     );
   }
-
-  //TODO: de trimis lista de parametri pentru filtrare
   Future<void> getFilteredProducts(bool loadMore, GetFilteredProductsParams getFilteredProductsParams) async {
     final either = await getFilteredProductsUseCase.call(
       GetFilteredProductsParams(
