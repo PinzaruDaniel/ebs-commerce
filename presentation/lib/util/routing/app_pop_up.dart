@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/util/enum/enums.dart';
 import 'package:presentation/util/widgets/option_picker_widget.dart';
 import 'package:presentation/util/widgets/payment_method_selection_widget.dart';
 import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
@@ -50,8 +51,8 @@ class AppPopUp {
   }
 
   static Future<void> paymentMethod({
-    required Function(String) onSelected,
-    String? initialMethod,
+    required Function(PaymentMethod) onSelected,
+    PaymentMethod? initialMethod,
   }) async {
     await showCustomBottomSheet(
       child: PaymentMethodSelectionWidget(

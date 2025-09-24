@@ -1,15 +1,15 @@
-import 'package:common/constants/constant_lists_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/util/enum/map_enums.dart';
+import '../enum/enums.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_text_styles.dart';
 import '../resources/app_texts.dart';
 import 'bottom_navigation_bar_widget.dart';
 
 class PaymentMethodSelectionWidget extends StatefulWidget {
-  final String? initialMethod;
-
-  final Function(String)? onSelected;
+  final PaymentMethod? initialMethod;
+  final Function(PaymentMethod)? onSelected;
 
   const PaymentMethodSelectionWidget({
     super.key,
@@ -18,18 +18,24 @@ class PaymentMethodSelectionWidget extends StatefulWidget {
   });
 
   @override
-  State<PaymentMethodSelectionWidget> createState() => _PaymentMethodSelectionWidgetState();
+  State<PaymentMethodSelectionWidget> createState() =>
+      _PaymentMethodSelectionWidgetState();
 }
 
-class _PaymentMethodSelectionWidgetState extends State<PaymentMethodSelectionWidget> {
-  String? selectedMethod;
+class _PaymentMethodSelectionWidgetState
+    extends State<PaymentMethodSelectionWidget> {
+  PaymentMethod? selectedMethod;
+
   @override
   void initState() {
     super.initState();
     selectedMethod = widget.initialMethod;
   }
+
   @override
   Widget build(BuildContext context) {
+    final paymentMethods = PaymentMethod.values;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,10 +79,9 @@ class _PaymentMethodSelectionWidgetState extends State<PaymentMethodSelectionWid
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            option,
+                            option.title,
                             style: AppTextsStyle.medium.copyWith(
                               color: isSelected
                                   ? AppColors.primary

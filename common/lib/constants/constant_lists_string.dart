@@ -22,7 +22,6 @@ List<String> promoCodes = [
   'discountX',
   'loyaltyPLUS',
 ];
-List<String> paymentMethods = ['PayPal', AppTexts.cashPaymentMethod];
 List<String> pickupLocations = [
   'Posta moldovei, Armeneasca 2',
   'Undeva departe',

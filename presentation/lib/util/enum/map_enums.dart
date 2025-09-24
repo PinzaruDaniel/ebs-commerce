@@ -56,3 +56,14 @@ extension MapTextProductType on ProductListType {
     }
   }
 }
+
+extension PaymentMethodExtension on PaymentMethod {
+  String get title {
+    switch (this) {
+      case PaymentMethod.paypal:
+        return 'PayPal';
+      case PaymentMethod.cash:
+        return AppTexts.cashPaymentMethod;
+    }
+  }
+}
