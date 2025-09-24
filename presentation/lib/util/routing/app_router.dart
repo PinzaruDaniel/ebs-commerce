@@ -1,3 +1,4 @@
+import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_page.dart';
@@ -63,8 +64,8 @@ class AppRouter {
     return FilterPage();
   }
 
-  static Widget openProductsDisplayPage({required ProductListType type, required String title}) {
-    return ProductsDisplayPage(title: title, type: type);
+  static Widget openProductsDisplayPage({required ProductListType type, required String title, GetFilteredProductsParams? getFilteredProductsParams}) {
+    return ProductsDisplayPage(title: title, type: type, getFilteredProductsParams: getFilteredProductsParams,);
   }
 
   static void openCheckoutPage({required List<CartViewModel> items}) {

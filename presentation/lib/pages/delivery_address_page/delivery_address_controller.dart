@@ -173,8 +173,16 @@ class DeliveryAddressController extends GetxController {
 
   void _addPickupFields() {
     final previousPickup = addressVM.value?.pickupLocation;
-
-    allItems.add(
+    allItems.value=[
+      SelectionViewModel(
+        keyId: 'sediu',
+        title: AppTexts.office,
+        options: pickupLocations,
+        initialValue:
+        previousPickup ?? getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? pickupLocations.first,
+      ),
+    ];
+    /*allItems.add(
       SelectionViewModel(
         keyId: 'sediu',
         title: AppTexts.office,
@@ -182,7 +190,7 @@ class DeliveryAddressController extends GetxController {
         initialValue:
             previousPickup ?? getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? pickupLocations.first,
       ),
-    );
+    );*/
   }
 
   void _addDeliveryFields() {

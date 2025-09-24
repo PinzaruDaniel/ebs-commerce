@@ -30,8 +30,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   void initState() {
     super.initState();
     deliveryAddressController = Get.put(DeliveryAddressController());
-
-    // Initialize the items after the first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
       deliveryAddressController.initItems();
     });

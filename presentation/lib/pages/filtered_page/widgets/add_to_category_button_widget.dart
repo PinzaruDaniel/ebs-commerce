@@ -17,6 +17,7 @@ class AddToCategoryButtonWidget extends StatelessWidget {
       splashColor: Colors.transparent,
       onTap: () async {
         AppRouter.openCategoryPickerPage(onSave: (List<CategoryViewModel> allCategories, Set<int> selectedIds){
+          //TODO: remove this, to change with callback
           filterController.setCategoryData(
             selectedIds: selectedIds.toSet(),
             allCategories: allCategories.toList(),

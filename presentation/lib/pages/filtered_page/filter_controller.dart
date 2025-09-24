@@ -1,14 +1,15 @@
-import 'package:domain/modules/products/use_cases/get_all_products_use_case.dart';
+import 'package:domain/modules/products/use_cases/get_filtered_products_count_use_case.dart';
+import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../view/category_view_model.dart';
 
 class FilterController extends GetxController {
-  final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();
+  final GetFilteredProductsCountUseCase getFilteredProductsCountUseCase =
+      GetIt.instance<GetFilteredProductsCountUseCase>();
   final RxSet<int> selectedCategoryId = <int>{}.obs;
   final RxList<CategoryViewModel> categories = RxList([]);
 
@@ -21,9 +22,9 @@ class FilterController extends GetxController {
   final RxInt filteredCount = 0.obs;
 
   void initItems() {
-    getFilteredProducts(page: 1);
-    debounce<SfRangeValues>(priceRange, (_) => getFilteredProducts(page: 1), time: Duration(seconds: 1));
-    debounce<Set<int>>(selectedCategoryId, (_) => getFilteredProducts(page: 1), time: Duration(milliseconds: 2));
+    getFilteredProductsCount(page: 1);
+    debounce<SfRangeValues>(priceRange, (_) => getFilteredProductsCount(page: 1), time: Duration(seconds: 1));
+    debounce<Set<int>>(selectedCategoryId, (_) => getFilteredProductsCount(page: 1), time: Duration(milliseconds: 2));
   }
 
   void setCategoryData({required Set<int> selectedIds, required List<CategoryViewModel> allCategories}) {
@@ -31,15 +32,27 @@ class FilterController extends GetxController {
     categories.value = List.from(allCategories);
   }
 
-  Future<void> getFilteredProducts({required int page}) async {
+  GetFilteredProductsParams getFilteredProductsParams() {
+    final min = priceRange.value.start.toDouble();
+    final max = priceRange.value.end.toDouble();
+    final categories = selectedCategoryId.toList();
+    return GetFilteredProductsParams(
+      page: 1,
+      priceGte: min,
+      priceLte: max,
+      categoriesId: categories.isNotEmpty ? categories : null,
+    );
+  }
+
+  Future<void> getFilteredProductsCount({required int page}) async {
     isLoading.value = true;
 
     final min = priceRange.value.start.toDouble();
     final max = priceRange.value.end.toDouble();
     final categories = selectedCategoryId.toList();
 
-    final result = await getFilteredProductsUseCase.call(
-      GetFilteredProductsParams(
+    final result = await getFilteredProductsCountUseCase.call(
+      GetFilteredProductsCountParams(
         page: page,
         priceGte: min,
         priceLte: max,
@@ -49,13 +62,10 @@ class FilterController extends GetxController {
 
     result.fold(
       (failure) {
-        filteredProducts.clear();
         filteredCount.value = 0;
       },
       (responseEntity) {
-        final products = responseEntity.response.map((e) => e.toModel).toList();
-        filteredProducts.value = products;
-        filteredCount.value = responseEntity.count;
+        filteredCount.value = responseEntity;
       },
     );
 
@@ -77,6 +87,6 @@ class FilterController extends GetxController {
   void resetFilters() {
     selectedCategoryId.clear();
     priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
-    getFilteredProducts(page: 1);
+    getFilteredProductsCount(page: 1);
   }
 }

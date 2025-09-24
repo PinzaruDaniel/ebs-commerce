@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../view/cart_products_view_model.dart';
 
@@ -12,11 +16,10 @@ class MainAppController extends GetxController {
       cartItems.add(item);
     }
   }
-  /*final priceString = (item.discountedPrice != null )
-      ? item.discountedPrice
-      : item.price;
 
-  final price = double.tryParse(priceString ?? '') ?? 0.0;
+  void changeLanguage(Locale locale, BuildContext context){
+      context.setLocale(locale);
+      Get.updateLocale(locale);
 
-  final rawTotalPrice=price*item.quantity;*/
+  }
 }

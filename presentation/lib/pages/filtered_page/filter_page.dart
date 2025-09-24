@@ -112,25 +112,26 @@ class _FilterPageState extends State<FilterPage> {
       ),
 
         bottomNavigationBar: Obx(() {
+          print(filterController.getFilteredProductsParams());
           final isLoading = filterController.isLoading.value;
-          final hasProducts = filterController.filteredProducts.isNotEmpty;
           final filteredCount = filterController.filteredCount.value;
-
+          var hasProducts=filteredCount>0;
           return OpenContainerAnimation(
             openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
               type: ProductListType.filteredProducts,
               title: AppTexts.filteredProducts,
+              getFilteredProductsParams: filterController.getFilteredProductsParams()
             ),
             closedBuilder: (context, openContainer) {
               return BottomNavigationBarWidget(
                 title: isLoading
                     ? AppTexts.loading
-                    : (filteredCount > 0
+                    : (hasProducts
                     ? '${AppTexts.showResults}($filteredCount)'
                     : AppTexts.noProductsToShow),
                 showIcon: false,
-                addToCart: hasProducts,
-                onTap: isLoading || !hasProducts ? null : openContainer,
+                addToCart: !isLoading,
+                onTap: isLoading  ? null : openContainer,
                 titleDialog: AppTexts.oops,
                 contentDialog: AppTexts.noProductsToShow,
               );

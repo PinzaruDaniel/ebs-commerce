@@ -12,7 +12,7 @@ void main() async {
   await initDi();
   await RootBinding().dependencies();
   await EasyLocalization.ensureInitialized();
-
+//TODO: din resources in assets localization
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ru'), Locale('ro')],

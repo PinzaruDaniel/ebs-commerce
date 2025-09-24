@@ -1,5 +1,6 @@
 import 'package:domain/modules/products/products_repository.dart';
-import 'package:domain/modules/products/use_cases/get_all_products_use_case.dart';
+import 'package:domain/modules/products/use_cases/get_filtered_products_count_use_case.dart';
+import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
@@ -10,6 +11,9 @@ Future<void> init() async {
 
   dataDi.registerLazySingleton<GetFilteredProductsUseCase>(
     () => GetFilteredProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
+  );
+  dataDi.registerLazySingleton<GetFilteredProductsCountUseCase>(
+    () => GetFilteredProductsCountUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
 
   /*dataDi.registerLazySingleton<GetSaleProductsUseCase>(
