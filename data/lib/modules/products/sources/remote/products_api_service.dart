@@ -10,7 +10,5 @@ abstract class ProductsApiService {
   factory ProductsApiService(Dio dio, {String baseUrl}) = _ProductsApiService;
 
   @GET('/products')
-  Future<ProductResponseApiDto> getProducts(
-      @Queries() Map<String, dynamic> queryParams,
-      );
+  Future<ProductResponseApiDto> getProducts(@Queries() Map<String, dynamic> queryParams);
 }

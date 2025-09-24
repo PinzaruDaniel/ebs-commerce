@@ -1,164 +1,147 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: invalid_use_of_protected_member
+
+import 'package:common/constants/constant_lists_string.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
-import 'package:presentation/pages/shopping_cart_page/cart_controller.dart';
-import 'package:presentation/util/routing/app_pop_up.dart';
+import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
-
-import '../../controllers/controller_imports.dart';
-import '../../util/enum/delivery_type.dart';
-import '../../util/resources/app_colors.dart';
+import '../../util/enum/enums.dart';
 import '../../util/resources/app_texts.dart';
-import '../../util/routing/app_router.dart';
-import '../../util/widgets/text_field_widget.dart';
-import '../../view/promo_code_view_model.dart';
+import '../../view/cart_products_view_model.dart';
 
 class CheckoutController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
-  RxString selectedPaymentMethod = RxString('');
+  RxString selectedPaymentMethod = ''.obs;
   RxString voucherCode = RxString('');
+  RxList<CartViewModel> productItems = RxList([]);
+  final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
 
-  CartController get cartController => Get.find();
+  void initProductItems(List<CartViewModel> productItems) {
+    this.productItems.value = productItems;
+    this.productItems.refresh();
+    allItems.refresh();
+  }
 
   bool hasIncompleteUserInfo() {
-    final user = contactInformationController.toUserViewModel();
+    final user = userModel.value;
     if (user == null) return true;
-    userModel.value = user;
     return user.surname.isEmpty || user.number.isEmpty || user.name.isEmpty || user.email.isEmpty;
   }
 
   void initAllItems() {
-    userModel.value = contactInformationController.toUserViewModel();
-    deliveryModel.value = deliveryAddressController.toDeliveryAddressViewModel();
+    updateOrderSummary(calculateSubtotal());
 
     allItems.value = [
       HeaderTitleViewModel(title: AppTexts.orderSummary),
-      ...cartController.selectedItems,
+      ...productItems.value,
 
       HeaderTitleViewModel(title: AppTexts.contactInformation),
       CheckoutInfoContainerViewModel(
+        keyId: CheckoutWidgetsType.userContactInfo,
         titleKey: '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''}',
-        infoItems: _buildUserInfo(userModel.value),
-        onTap: AppRouter.openContactInformationPage,
+        infoItems: buildUserInfo(userModel.value),
       ),
 
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
-        titleKey: deliveryModel.value?.deliveryType ??'',
-        infoItems: _buildDeliveryInfo(deliveryModel.value),
-        onTap: AppRouter.openDeliveryAddressPage,
+        keyId: CheckoutWidgetsType.deliveryAddressInfo,
+        placeholder: AppTexts.chooseDeliveryAddress,
+        titleKey: deliveryModel.value?.deliveryType ?? '',
+        infoItems: buildDeliveryInfo(deliveryModel.value),
       ),
 
       HeaderTitleViewModel(title: AppTexts.paymentMethod),
       CheckoutInfoContainerViewModel(
+        keyId: CheckoutWidgetsType.paymentMethod,
         placeholder: AppTexts.choosePaymentMethod,
         titleKey: selectedPaymentMethod.value,
-        onTap: () {
-          AppPopUp.paymentMethod(
-            selectedMethod: selectedPaymentMethod.value.obs,
-            onSelected: (value) {
-              selectedPaymentMethod.value = value;
-              initAllItems();
-              Navigator.pop(Get.context!);
-            },
-          );
-        },
         infoItems: {},
       ),
 
       CheckoutInfoContainerViewModel(
+        keyId: CheckoutWidgetsType.voucherCode,
         placeholder: AppTexts.enterYourVoucher,
         isPromoValid: true,
         showRemoveButton: voucherCode.value.isNotEmpty,
         titleKey: voucherCode.value,
-        onTap: _voucherTap,
-        onRemoveTap: () {
-          voucherCode.value = '';
-          initAllItems();
-        },
         infoItems: {},
       ),
-      _buildOrderSummary(_calculateSubtotal()),
+      orderSummary,
     ];
 
     allItems.refresh();
   }
 
-  double _calculateSubtotal() {
-    return cartController.selectedItems.fold(0.0, (sum, item) {
-      final priceString = item.discountedPrice ?? item.price;
-      final price = double.tryParse(priceString ?? '') ?? 0.0;
-      return sum + price * item.quantity;
-    });
+  double calculateSubtotal() {
+    return productItems.value.fold(0.0, (sum, item) => sum + item.totalPrice);
   }
 
-  Map<String, String> _buildDeliveryInfo(DeliveryAddressViewModel? model) {
+  void updateCheckoutInfoItem({
+    required CheckoutWidgetsType keyId,
+    String? titleKey,
+    String? placeholder,
+    Map<String, String>? infoItems,
+  }) {
+    final index = allItems.indexWhere((item) => item is CheckoutInfoContainerViewModel && item.keyId == keyId);
 
-    if (deliveryAddressController.fromLabel(model?.deliveryType ?? '') == DeliveryType.pickup) {
-      print(model?.pickupLocation);
-      return {'Pickup Location: ${model?.pickupLocation ?? ''}': ''};
+    if (index == -1) return;
+
+    final oldItem = allItems[index] as CheckoutInfoContainerViewModel;
+
+    final newItem = CheckoutInfoContainerViewModel(
+      keyId: oldItem.keyId,
+      titleKey: titleKey ?? oldItem.titleKey,
+      placeholder: placeholder ?? oldItem.placeholder,
+      infoItems: infoItems ?? oldItem.infoItems,
+      isPromoValid: oldItem.isPromoValid,
+      showRemoveButton: oldItem.showRemoveButton,
+    );
+
+    allItems[index] = newItem;
+    allItems.refresh();
+  }
+
+  Map<String, String>? buildDeliveryInfo(DeliveryAddressViewModel? model) {
+    var isPickUpType = model?.deliveryType == DeliveryType.pickup.label;
+    if (isPickUpType) {
+      return {'Pickup Location: ${model?.pickupLocation ?? pickupLocations.first}': ''};
+    } else if (!isPickUpType && model?.deliveryType != null) {
+      return {
+        'Country: ${model?.country ?? ''}': '',
+        'Region: ${model?.region ?? ''}': '',
+        'City: ${model?.city ?? ''}': '',
+        'Postal Code: ${model?.postalCode ?? ''}': '',
+        'Street: ${model?.address ?? ''}': '',
+      };
     }
-    return {
-      'Country: ${model?.country ?? ''}': '',
-      'Region: ${model?.region ?? ''}': '',
-      'City: ${model?.city ?? ''}': '',
-      'Postal Code: ${model?.postalCode ?? ''}': '',
-      'Street: ${model?.address ?? ''}': '',
-    };
+    return null;
   }
 
-  Map<String, String> _buildUserInfo(UserViewModel? model) {
+  Map<String, String> buildUserInfo(UserViewModel? model) {
     final info = <String, String>{};
     if (model?.number.isNotEmpty ?? false) info[model!.number] = '';
     if (model?.email.isNotEmpty ?? false) info[model!.email] = '';
     return info;
   }
 
-  OrderSummaryViewModel _buildOrderSummary(double subtotal) {
-    final summary = OrderSummaryViewModel();
-    summary.subtotal.value = subtotal;
-    summary.shippingFee.value =
-        (deliveryModel.value?.deliveryType == 'DHL' || deliveryModel.value?.deliveryType == 'Fan courier') ? 5.0 : 0.0;
-    summary.voucherDiscount.value = voucherCode.value.isNotEmpty ? 10.0 : 0.0;
-    summary.total.value = subtotal + summary.shippingFee.value + summary.adminFee - summary.voucherDiscount.value;
-    return summary;
-  }
+  void updateOrderSummary(double subtotal) {
+    orderSummary.subtotal.value = subtotal;
 
-  void _voucherTap() {
-    final textViewModel = TextFieldViewModel(title: '', initialValue: voucherCode.value);
-    AppPopUp.voucherCode(
-      textViewModel: textViewModel,
-      onTap: () {
-        final promoCodeViewModel = PromoCodeViewModel();
-        final validCodes = promoCodeViewModel.getMockPromoCodes();
-        final enteredCode = textViewModel.placeholder.trim().toUpperCase();
+    orderSummary.shippingFee.value =
+        (deliveryModel.value?.deliveryType == DeliveryType.dhl.label ||
+            deliveryModel.value?.deliveryType == DeliveryType.fanCourier.label)
+        ? 5.0
+        : 0.0;
 
-        final isValid = validCodes.contains(enteredCode);
-        if (isValid) {
-          voucherCode.value = enteredCode;
-          initAllItems();
-          Get.back();
-        }
-        Future.delayed(Duration(milliseconds: 200), () {
-          Get.snackbar(
-            duration: Duration(milliseconds: 1750),
-            isValid ? AppTexts.success : AppTexts.invalidCode,
-            isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: isValid ? AppColors.primary : AppColors.red,
-            colorText: Colors.white,
-            forwardAnimationCurve: Curves.easeOutBack,
-            reverseAnimationCurve: Curves.easeInOutBack,
-            margin: EdgeInsets.symmetric(vertical: 50 , horizontal: 16),
-          );
-        });
-      },
-    );
+    orderSummary.voucherDiscount.value = voucherCode.value.isNotEmpty ? 10.0 : 0.0;
+
+    orderSummary.total.value =
+        subtotal + orderSummary.shippingFee.value + orderSummary.adminFee.value - orderSummary.voucherDiscount.value;
   }
 }

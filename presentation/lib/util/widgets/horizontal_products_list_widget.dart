@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/util/mapper/map_text_product_type.dart';
+import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/view/product_view_model.dart';
-import '../enum/product_type.dart';
+import '../enum/enums.dart';
 import 'empty_widget.dart';
 import 'header_title_widget.dart';
 import '../../pages/home_page/widgets/home_products_item_widget.dart';

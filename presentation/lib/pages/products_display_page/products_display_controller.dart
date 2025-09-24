@@ -6,17 +6,15 @@ import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
-import '../../controllers/controller_imports.dart';
-import '../../util/enum/product_type.dart';
+import '../../util/enum/enums.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../view/product_view_model.dart';
 
 
 class ProductsDisplayController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
-  final GetSaleProductsUseCase getSaleProductsUseCase = GetIt.instance<GetSaleProductsUseCase>();
-  final GetNewProductsUseCase getNewProductsUseCase = GetIt.instance<GetNewProductsUseCase>();
   RxBool isLoading = true.obs;
   List<ProductViewModel> products = RxList([]);
 
@@ -25,10 +23,7 @@ class ProductsDisplayController extends GetxController {
   int perPage = 20;
   RxBool isLoadingMore = false.obs;
 
-
-
-
-
+  FilterController get filterController=>Get.find();
 
   Future<void> loadProducts({bool loadMore = false, required ProductListType productType}) async {
     if (loadMore) {
@@ -68,12 +63,12 @@ class ProductsDisplayController extends GetxController {
   }
 
   Future<void> getSaleProducts(bool loadMore) async {
-    final either = await getSaleProductsUseCase.call(GetSaleProductsParams(page: currentPage.value, perPage: perPage));
+    final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage, marks: 'sale'));
     either.fold(
       (failure) {
         isLoading.value = false;
         isLoadingMore.value = false;
-        showFailureSnackBar(failure);
+        showFailureSnackBar(failure: failure);
       },
       (list) {
         final newItems = list.map((e) => e.toModel).toList();
@@ -87,13 +82,13 @@ class ProductsDisplayController extends GetxController {
   }
 
   Future<void> getNewProducts(bool loadMore) async {
-    final either = await getNewProductsUseCase.call(GetNewProductsParams(page: currentPage.value, perPage: perPage));
+    final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage, marks: 'new'));
 
     either.fold(
       (failure) {
         isLoading.value = false;
         isLoadingMore.value = false;
-        showFailureSnackBar(failure);
+        showFailureSnackBar(failure: failure);
       },
       (list) {
         final newItems = list.map((e) => e.toModel).toList();

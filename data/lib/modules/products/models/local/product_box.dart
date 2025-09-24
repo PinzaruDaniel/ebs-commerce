@@ -2,8 +2,8 @@ part of 'index.dart';
 
 @Entity()
 @freezed
-abstract class ProductLocalDto with _$ProductLocalDto {
-  const factory ProductLocalDto({
+abstract class ProductBox with _$ProductBox{
+  const factory ProductBox({
     @Id(assignable: true) required int id,
     required String name,
     required String? price,
@@ -13,7 +13,7 @@ abstract class ProductLocalDto with _$ProductLocalDto {
     required List<String>? marks,
     required int? stock,
     required String? description,
-  }) = _ProductLocalDto;
+  }) = _ProductBox;
 
-  factory ProductLocalDto.fromJson(Map<String, dynamic> json) => _$ProductLocalDtoFromJson(json);
+  factory ProductBox.fromJson(Map<String, dynamic> json) => _$ProductBoxFromJson(json);
 }

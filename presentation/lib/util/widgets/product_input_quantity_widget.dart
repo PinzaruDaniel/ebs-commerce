@@ -41,17 +41,21 @@ class ProductInputQuantityWidget extends StatelessWidget {
               highlightColor: Colors.transparent,
               padding: EdgeInsets.zero,
               onPressed: currentValue.value <= minValue
-                  ? null
+                  ? () {
+                      if (minValue == 1) {
+                        onChanged(0);
+                      }
+                    }
                   : () {
                       final value = currentValue.value - 1;
-                      currentValue.value = value;
-                      onChanged(value);
+                      if (value < minValue) {
+                        onChanged(0);
+                      } else {
+                        currentValue.value = value;
+                        onChanged(value);
+                      }
                     },
-              icon: Icon(
-                Icons.remove_rounded,
-                size: 24,
-                color: currentValue.value == minValue ? Colors.grey : AppColors.primary,
-              ),
+              icon: Icon(Icons.remove_rounded, size: 24, color: AppColors.primary),
             ),
           ),
           SizedBox(

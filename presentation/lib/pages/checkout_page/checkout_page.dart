@@ -1,17 +1,24 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:common/constants/constant_lists_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/checkout_page/checkout_controller.dart';
 import 'package:presentation/pages/checkout_page/widgets/checkout_product_view_widget.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
+import 'package:presentation/util/enum/enums.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
-import '../../controllers/controller_imports.dart';
+import 'package:presentation/view/delivery_address_view_model.dart';
+import 'package:presentation/view/user_view_model.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
+import '../../util/routing/app_pop_up.dart';
+import '../../util/routing/app_router.dart';
 import '../../util/widgets/app_bar_widget.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
+import '../../util/widgets/failure_snack_bar_widget.dart';
 
 class CheckoutPage extends StatefulWidget {
   final List<CartViewModel> items;
@@ -23,10 +30,16 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  CheckoutController get checkoutController => Get.find();
+
   @override
   void initState() {
     super.initState();
-    checkoutController.initAllItems();
+    Get.put(CheckoutController());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkoutController.initProductItems(widget.items);
+      checkoutController.initAllItems();
+    });
   }
 
   @override
@@ -59,10 +72,73 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     return CheckoutProductViewWidget(item: item);
                   }
                   if (item is CheckoutInfoContainerViewModel) {
-                    return CheckoutInfoContainerWidget(item: item);
+                    return CheckoutInfoContainerWidget(
+                      item: item,
+                      onTap: () {
+                        if (item.keyId == CheckoutWidgetsType.userContactInfo) {
+                          AppRouter.openContactInformationPage(
+                            onSave: (UserViewModel? userVM) {
+                              checkoutController.updateCheckoutInfoItem(
+                                keyId: CheckoutWidgetsType.userContactInfo,
+                                titleKey: '${userVM?.name} ${userVM?.surname}',
+                                infoItems: checkoutController.buildUserInfo(userVM),
+                              );
+                            },
+                          );
+                        } else if (item.keyId == CheckoutWidgetsType.deliveryAddressInfo) {
+                          AppRouter.openDeliveryAddressPage(
+                            onSave: (DeliveryAddressViewModel? deliveryVM) {
+                              checkoutController.deliveryModel.value = deliveryVM;
+                              checkoutController.updateCheckoutInfoItem(
+                                keyId: CheckoutWidgetsType.deliveryAddressInfo,
+                                titleKey: deliveryVM?.deliveryType ?? '',
+                                infoItems: checkoutController.buildDeliveryInfo(deliveryVM),
+                              );
+                              checkoutController.updateOrderSummary(checkoutController.calculateSubtotal());
+                            },
+                          );
+                        } else if (item.keyId == CheckoutWidgetsType.paymentMethod) {
+                          AppPopUp.paymentMethod(
+                            initialMethod: checkoutController.selectedPaymentMethod.value,
+                            onSelected: (value) {
+                              checkoutController.selectedPaymentMethod.value = value;
+                              checkoutController.updateCheckoutInfoItem(
+                                keyId: CheckoutWidgetsType.paymentMethod,
+                                titleKey: value,
+                              );
+                              Get.back();
+                            },
+                          );
+                        } else if (item.keyId == CheckoutWidgetsType.voucherCode) {
+                          AppPopUp.voucherCode(
+                            initialValue: checkoutController.voucherCode.value,
+                            onSubmit: (enteredCode) {
+                              final isValid = promoCodes.contains(enteredCode);
+                              if (isValid) {
+                                checkoutController.voucherCode.value = enteredCode;
+                                checkoutController.updateCheckoutInfoItem(
+                                  keyId: CheckoutWidgetsType.voucherCode,
+                                  titleKey: enteredCode,
+                                );
+                                checkoutController.updateOrderSummary(checkoutController.calculateSubtotal());
+                                Get.back();
+                              }
+                              Future.delayed(Duration(milliseconds: 200), () {
+                                showFailureSnackBar(
+                                  title: isValid ? AppTexts.success : AppTexts.invalidCode,
+                                  fallbackMessage: isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
+                                  isError: !isValid,
+                                );
+                              });
+                            },
+                          );
+                        }
+                      },
+                      onRemoveTap: () {},
+                    );
                   }
                   if (item is OrderSummaryViewModel) {
-                    return OrderSummaryWidget();
+                    return OrderSummaryWidget(orderSummary: item);
                   }
                   return SizedBox();
                 }).toList(),
@@ -71,14 +147,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
           ),
         ),
       ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBarWidget(
+      bottomNavigationBar: Obx(() {
+        final hasSelectedPayment = checkoutController.selectedPaymentMethod.value.isNotEmpty;
+        final hasCompleteInfo = !checkoutController.hasIncompleteUserInfo();
+
+        return BottomNavigationBarWidget(
           titleDialog: AppTexts.oops,
           contentDialog: AppTexts.enterAllData,
-          title: checkoutController.selectedPaymentMethod.isNotEmpty && !checkoutController.hasIncompleteUserInfo()
-              ? AppTexts.createOrder
-              : AppTexts.enterAllData,
-          addToCart: checkoutController.selectedPaymentMethod.isNotEmpty && !checkoutController.hasIncompleteUserInfo(),
+          title: hasSelectedPayment && hasCompleteInfo ? AppTexts.createOrder : AppTexts.enterAllData,
+          addToCart: hasSelectedPayment && hasCompleteInfo,
           onTap: () {
             AwesomeDialog(
               context: context,
@@ -91,8 +168,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ).show();
           },
           showIcon: false,
-        ),
-      ),
+        );
+      }),
     );
   }
 }

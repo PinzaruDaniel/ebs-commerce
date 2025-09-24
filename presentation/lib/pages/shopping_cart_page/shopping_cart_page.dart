@@ -6,12 +6,13 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/product_image_widget.dart';
 import 'package:presentation/util/widgets/select_checkbox_widget.dart';
-import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
+import '../../util/routing/app_pop_up.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
+import 'cart_controller.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   const ShoppingCartPage({super.key});
@@ -21,13 +22,12 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
+  CartController get cartController => Get.find();
+
   @override
   void initState() {
     super.initState();
-    deliveryAddressController.onInit();
-    deliveryAddressController.toDeliveryAddressViewModel();
-    contactInformationController.initAllItems();
-    contactInformationController.toUserViewModel();
+    Get.put(CartController());
   }
 
   @override
@@ -81,10 +81,24 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                             key: ValueKey(
                               '${cartController.cartItems[index].id}_${cartController.cartItems[index].quantity}',
                             ),
-                            minValue: 0,
+                            minValue: 1,
                             initialValue: cartController.cartItems[index].quantity,
                             onChanged: (val) {
-                              cartController.updateQuantity(index, val, context);
+                              if (val == 0) {
+                                AppPopUp.showConfirmationDialog(
+                                  context: context,
+                                  title: AppTexts.removeItem,
+                                  content: AppTexts.removeItemQuestion,
+                                  onSave: () {
+                                    cartController.removeItem(index);
+                                  },
+                                  onCancel: () {
+                                    cartController.cartItems.refresh();
+                                  },
+                                );
+                              } else {
+                                cartController.updateQuantity(index, val, context);
+                              }
                             },
                             maxValue: cartController.cartItems[index].stock,
                           ),

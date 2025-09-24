@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';

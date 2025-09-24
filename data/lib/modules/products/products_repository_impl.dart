@@ -33,9 +33,10 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getProducts(page, perPage) async {
+  Future<Either<Failure, List<ProductEntity>>> getProducts(page, perPage, marks) async {
     try {
-      final response = await apiService.getProducts({'page': page, 'per_page': perPage});
+      final Map<String, dynamic> queries = {'page': page, 'per_page': perPage, if (marks != null) 'marks': marks};
+      final response = await apiService.getProducts(queries);
       final entities = response.results.map((dto) => dto.toEntity()).toList();
       return Right(entities);
     } catch (e, stackTrace) {

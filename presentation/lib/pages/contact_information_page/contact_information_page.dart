@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../controllers/controller_imports.dart';
+import 'package:get/get.dart';
+import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
@@ -8,23 +9,28 @@ import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/text_field_widget.dart';
 
 class ContactInformationPage extends StatefulWidget {
-  const ContactInformationPage({super.key});
+  const ContactInformationPage({super.key, required this.onSave});
+
+  final Function onSave;
 
   @override
   State<ContactInformationPage> createState() => _ContactInformationPageState();
 }
 
 class _ContactInformationPageState extends State<ContactInformationPage> {
+  ContactInformationController get contactInformationController => Get.find();
   final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    Get.put(ContactInformationController());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       contactInformationController.initAllItems();
-      contactInformationController.toUserViewModel();
     });
   }
 
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,35 +43,40 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Form(
-                key: _formKey,
-                child: Expanded(
-                  child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: contactInformationController.allItems.length,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Expanded(
+                child: Obx(() {
+                  final items = contactInformationController.allItems.toList();
+
+                  return ListView.builder(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    itemCount: items.length,
                     itemBuilder: (context, index) {
-                      var item = contactInformationController.allItems[index];
-                      if (item is TextFieldViewModel) {
-                        return TextFieldWidget(itemViewModel: item);
+                      final item = items[index];
+
+                      if (item is! TextFieldViewModel) {
+                        return const SizedBox.shrink();
                       }
-                      return null;
+
+                      return TextFieldWidget(itemViewModel: item);
                     },
-                  ),
-                ),
+                  );
+                }),
               ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
         title: AppTexts.save,
         showIcon: false,
-        onTap: ()  {
+        onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
-            checkoutController.initAllItems();
-            contactInformationController.initAllItems();
-            Navigator.pop(context);
+            widget.onSave.call(contactInformationController.toUserViewModel());
+            Get.back();
           }
         },
         titleDialog: AppTexts.oops,

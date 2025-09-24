@@ -7,13 +7,11 @@ import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
-import '../../util/enum/product_type.dart';
+import '../../util/enum/enums.dart';
 import '../../view/base_view_model.dart';
 
 class HomeController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
-  final GetSaleProductsUseCase getSaleProductsUseCase = GetIt.instance<GetSaleProductsUseCase>();
-  final GetNewProductsUseCase getNewProductsUseCase = GetIt.instance<GetNewProductsUseCase>();
   RxList<BaseViewModel> items = RxList<BaseViewModel>([]);
   RxList<ProductViewModel> products = RxList([]);
   RxBool isLoading = true.obs;
@@ -46,7 +44,7 @@ class HomeController extends GetxController {
           (failure) {
         isLoading.value = false;
         isLoadingMore.value = false;
-        showFailureSnackBar(failure);
+        showFailureSnackBar(failure: failure);
       },
           (list) async {
         final newItems = list.map((e) => e.toModel).toList();
@@ -75,7 +73,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getNewProducts() async {
-    await getNewProductsUseCase.call(GetNewProductsParams(page: 1, perPage: 5)).then((either) async {
+    await getProductsUseCase.call(GetProductsParams(page: 1, perPage: 5, marks: 'new')).then((either) async {
       either.fold(
             (failure) {
           isLoading.value = false;
@@ -89,7 +87,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getSaleProducts({bool loadMore = false}) async {
-    await getSaleProductsUseCase.call(GetSaleProductsParams(page: 1, perPage: 5)).then((either) async {
+    await getProductsUseCase.call(GetProductsParams(page: 1, perPage: 5, marks: 'sale')).then((either) async {
       either.fold(
             (failure) {
           isLoading.value = false;

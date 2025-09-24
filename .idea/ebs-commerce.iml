@@ -27,6 +27,30 @@
       <excludeFolder url="file://$MODULE_DIR$/presentation/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/presentation/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/presentation/build" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/objectbox_flutter_libs/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/objectbox_flutter_libs/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/objectbox_flutter_libs/build" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/path_provider_foundation/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/path_provider_foundation/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/path_provider_foundation/build" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/path_provider_foundation/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/path_provider_foundation/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/path_provider_foundation/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/rive_common/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/rive_common/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/rive_common/build" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/rive_common/ios/rive-cpp/dev/core_generator/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/rive_common/ios/rive-cpp/dev/core_generator/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/rive_common/ios/rive-cpp/dev/core_generator/build" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/rive_common/macos/rive-cpp/dev/core_generator/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/rive_common/macos/rive-cpp/dev/core_generator/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/rive_common/macos/rive-cpp/dev/core_generator/build" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/sqflite_darwin/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/sqflite_darwin/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/sqflite_darwin/build" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/sqflite_darwin/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/sqflite_darwin/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/presentation/ios/.symlinks/plugins/sqflite_darwin/example/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

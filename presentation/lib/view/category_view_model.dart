@@ -12,6 +12,6 @@ class CategoryViewModel extends BaseViewModel{
     required this.id,
     required this.name,
     required this.level,
-    required this.parent
+    required this.parent,
 });
 }

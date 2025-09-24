@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/pages/filtered_page/widgets/add_to_category_button_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/price_slider_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
@@ -9,9 +9,11 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/selected_category_button_widget.dart';
-import '../../util/enum/product_type.dart';
+import '../../util/enum/enums.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
+
+import '../../util/widgets/open_container_animation_widget.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -21,15 +23,20 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
+  FilterController get filterController=>Get.find();
 
-
+  @override
+  void dispose() {
+    filterController.resetFilters();
+    super.dispose();
+  }
   @override
   void initState() {
     super.initState();
+    Get.put(FilterController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      filterController.getFilteredProducts(page: 1);
+      filterController.initItems();
     });
-    filterController.filteredProducts;
   }
 
   @override
@@ -80,7 +87,7 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                 ),
                 Obx(() {
-                  final selected = categoryController.selectedCategoryId.toList();
+                  final selected = filterController.selectedCategoryId.toList();
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Wrap(
@@ -91,7 +98,7 @@ class _FilterPageState extends State<FilterPage> {
                           SelectedCategoryButtonWidget(
                             id: id,
                             name: _nameFor(id),
-                            onRemove: () => categoryController.toggleCategory(id, false),
+                            onRemove: () => filterController.toggleCategory(id, false),
                           ),
                         AddToCategoryButtonWidget(),
                       ],
@@ -109,24 +116,25 @@ class _FilterPageState extends State<FilterPage> {
           final hasProducts = filterController.filteredProducts.isNotEmpty;
           final filteredCount = filterController.filteredCount.value;
 
-          return BottomNavigationBarWidget(
-            title: isLoading
-                ? AppTexts.loading
-                : (filteredCount > 0
-                ? '${AppTexts.showResults}($filteredCount)'
-                : AppTexts.noProductsToShow),
-            showIcon: false,
-            addToCart: hasProducts,
-            onTap: isLoading || !hasProducts
-                ? null
-                : () {
-              AppRouter.openProductsDisplayPage(
-                type: ProductListType.filteredProducts,
-                title: AppTexts.filteredProducts,
+          return OpenContainerAnimation(
+            openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
+              type: ProductListType.filteredProducts,
+              title: AppTexts.filteredProducts,
+            ),
+            closedBuilder: (context, openContainer) {
+              return BottomNavigationBarWidget(
+                title: isLoading
+                    ? AppTexts.loading
+                    : (filteredCount > 0
+                    ? '${AppTexts.showResults}($filteredCount)'
+                    : AppTexts.noProductsToShow),
+                showIcon: false,
+                addToCart: hasProducts,
+                onTap: isLoading || !hasProducts ? null : openContainer,
+                titleDialog: AppTexts.oops,
+                contentDialog: AppTexts.noProductsToShow,
               );
             },
-            titleDialog: AppTexts.oops,
-            contentDialog: AppTexts.noProductsToShow,
           );
         })
 
@@ -134,7 +142,7 @@ class _FilterPageState extends State<FilterPage> {
   }
 
   String _nameFor(int id) {
-    final c = categoryController.categories.firstWhereOrNull((e) => e.id == id);
+    final c = filterController.categories.firstWhereOrNull((e) => e.id == id);
     return c!.name;
   }
 }

@@ -7,8 +7,6 @@ import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_t
 import '../../view/product_view_model.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_texts.dart';
-import '../widgets/text_field_widget.dart';
-
 
 class AppPopUp {
   static Future<void> showCustomBottomSheet({
@@ -26,7 +24,10 @@ class AppPopUp {
         isScrollControlled: isScrollControlled,
         enableDrag: enableDrag,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(16),
+            topLeft: Radius.circular(16),
+          ),
         ),
         context: Get.context!,
         builder: (_) => child,
@@ -40,27 +41,37 @@ class AppPopUp {
     required int? maxValue,
   }) async {
     await showCustomBottomSheet(
-      child: ProductDetailAddToCartBottomSheetWidget(item: item, onAdd: onAdd, maxValue: maxValue),
+      child: ProductDetailAddToCartBottomSheetWidget(
+        item: item,
+        onAdd: onAdd,
+        maxValue: maxValue,
+      ),
     );
   }
 
-  static Future<void> paymentMethod({required RxString selectedMethod, required Function(String) onSelected}) async {
-    if (Get.context == null) return;
-
-    final methods = ['PayPal', 'Plata Numerar'];
-
+  static Future<void> paymentMethod({
+    required Function(String) onSelected,
+    String? initialMethod,
+  }) async {
     await showCustomBottomSheet(
-      child: PaymentMethodSelectionWidget(selectedMethod: selectedMethod, onSelected: onSelected, methods: methods),
+      child: PaymentMethodSelectionWidget(
+        onSelected: onSelected,
+        initialMethod: initialMethod,
+      ),
     );
   }
 
-  static Future<void> voucherCode({required Function()? onTap, required TextFieldViewModel textViewModel}) async {
-    if (Get.context != null) {
-      await showCustomBottomSheet(
-        isScrollControlled: true,
-        child: VoucherCodeInputWidget(onTap: onTap, textViewModel: textViewModel),
-      );
-    }
+  static Future<void> voucherCode({
+    required String initialValue,
+    required Function(String) onSubmit,
+  }) async {
+    await showCustomBottomSheet(
+      isScrollControlled: true,
+      child: VoucherCodeInputWidget(
+        initialValue: initialValue,
+        onSubmit: onSubmit,
+      ),
+    );
   }
 
   static Future<void> showSelection({
@@ -69,48 +80,52 @@ class AppPopUp {
     required RxString selectedValue,
     Function(String)? onSelectionChanged,
   }) async {
-    if (Get.context != null) {
-      return await showCustomBottomSheet(
-        isDismissible: false,
-        child: OptionPickerWidget(
-          title: title,
-          options: options,
-          selectedValue: selectedValue,
-          onSelectionChanged: onSelectionChanged,
-        ),
-      );
-    }
+    return await showCustomBottomSheet(
+      isDismissible: false,
+      child: OptionPickerWidget(
+        title: title,
+        options: options,
+        selectedValue: selectedValue,
+        onSelectionChanged: onSelectionChanged,
+      ),
+    );
   }
+
   static Future<bool> showConfirmationDialog({
     required BuildContext context,
     String? title,
     String? content,
-    String confirmText = AppTexts.ok,
-    String cancelText = 'Cancel',
-
+    String? confirmText,
+    Function? onSave,
+    Function? onCancel,
   }) async {
     return await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: Text(title ?? 'Confirm'),
-        content: Text(content ?? 'Are you sure?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: Text(cancelText),
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: Colors.white,
+            title: Text(title ?? AppTexts.confirm),
+            content: Text(content ?? AppTexts.areYouSure),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  onCancel?.call();
+                  Navigator.of(context).pop(false);
+                },
+                child: Text(AppTexts.cancel),
+              ),
+              TextButton(
+                onPressed: () {
+                  onSave?.call();
+                  Navigator.of(context).pop(true);
+                },
+                child: Text(
+                  confirmText?? AppTexts.ok,
+                  style: TextStyle(color: AppColors.primary),
+                ),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(
-              confirmText,
-              style: TextStyle(color: AppColors.primary),
-            ),
-          ),
-        ],
-      ),
-    ) ?? false;
+        ) ??
+        false;
   }
 }

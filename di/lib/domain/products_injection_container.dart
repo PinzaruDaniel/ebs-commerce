@@ -12,13 +12,13 @@ Future<void> init() async {
     () => GetFilteredProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
 
-  dataDi.registerLazySingleton<GetSaleProductsUseCase>(
+  /*dataDi.registerLazySingleton<GetSaleProductsUseCase>(
     () => GetSaleProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
 
   dataDi.registerLazySingleton<GetNewProductsUseCase>(
     () => GetNewProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
-  );
+  );*/
 
   dataDi.registerLazySingleton<GetProductsUseCase>(
     () => GetProductsUseCase(productsRepository: dataDi<ProductsRepository>()),

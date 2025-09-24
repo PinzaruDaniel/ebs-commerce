@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_image_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_title_widget.dart';
 import 'package:presentation/util/resources/app_texts.dart';
@@ -69,7 +70,10 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
           title: AppTexts.addToCart,
           addToCart: true,
           onTap: () {
+            Get.back();
+
             widget.onAdd.call(quantity);
+
           },
           showIcon: true,
         ),

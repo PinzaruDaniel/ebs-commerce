@@ -101,12 +101,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             item: widget.item!,
             onAdd: (int quantity) {
               addCartController.cartItem.value?.quantity = quantity;
-
               final item = addCartController.cartItem.value;
-
-                mainAppController.addToCart(item!);
-                AppRouter.openShoppingCartPage();
-            }, maxValue: addCartController.cartItem.value!.stock,
+              mainAppController.addToCart(item!);
+              AppRouter.openShoppingCartPage();
+            },
+            maxValue: widget.item!.stock,
           );
         },
       ),

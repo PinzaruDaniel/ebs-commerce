@@ -12,4 +12,11 @@ class MainAppController extends GetxController {
       cartItems.add(item);
     }
   }
+  /*final priceString = (item.discountedPrice != null )
+      ? item.discountedPrice
+      : item.price;
+
+  final price = double.tryParse(priceString ?? '') ?? 0.0;
+
+  final rawTotalPrice=price*item.quantity;*/
 }

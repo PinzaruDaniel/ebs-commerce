@@ -9,7 +9,7 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/smart_refresher_widget.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
-import '../../util/enum/product_type.dart';
+import '../../util/enum/enums.dart';
 import '../../util/widgets/loading_overlay_widget.dart';
 
 class ProductsDisplayPage extends StatefulWidget {
