@@ -75,7 +75,6 @@ class DeliveryItemBuildWidget extends StatelessWidget {
       keyValue = 'unknown_$index';
     }
 
-    // Skip animation if animation hasn't started yet (first build)
     final skipAnimation = animation.status == AnimationStatus.dismissed;
 
     if (item is DeliveryTypeViewModel || skipAnimation) {

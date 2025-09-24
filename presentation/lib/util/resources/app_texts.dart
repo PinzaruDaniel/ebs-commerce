@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../localization/generated_keys/locale_keys.loc.dart';
+import '../../localization/generated_keys/locale_keys.dart';
+
 
 
 class AppTexts {
@@ -95,4 +96,5 @@ class AppTexts {
   static String get voucherCode => LocaleKeys.voucherCode.tr();
   static String get total => LocaleKeys.total.tr();
   static String get deliveryType=>LocaleKeys.deliveryType.tr();
+  static String get selectPreviousField=>LocaleKeys.selectPreviousField.tr();
 }

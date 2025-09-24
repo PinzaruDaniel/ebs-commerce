@@ -86,5 +86,7 @@
   "adminFee": "Административный сбор",
   "voucherCode": "Промокод",
   "total": "Итого",
-  "deliveryType": "Способ доставки"
+  "deliveryType": "Способ доставки",
+  "selectPreviousField": "Выберите предыдущее поле"
+
 }

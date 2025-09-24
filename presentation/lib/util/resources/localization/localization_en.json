@@ -86,6 +86,7 @@
   "adminFee": "Admin Fee",
   "voucherCode": "Voucher Code",
   "total": "Total",
-  "deliveryType": "Delivery Type"
+  "deliveryType": "Delivery Type",
+  "selectPreviousField": "Select previous field"
 
 }

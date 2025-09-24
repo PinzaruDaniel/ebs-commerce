@@ -86,6 +86,7 @@
   "adminFee": "Taxă de administrare",
   "voucherCode": "Cod voucher",
   "total": "Total",
-  "deliveryType": "Tipul livrării"
+  "deliveryType": "Tipul livrării",
+  "selectPreviousField": "Selectați câmpul anterior"
 
 }

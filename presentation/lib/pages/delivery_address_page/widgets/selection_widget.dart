@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
@@ -50,7 +51,7 @@ class SelectionWidget extends StatelessWidget {
                     onSelectionChanged: onSelectionChanged,
                   );
                 } else {
-                  showFailureSnackBar(fallbackMessage: 'Select previous field');
+                  showFailureSnackBar(fallbackMessage: AppTexts.selectPreviousField);
                 }
               },
               child: Container(
