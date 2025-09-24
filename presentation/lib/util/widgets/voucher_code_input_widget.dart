@@ -42,7 +42,7 @@ class VoucherCodeInputWidget extends StatelessWidget {
                 ),
                 BottomNavigationBarWidget(
                   title: AppTexts.save,
-                  onTap: () => onSubmit(textViewModel.placeholder.trim().toUpperCase()),
+                  onTap: () => onSubmit(textViewModel.placeholder.trim()),
                   showIcon: false,
                 ),
               ],
