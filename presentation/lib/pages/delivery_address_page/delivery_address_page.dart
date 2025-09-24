@@ -24,12 +24,13 @@ class DeliveryAddressPage extends StatefulWidget {
 
 class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   final _formKey = GlobalKey<FormState>();
-  late DeliveryAddressController deliveryAddressController;
+
+  DeliveryAddressController get deliveryAddressController => Get.find();
 
   @override
   void initState() {
     super.initState();
-    deliveryAddressController = Get.put(DeliveryAddressController());
+    Get.put(DeliveryAddressController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       deliveryAddressController.initItems();
     });
@@ -95,8 +96,9 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                     deliveryAddressController.cities.clear();
                     deliveryAddressController.loadCities(deliveryAddressController.selectedCountry.value!, state);
                   } else if (viewModel.keyId == 'city') {
-                    deliveryAddressController.selectedCity.value =
-                        deliveryAddressController.cities.firstWhere((c) => c.name == value);
+                    deliveryAddressController.selectedCity.value = deliveryAddressController.cities.firstWhere(
+                      (c) => c.name == value,
+                    );
                   }
                 }
 
@@ -111,7 +113,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                   index: index,
                 );
               },
-
             ),
           );
         }),
@@ -122,9 +123,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
             deliveryAddressController.onInit();
-            widget.onSave.call(
-              deliveryAddressController.toDeliveryAddressViewModel(),
-            );
+            widget.onSave.call(deliveryAddressController.toDeliveryAddressViewModel());
             Get.back();
           }
         },
