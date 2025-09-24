@@ -11,8 +11,6 @@ import 'package:presentation/util/widgets/empty_widget.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_text_styles.dart';
 import '../../util/resources/app_texts.dart';
-import '../filtered_page/filter_controller.dart';
-
 class CategoryPage extends StatefulWidget {
   final Function onSave;
 
@@ -24,8 +22,6 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   CategoryController get categoryController => Get.find();
-
-  FilterController get filterController => Get.find();
 
   @override
   void initState() {

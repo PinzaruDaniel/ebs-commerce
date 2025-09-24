@@ -14,6 +14,7 @@ import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
 
 import '../../util/widgets/open_container_animation_widget.dart';
+import '../../view/category_view_model.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -23,13 +24,14 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-  FilterController get filterController=>Get.find();
+  FilterController get filterController => Get.find();
 
   @override
   void dispose() {
     filterController.resetFilters();
     super.dispose();
   }
+
   @override
   void initState() {
     super.initState();
@@ -100,7 +102,14 @@ class _FilterPageState extends State<FilterPage> {
                             name: _nameFor(id),
                             onRemove: () => filterController.toggleCategory(id, false),
                           ),
-                        AddToCategoryButtonWidget(),
+                        AddToCategoryButtonWidget(
+                          onSave: (List<CategoryViewModel> allCategories, Set<int> selectedIds) {
+                            filterController.setCategoryData(
+                              selectedIds: selectedIds.toSet(),
+                              allCategories: allCategories.toList(),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   );
@@ -111,34 +120,31 @@ class _FilterPageState extends State<FilterPage> {
         }),
       ),
 
-        bottomNavigationBar: Obx(() {
-          print(filterController.getFilteredProductsParams());
-          final isLoading = filterController.isLoading.value;
-          final filteredCount = filterController.filteredCount.value;
-          var hasProducts=filteredCount>0;
-          return OpenContainerAnimation(
-            openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
-              type: ProductListType.filteredProducts,
-              title: AppTexts.filteredProducts,
-              getFilteredProductsParams: filterController.getFilteredProductsParams()
-            ),
-            closedBuilder: (context, openContainer) {
-              return BottomNavigationBarWidget(
-                title: isLoading
-                    ? AppTexts.loading
-                    : (hasProducts
-                    ? '${AppTexts.showResults}($filteredCount)'
-                    : AppTexts.noProductsToShow),
-                showIcon: false,
-                addToCart: !isLoading,
-                onTap: isLoading  ? null : openContainer,
-                titleDialog: AppTexts.oops,
-                contentDialog: AppTexts.noProductsToShow,
-              );
-            },
-          );
-        })
-
+      bottomNavigationBar: Obx(() {
+        print(filterController.getFilteredProductsParams());
+        final isLoading = filterController.isLoading.value;
+        final filteredCount = filterController.filteredCount.value;
+        var hasProducts = filteredCount > 0;
+        return OpenContainerAnimation(
+          openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
+            type: ProductListType.filteredProducts,
+            title: AppTexts.filteredProducts,
+            getFilteredProductsParams: filterController.getFilteredProductsParams(),
+          ),
+          closedBuilder: (context, openContainer) {
+            return BottomNavigationBarWidget(
+              title: isLoading
+                  ? AppTexts.loading
+                  : (hasProducts ? '${AppTexts.showResults}($filteredCount)' : AppTexts.noProductsToShow),
+              showIcon: false,
+              addToCart: !isLoading,
+              onTap: isLoading ? null : openContainer,
+              titleDialog: AppTexts.oops,
+              contentDialog: AppTexts.noProductsToShow,
+            );
+          },
+        );
+      }),
     );
   }
 

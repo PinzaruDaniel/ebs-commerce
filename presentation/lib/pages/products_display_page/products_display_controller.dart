@@ -21,7 +21,6 @@ class ProductsDisplayController extends GetxController {
   int perPage = 20;
   RxBool isLoadingMore = false.obs;
 
-  FilterController get filterController => Get.find();
 
   Future<void> loadProducts({
     bool loadMore = false,
