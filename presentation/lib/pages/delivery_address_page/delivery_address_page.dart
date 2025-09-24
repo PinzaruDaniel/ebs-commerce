@@ -49,7 +49,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
       body: SafeArea(
         child: Obx(() {
           final items = deliveryAddressController.allItems.toList();
-
           return Form(
             key: _formKey,
             child: ImplicitlyAnimatedList<BaseViewModel>(
@@ -60,9 +59,10 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                 if (a.runtimeType != b.runtimeType) return false;
                 if (a is SelectionViewModel && b is SelectionViewModel) return a.keyId == b.keyId;
                 if (a is TextFieldViewModel && b is TextFieldViewModel) return a.keyId == b.keyId;
-                if (a is DeliveryTypeViewModel && b is DeliveryTypeViewModel) return true;
+                if (a is DeliveryTypeViewModel && b is DeliveryTypeViewModel) return a.selected == b.selected;
                 return false;
               },
+
               removeItemBuilder: (context, animation, oldItem) {
                 return DeliveryItemBuildWidget(
                   onCallBack: () async {
@@ -75,17 +75,43 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                   isRemoval: true,
                 );
               },
+
               itemBuilder: (context, animation, item, index) {
+                void onSelectionChanged(String value) {
+                  if (item is! SelectionViewModel) return;
+                  final viewModel = item;
+                  if (viewModel.keyId == 'country') {
+                    final country = deliveryAddressController.countries.firstWhere((c) => c.name == value);
+                    deliveryAddressController.selectedCountry.value = country;
+                    deliveryAddressController.selectedState.value = null;
+                    deliveryAddressController.selectedCity.value = null;
+                    deliveryAddressController.states.clear();
+                    deliveryAddressController.cities.clear();
+                    deliveryAddressController.loadStates(country);
+                  } else if (viewModel.keyId == 'region') {
+                    final state = deliveryAddressController.states.firstWhere((s) => s.name == value);
+                    deliveryAddressController.selectedState.value = state;
+                    deliveryAddressController.selectedCity.value = null;
+                    deliveryAddressController.cities.clear();
+                    deliveryAddressController.loadCities(deliveryAddressController.selectedCountry.value!, state);
+                  } else if (viewModel.keyId == 'city') {
+                    deliveryAddressController.selectedCity.value =
+                        deliveryAddressController.cities.firstWhere((c) => c.name == value);
+                  }
+                }
+
                 return DeliveryItemBuildWidget(
                   onCallBack: () async {
                     await deliveryAddressController.removeAllItemsAnimated();
                     deliveryAddressController.updateAllItems();
                   },
+                  onSelectionChanged: onSelectionChanged,
                   item: item,
                   animation: animation,
                   index: index,
                 );
               },
+
             ),
           );
         }),
