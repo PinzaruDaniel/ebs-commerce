@@ -13,7 +13,6 @@ class DeliveryItemBuildWidget extends StatelessWidget {
   final Function onCallBack;
   final Function(String)? onSelectionChanged;
 
-
   const DeliveryItemBuildWidget({
     super.key,
     required this.item,
@@ -46,7 +45,9 @@ class DeliveryItemBuildWidget extends StatelessWidget {
       keyValue = 'unknown_$index';
     }
 
-    if (animation.status == AnimationStatus.dismissed) {
+    final bool shouldSkipAnimation = animation.value == 1.0;
+
+    if (shouldSkipAnimation || item is DeliveryTypeViewModel) {
       return KeyedSubtree(key: ValueKey(keyValue), child: child);
     }
 
