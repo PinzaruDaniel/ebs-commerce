@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/util/enum/enums.dart';
 import 'package:presentation/util/widgets/option_picker_widget.dart';
 import 'package:presentation/util/widgets/payment_method_selection_widget.dart';
 import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
@@ -50,10 +51,9 @@ class AppPopUp {
   }
 
   static Future<void> paymentMethod({
-    required Function(String) onSelected,
-    String? initialMethod,
+    required Function(PaymentMethod) onSelected,
+    PaymentMethod? initialMethod,
   }) async {
-    if (Get.context == null) return;
     await showCustomBottomSheet(
       child: PaymentMethodSelectionWidget(
         onSelected: onSelected,
@@ -66,15 +66,13 @@ class AppPopUp {
     required String initialValue,
     required Function(String) onSubmit,
   }) async {
-    if (Get.context != null) {
-      await showCustomBottomSheet(
-        isScrollControlled: true,
-        child: VoucherCodeInputWidget(
-          initialValue: initialValue,
-          onSubmit: onSubmit,
-        ),
-      );
-    }
+    await showCustomBottomSheet(
+      isScrollControlled: true,
+      child: VoucherCodeInputWidget(
+        initialValue: initialValue,
+        onSubmit: onSubmit,
+      ),
+    );
   }
 
   static Future<void> showSelection({
@@ -83,43 +81,46 @@ class AppPopUp {
     required RxString selectedValue,
     Function(String)? onSelectionChanged,
   }) async {
-    if (Get.context != null) {
-      return await showCustomBottomSheet(
-        isDismissible: false,
-        child: OptionPickerWidget(
-          title: title,
-          options: options,
-          selectedValue: selectedValue,
-          onSelectionChanged: onSelectionChanged,
-        ),
-      );
-    }
+    return await showCustomBottomSheet(
+      isDismissible: false,
+      child: OptionPickerWidget(
+        title: title,
+        options: options,
+        selectedValue: selectedValue,
+        onSelectionChanged: onSelectionChanged,
+      ),
+    );
   }
 
   static Future<bool> showConfirmationDialog({
     required BuildContext context,
     String? title,
     String? content,
-    String confirmText = AppTexts.ok,
-    String cancelText = 'Cancel',
+    String? confirmText,
+    Function? onSave,
+    Function? onCancel,
   }) async {
     return await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
             backgroundColor: Colors.white,
-            title: Text(title ?? 'Confirm'),
-            content: Text(content ?? 'Are you sure?'),
+            title: Text(title ?? AppTexts.confirm),
+            content: Text(content ?? AppTexts.areYouSure),
             actions: [
               TextButton(
                 onPressed: () {
+                  onCancel?.call();
                   Navigator.of(context).pop(false);
                 },
-                child: Text(cancelText),
+                child: Text(AppTexts.cancel),
               ),
               TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
+                onPressed: () {
+                  onSave?.call();
+                  Navigator.of(context).pop(true);
+                },
                 child: Text(
-                  confirmText,
+                  confirmText?? AppTexts.ok,
                   style: TextStyle(color: AppColors.primary),
                 ),
               ),

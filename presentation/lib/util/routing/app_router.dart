@@ -1,3 +1,4 @@
+import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_page.dart';
@@ -20,7 +21,7 @@ Route<T> createSharedAxisRoute<T>({required Widget page, SharedAxisTransitionTyp
     pageBuilder: (context, animation, secondaryAnimation) => page,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return SharedAxisTransition(
-        fillColor: Colors.white ,
+        fillColor: Colors.white,
         animation: animation,
         secondaryAnimation: secondaryAnimation,
         transitionType: transitionType ?? SharedAxisTransitionType.horizontal,
@@ -41,7 +42,7 @@ class AppRouter {
     return ProductDetailPage(item: item);
   }
 
-/*  static void openDetailsPage({required ProductViewModel item}) {
+  /*  static void openDetailsPage({required ProductViewModel item}) {
     if (Get.context != null) {
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ProductDetailPage(item: item)));
     }
@@ -53,20 +54,18 @@ class AppRouter {
     }
   }
 
-  static void openCategoryPickerPage() {
+  static void openCategoryPickerPage({required Function onSave}) {
     if (Get.context != null) {
-      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => CategoryPage()));
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => CategoryPage(onSave: onSave)));
     }
   }
 
-
-  static Widget openFilterPage(){
+  static Widget openFilterPage() {
     return FilterPage();
   }
 
-  static Widget openProductsDisplayPage({required ProductListType type, required String title}) {
-      return  ProductsDisplayPage(title: title, type: type);
-
+  static Widget openProductsDisplayPage({required ProductListType type, required String title, GetFilteredProductsParams? getFilteredProductsParams}) {
+    return ProductsDisplayPage(title: title, type: type, getFilteredProductsParams: getFilteredProductsParams,);
   }
 
   static void openCheckoutPage({required List<CartViewModel> items}) {
@@ -80,7 +79,7 @@ class AppRouter {
     }
   }
 
-  static void openContactInformationPage({required Function onSave, }) {
+  static void openContactInformationPage({required Function onSave}) {
     if (Get.context != null) {
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ContactInformationPage(onSave: onSave)));
     }

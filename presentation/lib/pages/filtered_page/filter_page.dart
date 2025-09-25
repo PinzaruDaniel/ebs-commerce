@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/pages/category_page/category_controller.dart';
 import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/pages/filtered_page/widgets/add_to_category_button_widget.dart';
 import 'package:presentation/pages/filtered_page/widgets/price_slider_widget.dart';
@@ -15,6 +14,7 @@ import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
 
 import '../../util/widgets/open_container_animation_widget.dart';
+import '../../view/category_view_model.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -24,22 +24,20 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-  FilterController get filterController=>Get.find();
-  CategoryController get categoryController=>Get.find();
+  FilterController get filterController => Get.find();
 
   @override
   void dispose() {
     filterController.resetFilters();
     super.dispose();
   }
+
   @override
   void initState() {
     super.initState();
     Get.put(FilterController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.put(CategoryController());
-
-      filterController.getFilteredProducts(page: 1);
+      filterController.initItems();
     });
   }
 
@@ -91,7 +89,7 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                 ),
                 Obx(() {
-                  final selected = categoryController.selectedCategoryId.toList();
+                  final selected = filterController.selectedCategoryId.toList();
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Wrap(
@@ -102,9 +100,16 @@ class _FilterPageState extends State<FilterPage> {
                           SelectedCategoryButtonWidget(
                             id: id,
                             name: _nameFor(id),
-                            onRemove: () => categoryController.toggleCategory(id, false),
+                            onRemove: () => filterController.toggleCategory(id, false),
                           ),
-                        AddToCategoryButtonWidget(),
+                        AddToCategoryButtonWidget(
+                          onSave: (List<CategoryViewModel> allCategories, Set<int> selectedIds) {
+                            filterController.setCategoryData(
+                              selectedIds: selectedIds.toSet(),
+                              allCategories: allCategories.toList(),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   );
@@ -115,38 +120,36 @@ class _FilterPageState extends State<FilterPage> {
         }),
       ),
 
-        bottomNavigationBar: Obx(() {
-          final isLoading = filterController.isLoading.value;
-          final hasProducts = filterController.filteredProducts.isNotEmpty;
-          final filteredCount = filterController.filteredCount.value;
-
-          return OpenContainerAnimation(
-            openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
-              type: ProductListType.filteredProducts,
-              title: AppTexts.filteredProducts,
-            ),
-            closedBuilder: (context, openContainer) {
-              return BottomNavigationBarWidget(
-                title: isLoading
-                    ? AppTexts.loading
-                    : (filteredCount > 0
-                    ? '${AppTexts.showResults}($filteredCount)'
-                    : AppTexts.noProductsToShow),
-                showIcon: false,
-                addToCart: hasProducts,
-                onTap: isLoading || !hasProducts ? null : openContainer,
-                titleDialog: AppTexts.oops,
-                contentDialog: AppTexts.noProductsToShow,
-              );
-            },
-          );
-        })
-
+      bottomNavigationBar: Obx(() {
+        print(filterController.getFilteredProductsParams());
+        final isLoading = filterController.isLoading.value;
+        final filteredCount = filterController.filteredCount.value;
+        var hasProducts = filteredCount > 0;
+        return OpenContainerAnimation(
+          openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
+            type: ProductListType.filteredProducts,
+            title: AppTexts.filteredProducts,
+            getFilteredProductsParams: filterController.getFilteredProductsParams(),
+          ),
+          closedBuilder: (context, openContainer) {
+            return BottomNavigationBarWidget(
+              title: isLoading
+                  ? AppTexts.loading
+                  : (hasProducts ? '${AppTexts.showResults}($filteredCount)' : AppTexts.noProductsToShow),
+              showIcon: false,
+              addToCart: !isLoading,
+              onTap: isLoading ? null : openContainer,
+              titleDialog: AppTexts.oops,
+              contentDialog: AppTexts.noProductsToShow,
+            );
+          },
+        );
+      }),
     );
   }
 
   String _nameFor(int id) {
-    final c = categoryController.categories.firstWhereOrNull((e) => e.id == id);
+    final c = filterController.categories.firstWhereOrNull((e) => e.id == id);
     return c!.name;
   }
 }

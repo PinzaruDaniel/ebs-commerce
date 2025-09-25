@@ -7,16 +7,12 @@ import 'package:data/modules/products/sources/remote/products_api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/modules/products/models/index.dart';
 import 'package:domain/modules/products/products_repository.dart';
-import 'package:objectbox/objectbox.dart';
-
-import 'models/local/product_box.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
   final ProductsApiService apiService;
-  final Box<ProductBox> productBox;
 
-  ProductsRepositoryImpl( {required this.apiService, required this.productBox,});
-
+  ProductsRepositoryImpl({required this.apiService});
+//TODO: un use case pentru count doar is altul pentru toate produsele
   @override
   Future<Either<Failure, ProductResponseEntity>> getFilteredProducts(page, priceGte, priceLte, categoriesId) async {
     try {
@@ -35,17 +31,31 @@ class ProductsRepositoryImpl implements ProductsRepository {
       return Left(Failure.error(e, stackTrace));
     }
   }
-
-  Stream<List<ProductEntity>> watchProducts(){
-    return productBox.query().watch(triggerImmediately: true).map((query)=>query.find().map((e)=>e.toEntity()).toList());
+  @override
+  Future<Either<Failure, int>> getFilteredProductsCount(page, priceGte, priceLte, categoriesId) async {
+    try {
+      final response = await apiService.getProducts({
+        'page': page,
+        'price_gte': priceGte,
+        'price_lte': priceLte,
+        if (categoriesId != null) 'categories': categoriesId,
+      });
+    //  final entities = response.map((dto) => dto.toEntity());
+      return Right(response.count);
+    } catch (e, stackTrace) {
+      if (e is DioException) {
+        return Left(Failure.dio(e));
+      }
+      return Left(Failure.error(e, stackTrace));
+    }
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getProducts(page, perPage) async {
+  Future<Either<Failure, List<ProductEntity>>> getProducts(page, perPage, marks) async {
     try {
-      final response = await apiService.getProducts({'page': page, 'per_page': perPage});
+      final Map<String, dynamic> queries = {'page': page, 'per_page': perPage, if (marks != null) 'marks': marks};
+      final response = await apiService.getProducts(queries);
       final entities = response.results.map((dto) => dto.toEntity()).toList();
-      productBox.putMany(entities.map((e)=>e.toBox()).toList());
       return Right(entities);
     } catch (e, stackTrace) {
       if (e is DioException) {

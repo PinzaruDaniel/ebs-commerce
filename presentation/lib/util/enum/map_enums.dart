@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:presentation/util/resources/app_icons.dart';
 import '../../view/cart_products_view_model.dart';
 import '../resources/app_texts.dart';
 import 'enums.dart';
@@ -7,11 +8,11 @@ extension DeliveryTypeMapper on DeliveryType {
   String get label {
     switch (this) {
       case DeliveryType.pickup:
-        return 'Ridicare la sediu';
+        return AppTexts.ridicareLaSediu;
       case DeliveryType.fanCourier:
-        return 'Fan courier';
+        return AppTexts.fanCourier;
       case DeliveryType.dhl:
-        return 'DHL';
+        return AppTexts.dhl;
     }
   }
   static DeliveryType fromLabel(String label) {
@@ -23,9 +24,9 @@ extension DeliveryTypeMapper on DeliveryType {
       case DeliveryType.pickup:
         return null;
       case DeliveryType.fanCourier:
-        return Image.asset('assets/icons/fan_courier.png');
+        return AppIcons.fanCourier;
       case DeliveryType.dhl:
-        return Image.asset('assets/icons/dhl.png');
+        return AppIcons.dhl;
     }
   }
 }
@@ -52,6 +53,17 @@ extension MapTextProductType on ProductListType {
         return AppTexts.allProducts;
       default:
         return null;
+    }
+  }
+}
+
+extension PaymentMethodExtension on PaymentMethod {
+  String get title {
+    switch (this) {
+      case PaymentMethod.paypal:
+        return 'PayPal';
+      case PaymentMethod.cash:
+        return AppTexts.cashPaymentMethod;
     }
   }
 }

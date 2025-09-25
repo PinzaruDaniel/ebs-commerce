@@ -10,11 +10,10 @@ abstract class ProductsRepository {
     double priceLte,
     List<int>? categoriesId,
   );
+  Future<Either<Failure, int>> getFilteredProductsCount(int page,
+      double priceGte,
+      double priceLte,
+      List<int>? categoriesId,);
 
-  Future<Either<Failure, List<ProductEntity>>> getSaleProducts(int page, int perPage);
-
-  Future<Either<Failure, List<ProductEntity>>> getNewProducts(int page, int perPage);
-
-  Future<Either<Failure, List<ProductEntity>>> getProducts(int page, int perPage);
-  Stream<List<ProductEntity>> watchProducts();
+  Future<Either<Failure, List<ProductEntity>>> getProducts(int page, int perPage, String? marks);
 }

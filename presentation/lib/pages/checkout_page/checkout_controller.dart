@@ -17,7 +17,7 @@ class CheckoutController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
-  RxString selectedPaymentMethod = ''.obs;
+  Rxn<PaymentMethod> selectedPaymentMethod = Rxn<PaymentMethod>();
   RxString voucherCode = RxString('');
   RxList<CartViewModel> productItems = RxList([]);
   final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
@@ -51,7 +51,7 @@ class CheckoutController extends GetxController {
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.deliveryAddressInfo,
-        placeholder: 'Choose your Delivery Address',
+        placeholder: AppTexts.chooseDeliveryAddress,
         titleKey: deliveryModel.value?.deliveryType ?? '',
         infoItems: buildDeliveryInfo(deliveryModel.value),
       ),
@@ -60,7 +60,7 @@ class CheckoutController extends GetxController {
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.paymentMethod,
         placeholder: AppTexts.choosePaymentMethod,
-        titleKey: selectedPaymentMethod.value,
+        titleKey: selectedPaymentMethod.value?.title,
         infoItems: {},
       ),
 

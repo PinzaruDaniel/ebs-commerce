@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import '../../../util/resources/app_colors.dart';
+import '../resources/app_texts.dart';
 
 class CheckoutInfoContainerViewModel extends BaseViewModel {
   final CheckoutWidgetsType keyId;
@@ -97,7 +98,7 @@ class CheckoutInfoContainerWidget extends StatelessWidget {
                                   }),
                                 if ((item.infoItems == null || item.infoItems!.isEmpty) &&
                                     (item.titleKey?.trim().isEmpty ?? true))
-                                  Text(item.placeholder == null ? 'Enter your data here' : item.placeholder!),
+                                  Text(item.placeholder == null ? AppTexts.enterYourData : item.placeholder!),
                               ],
                             ),
                           ),

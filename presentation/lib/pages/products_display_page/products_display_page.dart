@@ -1,3 +1,4 @@
+import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/home_controller.dart';
@@ -15,8 +16,9 @@ import '../../util/widgets/loading_overlay_widget.dart';
 class ProductsDisplayPage extends StatefulWidget {
   final String title;
   final ProductListType type;
+  final GetFilteredProductsParams? getFilteredProductsParams;
 
-  const ProductsDisplayPage({super.key, required this.title, required this.type});
+  const ProductsDisplayPage({super.key, required this.title, required this.type, this.getFilteredProductsParams, });
 
   @override
   State<ProductsDisplayPage> createState() => _ProductsDisplayPageState();
@@ -32,7 +34,8 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
     super.initState();
     Get.put(ProductsDisplayController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.loadProducts(productType: widget.type);
+      //TODO: to send filter params, request filtered products, displaiyng page
+      controller.loadProducts(productType: widget.type, getFilteredProductsParams: widget.getFilteredProductsParams);
     });
   }
 
@@ -49,29 +52,39 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
       ),
       body: SafeArea(
         child: Obx(
-          () => SmartRefresherWidget(
-            controller: _refreshController,
-            onRefresh: () async {
-              await controller.loadProducts(loadMore: false, productType: widget.type);
-              _refreshController.refreshCompleted();
-            },
-            onLoading: () async {
-              await controller.loadProducts(loadMore: true, productType: widget.type);
-              _refreshController.loadComplete();
-            },
-        
-            child: controller.isLoading.value
-                ? LoadingOverlayWidget(isLoading: true)
-                : SingleChildScrollView(
-                    child: ProductsListDisplayWidget(
-                      title: widget.title,
-                      showHeaderTitle: false,
-                      products: controller.products,
-                    ),
+              () =>
+              SmartRefresherWidget(
+                controller: _refreshController,
+                onRefresh: () async {
+                  await controller.loadProducts(loadMore: false, productType: widget.type);
+                  _refreshController.refreshCompleted();
+                },
+                onLoading: () async {
+                  await controller.loadProducts(loadMore: true, productType: widget.type);
+                  _refreshController.loadComplete();
+                },
+                //TODO: prin-trun container care
+                child: controller.isLoading.value
+                    ? LoadingOverlayWidget(isLoading: true)
+                    : SingleChildScrollView(
+                  child: ProductsListDisplayWidget(
+                    title: widget.title,
+                    showHeaderTitle: false,
+                    products: controller.products,
                   ),
-          ),
+                ),
+              ),
         ),
       ),
     );
   }
 }
+/*child: ProductsListContainer(
+                      builder: (context, products) {
+                        return ProductsListDisplayWidget(
+                          title: widget.title,
+                          showHeaderTitle: false,
+                          products: products,
+                        );
+                      }
+                    ),*/

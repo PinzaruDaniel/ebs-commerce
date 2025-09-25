@@ -1,3 +1,4 @@
+/*
 import 'package:common/constants/failure_class.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/core/usecase.dart';
@@ -22,3 +23,4 @@ class GetNewProductsParams {
 
   GetNewProductsParams({required this.page, required this.perPage});
 }
+*/

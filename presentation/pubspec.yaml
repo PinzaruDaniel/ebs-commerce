@@ -61,7 +61,8 @@ dependencies:
   awesome_dialog: ^3.2.1
   mock_data: ^2.0.1
   liquid_glass_renderer: ^0.1.1-dev.10
-
+  easy_localization: ^3.0.8
+  pull_down_button: ^0.10.2
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +84,7 @@ flutter:
     - assets/icons/
     - assets/banner/banner.png
     - assets/products/
+    - lib/util/resources/localization/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

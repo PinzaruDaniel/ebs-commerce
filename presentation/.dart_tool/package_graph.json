@@ -15,6 +15,7 @@
         "cupertino_icons",
         "di",
         "domain",
+        "easy_localization",
         "flutter",
         "flutter_animate",
         "flutter_hooks",
@@ -27,6 +28,7 @@
         "intl",
         "liquid_glass_renderer",
         "mock_data",
+        "pull_down_button",
         "pull_to_refresh_flutter3",
         "readmore",
         "smooth_page_indicator",
@@ -60,6 +62,27 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "pull_down_button",
+      "version": "0.10.2",
+      "dependencies": [
+        "flutter",
+        "meta"
+      ]
+    },
+    {
+      "name": "easy_localization",
+      "version": "3.0.8",
+      "dependencies": [
+        "args",
+        "easy_logger",
+        "flutter",
+        "flutter_localizations",
+        "intl",
+        "path",
+        "shared_preferences"
       ]
     },
     {
@@ -241,7 +264,8 @@
       "name": "common",
       "version": "1.0.0",
       "dependencies": [
-        "dio"
+        "dio",
+        "presentation"
       ]
     },
     {
@@ -252,9 +276,7 @@
         "data",
         "dio",
         "domain",
-        "get_it",
-        "objectbox",
-        "objectbox_flutter_libs"
+        "get_it"
       ]
     },
     {
@@ -358,6 +380,40 @@
         "stream_channel",
         "string_scanner",
         "term_glyph"
+      ]
+    },
+    {
+      "name": "flutter_localizations",
+      "version": "0.0.0",
+      "dependencies": [
+        "flutter",
+        "intl",
+        "path"
+      ]
+    },
+    {
+      "name": "easy_logger",
+      "version": "0.0.2",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
+      "name": "args",
+      "version": "2.7.0",
+      "dependencies": []
+    },
+    {
+      "name": "shared_preferences",
+      "version": "2.5.3",
+      "dependencies": [
+        "flutter",
+        "shared_preferences_android",
+        "shared_preferences_foundation",
+        "shared_preferences_linux",
+        "shared_preferences_platform_interface",
+        "shared_preferences_web",
+        "shared_preferences_windows"
       ]
     },
     {
@@ -564,26 +620,6 @@
       ]
     },
     {
-      "name": "objectbox_flutter_libs",
-      "version": "4.3.1",
-      "dependencies": [
-        "flutter",
-        "objectbox",
-        "path_provider"
-      ]
-    },
-    {
-      "name": "objectbox",
-      "version": "4.3.1",
-      "dependencies": [
-        "collection",
-        "ffi",
-        "flat_buffers",
-        "meta",
-        "path"
-      ]
-    },
-    {
       "name": "data",
       "version": "1.0.0",
       "dependencies": [
@@ -685,6 +721,64 @@
       ]
     },
     {
+      "name": "shared_preferences_windows",
+      "version": "2.4.1",
+      "dependencies": [
+        "file",
+        "flutter",
+        "path",
+        "path_provider_platform_interface",
+        "path_provider_windows",
+        "shared_preferences_platform_interface"
+      ]
+    },
+    {
+      "name": "shared_preferences_web",
+      "version": "2.4.3",
+      "dependencies": [
+        "flutter",
+        "flutter_web_plugins",
+        "shared_preferences_platform_interface",
+        "web"
+      ]
+    },
+    {
+      "name": "shared_preferences_platform_interface",
+      "version": "2.4.1",
+      "dependencies": [
+        "flutter",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "shared_preferences_linux",
+      "version": "2.4.1",
+      "dependencies": [
+        "file",
+        "flutter",
+        "path",
+        "path_provider_linux",
+        "path_provider_platform_interface",
+        "shared_preferences_platform_interface"
+      ]
+    },
+    {
+      "name": "shared_preferences_foundation",
+      "version": "2.5.4",
+      "dependencies": [
+        "flutter",
+        "shared_preferences_platform_interface"
+      ]
+    },
+    {
+      "name": "shared_preferences_android",
+      "version": "2.4.13",
+      "dependencies": [
+        "flutter",
+        "shared_preferences_platform_interface"
+      ]
+    },
+    {
       "name": "rive_common",
       "version": "0.4.15",
       "dependencies": [
@@ -729,11 +823,6 @@
         "meta",
         "vector_math"
       ]
-    },
-    {
-      "name": "args",
-      "version": "2.7.0",
-      "dependencies": []
     },
     {
       "name": "http_parser",
@@ -986,14 +1075,24 @@
       "dependencies": []
     },
     {
-      "name": "ffi",
-      "version": "2.1.4",
-      "dependencies": []
+      "name": "objectbox_flutter_libs",
+      "version": "4.3.1",
+      "dependencies": [
+        "flutter",
+        "objectbox",
+        "path_provider"
+      ]
     },
     {
-      "name": "flat_buffers",
-      "version": "23.5.26",
-      "dependencies": []
+      "name": "objectbox",
+      "version": "4.3.1",
+      "dependencies": [
+        "collection",
+        "ffi",
+        "flat_buffers",
+        "meta",
+        "path"
+      ]
     },
     {
       "name": "vm_service",
@@ -1001,11 +1100,46 @@
       "dependencies": []
     },
     {
+      "name": "path_provider_windows",
+      "version": "2.3.0",
+      "dependencies": [
+        "ffi",
+        "flutter",
+        "path",
+        "path_provider_platform_interface"
+      ]
+    },
+    {
+      "name": "path_provider_platform_interface",
+      "version": "2.1.2",
+      "dependencies": [
+        "flutter",
+        "platform",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "path_provider_linux",
+      "version": "2.2.1",
+      "dependencies": [
+        "ffi",
+        "flutter",
+        "path",
+        "path_provider_platform_interface",
+        "xdg_directories"
+      ]
+    },
+    {
       "name": "graphs",
       "version": "2.3.2",
       "dependencies": [
         "collection"
       ]
+    },
+    {
+      "name": "ffi",
+      "version": "2.1.4",
+      "dependencies": []
     },
     {
       "name": "petitparser",
@@ -1071,36 +1205,6 @@
         "path",
         "sqflite_common",
         "sqflite_platform_interface"
-      ]
-    },
-    {
-      "name": "path_provider_windows",
-      "version": "2.3.0",
-      "dependencies": [
-        "ffi",
-        "flutter",
-        "path",
-        "path_provider_platform_interface"
-      ]
-    },
-    {
-      "name": "path_provider_platform_interface",
-      "version": "2.1.2",
-      "dependencies": [
-        "flutter",
-        "platform",
-        "plugin_platform_interface"
-      ]
-    },
-    {
-      "name": "path_provider_linux",
-      "version": "2.2.1",
-      "dependencies": [
-        "ffi",
-        "flutter",
-        "path",
-        "path_provider_platform_interface",
-        "xdg_directories"
       ]
     },
     {
@@ -1204,8 +1308,8 @@
       ]
     },
     {
-      "name": "synchronized",
-      "version": "3.4.0",
+      "name": "flat_buffers",
+      "version": "23.5.26",
       "dependencies": []
     },
     {
@@ -1220,6 +1324,11 @@
         "meta",
         "path"
       ]
+    },
+    {
+      "name": "synchronized",
+      "version": "3.4.0",
+      "dependencies": []
     }
   ],
   "configVersion": 1

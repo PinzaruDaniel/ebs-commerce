@@ -12,6 +12,7 @@ import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/mapper/cities_response_entity_mapper.dart';
 import 'package:presentation/util/mapper/countries_entity_mapper.dart';
 import 'package:presentation/util/mapper/states_entity_mapper.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/country_view_model.dart';
@@ -172,11 +173,10 @@ class DeliveryAddressController extends GetxController {
 
   void _addPickupFields() {
     final previousPickup = addressVM.value?.pickupLocation;
-
     allItems.add(
       SelectionViewModel(
         keyId: 'sediu',
-        title: 'Sediu',
+        title: AppTexts.office,
         options: pickupLocations,
         initialValue:
             previousPickup ?? getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? pickupLocations.first,
@@ -188,30 +188,30 @@ class DeliveryAddressController extends GetxController {
     allItems.addAll([
       SelectionViewModel(
         keyId: 'country',
-        title: 'Country',
-        options: ['Select country', ...countries.map((c) => c.name)],
-        initialValue: selectedCountry.value?.name ?? 'Select country',
+        title: AppTexts.country,
+        options: [ ...countries.map((c) => c.name)],
+        initialValue: selectedCountry.value?.name ?? AppTexts.selectCountry,
       ),
       SelectionViewModel(
         keyId: 'region',
-        title: 'Region',
-        options: ['Select region', ...states.map((s) => s.name)],
-        initialValue: selectedState.value?.name ?? 'Select region',
+        title: AppTexts.region,
+        options: [...states.map((s) => s.name)],
+        initialValue: selectedState.value?.name ?? AppTexts.selectRegion ,
       ),
       SelectionViewModel(
         keyId: 'city',
-        title: 'City',
-        options: ['Select city', ...cities.map((c) => c.name)],
-        initialValue: selectedCity.value?.name ?? 'Select city',
+        title: AppTexts.city,
+        options: [ ...cities.map((c) => c.name)],
+        initialValue: selectedCity.value?.name ?? AppTexts.selectCity,
       ),
       TextFieldViewModel(
         keyId: 'postal_code',
-        title: 'Postal code',
+        title: AppTexts.postalCode,
         initialValue: '',
         textInputType: TextInputType.number,
       ),
-      TextFieldViewModel(keyId: 'address', title: 'Address', initialValue: ''),
-      TextFieldViewModel(keyId: 'other_comments', title: 'Other Comments', initialValue: '', isRequired: false),
+      TextFieldViewModel(keyId: 'address', title: AppTexts.address, initialValue: ''),
+      TextFieldViewModel(keyId: 'other_comments', title: AppTexts.otherComments, initialValue: '', isRequiredValidation: false, minLines: 3),
     ]);
   }
 

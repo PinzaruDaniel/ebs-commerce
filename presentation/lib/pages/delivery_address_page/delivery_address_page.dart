@@ -5,12 +5,12 @@ import 'package:presentation/pages/delivery_address_page/delivery_address_contro
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_item_build_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
-import 'package:presentation/util/widgets/text_field_widget.dart';
-import '../../util/resources/app_colors.dart';
-import '../../util/resources/app_icons.dart';
-import '../../util/resources/app_texts.dart';
-import '../../util/widgets/app_bar_widget.dart';
-import '../../util/widgets/bottom_navigation_bar_widget.dart';
+import 'package:presentation/util/resources/app_colors.dart';
+import 'package:presentation/util/resources/app_icons.dart';
+import 'package:presentation/util/resources/app_texts.dart';
+import 'package:presentation/util/widgets/app_bar_widget.dart';
+import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
+import '../../util/widgets/text_field_widget.dart';
 import '../../view/base_view_model.dart';
 
 class DeliveryAddressPage extends StatefulWidget {
@@ -23,8 +23,9 @@ class DeliveryAddressPage extends StatefulWidget {
 }
 
 class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
-  DeliveryAddressController get deliveryAddressController=>Get.find();
   final _formKey = GlobalKey<FormState>();
+
+  DeliveryAddressController get deliveryAddressController => Get.find();
 
   @override
   void initState() {
@@ -38,7 +39,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       appBar: AppBarWidget(
         title: AppTexts.deliveryAddress.capitalizeFirst,
         showBorder: false,
@@ -50,7 +50,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
       body: SafeArea(
         child: Obx(() {
           final items = deliveryAddressController.allItems.toList();
-
           return Form(
             key: _formKey,
             child: ImplicitlyAnimatedList<BaseViewModel>(
@@ -59,11 +58,9 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               shrinkWrap: true,
               areItemsTheSame: (a, b) {
                 if (a.runtimeType != b.runtimeType) return false;
-
                 if (a is SelectionViewModel && b is SelectionViewModel) return a.keyId == b.keyId;
                 if (a is TextFieldViewModel && b is TextFieldViewModel) return a.keyId == b.keyId;
                 if (a is DeliveryTypeViewModel && b is DeliveryTypeViewModel) return a.selected == b.selected;
-
                 return false;
               },
 
@@ -81,11 +78,36 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               },
 
               itemBuilder: (context, animation, item, index) {
+                void onSelectionChanged(String value) {
+                  if (item is! SelectionViewModel) return;
+                  final viewModel = item;
+                  if (viewModel.keyId == 'country') {
+                    final country = deliveryAddressController.countries.firstWhere((c) => c.name == value);
+                    deliveryAddressController.selectedCountry.value = country;
+                    deliveryAddressController.selectedState.value = null;
+                    deliveryAddressController.selectedCity.value = null;
+                    deliveryAddressController.states.clear();
+                    deliveryAddressController.cities.clear();
+                    deliveryAddressController.loadStates(country);
+                  } else if (viewModel.keyId == 'region') {
+                    final state = deliveryAddressController.states.firstWhere((s) => s.name == value);
+                    deliveryAddressController.selectedState.value = state;
+                    deliveryAddressController.selectedCity.value = null;
+                    deliveryAddressController.cities.clear();
+                    deliveryAddressController.loadCities(deliveryAddressController.selectedCountry.value!, state);
+                  } else if (viewModel.keyId == 'city') {
+                    deliveryAddressController.selectedCity.value = deliveryAddressController.cities.firstWhere(
+                      (c) => c.name == value,
+                    );
+                  }
+                }
+
                 return DeliveryItemBuildWidget(
                   onCallBack: () async {
                     await deliveryAddressController.removeAllItemsAnimated();
                     deliveryAddressController.updateAllItems();
                   },
+                  onSelectionChanged: onSelectionChanged,
                   item: item,
                   animation: animation,
                   index: index,
@@ -95,7 +117,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
           );
         }),
       ),
-
       bottomNavigationBar: BottomNavigationBarWidget(
         title: AppTexts.save,
         showIcon: false,

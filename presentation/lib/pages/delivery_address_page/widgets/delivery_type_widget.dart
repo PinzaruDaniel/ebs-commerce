@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/base_view_model.dart';
 import '../../../util/enum/enums.dart';
 
@@ -45,12 +46,12 @@ class _DeliveryTypeWidgetState extends State<DeliveryTypeWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding:  EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Delivery Type'),
-          const SizedBox(height: 4),
+           Text(AppTexts.deliveryType),
+           SizedBox(height: 4),
 
           GridView.builder(
             shrinkWrap: true,
@@ -73,7 +74,7 @@ class _DeliveryTypeWidgetState extends State<DeliveryTypeWidget> {
                   setState(() {});
                 },
                 child: Container(
-                  padding: const EdgeInsets.only(left: 8.0, right: 36, top: 8, bottom: 8),
+                  padding:  EdgeInsets.only(left: 8.0, right: 36, top: 8, bottom: 8),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5),
@@ -83,7 +84,7 @@ class _DeliveryTypeWidgetState extends State<DeliveryTypeWidget> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if (option.icon != null) option.icon!,
-                      const SizedBox(width: 8),
+                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           option.titleKey,
