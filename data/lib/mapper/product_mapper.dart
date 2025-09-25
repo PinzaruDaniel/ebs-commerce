@@ -23,6 +23,20 @@ extension ProductApiDtoMapper on ProductApiDto {
     );
   }
 }
+extension ProductEntityToBoxMapper on ProductEntity{
+  ProductBox get toBox {
+    return ProductBox(idProduct: id,
+        name: name,
+        price: price,
+        discount: discount,
+        discountedPrice: discountedPrice,
+        imageUrl: jsonEncode(imageUrl),
+        marks: jsonEncode(marks),
+        stock: stock,
+        description: description);
+  }
+}
+/*
 
 extension ProductEntityToBoxMapper on ProductEntity{
   ProductBox toBox() {
@@ -54,4 +68,4 @@ extension ProductBoxToEntityMapper on ProductBox{
         specification: [],
         category: []);
   }
-}
+}*/

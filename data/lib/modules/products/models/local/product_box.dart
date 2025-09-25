@@ -3,22 +3,18 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class ProductBox {
   @Id(assignable: true)
-  int id;
-
+  int idProduct;
   String name;
-
   String? price;
   String? discount;
   String? discountedPrice;
-
   String? imageUrl;
   String? marks;
-
   int? stock;
   String? description;
 
   ProductBox({
-    this.id = 0,
+    this.idProduct = 0,
     required this.name,
     this.price,
     this.discount,

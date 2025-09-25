@@ -10,10 +10,15 @@ abstract class ProductsRepository {
     double priceLte,
     List<int>? categoriesId,
   );
-  Future<Either<Failure, int>> getFilteredProductsCount(int page,
-      double priceGte,
-      double priceLte,
-      List<int>? categoriesId,);
+
+  Future<Either<Failure, int>> getFilteredProductsCount(
+    int page,
+    double priceGte,
+    double priceLte,
+    List<int>? categoriesId,
+  );
 
   Future<Either<Failure, List<ProductEntity>>> getProducts(int page, int perPage, String? marks);
+
+  Future<void> setProductsLocalCache(List<ProductEntity> products);
 }

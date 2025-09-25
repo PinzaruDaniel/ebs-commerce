@@ -3,6 +3,7 @@ import 'package:data/mapper/product_mapper.dart';
 import 'package:data/mapper/product_response_mapper.dart';
 import 'package:data/modules/products/models/remote/index.dart';
 import 'package:dartz/dartz.dart';
+import 'package:data/modules/products/sources/local/products_local_source.dart';
 import 'package:data/modules/products/sources/remote/products_api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/modules/products/models/index.dart';
@@ -10,9 +11,8 @@ import 'package:domain/modules/products/products_repository.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
   final ProductsApiService apiService;
-
-  ProductsRepositoryImpl({required this.apiService});
-//TODO: un use case pentru count doar is altul pentru toate produsele
+  final ProductsLocalDataSource localDataSource;
+  ProductsRepositoryImpl({required this.apiService, required this.localDataSource});
   @override
   Future<Either<Failure, ProductResponseEntity>> getFilteredProducts(page, priceGte, priceLte, categoriesId) async {
     try {
@@ -40,7 +40,6 @@ class ProductsRepositoryImpl implements ProductsRepository {
         'price_lte': priceLte,
         if (categoriesId != null) 'categories': categoriesId,
       });
-    //  final entities = response.map((dto) => dto.toEntity());
       return Right(response.count);
     } catch (e, stackTrace) {
       if (e is DioException) {
@@ -66,30 +65,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getSaleProducts(page, perPage) async {
-    try {
-      final response = await apiService.getProducts({'marks': 'sale', 'page': page, 'per_page': perPage});
-      final entities = response.results.map((dto) => dto.toEntity()).toList();
-      return Right(entities);
-    } catch (e, stackTrace) {
-      if (e is DioException) {
-        return Left(Failure.dio(e));
-      }
-      return Left(Failure.error(e, stackTrace));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<ProductEntity>>> getNewProducts(page, perPage) async {
-    try {
-      final response = await apiService.getProducts({'marks': 'new', 'page': page, 'per_page': perPage});
-      final entities = response.results.map((dto) => dto.toEntity()).toList();
-      return Right(entities);
-    } catch (e, stackTrace) {
-      if (e is DioException) {
-        return Left(Failure.dio(e));
-      }
-      return Left(Failure.error(e, stackTrace));
-    }
+  Future<void> setProductsLocalCache(List<ProductEntity> products) {
+    return localDataSource.setProducts(products.map((e)=>e.toBox).toList());
   }
 }

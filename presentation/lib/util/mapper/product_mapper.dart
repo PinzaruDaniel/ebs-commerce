@@ -21,3 +21,21 @@ extension ProductViewModelMapper on ProductEntity {
     );
   }
 }
+
+extension ProductMapper on ProductViewModel{
+  ProductEntity get toEntity {
+    return ProductEntity(id: id,
+        name: title,
+        brand: company,
+        price: price,
+        discount: discount,
+        discountedPrice: discountedPrice,
+        imageUrl: imageUrl,
+        marks: marks,
+        stock: stock,
+        description: description,
+        specification:  null,
+        category: null);
+    //TODO: to make the mapper
+  }
+}

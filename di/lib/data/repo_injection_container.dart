@@ -1,5 +1,6 @@
 import 'package:data/core/objectbox_store.dart';
 import 'package:data/modules/products/models/local/product_box.dart';
+import 'package:data/modules/products/sources/local/products_local_source.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'package:data/modules/categories/sources/remote/categories_api_service.dart';
@@ -15,14 +16,11 @@ import 'package:get_it/get_it.dart';
 
 Future<void> init() async {
   var dataDi = GetIt.instance;
-  final store = await ObjectBoxStore.getStore();
-
-  dataDi.registerLazySingleton<Box<ProductBox>>(() => store.box<ProductBox>());
 
   dataDi.registerLazySingleton<ProductsRepository>(
         () => ProductsRepositoryImpl(
       apiService: dataDi<ProductsApiService>(),
-      productBox: dataDi<Box<ProductBox>>(),
+      localDataSource: dataDi<ProductsLocalDataSource>(),
     ),
   );
 
