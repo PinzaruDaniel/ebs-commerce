@@ -1111,7 +1111,6 @@
         <entry key="vector_math">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_math-2.2.0/lib" />
             </list>
           </value>
@@ -1362,7 +1361,6 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics_codec-1.1.13/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.17/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.19/lib" />
-      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vector_math-2.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vm_service-15.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vm_service-15.0.2/lib" />

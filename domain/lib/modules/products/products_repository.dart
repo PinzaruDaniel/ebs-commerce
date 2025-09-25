@@ -21,4 +21,6 @@ abstract class ProductsRepository {
   Future<Either<Failure, List<ProductEntity>>> getProducts(int page, int perPage, String? marks);
 
   Future<void> setProductsLocalCache(List<ProductEntity> products);
+
+  Future<List<ProductEntity>>getProductsLocalCache();
 }

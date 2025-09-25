@@ -25,7 +25,8 @@ extension ProductApiDtoMapper on ProductApiDto {
 }
 extension ProductEntityToBoxMapper on ProductEntity{
   ProductBox get toBox {
-    return ProductBox(idProduct: id,
+    return ProductBox(
+        idProduct: id,
         name: name,
         price: price,
         discount: discount,
@@ -34,6 +35,23 @@ extension ProductEntityToBoxMapper on ProductEntity{
         marks: jsonEncode(marks),
         stock: stock,
         description: description);
+  }
+}
+extension ProductBoxToEntityMapper on ProductBox{
+  ProductEntity toEntity() {
+    return ProductEntity(
+        id: idProduct,
+        name: name,
+        brand: null,
+        price: price,
+        discount: discount,
+        discountedPrice: discountedPrice,
+        imageUrl: imageUrl != null ? List<String>.from(jsonDecode(imageUrl!)) : [],
+        marks: marks != null ? List<String>.from(jsonDecode(marks!)) : [],
+        stock: stock,
+        description: description,
+        specification: [],
+        category: []);
   }
 }
 /*

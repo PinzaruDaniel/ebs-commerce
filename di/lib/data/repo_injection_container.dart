@@ -1,8 +1,4 @@
-import 'package:data/core/objectbox_store.dart';
-import 'package:data/modules/products/models/local/product_box.dart';
 import 'package:data/modules/products/sources/local/products_local_source.dart';
-import 'package:objectbox/objectbox.dart';
-
 import 'package:data/modules/categories/sources/remote/categories_api_service.dart';
 import 'package:data/modules/delivery_address/delivery_address_repository_impl.dart';
 import 'package:data/modules/delivery_address/sources/remote/delivery_address_api_service.dart';
