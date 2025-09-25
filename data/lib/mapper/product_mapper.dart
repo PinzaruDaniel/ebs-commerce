@@ -46,8 +46,13 @@ extension ProductBoxToEntityMapper on ProductBox{
         price: price,
         discount: discount,
         discountedPrice: discountedPrice,
-        imageUrl: imageUrl != null ? List<String>.from(jsonDecode(imageUrl!)) : [],
-        marks: marks != null ? List<String>.from(jsonDecode(marks!)) : [],
+        imageUrl: (imageUrl != null && imageUrl!.isNotEmpty)
+            ? List<String>.from(jsonDecode(imageUrl!) ?? [])
+            : [],
+
+        marks: (marks != null && marks!.isNotEmpty)
+            ? List<String>.from(jsonDecode(marks!) ?? [])
+            : [],
         stock: stock,
         description: description,
         specification: [],

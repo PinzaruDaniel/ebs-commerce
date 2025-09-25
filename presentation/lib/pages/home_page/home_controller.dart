@@ -25,13 +25,10 @@ class HomeController extends GetxController {
   int perPage = 20;
   RxBool isLoadingMore = false.obs;
 
-  void initItems() {
+  void initItems() async {
     items.clear();
     items.add(AdBannerViewModel());
-    getProducts();
-    setProductsLocalCache();
-    getProductsLocalCache();
-
+    await getProducts();
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
@@ -47,7 +44,8 @@ class HomeController extends GetxController {
     final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage));
 
     either.fold(
-      (failure) {
+      (failure) async {
+        await getProductsLocalCache();
         isLoading.value = false;
         isLoadingMore.value = false;
         showFailureSnackBar(failure: failure);
@@ -57,9 +55,12 @@ class HomeController extends GetxController {
 
         if (loadMore) {
           products.addAll(newItems);
+
         } else {
           products.assignAll(newItems);
         }
+        await setProductsLocalCache();
+
         if (!loadMore && currentPage.value == 1) {
           await getNewProducts();
           await getSaleProducts();
@@ -109,31 +110,28 @@ class HomeController extends GetxController {
 
   Future<void> setProductsLocalCache() async {
     final productEntities = products.map((e) => e.toEntity).toList();
-    print('Caching ${productEntities.length} products locally');
+    print('Caching ${productEntities.length} ');
     await setProductLocalUseCase.call(productEntities);
-    print('Products cached successfully');
+    print(' cached');
   }
 
   Future<void> getProductsLocalCache() async {
     final cachedProducts = await getProductsLocalUseCase.call();
-    print('Loaded ${cachedProducts.length} products from local cache');
+    print('Loaded ${cachedProducts.length} products from cache');
 
     if (cachedProducts.isNotEmpty) {
       final cachedViewModels = cachedProducts.map((e) => e.toModel).toList();
       products.assignAll(cachedViewModels);
-
-      print('Assigned ${cachedViewModels.length} products to products RxList');
-
+      print('Assigned ${cachedViewModels.length} products ');
       items.value = [
         AdBannerViewModel(),
         HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
         HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
         AllProductsViewItem(products: products),
       ];
-
       isLoading.value = false;
     } else {
-      print('No products found in local cache');
+      print('No products cache');
     }
   }
 

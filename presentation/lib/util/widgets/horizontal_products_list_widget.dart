@@ -52,7 +52,8 @@ class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWid
                   },
                 ),
               )
-            : EmptyWidget()
+            : Center(child: Text('Nimic nou'))
+
       ],
     );
   }
