@@ -24,11 +24,18 @@ class HomeController extends GetxController {
   RxInt currentPage = 1.obs;
   int perPage = 20;
   RxBool isLoadingMore = false.obs;
+  StreamSubscription? _cacheSubscription;
+
 
   void initItems() async {
     items.clear();
     items.add(AdBannerViewModel());
     await getProducts();
+  }
+  @override
+  void onClose() {
+    _cacheSubscription?.cancel();
+    super.onClose();
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
@@ -45,7 +52,7 @@ class HomeController extends GetxController {
 
     either.fold(
       (failure) async {
-        await getProductsLocalCache();
+         getProductsLocalCache();
         isLoading.value = false;
         isLoadingMore.value = false;
         showFailureSnackBar(failure: failure);
@@ -115,24 +122,25 @@ class HomeController extends GetxController {
     print(' cached');
   }
 
-  Future<void> getProductsLocalCache() async {
-    final cachedProducts = await getProductsLocalUseCase.call();
-    print('Loaded ${cachedProducts.length} products from cache');
-
-    if (cachedProducts.isNotEmpty) {
-      final cachedViewModels = cachedProducts.map((e) => e.toModel).toList();
-      products.assignAll(cachedViewModels);
-      print('Assigned ${cachedViewModels.length} products ');
-      items.value = [
-        AdBannerViewModel(),
-        HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
-        HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
-        AllProductsViewItem(products: products),
-      ];
-      isLoading.value = false;
-    } else {
-      print('No products cache');
-    }
+  void getProductsLocalCache() {
+    _cacheSubscription = getProductsLocalUseCase.call().listen((cachedProducts) {
+      print('Stream emitted ${cachedProducts.length} cached products');
+      if (cachedProducts.isNotEmpty) {
+        final cachedViewModels = cachedProducts.map((e) => e.toModel).toList();
+        products.assignAll(cachedViewModels);
+        items.value = [
+          AdBannerViewModel(),
+          HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
+          HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
+          AllProductsViewItem(products: products),
+        ];
+        isLoading.value = false;
+      } else {
+        print('No products in cache');
+      }
+    });
   }
+
+
 
 }

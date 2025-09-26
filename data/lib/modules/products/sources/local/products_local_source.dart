@@ -4,7 +4,7 @@ import 'package:objectbox/objectbox.dart';
 abstract class ProductsLocalDataSource {
   Future<void> setProducts(List<ProductBox> productsBox);
 
-  Future<List<ProductBox>> getProducts();
+  Stream<List<ProductBox>> getProducts();
 }
 
 class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
@@ -18,8 +18,7 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   }
 
   @override
-  Future<List<ProductBox>> getProducts() async {
-    final products = productBox.getAll();
-    return products;
+  Stream<List<ProductBox>> getProducts()  {
+    return productBox.query().watch(triggerImmediately: true).map((query) => query.find().reversed.toList());
   }
 }

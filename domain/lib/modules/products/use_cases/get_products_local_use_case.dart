@@ -8,7 +8,7 @@ class GetProductsLocalUseCase extends UseCaseNoEitherNoParams<List<ProductEntity
   final ProductsRepository productsRepository;
   GetProductsLocalUseCase({required this.productsRepository});
   @override
-  Future<List<ProductEntity>> call() {
+  Stream<List<ProductEntity>> call() {
     return productsRepository.getProductsLocalCache();
   }
 }

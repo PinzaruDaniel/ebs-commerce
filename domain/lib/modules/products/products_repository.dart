@@ -22,5 +22,5 @@ abstract class ProductsRepository {
 
   Future<void> setProductsLocalCache(List<ProductEntity> products);
 
-  Future<List<ProductEntity>>getProductsLocalCache();
+  Stream<List<ProductEntity>> getProductsLocalCache();
 }

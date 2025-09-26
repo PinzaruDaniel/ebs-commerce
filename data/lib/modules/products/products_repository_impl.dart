@@ -70,10 +70,11 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<List<ProductEntity>> getProductsLocalCache() async{
-    final response= await localDataSource.getProducts();
-    final entities=response.map((e)=>e.toEntity()).toList();
-    return entities;
+  Stream<List<ProductEntity>> getProductsLocalCache() {
+    return localDataSource.getProducts().map(
+          (boxList) => boxList.map((e) => e.toEntity()).toList(),
+    );
   }
+
 
 }
