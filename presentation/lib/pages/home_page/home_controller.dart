@@ -117,7 +117,7 @@ class HomeController extends GetxController {
 
   Future<void> setProductsLocalCache() async {
     final productEntities = products.map((e) => e.toEntity).toList();
-    print('Caching ${productEntities.length} ');
+    print('Caching ${productEntities[0].brand} ');
     await setProductLocalUseCase.call(productEntities);
     print(' cached');
   }

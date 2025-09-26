@@ -43,7 +43,7 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
       body: Obx(() {
         if (categoryController.isLoading.value) {
-          return const Center(
+          return  Center(
             child: CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75)),
           );
         }
@@ -51,7 +51,7 @@ class _CategoryPageState extends State<CategoryPage> {
         final parentCategories = categoryController.groupedCategories[null];
 
         if (parentCategories == null || parentCategories.isEmpty) {
-          return const EmptyWidget();
+          return  EmptyWidget();
         }
 
         return ListView.builder(
@@ -61,7 +61,7 @@ class _CategoryPageState extends State<CategoryPage> {
             final hasChildren = categoryController.groupedCategories.containsKey(parent.id);
 
             return ExpansionTile(
-              shape: const Border(),
+              shape:  Border(),
               iconColor: hasChildren ? AppColors.primary : Colors.transparent,
               collapsedIconColor: hasChildren ? Colors.black : Colors.transparent,
               title: Obx(() {
@@ -92,10 +92,10 @@ class _CategoryPageState extends State<CategoryPage> {
 
                       return hasGrandChildren
                           ? ExpansionTile(
-                              shape: const Border(),
+                              shape:  Border(),
                               iconColor: AppColors.primary,
                               title: Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
+                                padding:  EdgeInsets.only(left: 16.0),
                                 child: Obx(() {
                                   final selectedChild = categoryController.getCategorySelectionState(child.id);
                                   return CheckboxCategoryWidget(
@@ -118,9 +118,9 @@ class _CategoryPageState extends State<CategoryPage> {
                               ) {
                                 final grand = categoryController.groupedCategories[child.id]![grandIndex];
                                 return ListTile(
-                                  shape: const Border(),
+                                  shape:  Border(),
                                   title: Padding(
-                                    padding: const EdgeInsets.only(left: 32.0),
+                                    padding:  EdgeInsets.only(left: 32.0),
                                     child: Obx(() {
                                       final selectedGrand = categoryController.selectedCategoryId.contains(grand.id);
                                       return CheckboxCategoryWidget(
@@ -136,7 +136,7 @@ class _CategoryPageState extends State<CategoryPage> {
                             )
                           : ListTile(
                               title: Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
+                                padding:  EdgeInsets.only(left: 16.0),
                                 child: Obx(() {
                                   final selectedChild = categoryController.getCategorySelectionState(child.id);
                                   return CheckboxCategoryWidget(
