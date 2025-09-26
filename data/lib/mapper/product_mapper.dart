@@ -34,9 +34,11 @@ extension ProductEntityToBoxMapper on ProductEntity{
         imageUrl: jsonEncode(imageUrl),
         marks: jsonEncode(marks),
         stock: stock,
-        description: description);
+        description: description,
+    );
   }
 }
+
 extension ProductBoxToEntityMapper on ProductBox{
   ProductEntity toEntity() {
     return ProductEntity(
@@ -55,40 +57,7 @@ extension ProductBoxToEntityMapper on ProductBox{
             : [],
         stock: stock,
         description: description,
-        specification: [],
-        category: []);
+        specification: specifications.map((e)=>e.toEntity).toList(),
+        category: categories.map((e)=>e.toEntity).toList());
   }
 }
-/*
-
-extension ProductEntityToBoxMapper on ProductEntity{
-  ProductBox toBox() {
-    return ProductBox(id: id,
-        name: name,
-        price: price,
-        discount: discount,
-        discountedPrice: discountedPrice,
-        imageUrl: jsonEncode(imageUrl),
-        marks: jsonEncode(marks),
-        stock: stock,
-        description: description);
-  }
-}
-
-extension ProductBoxToEntityMapper on ProductBox{
-  ProductEntity toEntity() {
-    return ProductEntity(
-        id: id,
-        name: name,
-        brand: null,
-        price: price,
-        discount: discount,
-        discountedPrice: discountedPrice,
-        imageUrl: imageUrl!=null?List<String>.from(jsonDecode(imageUrl!)):[],
-        marks: marks!=null?List<String>.from(jsonDecode(marks!)):[],
-        stock: stock,
-        description: description,
-        specification: [],
-        category: []);
-  }
-}*/

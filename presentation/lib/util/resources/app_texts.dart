@@ -69,7 +69,7 @@ class AppTexts {
   static String get removeItemQuestion => LocaleKeys.removeItemQuestion.tr();
   static String get chooseDeliveryAddress => LocaleKeys.chooseDeliveryAddress.tr();
   static String get cancel => LocaleKeys.cancel.tr();
-  static String get nothingToShow=> AppTexts.nothingToShow.tr();
+  static String get nothingToShow=> LocaleKeys.nothingToShow.tr();
   static String get name=>LocaleKeys.name.tr();
   static String get surname=>LocaleKeys.surname.tr();
   static String get phone=>LocaleKeys.phone.tr();
