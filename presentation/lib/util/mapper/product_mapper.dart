@@ -22,20 +22,22 @@ extension ProductViewModelMapper on ProductEntity {
   }
 }
 
-extension ProductMapper on ProductViewModel{
+extension ProductMapper on ProductViewModel {
   ProductEntity get toEntity {
-    return ProductEntity(id: id,
-        name: title,
-        brand: company,
-        price: price,
-        discount: discount,
-        discountedPrice: discountedPrice,
-        imageUrl: imageUrl,
-        marks: marks,
-        stock: stock,
-        description: description,
-        specification:  null,
-        category: null);
+    return ProductEntity(
+      id: id,
+      name: title,
+      brand: company,
+      price: price,
+      discount: discount,
+      discountedPrice: discountedPrice,
+      imageUrl: imageUrl,
+      marks: marks,
+      stock: stock,
+      description: description,
+      specification: specification.map((e) => e.toEntity).toList(),
+      category: category.map((e) => e.toEntity).toList(),
+    );
     //TODO: to make the mapper
   }
 }

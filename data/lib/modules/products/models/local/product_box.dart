@@ -22,7 +22,7 @@ class ProductBox {
   @Backlink('product')
   final specifications=ToMany<SpecificationBox>();
 
-  ProductBox({
+  ProductBox( {
     this.idProduct = 0,
     required this.name,
     this.price,

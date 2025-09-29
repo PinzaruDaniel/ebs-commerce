@@ -6,3 +6,8 @@ extension SpecificationViewModelMapper on SpecificationEntity{
     return SpecificationViewModel(title: title, value: value);
   }
 }
+extension SpecificationToEntityMapper on SpecificationViewModel{
+  SpecificationEntity get toEntity{
+    return SpecificationEntity(title: title, value: value);
+  }
+}

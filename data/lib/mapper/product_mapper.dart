@@ -23,19 +23,27 @@ extension ProductApiDtoMapper on ProductApiDto {
     );
   }
 }
-extension ProductEntityToBoxMapper on ProductEntity{
+extension ProductEntityToBoxMapper on ProductEntity {
   ProductBox get toBox {
-    return ProductBox(
-        idProduct: id,
-        name: name,
-        price: price,
-        discount: discount,
-        discountedPrice: discountedPrice,
-        imageUrl: jsonEncode(imageUrl),
-        marks: jsonEncode(marks),
-        stock: stock,
-        description: description,
+    final box = ProductBox(
+      idProduct: id,
+      name: name,
+      price: price,
+      discount: discount,
+      discountedPrice: discountedPrice,
+      imageUrl: imageUrl != null ? jsonEncode(imageUrl) : null,
+      marks: marks != null ? jsonEncode(marks) : null,
+      stock: stock,
+      description: description,
     );
+    if (specification != null) {
+      box.specifications.addAll(specification!.map((e) => e.toBox));
+    }
+    if (category != null) {
+      box.categories.addAll(category!.map((e) => e.toBox));
+    }
+
+    return box;
   }
 }
 

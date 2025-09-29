@@ -38,12 +38,6 @@ class _HomePageState extends State<HomePage> {
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -72,11 +66,11 @@ class _HomePageState extends State<HomePage> {
               SmartRefresherWidget(
                 controller: _refreshController,
                 onRefresh: () async {
-                  await homeController.getProducts(loadMore: false);
+                  await homeController.getProducts(refresh: false);
                   _refreshController.refreshCompleted();
                 },
                 onLoading: () async {
-                  await homeController.getProducts(loadMore: true);
+                  await homeController.getProducts(refresh: true);
                   _refreshController.loadComplete();
                 },
                 child: ListView.builder(

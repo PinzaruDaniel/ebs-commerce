@@ -1,10 +1,11 @@
-import 'package:data/objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 
 import '../../../products/models/local/product_box.dart';
 
+
 @Entity()
 class CategoryBox {
-  @Id(assignable: true)
+  @Id(assignable:  true)
   int idCategory;
   String name;
   int level;

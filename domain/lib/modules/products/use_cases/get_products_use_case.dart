@@ -10,8 +10,20 @@ class GetProductsUseCase extends UseCase<List<ProductEntity>,GetProductsParams> 
   GetProductsUseCase({required this.productsRepository});
 
   Future<Either<Failure, List<ProductEntity>>> call(params) async {
+//TODO: init Stream, use controller to sync from cache and from api(to set)
 
-    return productsRepository.getProducts( params.page, params.perPage, params.marks);
+  //get products from api:Left-failure, Right-List<ProductEntity
+   var either = await  productsRepository.getProducts( params.page, params.perPage, params.marks);
+
+  return  either.fold(
+       (failure) async{
+         return Left(failure);
+       },
+       (newItems) async{
+         productsRepository.setProductsLocalCache(newItems);
+         return Right(newItems);
+       }
+   );
   }
 }
 

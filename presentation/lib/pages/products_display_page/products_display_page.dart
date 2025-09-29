@@ -34,7 +34,6 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
     super.initState();
     Get.put(ProductsDisplayController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      //TODO: to send filter params, request filtered products, displaiyng page
       controller.loadProducts(productType: widget.type, getFilteredProductsParams: widget.getFilteredProductsParams);
     });
   }

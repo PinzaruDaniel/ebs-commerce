@@ -6,7 +6,6 @@ class SpecificationBox {
   @Id(assignable: true)
   int idSpec;
   String attributeName;
-
   String value;
 
   final product = ToOne<ProductBox>();
