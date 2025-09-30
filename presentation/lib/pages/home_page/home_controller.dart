@@ -19,17 +19,14 @@ class HomeController extends GetxController {
   List<ProductViewModel> newProducts = [];
   List<ProductViewModel> saleProducts = [];
   Rxn<Failure> failure = Rxn<Failure>();
-  RxInt currentPage = 1.obs;
+  RxInt currentPage = 0.obs;
   int perPage = 20;
   StreamSubscription? _streamSubscription;
 
   void initItems() async {
     items.clear();
     items.add(AdBannerViewModel());
-    await getSaleProducts();
-    await getNewProducts();
-    await getProducts(refresh: true);
-
+    getProducts();
   }
 
   @override
@@ -38,11 +35,8 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-/*
   Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
-      if (isLoadingMore.value) return;
-      isLoadingMore.value = true;
       currentPage.value++;
     } else {
       isLoading.value = true;
@@ -52,12 +46,12 @@ class HomeController extends GetxController {
     final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage));
 
     either.fold(
-          (failure) {
+      (failure) {
         isLoading.value = false;
-        isLoadingMore.value = false;
+        getProductsLocalCache();
         showFailureSnackBar(failure: failure);
       },
-          (list) async {
+      (list) async {
         final newItems = list.map((e) => e.toModel).toList();
 
         if (loadMore) {
@@ -65,7 +59,7 @@ class HomeController extends GetxController {
         } else {
           products.assignAll(newItems);
         }
-        if(!loadMore && currentPage.value==1){
+        if (!loadMore && currentPage.value == 1) {
           await getNewProducts();
           await getSaleProducts();
         }
@@ -78,12 +72,11 @@ class HomeController extends GetxController {
         ];
 
         isLoading.value = false;
-        isLoadingMore.value = false;
       },
     );
   }
-*/
 
+  /*
   Future<void> getProducts({bool refresh = false}) async {
     if (refresh) {
       final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value++, perPage: perPage));
@@ -104,17 +97,18 @@ class HomeController extends GetxController {
           isLoading.value = false;
         },
       );
+    } else if (!refresh) {
+      getProductsLocalCache();
     }
-    getProductsLocalCache();
   }
+*/
 
-  Future<void> getNewProducts() async {
+ Future<void> getNewProducts() async {
     await getProductsUseCase.call(GetProductsParams(page: 1, perPage: 5, marks: 'new')).then((either) async {
       either.fold(
         (failure) {
           isLoading.value = false;
         },
-
         (products) async {
           newProducts = products.map((e) => e.toModel).toList();
         },
@@ -128,7 +122,6 @@ class HomeController extends GetxController {
         (failure) {
           isLoading.value = false;
         },
-
         (products) async {
           saleProducts = products.map((e) => e.toModel).toList();
         },
@@ -139,12 +132,11 @@ class HomeController extends GetxController {
   void getProductsLocalCache() {
     print('initializing');
     _streamSubscription = getProductsLocalUseCase.call().listen((cachedProducts) {
+      print('cached specs length: ${cachedProducts[0].specification!.length}');
       if (cachedProducts.isNotEmpty) {
         final cachedViewModels = cachedProducts.map((e) => e.toModel).toList();
         products.assignAll(cachedViewModels);
-        items.value = [
-          AllProductsViewItem(products: products),
-        ];
+        items.value = [AdBannerViewModel(), AllProductsViewItem(products: products)];
         isLoading.value = false;
       }
     });

@@ -17,10 +17,10 @@ class ProductBox {
   String? description;
 
   @Backlink('product')
-  final categories = ToMany<CategoryBox>();
+  final categories=ToMany<CategoryBox>();
 
   @Backlink('product')
-  final specifications=ToMany<SpecificationBox>();
+  final specifications = ToMany<SpecificationBox>();
 
   ProductBox( {
     this.idProduct = 0,

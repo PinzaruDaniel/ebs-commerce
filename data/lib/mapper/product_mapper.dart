@@ -23,6 +23,7 @@ extension ProductApiDtoMapper on ProductApiDto {
     );
   }
 }
+
 extension ProductEntityToBoxMapper on ProductEntity {
   ProductBox get toBox {
     final box = ProductBox(
@@ -36,35 +37,48 @@ extension ProductEntityToBoxMapper on ProductEntity {
       stock: stock,
       description: description,
     );
+
     if (specification != null) {
-      box.specifications.addAll(specification!.map((e) => e.toBox));
+      box.specifications.clear();
+      box.specifications.addAll(
+        specification!.map((e) {
+          final specBox = e.toBox;
+          specBox.product.target = box;
+          return specBox;
+        }),
+      );
     }
+
     if (category != null) {
-      box.categories.addAll(category!.map((e) => e.toBox));
+      box.categories.clear();
+      box.categories.addAll(
+        category!.map((e) {
+          final categoryBox = e.toBox;
+          categoryBox.product.target = box;
+          return categoryBox;
+        }),
+      );
     }
+
     return box;
   }
 }
 
-extension ProductBoxToEntityMapper on ProductBox{
-  ProductEntity toEntity() {
+extension ProductBoxToEntityMapper on ProductBox {
+  ProductEntity get toEntity {
     return ProductEntity(
-        id: idProduct,
-        name: name,
-        brand: null,
-        price: price,
-        discount: discount,
-        discountedPrice: discountedPrice,
-        imageUrl: (imageUrl != null && imageUrl!.isNotEmpty)
-            ? List<String>.from(jsonDecode(imageUrl!) ?? [])
-            : [],
-
-        marks: (marks != null && marks!.isNotEmpty)
-            ? List<String>.from(jsonDecode(marks!) ?? [])
-            : [],
-        stock: stock,
-        description: description,
-        specification: specifications.map((e)=>e.toEntity).toList(),
-        category: categories.map((e)=>e.toEntity).toList());
+      id: idProduct,
+      name: name,
+      brand: null,
+      price: price,
+      discount: discount,
+      discountedPrice: discountedPrice,
+      imageUrl: (imageUrl != null && imageUrl!.isNotEmpty) ? List<String>.from(jsonDecode(imageUrl!) ?? []) : [],
+      marks: (marks != null && marks!.isNotEmpty) ? List<String>.from(jsonDecode(marks!) ?? []) : [],
+      stock: stock,
+      description: description,
+      specification: specifications.map((e) => e.toEntity).toList(),
+      category: categories.map((e) => e.toEntity).toList(),
+    );
   }
 }
