@@ -22,7 +22,6 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
     final List<int> categoriesToRemove = [];
     for (final newProduct in productsBox) {
       final existing = productBox.get(newProduct.idProduct);
-
       if (existing != null) {
         specsToRemove.addAll(existing.specifications.map((e) => e.idSpec));
         existing.specifications.clear();

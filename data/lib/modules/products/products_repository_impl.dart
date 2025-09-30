@@ -66,7 +66,6 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Future<void> setProductsLocalCache(List<ProductEntity> products) {
-    print(' specs length${products[0].specification!.length}');
     return localDataSource.setProducts(products.map((e)=>e.toBox).toList());
   }
 

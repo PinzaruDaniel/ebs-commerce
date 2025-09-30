@@ -44,7 +44,6 @@ class HomeController extends GetxController {
       currentPage.value = 1;
     }
     final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage));
-
     either.fold(
       (failure) {
         isLoading.value = false;
@@ -53,7 +52,6 @@ class HomeController extends GetxController {
       },
       (list) async {
         final newItems = list.map((e) => e.toModel).toList();
-
         if (loadMore) {
           products.addAll(newItems);
         } else {
@@ -75,34 +73,6 @@ class HomeController extends GetxController {
       },
     );
   }
-
-  /*
-  Future<void> getProducts({bool refresh = false}) async {
-    if (refresh) {
-      final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value++, perPage: perPage));
-      either.fold(
-        (failure) async {
-          isLoading.value = false;
-          showFailureSnackBar(failure: failure);
-        },
-        (list) async {
-          final newItems = list.map((e) => e.toModel).toList();
-          products.addAll(newItems);
-          items.value = [
-            AdBannerViewModel(),
-            HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
-            HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
-            AllProductsViewItem(products: products),
-          ];
-          isLoading.value = false;
-        },
-      );
-    } else if (!refresh) {
-      getProductsLocalCache();
-    }
-  }
-*/
-
  Future<void> getNewProducts() async {
     await getProductsUseCase.call(GetProductsParams(page: 1, perPage: 5, marks: 'new')).then((either) async {
       either.fold(
@@ -130,9 +100,7 @@ class HomeController extends GetxController {
   }
 
   void getProductsLocalCache() {
-    print('initializing');
     _streamSubscription = getProductsLocalUseCase.call().listen((cachedProducts) {
-      print('cached specs length: ${cachedProducts[0].specification!.length}');
       if (cachedProducts.isNotEmpty) {
         final cachedViewModels = cachedProducts.map((e) => e.toModel).toList();
         products.assignAll(cachedViewModels);

@@ -18,7 +18,6 @@ class GetProductsUseCase extends UseCase<List<ProductEntity>,GetProductsParams> 
          return Left(failure);
        },
        (newItems) async{
-         print('new item specs ${newItems[0].specification!.length}');
          await productsRepository.setProductsLocalCache(newItems);
          return Right(newItems);
        }
