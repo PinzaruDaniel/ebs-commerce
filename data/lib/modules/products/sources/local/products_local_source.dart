@@ -35,6 +35,7 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
     if (specsToRemove.isNotEmpty) {
       specBox.removeMany(specsToRemove);
     }
+
     if (categoriesToRemove.isNotEmpty) {
       categoryBox.removeMany(categoriesToRemove);
     }

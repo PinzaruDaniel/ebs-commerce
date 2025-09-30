@@ -62,12 +62,14 @@ class HomeController extends GetxController {
           await getSaleProducts();
         }
 
-        items.value = [
-          AdBannerViewModel(),
-          HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
-          HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
-          AllProductsViewItem(products: products),
-        ];
+        if(newProducts.isNotEmpty&& saleProducts.isNotEmpty){
+          items.value = [
+            AdBannerViewModel(),
+            HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
+            HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
+            AllProductsViewItem(products: products),
+          ];
+        }
 
         isLoading.value = false;
       },
@@ -86,7 +88,7 @@ class HomeController extends GetxController {
     });
   }
 
-  Future<void> getSaleProducts({bool loadMore = false}) async {
+  Future<void> getSaleProducts() async {
     await getProductsUseCase.call(GetProductsParams(page: 1, perPage: 5, marks: 'sale')).then((either) async {
       either.fold(
         (failure) {
