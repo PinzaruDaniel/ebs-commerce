@@ -101,7 +101,6 @@ class HomeController extends GetxController {
             HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
             AllProductsViewItem(products: products),
           ];
-
           isLoading.value = false;
         },
       );
@@ -138,14 +137,12 @@ class HomeController extends GetxController {
   }
 
   void getProductsLocalCache() {
+    print('initializing');
     _streamSubscription = getProductsLocalUseCase.call().listen((cachedProducts) {
       if (cachedProducts.isNotEmpty) {
         final cachedViewModels = cachedProducts.map((e) => e.toModel).toList();
         products.assignAll(cachedViewModels);
         items.value = [
-          AdBannerViewModel(),
-          HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
-          HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
           AllProductsViewItem(products: products),
         ];
         isLoading.value = false;

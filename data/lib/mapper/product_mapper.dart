@@ -42,7 +42,6 @@ extension ProductEntityToBoxMapper on ProductEntity {
     if (category != null) {
       box.categories.addAll(category!.map((e) => e.toBox));
     }
-
     return box;
   }
 }
