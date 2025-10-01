@@ -58,11 +58,10 @@ class HomeController extends GetxController {
           products.assignAll(newItems);
         }
         if (!loadMore && currentPage.value == 1) {
-          await getNewProducts();
-          await getSaleProducts();
+          await Future.wait([getNewProducts(), getSaleProducts()]);
         }
 
-        if(newProducts.isNotEmpty&& saleProducts.isNotEmpty){
+        if (newProducts.isNotEmpty && saleProducts.isNotEmpty) {
           items.value = [
             AdBannerViewModel(),
             HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
@@ -70,34 +69,24 @@ class HomeController extends GetxController {
             AllProductsViewItem(products: products),
           ];
         }
-
         isLoading.value = false;
       },
     );
   }
- Future<void> getNewProducts() async {
+
+  Future<void> getNewProducts() async {
     await getProductsUseCase.call(GetProductsParams(page: 1, perPage: 5, marks: 'new')).then((either) async {
-      either.fold(
-        (failure) {
-          isLoading.value = false;
-        },
-        (products) async {
-          newProducts = products.map((e) => e.toModel).toList();
-        },
-      );
+      either.fold((failure) {}, (products) async {
+        newProducts = products.map((e) => e.toModel).toList();
+      });
     });
   }
 
   Future<void> getSaleProducts() async {
     await getProductsUseCase.call(GetProductsParams(page: 1, perPage: 5, marks: 'sale')).then((either) async {
-      either.fold(
-        (failure) {
-          isLoading.value = false;
-        },
-        (products) async {
-          saleProducts = products.map((e) => e.toModel).toList();
-        },
-      );
+      either.fold((failure) {}, (products) async {
+        saleProducts = products.map((e) => e.toModel).toList();
+      });
     });
   }
 
