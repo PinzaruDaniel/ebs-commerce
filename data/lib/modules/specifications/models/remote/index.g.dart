@@ -16,6 +16,8 @@ Map<String, dynamic> _$SpecificationApiDtoToJson(
 _SpecificationDataApiDto _$SpecificationDataApiDtoFromJson(
   Map<String, dynamic> json,
 ) => _SpecificationDataApiDto(
+  id: (json['id'] as num).toInt(),
+  attributeId: (json['attribute_id'] as num).toInt(),
   attribute: SpecificationApiDto.fromJson(
     json['attribute'] as Map<String, dynamic>,
   ),
@@ -25,6 +27,8 @@ _SpecificationDataApiDto _$SpecificationDataApiDtoFromJson(
 Map<String, dynamic> _$SpecificationDataApiDtoToJson(
   _SpecificationDataApiDto instance,
 ) => <String, dynamic>{
+  'id': instance.id,
+  'attribute_id': instance.attributeId,
   'attribute': instance.attribute,
   'value': instance.value,
 };

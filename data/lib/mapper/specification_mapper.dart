@@ -5,17 +5,18 @@ import '../modules/specifications/models/remote/index.dart';
 
 extension SpecificationApiDtoMapper on SpecificationDataApiDto {
   SpecificationEntity toEntity() {
-    return SpecificationEntity(title: attribute.name, value: value);
+    return SpecificationEntity(id: id, attributeId: attributeId, title: attribute.name, value: value);
   }
 }
 
 extension SpecificationEntityToBoxMapper on SpecificationEntity {
   SpecificationBox get toBox {
-    return SpecificationBox(attributeName: title, value: value);
+    return SpecificationBox(idSpec: id, attributeId: attributeId, attributeName: title, value: value);
   }
 }
+
 extension SpecificationBoxToEntityMapper on SpecificationBox {
   SpecificationEntity get toEntity {
-    return SpecificationEntity(title: attributeName, value: value);
+    return SpecificationEntity(id: idSpec, attributeId: attributeId, title: attributeName, value: value);
   }
 }

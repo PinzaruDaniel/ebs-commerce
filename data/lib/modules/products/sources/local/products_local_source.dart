@@ -1,10 +1,14 @@
+import 'package:data/mapper/category_mapper.dart';
+import 'package:data/mapper/product_mapper.dart';
+import 'package:data/mapper/specification_mapper.dart';
 import 'package:data/modules/categories/models/local/category_box.dart';
 import 'package:data/modules/products/models/local/product_box.dart';
 import 'package:data/modules/specifications/models/local/specification_box.dart';
+import 'package:domain/modules/products/models/index.dart';
 import 'package:objectbox/objectbox.dart';
 
 abstract class ProductsLocalDataSource {
-  Future<void> setProducts(List<ProductBox> productsBox);
+  Future<void> setProducts({required List<ProductEntity> products});
 
   Stream<List<ProductBox>> getProducts();
 }
@@ -17,32 +21,24 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   Box<CategoryBox> categoryBox;
 
   @override
-  Future<void> setProducts(productsBox) async {
-    final List<int> specsToRemove = [];
-    final List<int> categoriesToRemove = [];
-    for (final newProduct in productsBox) {
-      final existing = productBox.get(newProduct.idProduct);
-      if (existing != null) {
-        specsToRemove.addAll(existing.specifications.map((e) => e.idSpec));
-        existing.specifications.clear();
-        categoriesToRemove.addAll(existing.categories.map((e) => e.idCategory));
-        existing.categories.clear();
-        await productBox.putAsync(existing);
-      }
-    }
-    await productBox.putManyAsync(productsBox);
+  Future<void> setProducts({required List<ProductEntity> products}) async {
+    await productBox.putManyAsync(
+      products.map((e) {
+        return e.toBox;
+      }).toList(),
+    );
+  }
 
-    if (specsToRemove.isNotEmpty) {
-      specBox.removeMany(specsToRemove);
+  Future<void> setProductsSpecs({required List<ProductEntity> products}) async {
+    for (final product in products) {
+      specBox.putManyAsync(product.specification?.map((e) => e.toBox).toList() ?? []);
+      categoryBox.putManyAsync(product.category?.map((e) => e.toBox).toList() ?? []);
     }
-
-    if (categoriesToRemove.isNotEmpty) {
-      categoryBox.removeMany(categoriesToRemove);
-    }
+    await productBox.putManyAsync(products.map((e) => e.toBox).toList());
   }
 
   @override
-  Stream<List<ProductBox>> getProducts()  {
+  Stream<List<ProductBox>> getProducts() {
     return productBox.query().watch(triggerImmediately: true).map((query) => query.find().reversed.toList());
   }
 }
