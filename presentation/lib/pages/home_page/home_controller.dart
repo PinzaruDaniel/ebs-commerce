@@ -19,7 +19,7 @@ class HomeController extends GetxController {
   List<ProductViewModel> newProducts = [];
   List<ProductViewModel> saleProducts = [];
   Rxn<Failure> failure = Rxn<Failure>();
-  RxInt currentPage = 0.obs;
+  RxInt currentPage = 1.obs;
   int perPage = 20;
   StreamSubscription? _streamSubscription;
 
@@ -41,37 +41,37 @@ class HomeController extends GetxController {
     } else {
       isLoading.value = true;
       products.clear();
-      currentPage.value = 1;
     }
-    final either = await getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage));
-    either.fold(
-      (failure) {
-        isLoading.value = false;
-        getProductsLocalCache();
-        showFailureSnackBar(failure: failure);
-      },
-      (list) async {
-        final newItems = list.map((e) => e.toModel).toList();
-        if (loadMore) {
-          products.addAll(newItems);
-        } else {
-          products.assignAll(newItems);
-        }
-        if (!loadMore && currentPage.value == 1) {
-          await Future.wait([getNewProducts(), getSaleProducts()]);
-        }
+    getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage)).then((either) async {
+      either.fold(
+        (failure) {
+          isLoading.value = false;
+          getProductsLocalCache();
+          showFailureSnackBar(failure: failure);
+        },
+        (list) async {
+          final newItems = list.map((e) => e.toModel).toList();
+          if (loadMore) {
+            products.addAll(newItems);
+          } else {
+            products.assignAll(newItems);
+          }
+          if (!loadMore && currentPage.value == 1) {
+            await Future.wait([getNewProducts(), getSaleProducts()]);
+          }
 
-        if (newProducts.isNotEmpty && saleProducts.isNotEmpty) {
-          items.value = [
-            AdBannerViewModel(),
-            HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
-            HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
-            AllProductsViewItem(products: products),
-          ];
-        }
-        isLoading.value = false;
-      },
-    );
+          if (newProducts.isNotEmpty && saleProducts.isNotEmpty) {
+            items.value = [
+              AdBannerViewModel(),
+              HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
+              HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
+              AllProductsViewItem(products: products),
+            ];
+          }
+          isLoading.value = false;
+        },
+      );
+    });
   }
 
   Future<void> getNewProducts() async {
