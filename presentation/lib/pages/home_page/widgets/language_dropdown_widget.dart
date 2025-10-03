@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -15,17 +14,6 @@ class LanguageDropdown extends StatefulWidget {
 }
 
 class _LanguageDropdownState extends State<LanguageDropdown> {
-/*  final List<Locale> supportedLocales = [
-    Locale('en'),
-    Locale('ro'),
-    Locale('ru')
-  ];
-
-  final Map<String, String> languageNames = {
-    'en': 'English',
-    'ro': 'Romanian',
-    'ru': 'Russian'
-  };*/
 
   @override
   Widget build(BuildContext context) {

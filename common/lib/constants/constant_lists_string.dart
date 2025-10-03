@@ -1,4 +1,3 @@
-import 'package:presentation/util/resources/app_texts.dart';
 
 List<String> promoCodes = [
   'SAVE10',

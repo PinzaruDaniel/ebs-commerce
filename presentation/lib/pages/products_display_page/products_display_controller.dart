@@ -4,7 +4,6 @@ import 'package:domain/modules/products/use_cases/get_filtered_products_use_case
 import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import '../../util/enum/enums.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
@@ -20,7 +19,6 @@ class ProductsDisplayController extends GetxController {
   RxInt currentPage = 1.obs;
   int perPage = 20;
   RxBool isLoadingMore = false.obs;
-
 
   Future<void> loadProducts({
     bool loadMore = false,
@@ -64,38 +62,36 @@ class ProductsDisplayController extends GetxController {
   }
 
   Future<void> getSaleProducts(bool loadMore) async {
-    final either = await getProductsUseCase.call(
-      GetProductsParams(page: currentPage.value, perPage: perPage, marks: 'sale'),
-    );
-    either.fold(
-      (failure) {
-        isLoading.value = false;
-        isLoadingMore.value = false;
-        showFailureSnackBar(failure: failure);
-      },
-      (list) {
+    getProductsUseCase
+        .call(
+        GetProductsParams(page: currentPage.value, perPage: perPage, marks: 'sale', onCallBack: (isError, fromApi) {
+
+        }))
+        .listen(
+          (list) {
         final newItems = list.map((e) => e.toModel).toList();
         if (loadMore) {
           products.addAll(newItems);
         } else {
           products.assignAll(newItems);
         }
+      },
+      onError: (failure) {
+        isLoading.value = false;
+        isLoadingMore.value = false;
+        showFailureSnackBar(failure: failure);
       },
     );
   }
 
   Future<void> getNewProducts(bool loadMore) async {
-    final either = await getProductsUseCase.call(
-      GetProductsParams(page: currentPage.value, perPage: perPage, marks: 'new'),
-    );
+    getProductsUseCase
+        .call(
+        GetProductsParams(page: currentPage.value, perPage: perPage, marks: 'new', onCallBack: (isError, fromApi) {
 
-    either.fold(
-      (failure) {
-        isLoading.value = false;
-        isLoadingMore.value = false;
-        showFailureSnackBar(failure: failure);
-      },
-      (list) {
+        }))
+        .listen(
+          (list) {
         final newItems = list.map((e) => e.toModel).toList();
         if (loadMore) {
           products.addAll(newItems);
@@ -103,8 +99,14 @@ class ProductsDisplayController extends GetxController {
           products.assignAll(newItems);
         }
       },
+      onError: (failure) {
+        isLoading.value = false;
+        isLoadingMore.value = false;
+        showFailureSnackBar(failure: failure);
+      },
     );
   }
+
   Future<void> getFilteredProducts(bool loadMore, GetFilteredProductsParams getFilteredProductsParams) async {
     final either = await getFilteredProductsUseCase.call(
       GetFilteredProductsParams(
@@ -116,12 +118,12 @@ class ProductsDisplayController extends GetxController {
     );
 
     either.fold(
-      (failure) {
+          (failure) {
         isLoading.value = false;
         isLoadingMore.value = false;
         showFailureSnackBar(failure: failure);
       },
-      (responseEntity) {
+          (responseEntity) {
         final items = responseEntity.response.map((e) => e.toModel).toList();
         if (loadMore) {
           products.addAll(items);

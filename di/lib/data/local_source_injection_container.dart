@@ -9,6 +9,4 @@ Future<void> init() async {
   dataDi.registerLazySingleton<ProductsLocalDataSource>(
     () => ProductsLocalDataSourceImpl(productBox: store.productBox, specBox: store.specificationBox, categoryBox: store.categoryBox),
   );
-
-  //TODO: lazysingleton to init localsources
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:common/constants/failure_class.dart';
-import 'package:domain/modules/products/use_cases/get_products_local_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -12,7 +11,6 @@ import '../../view/base_view_model.dart';
 
 class HomeController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
-  final GetProductsLocalUseCase getProductsLocalUseCase = GetIt.instance<GetProductsLocalUseCase>();
   RxList<BaseViewModel> items = RxList<BaseViewModel>([]);
   RxList<ProductViewModel> products = RxList([]);
   RxBool isLoading = true.obs;
@@ -42,62 +40,94 @@ class HomeController extends GetxController {
       isLoading.value = true;
       products.clear();
     }
-    getProductsUseCase.call(GetProductsParams(page: currentPage.value, perPage: perPage)).then((either) async {
-      either.fold(
-        (failure) {
-          isLoading.value = false;
-          getProductsLocalCache();
-          showFailureSnackBar(failure: failure);
-        },
-        (list) async {
-          final newItems = list.map((e) => e.toModel).toList();
-          if (loadMore) {
-            products.addAll(newItems);
-          } else {
-            products.assignAll(newItems);
-          }
-          if (!loadMore && currentPage.value == 1) {
-            await Future.wait([getNewProducts(), getSaleProducts()]);
-          }
 
-          if (newProducts.isNotEmpty && saleProducts.isNotEmpty) {
-            items.value = [
-              AdBannerViewModel(),
-              HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
-              HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
-              AllProductsViewItem(products: products),
-            ];
-          }
-          isLoading.value = false;
-        },
-      );
-    });
+    getProductsUseCase
+        .call(
+          GetProductsParams(
+            page: currentPage.value,
+            perPage: perPage,
+            onCallBack: (isError, fromApi) {
+              if (isError) {
+                print("Error from API");
+              } else if (!fromApi) {
+                print("Using cached data");
+              } else {
+                print("Loaded fresh data from API");
+              }
+            },
+          ),
+        )
+        .listen(
+          (list) async {
+            final newItems = list.map((e) => e.toModel).toList();
+
+            if (loadMore) {
+              products.addAll(newItems);
+              items.refresh();
+            } else {
+              products.assignAll(newItems);
+            }
+
+            if (!loadMore && currentPage.value == 1) {
+              await Future.wait([getNewProducts(), getSaleProducts()]);
+            }
+
+            if (newProducts.isNotEmpty && saleProducts.isNotEmpty) {
+              items.value = [
+                AdBannerViewModel(),
+                HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
+                HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
+                AllProductsViewItem(products: products),
+              ];
+            }
+            isLoading.value = false;
+          },
+          onError: (failure) {
+            isLoading.value = false;
+            showFailureSnackBar(failure: failure);
+          },
+        );
   }
 
   Future<void> getNewProducts() async {
-    await getProductsUseCase.call(GetProductsParams(page: 1, perPage: 5, marks: 'new')).then((either) async {
-      either.fold((failure) {}, (products) async {
-        newProducts = products.map((e) => e.toModel).toList();
-      });
-    });
+    getProductsUseCase
+        .call(
+          GetProductsParams(
+            page: 1,
+            perPage: 5,
+            marks: 'new',
+            onCallBack: (isError, fromApi) {
+              if (isError) {
+                print("Failed to load new products");
+              }
+            },
+          ),
+        )
+        .listen((productsList) {
+          newProducts = productsList.map((e) => e.toModel).toList();
+          items.refresh();
+
+    }, onError: (failure) {});
   }
 
   Future<void> getSaleProducts() async {
-    await getProductsUseCase.call(GetProductsParams(page: 1, perPage: 5, marks: 'sale')).then((either) async {
-      either.fold((failure) {}, (products) async {
-        saleProducts = products.map((e) => e.toModel).toList();
-      });
-    });
-  }
+    getProductsUseCase
+        .call(
+          GetProductsParams(
+            page: 1,
+            perPage: 5,
+            marks: 'sale',
+            onCallBack: (isError, fromApi) {
+              if (isError) {
+                print("Failed to load sale products");
+              }
+            },
+          ),
+        )
+        .listen((productsList) {
+          saleProducts = productsList.map((e) => e.toModel).toList();
+          items.refresh();
 
-  void getProductsLocalCache() {
-    _streamSubscription = getProductsLocalUseCase.call().listen((cachedProducts) {
-      if (cachedProducts.isNotEmpty) {
-        final cachedViewModels = cachedProducts.map((e) => e.toModel).toList();
-        products.assignAll(cachedViewModels);
-        items.value = [AdBannerViewModel(), AllProductsViewItem(products: products)];
-        isLoading.value = false;
-      }
-    });
+    }, onError: (failure) {});
   }
 }

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:presentation/pages/filtered_page/filter_controller.dart';
 import 'package:presentation/util/resources/app_texts.dart';
-import 'package:presentation/view/category_view_model.dart';
 
 import '../../../util/resources/app_text_styles.dart';
 import '../../../util/routing/app_router.dart';

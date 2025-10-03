@@ -16,7 +16,7 @@ void main() async {
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ru'), Locale('ro')],
-      path: 'lib/util/resources/localization',
+      path: 'assets/localization',
       fallbackLocale: Locale('ro'),
       startLocale: Locale('ro'),
       assetLoader: LocalizationLoader(),

@@ -38,6 +38,5 @@ extension ProductMapper on ProductViewModel {
       specification: specification.map((e) => e.toEntity).toList(),
       category: category.map((e) => e.toEntity).toList(),
     );
-    //TODO: to make the mapper
   }
 }
