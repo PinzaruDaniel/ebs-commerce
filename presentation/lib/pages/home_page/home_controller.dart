@@ -60,7 +60,6 @@ class HomeController extends GetxController {
         .listen(
           (list) async {
             final newItems = list.map((e) => e.toModel).toList();
-
             if (loadMore) {
               products.addAll(newItems);
               items.refresh();
@@ -106,8 +105,7 @@ class HomeController extends GetxController {
         .listen((productsList) {
           newProducts = productsList.map((e) => e.toModel).toList();
           items.refresh();
-
-    }, onError: (failure) {});
+        }, onError: (failure) {});
   }
 
   Future<void> getSaleProducts() async {
@@ -127,7 +125,6 @@ class HomeController extends GetxController {
         .listen((productsList) {
           saleProducts = productsList.map((e) => e.toModel).toList();
           items.refresh();
-
-    }, onError: (failure) {});
+        }, onError: (failure) {});
   }
 }
