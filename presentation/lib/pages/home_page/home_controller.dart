@@ -62,7 +62,6 @@ class HomeController extends GetxController {
             final newItems = list.map((e) => e.toModel).toList();
             if (loadMore) {
               products.addAll(newItems);
-              items.refresh();
             } else {
               products.assignAll(newItems);
             }
