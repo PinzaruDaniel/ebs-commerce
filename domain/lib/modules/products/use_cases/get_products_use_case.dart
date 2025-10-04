@@ -1,41 +1,39 @@
+import 'package:dartz/dartz.dart';
+
 import '../../../core/usecase.dart';
 import '../models/index.dart';
 import '../products_repository.dart';
 import 'dart:async';
 
-class GetProductsUseCase extends UseCaseStream<List<ProductEntity>, GetProductsParams> {
+class GetProductsUseCase
+    extends UseCaseStream<List<ProductEntity>, GetProductsParams> {
   final ProductsRepository productsRepository;
 
   GetProductsUseCase({required this.productsRepository});
 
   Stream<List<ProductEntity>> call(params) async* {
-    //TODO: initialize Stream, use stream controller to set from cache and from api(to set)
     final streamController = StreamController<List<ProductEntity>>();
 
-    () async {
-      final either = await productsRepository.getProducts(params.page, params.perPage, params.marks);
-
-      either.fold(
-        (failure) async {
-          params.onCallBack!(true, true);
-          final cacheStream = productsRepository.getProductsLocalCache();
-          cacheStream.listen(
-            (cachedProducts) {
-              streamController.sink.add(cachedProducts);
-              params.onCallBack!(false, false);
+    params.onCallBack!(false, false);
+    productsRepository.getProductsLocalCache();
+    streamController.stream.listen((data) {
+      streamController.sink.add(data);
+    });
+    productsRepository
+        .getProducts(params.page, params.perPage, params.marks)
+        .then((data) {
+          data.fold(
+            (failure) {
+              params.onCallBack!(true, true);
+              return Left(failure);
             },
-            onError: (cacheError) => streamController.sink.addError(failure),
-            onDone: () => streamController.close(),
+            (productsApi) async {
+              params.onCallBack!(false, true);
+              await productsRepository.setProductsLocalCache(productsApi);
+              return Right(streamController.sink.add(productsApi));
+            },
           );
-        },
-        (newItems) async {
-          await productsRepository.setProductsLocalCache(newItems);
-          streamController.sink.add(newItems);
-          params.onCallBack!(false, true);
-          streamController.close();
-        },
-      );
-    }();
+        });
 
     yield* streamController.stream;
   }
@@ -65,5 +63,10 @@ class GetProductsParams {
   final Function(bool error, bool fromApi)? onCallBack;
 
   //o add callback to manage error on request
-  GetProductsParams({required this.page, required this.perPage, this.marks, this.onCallBack});
+  GetProductsParams({
+    required this.page,
+    required this.perPage,
+    this.marks,
+    this.onCallBack,
+  });
 }
