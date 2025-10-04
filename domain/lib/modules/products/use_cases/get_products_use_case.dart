@@ -13,7 +13,6 @@ class GetProductsUseCase
 
   Stream<List<ProductEntity>> call(params) async* {
     final streamController = StreamController<List<ProductEntity>>();
-
     params.onCallBack!(false, false);
     productsRepository.getProductsLocalCache();
     streamController.stream.listen((data) {

@@ -10,8 +10,10 @@ import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../view/product_view_model.dart';
 
 class ProductsDisplayController extends GetxController {
-  final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
-  final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();
+  final GetProductsUseCase getProductsUseCase = GetIt.instance<
+      GetProductsUseCase>();
+  final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<
+      GetFilteredProductsUseCase>();
   RxBool isLoading = true.obs;
   List<ProductViewModel> products = RxList([]);
 
@@ -64,9 +66,12 @@ class ProductsDisplayController extends GetxController {
   Future<void> getSaleProducts(bool loadMore) async {
     getProductsUseCase
         .call(
-        GetProductsParams(page: currentPage.value, perPage: perPage, marks: 'sale', onCallBack: (isError, fromApi) {
+        GetProductsParams(page: currentPage.value,
+            perPage: perPage,
+            marks: 'sale',
+            onCallBack: (isError, fromApi) {
 
-        }))
+            }))
         .listen(
           (list) {
         final newItems = list.map((e) => e.toModel).toList();
@@ -87,27 +92,27 @@ class ProductsDisplayController extends GetxController {
   Future<void> getNewProducts(bool loadMore) async {
     getProductsUseCase
         .call(
-        GetProductsParams(page: currentPage.value, perPage: perPage, marks: 'new', onCallBack: (isError, fromApi) {
+        GetProductsParams(
+          page: currentPage.value, perPage: perPage, marks: 'new',))
+            .listen(
+              (list) {
+            final newItems = list.map((e) => e.toModel).toList();
+            if (loadMore) {
+              products.addAll(newItems);
+            } else {
+              products.assignAll(newItems);
+            }
+          },
+          onError: (failure) {
+            isLoading.value = false;
+            isLoadingMore.value = false;
+            showFailureSnackBar(failure: failure);
+          },
+        );
+    }
 
-        }))
-        .listen(
-          (list) {
-        final newItems = list.map((e) => e.toModel).toList();
-        if (loadMore) {
-          products.addAll(newItems);
-        } else {
-          products.assignAll(newItems);
-        }
-      },
-      onError: (failure) {
-        isLoading.value = false;
-        isLoadingMore.value = false;
-        showFailureSnackBar(failure: failure);
-      },
-    );
-  }
-
-  Future<void> getFilteredProducts(bool loadMore, GetFilteredProductsParams getFilteredProductsParams) async {
+  Future<void> getFilteredProducts(bool loadMore,
+      GetFilteredProductsParams getFilteredProductsParams) async {
     final either = await getFilteredProductsUseCase.call(
       GetFilteredProductsParams(
         page: currentPage.value,

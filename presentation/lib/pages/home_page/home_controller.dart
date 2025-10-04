@@ -10,7 +10,8 @@ import '../../util/enum/enums.dart';
 import '../../view/base_view_model.dart';
 
 class HomeController extends GetxController {
-  final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
+  final GetProductsUseCase getProductsUseCase =
+      GetIt.instance<GetProductsUseCase>();
   RxList<BaseViewModel> items = RxList<BaseViewModel>([]);
   RxList<ProductViewModel> products = RxList([]);
   RxBool isLoading = true.obs;
@@ -42,21 +43,7 @@ class HomeController extends GetxController {
     }
 
     getProductsUseCase
-        .call(
-          GetProductsParams(
-            page: currentPage.value,
-            perPage: perPage,
-            onCallBack: (isError, fromApi) {
-              if (isError) {
-                print("Error from API");
-              } else if (!fromApi) {
-                print("Using cached data");
-              } else {
-                print("Loaded fresh data from API");
-              }
-            },
-          ),
-        )
+        .call(GetProductsParams(page: currentPage.value, perPage: perPage))
         .listen(
           (list) async {
             final newItems = list.map((e) => e.toModel).toList();
@@ -73,8 +60,14 @@ class HomeController extends GetxController {
             if (newProducts.isNotEmpty && saleProducts.isNotEmpty) {
               items.value = [
                 AdBannerViewModel(),
-                HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
-                HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
+                HorizontalProductListViewModel(
+                  products: newProducts,
+                  type: ProductListType.newProducts,
+                ),
+                HorizontalProductListViewModel(
+                  products: saleProducts,
+                  type: ProductListType.saleProducts,
+                ),
                 AllProductsViewItem(products: products),
               ];
             }
@@ -89,18 +82,7 @@ class HomeController extends GetxController {
 
   Future<void> getNewProducts() async {
     getProductsUseCase
-        .call(
-          GetProductsParams(
-            page: 1,
-            perPage: 5,
-            marks: 'new',
-            onCallBack: (isError, fromApi) {
-              if (isError) {
-                print("Failed to load new products");
-              }
-            },
-          ),
-        )
+        .call(GetProductsParams(page: 1, perPage: 5, marks: 'new'))
         .listen((productsList) {
           newProducts = productsList.map((e) => e.toModel).toList();
           items.refresh();
@@ -109,18 +91,7 @@ class HomeController extends GetxController {
 
   Future<void> getSaleProducts() async {
     getProductsUseCase
-        .call(
-          GetProductsParams(
-            page: 1,
-            perPage: 5,
-            marks: 'sale',
-            onCallBack: (isError, fromApi) {
-              if (isError) {
-                print("Failed to load sale products");
-              }
-            },
-          ),
-        )
+        .call(GetProductsParams(page: 1, perPage: 5, marks: 'sale'))
         .listen((productsList) {
           saleProducts = productsList.map((e) => e.toModel).toList();
           items.refresh();
