@@ -48,9 +48,7 @@ class HomeController extends GetxController {
             if (loadMore) {
               final newItems = list.map((e) => e.toModel).toList();
               final existingIds = products.map((p) => p.id).toSet();
-
               final uniqueNewItems = newItems.where((item) => !existingIds.contains(item.id)).toList();
-
               products.addAll(uniqueNewItems);
             } else {
               products.assignAll(list.map((e) => e.toModel).toList());
