@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import '../../../core/usecase.dart';
 import '../models/index.dart';
 import '../products_repository.dart';
@@ -8,26 +7,25 @@ class GetProductsUseCase extends UseCaseStream<List<ProductEntity>, GetProductsP
   final ProductsRepository productsRepository;
 
   GetProductsUseCase({required this.productsRepository});
-
-  Stream<List<ProductEntity>> call(params) async* {
+//TODO: use onCallBack from params
+  Stream<List<ProductEntity>> call(params) {
     final streamController = StreamController<List<ProductEntity>>();
-    productsRepository.getProductsLocalCache().distinct().listen((event) {
-      streamController.sink.add(event);
+    final StreamSubscription streamSubscription = productsRepository.getProductsLocalCache().distinct().listen((event) {
       print('get local cache ${event.length}');
+      streamController.sink.add(event);
     });
+
     productsRepository.getProducts(params.page, params.perPage, params.marks).then((data) {
-      data.fold(
-        (failure) {
-          return Left(failure);
-        },
-        (productsApi) {
-          print('get from api ${productsApi.length}');
-          streamController.sink.add(productsApi);
-          return Right(productsApi);
-        },
-      );
+      data.fold((failure) {}, (productsApi) {
+        print('get from api ${productsApi.length}');
+        streamController.sink.add(productsApi);
+        productsRepository.setProductsLocalCache(productsApi);
+        streamSubscription.cancel();
+        streamController.close();
+      });
     });
-    yield* streamController.stream;
+
+    return streamController.stream;
   }
 }
 

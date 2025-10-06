@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:common/constants/failure_class.dart';
 import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
-import 'package:domain/modules/products/use_cases/set_products_cached_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
@@ -10,8 +9,6 @@ import '../../view/base_view_model.dart';
 
 class HomeController extends GetxController {
   final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
-  final SetProductsCachedUseCase setProductsCachedUseCase = GetIt.instance<SetProductsCachedUseCase>();
-
   RxList<BaseViewModel> items = RxList<BaseViewModel>([]);
   RxList<ProductViewModel> products = RxList([]);
   RxBool isLoading = true.obs;
@@ -48,13 +45,16 @@ class HomeController extends GetxController {
         .distinct()
         .listen(
           (list) async {
-            final newItems = list.map((e) => e.toModel).toList();
             if (loadMore) {
-              products.addAll(newItems);
+              final newItems = list.map((e) => e.toModel).toList();
+              final existingIds = products.map((p) => p.id).toSet();
+
+              final uniqueNewItems = newItems.where((item) => !existingIds.contains(item.id)).toList();
+
+              products.addAll(uniqueNewItems);
             } else {
-              products.assignAll(newItems);
+              products.assignAll(list.map((e) => e.toModel).toList());
             }
-            setProductsCachedUseCase.call(list);
             print('get from api controller ${list.length}');
             items.value = [AdBannerViewModel(), AllProductsViewItem(products: products)];
             isLoading.value = false;
