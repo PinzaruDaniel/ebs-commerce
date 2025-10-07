@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/view/product_view_model.dart';
+import '../../util/enum/enums.dart';
 import '../../view/base_view_model.dart';
 
 class HomeController extends GetxController {
-  final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
+  final GetProductsUseCase getProductsUseCase =
+      GetIt.instance<GetProductsUseCase>();
   RxList<BaseViewModel> items = RxList<BaseViewModel>([]);
   RxList<ProductViewModel> products = RxList([]);
   RxBool isLoading = true.obs;
@@ -17,10 +19,10 @@ class HomeController extends GetxController {
   Rxn<Failure> failure = Rxn<Failure>();
   RxInt currentPage = 1.obs;
   int perPage = 20;
+  bool loadedExtraLists = false;
   StreamSubscription? _streamSubscription;
 
   void initItems() async {
-    items.clear();
     items.add(AdBannerViewModel());
     getProducts();
   }
@@ -37,6 +39,7 @@ class HomeController extends GetxController {
     } else {
       isLoading.value = true;
       products.clear();
+      loadedExtraLists = false;
     }
     _streamSubscription?.cancel();
 
@@ -46,15 +49,37 @@ class HomeController extends GetxController {
         .listen(
           (list) async {
             if (loadMore) {
+              isLoading.value = true;
               final newItems = list.map((e) => e.toModel).toList();
               final existingIds = products.map((p) => p.id).toSet();
-              final uniqueNewItems = newItems.where((item) => !existingIds.contains(item.id)).toList();
+              final uniqueNewItems = newItems
+                  .where((item) => !existingIds.contains(item.id))
+                  .toList();
               products.addAll(uniqueNewItems);
+              isLoading.value = true;
             } else {
               products.assignAll(list.map((e) => e.toModel).toList());
+              isLoading.value = false;
+            }
+
+            if (!loadedExtraLists && !loadMore && currentPage.value == 1) {
+              loadedExtraLists = true;
+              await getNewProducts();
+              await getSaleProducts();
             }
             print('get from api controller ${list.length}');
-            items.value = [AdBannerViewModel(), AllProductsViewItem(products: products)];
+            items.value = [
+              AdBannerViewModel(),
+              HorizontalProductListViewModel(
+                products: newProducts,
+                type: ProductListType.newProducts,
+              ),
+              HorizontalProductListViewModel(
+                products: saleProducts,
+                type: ProductListType.saleProducts,
+              ),
+              AllProductsViewItem(products: products),
+            ];
             isLoading.value = false;
           },
           onError: (error) {
@@ -64,52 +89,27 @@ class HomeController extends GetxController {
   }
 
   Future<void> getNewProducts() async {
+    isLoading.value=true;
+
     getProductsUseCase
-        .call(
-          GetProductsParams(
-            page: 1,
-            perPage: 5,
-            marks: 'new',
-            /*onCallBack: (isError, fromApi) {
-              if (isError) {
-                print("Error from API new");
-              } else if (!fromApi) {
-                print("Using cached data new");
-              } else {
-                print("Loaded fresh data from API new");
-              }
-            },*/
-          ),
-        )
+        .call(GetProductsParams(page: 1, perPage: 5, marks: 'new'))
         .listen((productsList) {
           newProducts = productsList.map((e) => e.toModel).toList();
-          Future.delayed(Duration(milliseconds: 100));
           items.refresh();
-        }, onError: (failure) {});
+          isLoading.value=false;
+
+    }, onError: (failure) {});
   }
 
   Future<void> getSaleProducts() async {
+    isLoading.value=true;
+
     getProductsUseCase
-        .call(
-          GetProductsParams(
-            page: 1,
-            perPage: 5,
-            marks: 'sale',
-            /*onCallBack: (isError, fromApi) {
-              if (isError) {
-                print("Error from API sale ");
-              } else if (!fromApi) {
-                print("Using cached data sale");
-              } else {
-                print("Loaded fresh data from API sale");
-              }
-            },*/
-          ),
-        )
+        .call(GetProductsParams(page: 1, perPage: 5, marks: 'sale'))
         .listen((productsList) {
           saleProducts = productsList.map((e) => e.toModel).toList();
-          Future.delayed(Duration(milliseconds: 100));
           items.refresh();
+          isLoading.value=false;
         }, onError: (failure) {});
   }
 }

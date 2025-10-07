@@ -35,7 +35,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -59,40 +61,48 @@ class _HomePageState extends State<HomePage> {
           AppBarIconShoppingCartWidget(),
         ],
       ),
-        body: SafeArea(
-          child: Obx(
-            () => Stack(
-              children: [
-                SmartRefresherWidget(
-                  controller: _refreshController,
-                  onRefresh: () async {
-                    await homeController.getProducts();
-                    _refreshController.refreshCompleted();
+      body: SafeArea(
+        child: Obx(
+          () => Stack(
+            children: [
+              SmartRefresherWidget(
+                controller: _refreshController,
+                onRefresh: () async {
+                  await homeController.getProducts();
+                  !homeController.isLoading.value;
+                  _refreshController.refreshCompleted();
+                },
+                onLoading: () async {
+                  await homeController.getProducts(loadMore: true);
+                  _refreshController.loadComplete();
+                },
+                child: ListView.builder(
+                  itemCount: homeController.items.length,
+                  itemBuilder: (context, index) {
+                    final item = homeController.items[index];
+                    if (item is AdBannerViewModel) {
+                      return HomeAdBannerWidget();
+                    } else if (item is HorizontalProductListViewModel) {
+                      return HorizontalProductsListWidget(
+                        items: item.products,
+                        type: item.type,
+                      );
+                    } else if (item is AllProductsViewItem) {
+                      return ProductsListDisplayWidget(
+                        title: item.type.title ?? '',
+                        products: homeController.products,
+                      );
+                    }
+                    return const SizedBox.shrink();
                   },
-                  onLoading: () async {
-                    await homeController.getProducts(loadMore: true);
-                    _refreshController.loadComplete();
-                  },
-                  child: ListView.builder(
-                    itemCount: homeController.items.length,
-                    itemBuilder: (context, index) {
-                      final item = homeController.items[index];
-                      if (item is AdBannerViewModel) {
-                        return HomeAdBannerWidget();
-                      } else if (item is HorizontalProductListViewModel) {
-                        return HorizontalProductsListWidget(items: item.products, type: item.type);
-                      } else if (item is AllProductsViewItem) {
-                        return ProductsListDisplayWidget(title: item.type.title ?? '', products: homeController.products);
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  ),
                 ),
-                if (homeController.isLoading.value) LoadingOverlayWidget(isLoading: true),
-              ],
-            ),
+              ),
+              if (homeController.isLoading.value)
+                LoadingOverlayWidget(isLoading: true),
+            ],
           ),
         ),
+      ),
     );
   }
 }
