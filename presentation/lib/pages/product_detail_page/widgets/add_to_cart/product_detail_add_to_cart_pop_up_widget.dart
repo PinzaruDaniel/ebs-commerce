@@ -45,7 +45,7 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               AddToCartPopUpImageWidget(item: widget.item),
-              AddToCartPopUpTitleWidget(item: widget.item),
+              Expanded(child: AddToCartPopUpTitleWidget(item: widget.item)),
             ],
           ),
         ),
