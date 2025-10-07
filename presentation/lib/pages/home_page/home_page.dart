@@ -69,7 +69,6 @@ class _HomePageState extends State<HomePage> {
                 controller: _refreshController,
                 onRefresh: () async {
                   await homeController.getProducts();
-                  !homeController.isLoading.value;
                   _refreshController.refreshCompleted();
                 },
                 onLoading: () async {
