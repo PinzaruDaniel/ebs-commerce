@@ -70,6 +70,34 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
+  Future<Either<Failure, List<ProductEntity>>> getNewProducts(page, perPage) async{
+    try {
+      final Map<String, dynamic> queries = {'page': page, 'per_page': perPage, 'marks': 'new'};
+      final response = await apiService.getProducts(queries);
+      final entities = response.results.map((dto) => dto.toEntity()).toList();
+      return Right(entities);
+    } catch (e, stackTrace) {
+      if (e is DioException) {
+        return Left(Failure.dio(e));
+      }
+      return Left(Failure.error(e, stackTrace));
+    }
+  }  @override
+  Future<Either<Failure, List<ProductEntity>>> getSaleProducts(page, perPage) async{
+    try {
+      final Map<String, dynamic> queries = {'page': page, 'per_page': perPage, 'marks': 'new'};
+      final response = await apiService.getProducts(queries);
+      final entities = response.results.map((dto) => dto.toEntity()).toList();
+      return Right(entities);
+    } catch (e, stackTrace) {
+      if (e is DioException) {
+        return Left(Failure.dio(e));
+      }
+      return Left(Failure.error(e, stackTrace));
+    }
+  }
+
+  @override
   Stream<List<ProductEntity>> getProductsLocalCache() {
     return localDataSource.getProducts().map(
           (boxList) =>boxList.map((e) => e.toEntity).toList(),

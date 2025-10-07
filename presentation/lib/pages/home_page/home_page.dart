@@ -41,6 +41,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print('Building UI, isLoading=${homeController.isLoading.value}');
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
@@ -71,8 +73,8 @@ class _HomePageState extends State<HomePage> {
                   await homeController.getProducts();
                   _refreshController.refreshCompleted();
                 },
-                onLoading: () async {
-                  await homeController.getProducts(loadMore: true);
+                onLoading: ()  {
+                   homeController.getProducts(loadMore: true);
                   _refreshController.loadComplete();
                 },
                 child: ListView.builder(
@@ -89,14 +91,14 @@ class _HomePageState extends State<HomePage> {
                     } else if (item is AllProductsViewItem) {
                       return ProductsListDisplayWidget(
                         title: item.type.title ?? '',
-                        products: homeController.products,
+                        products: item.products
                       );
                     }
                     return const SizedBox.shrink();
                   },
                 ),
               ),
-              if (homeController.isLoading.value)
+              if (homeController.isLoading.value && homeController.currentPage.value == 1)
                 LoadingOverlayWidget(isLoading: true),
             ],
           ),

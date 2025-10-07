@@ -22,5 +22,8 @@ abstract class ProductsRepository {
 
   Future<void> setProductsLocalCache(List<ProductEntity> products);
 
+  Future<Either<Failure, List<ProductEntity>>> getSaleProducts(int page, int perPage);
+  Future<Either<Failure, List<ProductEntity>>> getNewProducts(int page, int perPage);
+
   Stream<List<ProductEntity>> getProductsLocalCache();
 }
