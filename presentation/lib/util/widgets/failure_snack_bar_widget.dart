@@ -4,7 +4,13 @@ import 'package:get/get.dart';
 
 import '../resources/app_colors.dart';
 
-void showFailureSnackBar({Failure? failure, String? fallbackMessage, String? title, bool isError = true}) {
+void showFailureSnackBar({
+  Failure? failure,
+  String? fallbackMessage,
+  String? title,
+  bool isError = true,
+  SnackPosition? snackPosition,
+}) {
   final message = failure?.message ?? fallbackMessage;
 
   Get.snackbar(
@@ -12,14 +18,11 @@ void showFailureSnackBar({Failure? failure, String? fallbackMessage, String? tit
     message!,
     backgroundColor: isError ? AppColors.red : AppColors.primary,
     colorText: Colors.white,
-    snackPosition: SnackPosition.BOTTOM,
+    snackPosition: snackPosition ?? SnackPosition.BOTTOM,
     duration: const Duration(seconds: 2),
     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
     padding: const EdgeInsets.all(16),
     borderRadius: 20,
-    icon: Icon(
-      isError ? Icons.error : Icons.check_circle,
-      color: Colors.white,
-    ),
+    icon: Icon(isError ? Icons.error : Icons.check_circle, color: Colors.white),
   );
 }

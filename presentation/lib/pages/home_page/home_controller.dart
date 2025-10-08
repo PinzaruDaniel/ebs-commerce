@@ -32,49 +32,74 @@ class HomeController extends GetxController {
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
+    final completer = Completer<void>();
+
     if (loadMore) {
       currentPage.value++;
-      isLoading.value = true;
     } else {
       currentPage.value = 1;
-      isLoading.value = true;
       products.clear();
     }
     if (products.value.isNotEmpty) {
       var pageNumber = products.length / 20;
       currentPage.value == pageNumber;
     }
+    isLoading.value = true;
+
     _streamSubscription?.cancel();
+    int emissionCount = 0;
+    bool hasCompleted = false;
+
     _streamSubscription = getProductsUseCase
         .call(GetProductsParams(page: currentPage.value, perPage: perPage))
         .distinct()
         .listen(
-          (list) async {
-            if (loadMore) {
-              final newItems = list.map((e) => e.toModel).toList();
-              final existingIds = products.map((p) => p.id).toSet();
-              final uniqueNewItems = newItems.where((item) => !existingIds.contains(item.id)).toList();
-              products.addAll(uniqueNewItems);
-            } else {
-              products.assignAll(list.map((e) => e.toModel).toList());
-              if (currentPage.value == 1) {
-                newProducts = products.where((e) => e.marks?.contains("new") ?? false).take(5).toList();
-                saleProducts = products.where((e) => e.marks?.contains("sale") ?? false).take(5).toList();
-              }
-            }
-            items.value = [
-              AdBannerViewModel(),
-              HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
-              HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
-              AllProductsViewItem(products: products),
-            ];
-            await Future.delayed(Duration(seconds: 1));
-            isLoading.value = false;
-          },
+          (list) {
+        emissionCount++;
+        final mappedProducts = list.map((e) => e.toModel).toList();
 
-          onError: (error) {
-            isLoading.value = false;
-          },
-        );
+        if (loadMore) {
+          final existingIds = products.map((p) => p.id).toSet();
+          final uniqueNewItems = mappedProducts.where((item) => !existingIds.contains(item.id)).toList();
+          products.addAll(uniqueNewItems);
+        } else {
+          products.assignAll(mappedProducts);
+        }
+
+        newProducts = products.where((e) => e.marks?.contains("new") ?? false).take(5).toList();
+        saleProducts = products.where((e) => e.marks?.contains("sale") ?? false).take(5).toList();
+
+        items.value = [
+          AdBannerViewModel(),
+          HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
+          HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
+          AllProductsViewItem(products: products),
+        ];
+
+        if (emissionCount >= 2 && !hasCompleted) {
+          isLoading.value = false;
+          if (!completer.isCompleted) completer.complete();
+          hasCompleted = true;
+        }
+
+        if (emissionCount == 1) {
+          Future.delayed(const Duration(seconds: 2), () {
+            if (!hasCompleted) {
+              isLoading.value = false;
+              if (!completer.isCompleted) completer.complete();
+              hasCompleted = true;
+            }
+          });
+        }
+      },
+      onError: (error) {
+        isLoading.value = false;
+        if (!completer.isCompleted) completer.completeError(error);
+        },
+    );
+
+    return completer.future;
   }
+
+
 }

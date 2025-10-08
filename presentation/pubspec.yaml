@@ -63,7 +63,7 @@ dependencies:
   liquid_glass_renderer: ^0.1.1-dev.10
   easy_localization: ^3.0.8
   pull_down_button: ^0.10.2
-
+  connectivity_plus: ^7.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

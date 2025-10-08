@@ -1,0 +1,146 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:1638919249445323337",
+      "lastPropertyId": "5:1789566561207249054",
+      "name": "CategoryBox",
+      "properties": [
+        {
+          "id": "1:1731803144609708519",
+          "name": "idCategory",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:6733728860544805392",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:9174613086877876733",
+          "name": "level",
+          "type": 6
+        },
+        {
+          "id": "4:8407544899231393571",
+          "name": "parent",
+          "type": 6
+        },
+        {
+          "id": "5:1789566561207249054",
+          "name": "productId",
+          "indexId": "1:9153443521418966216",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "ProductBox"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:4128261350642884033",
+      "lastPropertyId": "9:125886565802266517",
+      "name": "ProductBox",
+      "properties": [
+        {
+          "id": "1:2320992625907644778",
+          "name": "idProduct",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:371323129106173534",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:2609593488037723415",
+          "name": "price",
+          "type": 9
+        },
+        {
+          "id": "4:282716519735822010",
+          "name": "discount",
+          "type": 9
+        },
+        {
+          "id": "5:509993225368686468",
+          "name": "discountedPrice",
+          "type": 9
+        },
+        {
+          "id": "6:354826701800105572",
+          "name": "imageUrl",
+          "type": 9
+        },
+        {
+          "id": "7:7435511298048066916",
+          "name": "marks",
+          "type": 9
+        },
+        {
+          "id": "8:4929892421484905170",
+          "name": "stock",
+          "type": 6
+        },
+        {
+          "id": "9:125886565802266517",
+          "name": "description",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:4554370860469021776",
+      "lastPropertyId": "5:3403132717975881340",
+      "name": "SpecificationBox",
+      "properties": [
+        {
+          "id": "1:8537528104654083296",
+          "name": "idSpec",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:2746280391028959154",
+          "name": "attributeName",
+          "type": 9
+        },
+        {
+          "id": "3:1041774987603650636",
+          "name": "value",
+          "type": 9
+        },
+        {
+          "id": "4:550751247195771875",
+          "name": "productId",
+          "indexId": "2:4504896009286587906",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "ProductBox"
+        },
+        {
+          "id": "5:3403132717975881340",
+          "name": "attributeId",
+          "type": 6
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:4554370860469021776",
+  "lastIndexId": "2:4504896009286587906",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
