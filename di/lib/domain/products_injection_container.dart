@@ -4,24 +4,28 @@ import 'package:domain/modules/products/use_cases/get_filtered_products_use_case
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
+import 'package:domain/modules/products/use_cases/sync_products_use_case.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> init() async {
   var dataDi = GetIt.instance;
 
   dataDi.registerLazySingleton<GetFilteredProductsUseCase>(
-        () => GetFilteredProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
+    () => GetFilteredProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
   dataDi.registerLazySingleton<GetFilteredProductsCountUseCase>(
-        () => GetFilteredProductsCountUseCase(productsRepository: dataDi<ProductsRepository>()),
+    () => GetFilteredProductsCountUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
   dataDi.registerLazySingleton<GetProductsUseCase>(
-        () => GetProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
+    () => GetProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
   dataDi.registerLazySingleton<GetNewProductsUseCase>(
-        () => GetNewProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
+    () => GetNewProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
   dataDi.registerLazySingleton<GetSaleProductsUseCase>(
-        () => GetSaleProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
+    () => GetSaleProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
+  );
+  dataDi.registerLazySingleton<SyncProductsUseCase>(
+    () => SyncProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
 }

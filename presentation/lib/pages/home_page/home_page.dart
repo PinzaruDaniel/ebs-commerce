@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
+  //TODO: global internet connection controller
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +103,6 @@ class _HomePageState extends State<HomePage> {
                 },
                 onLoading: () async {
                   await homeController.getProducts(loadMore: true);
-                  homeController.isLoading.value;
                   _refreshController.loadComplete();
                 },
                 child: ListView.builder(
