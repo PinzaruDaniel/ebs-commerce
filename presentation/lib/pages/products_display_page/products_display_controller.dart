@@ -12,7 +12,7 @@ import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../view/product_view_model.dart';
 
 class ProductsDisplayController extends GetxController {
-  final GetProductsUseCase getProductsUseCase = GetIt.instance<GetProductsUseCase>();
+  final StreamProductsUseCase getProductsUseCase = GetIt.instance<StreamProductsUseCase>();
   final GetNewProductsUseCase getNewProductsUseCase = GetIt.instance<GetNewProductsUseCase>();
   final GetSaleProductsUseCase getSaleProductsUseCase = GetIt.instance<GetSaleProductsUseCase>();
   final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();

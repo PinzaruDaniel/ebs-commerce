@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:common/constants/failure_class.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/core/usecase.dart';
@@ -11,7 +12,11 @@ class SyncProductsUseCase extends UseCase<List<ProductEntity>, SyncProductsParam
 
   @override
   Future<Either<Failure, List<ProductEntity>>> call(params) async {
-    return productsRepository.getProducts(params.page, params.perPage, params.marks);
+    final either = await productsRepository.getProducts(params.page, params.perPage, params.marks);
+    either.fold((failure) {}, (productsApi) {
+      productsRepository.setProductsLocalCache(productsApi);
+    });
+    return either;
   }
 }
 

@@ -16,8 +16,8 @@ Future<void> init() async {
   dataDi.registerLazySingleton<GetFilteredProductsCountUseCase>(
     () => GetFilteredProductsCountUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
-  dataDi.registerLazySingleton<GetProductsUseCase>(
-    () => GetProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
+  dataDi.registerLazySingleton<StreamProductsUseCase>(
+    () => StreamProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
   dataDi.registerLazySingleton<GetNewProductsUseCase>(
     () => GetNewProductsUseCase(productsRepository: dataDi<ProductsRepository>()),

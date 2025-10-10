@@ -9,6 +9,7 @@ import 'package:presentation/pages/home_page/widgets/language_dropdown_widget.da
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/resources/app_icons.dart';
+import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/util/widgets/open_container_animation_widget.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                     } else if (item is AllProductsViewItem) {
                       return ProductsListDisplayWidget(title: item.type.title ?? '', products: item.products);
                     }
-                    return const SizedBox.shrink();
+                    return EmptyWidget();
                   },
                 ),
               ),
