@@ -32,9 +32,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomeController get homeController => Get.find();
-  List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
-  final Connectivity _connectivity = Connectivity();
-  late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
 
   @override
   void initState() {
@@ -43,34 +40,11 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       homeController.initItems();
     });
-    initConnectivity();
-    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  Future<void> initConnectivity() async {
-    late List<ConnectivityResult> result;
-    try {
-      result = await _connectivity.checkConnectivity();
-    } on PlatformException catch (e) {
-      developer.log('Couldn\'t check connectivity status', error: e);
-      return;
-    }
-    if (!mounted) {
-      return Future.value(null);
-    }
-    return _updateConnectionStatus(result);
-  }
 
-  Future<void> _updateConnectionStatus(List<ConnectivityResult> result) async {
-    setState(() {
-      _connectionStatus = result;
-      if (result.contains(ConnectivityResult.none)) {
-        showFailureSnackBar(fallbackMessage: 'No internet connection', snackPosition: SnackPosition.TOP);
-      }
-    });
-  }
   //TODO: global internet connection controller
 
   @override
