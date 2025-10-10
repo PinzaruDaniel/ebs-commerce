@@ -94,6 +94,7 @@ class HomeController extends GetxController {
               products.addAll(uniqueNewItems);
             } else {
               products.assignAll(mappedProducts);
+
             }
 
             newProducts = products.where((e) => e.marks?.contains("new") ?? false).take(5).toList();
@@ -108,10 +109,9 @@ class HomeController extends GetxController {
             if (emissionCount == 1) {
               Future.delayed(const Duration(seconds: 2), () {
                 if (!hasCompleted) {
-                  items.refresh();
-
                   isLoading.value = false;
                   if (!completer.isCompleted) completer.complete();
+                  items.refresh();
                   hasCompleted = true;
                 }
               });
