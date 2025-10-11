@@ -1,8 +1,4 @@
-import 'dart:async';
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
 import 'package:presentation/pages/home_page/widgets/language_dropdown_widget.dart';
@@ -10,7 +6,6 @@ import 'package:presentation/pages/products_display_page/widgets/products_list_d
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
-import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/util/widgets/open_container_animation_widget.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -21,7 +16,6 @@ import '../../util/widgets/horizontal_products_list_widget.dart';
 import '../../util/widgets/loading_overlay_widget.dart';
 import '../../util/widgets/smart_refresher_widget.dart';
 import 'home_controller.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
