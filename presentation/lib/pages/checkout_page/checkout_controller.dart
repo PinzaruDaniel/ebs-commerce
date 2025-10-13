@@ -125,8 +125,16 @@ class CheckoutController extends GetxController {
 
   Map<String, String> buildUserInfo(UserViewModel? model) {
     final info = <String, String>{};
-    if (model?.number.isNotEmpty ?? false) info[model!.number] = '';
-    if (model?.email.isNotEmpty ?? false) info[model!.email] = '';
+    if (model != null) {
+      if ((model.number.isNotEmpty) && (model.dialCode.isNotEmpty)) {
+        info['${model.dialCode} ${model.number}'] = '';
+      } else if (model.number.isNotEmpty) {
+        info[model.number] = '';
+      }
+      if (model.email.isNotEmpty) {
+        info[model.email] = '';
+      }
+    }
     return info;
   }
 

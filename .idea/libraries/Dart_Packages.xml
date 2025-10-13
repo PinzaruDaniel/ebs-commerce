@@ -58,16 +58,16 @@
         <entry key="build">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build-3.0.0/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build-3.1.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build-3.0.0/lib" />
             </list>
           </value>
         </entry>
         <entry key="build_config">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_config-1.1.2/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_config-1.2.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_config-1.1.2/lib" />
             </list>
           </value>
         </entry>
@@ -81,24 +81,24 @@
         <entry key="build_resolvers">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_resolvers-3.0.0/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_resolvers-3.0.3/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_resolvers-3.0.0/lib" />
             </list>
           </value>
         </entry>
         <entry key="build_runner">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner-2.6.0/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner-2.7.1/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner-2.6.0/lib" />
             </list>
           </value>
         </entry>
         <entry key="build_runner_core">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner_core-9.2.0/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner_core-9.3.1/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/build_runner_core-9.2.0/lib" />
             </list>
           </value>
         </entry>
@@ -510,8 +510,8 @@
         <entry key="js">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/js-0.7.2/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/js-0.6.7/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/js-0.7.2/lib" />
             </list>
           </value>
         </entry>
@@ -832,8 +832,8 @@
         <entry key="rxdart">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/rxdart-0.28.0/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/rxdart-0.27.7/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/rxdart-0.28.0/lib" />
             </list>
           </value>
         </entry>
@@ -1074,24 +1074,24 @@
         <entry key="test">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test-1.26.3/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test-1.26.2/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test-1.26.3/lib" />
             </list>
           </value>
         </entry>
         <entry key="test_api">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test_api-0.7.7/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test_api-0.7.6/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test_api-0.7.7/lib" />
             </list>
           </value>
         </entry>
         <entry key="test_core">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test_core-0.6.12/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test_core-0.6.11/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/test_core-0.6.12/lib" />
             </list>
           </value>
         </entry>
@@ -1148,8 +1148,8 @@
         <entry key="vm_service">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vm_service-15.0.2/lib" />
               <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vm_service-15.0.0/lib" />
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/vm_service-15.0.2/lib" />
             </list>
           </value>
         </entry>

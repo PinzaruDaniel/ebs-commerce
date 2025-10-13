@@ -800,4 +800,527 @@ as String,
 
 }
 
+/// @nodoc
+mixin _$DialCodesEntity {
+
+ String get name; String get code; String get dialCode;
+/// Create a copy of DialCodesEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DialCodesEntityCopyWith<DialCodesEntity> get copyWith => _$DialCodesEntityCopyWithImpl<DialCodesEntity>(this as DialCodesEntity, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DialCodesEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.code, code) || other.code == code)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,name,code,dialCode);
+
+@override
+String toString() {
+  return 'DialCodesEntity(name: $name, code: $code, dialCode: $dialCode)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $DialCodesEntityCopyWith<$Res>  {
+  factory $DialCodesEntityCopyWith(DialCodesEntity value, $Res Function(DialCodesEntity) _then) = _$DialCodesEntityCopyWithImpl;
+@useResult
+$Res call({
+ String name, String code, String dialCode
+});
+
+
+
+
+}
+/// @nodoc
+class _$DialCodesEntityCopyWithImpl<$Res>
+    implements $DialCodesEntityCopyWith<$Res> {
+  _$DialCodesEntityCopyWithImpl(this._self, this._then);
+
+  final DialCodesEntity _self;
+  final $Res Function(DialCodesEntity) _then;
+
+/// Create a copy of DialCodesEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? code = null,Object? dialCode = null,}) {
+  return _then(_self.copyWith(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,dialCode: null == dialCode ? _self.dialCode : dialCode // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [DialCodesEntity].
+extension DialCodesEntityPatterns on DialCodesEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _DialCodesEntity value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _DialCodesEntity() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _DialCodesEntity value)  $default,){
+final _that = this;
+switch (_that) {
+case _DialCodesEntity():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _DialCodesEntity value)?  $default,){
+final _that = this;
+switch (_that) {
+case _DialCodesEntity() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String code,  String dialCode)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _DialCodesEntity() when $default != null:
+return $default(_that.name,_that.code,_that.dialCode);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String code,  String dialCode)  $default,) {final _that = this;
+switch (_that) {
+case _DialCodesEntity():
+return $default(_that.name,_that.code,_that.dialCode);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String code,  String dialCode)?  $default,) {final _that = this;
+switch (_that) {
+case _DialCodesEntity() when $default != null:
+return $default(_that.name,_that.code,_that.dialCode);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _DialCodesEntity implements DialCodesEntity {
+  const _DialCodesEntity({required this.name, required this.code, required this.dialCode});
+  
+
+@override final  String name;
+@override final  String code;
+@override final  String dialCode;
+
+/// Create a copy of DialCodesEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DialCodesEntityCopyWith<_DialCodesEntity> get copyWith => __$DialCodesEntityCopyWithImpl<_DialCodesEntity>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DialCodesEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.code, code) || other.code == code)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,name,code,dialCode);
+
+@override
+String toString() {
+  return 'DialCodesEntity(name: $name, code: $code, dialCode: $dialCode)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DialCodesEntityCopyWith<$Res> implements $DialCodesEntityCopyWith<$Res> {
+  factory _$DialCodesEntityCopyWith(_DialCodesEntity value, $Res Function(_DialCodesEntity) _then) = __$DialCodesEntityCopyWithImpl;
+@override @useResult
+$Res call({
+ String name, String code, String dialCode
+});
+
+
+
+
+}
+/// @nodoc
+class __$DialCodesEntityCopyWithImpl<$Res>
+    implements _$DialCodesEntityCopyWith<$Res> {
+  __$DialCodesEntityCopyWithImpl(this._self, this._then);
+
+  final _DialCodesEntity _self;
+  final $Res Function(_DialCodesEntity) _then;
+
+/// Create a copy of DialCodesEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? code = null,Object? dialCode = null,}) {
+  return _then(_DialCodesEntity(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,dialCode: null == dialCode ? _self.dialCode : dialCode // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+mixin _$FlagEntity {
+
+ String get iso2; String get unicodeFlag;
+/// Create a copy of FlagEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$FlagEntityCopyWith<FlagEntity> get copyWith => _$FlagEntityCopyWithImpl<FlagEntity>(this as FlagEntity, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FlagEntity&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,iso2,unicodeFlag);
+
+@override
+String toString() {
+  return 'FlagEntity(iso2: $iso2, unicodeFlag: $unicodeFlag)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $FlagEntityCopyWith<$Res>  {
+  factory $FlagEntityCopyWith(FlagEntity value, $Res Function(FlagEntity) _then) = _$FlagEntityCopyWithImpl;
+@useResult
+$Res call({
+ String iso2, String unicodeFlag
+});
+
+
+
+
+}
+/// @nodoc
+class _$FlagEntityCopyWithImpl<$Res>
+    implements $FlagEntityCopyWith<$Res> {
+  _$FlagEntityCopyWithImpl(this._self, this._then);
+
+  final FlagEntity _self;
+  final $Res Function(FlagEntity) _then;
+
+/// Create a copy of FlagEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? iso2 = null,Object? unicodeFlag = null,}) {
+  return _then(_self.copyWith(
+iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
+as String,unicodeFlag: null == unicodeFlag ? _self.unicodeFlag : unicodeFlag // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [FlagEntity].
+extension FlagEntityPatterns on FlagEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FlagEntity value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _FlagEntity() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FlagEntity value)  $default,){
+final _that = this;
+switch (_that) {
+case _FlagEntity():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FlagEntity value)?  $default,){
+final _that = this;
+switch (_that) {
+case _FlagEntity() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String iso2,  String unicodeFlag)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _FlagEntity() when $default != null:
+return $default(_that.iso2,_that.unicodeFlag);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String iso2,  String unicodeFlag)  $default,) {final _that = this;
+switch (_that) {
+case _FlagEntity():
+return $default(_that.iso2,_that.unicodeFlag);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String iso2,  String unicodeFlag)?  $default,) {final _that = this;
+switch (_that) {
+case _FlagEntity() when $default != null:
+return $default(_that.iso2,_that.unicodeFlag);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _FlagEntity implements FlagEntity {
+  const _FlagEntity({required this.iso2, required this.unicodeFlag});
+  
+
+@override final  String iso2;
+@override final  String unicodeFlag;
+
+/// Create a copy of FlagEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FlagEntityCopyWith<_FlagEntity> get copyWith => __$FlagEntityCopyWithImpl<_FlagEntity>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FlagEntity&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,iso2,unicodeFlag);
+
+@override
+String toString() {
+  return 'FlagEntity(iso2: $iso2, unicodeFlag: $unicodeFlag)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$FlagEntityCopyWith<$Res> implements $FlagEntityCopyWith<$Res> {
+  factory _$FlagEntityCopyWith(_FlagEntity value, $Res Function(_FlagEntity) _then) = __$FlagEntityCopyWithImpl;
+@override @useResult
+$Res call({
+ String iso2, String unicodeFlag
+});
+
+
+
+
+}
+/// @nodoc
+class __$FlagEntityCopyWithImpl<$Res>
+    implements _$FlagEntityCopyWith<$Res> {
+  __$FlagEntityCopyWithImpl(this._self, this._then);
+
+  final _FlagEntity _self;
+  final $Res Function(_FlagEntity) _then;
+
+/// Create a copy of FlagEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? iso2 = null,Object? unicodeFlag = null,}) {
+  return _then(_FlagEntity(
+iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
+as String,unicodeFlag: null == unicodeFlag ? _self.unicodeFlag : unicodeFlag // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
 // dart format on

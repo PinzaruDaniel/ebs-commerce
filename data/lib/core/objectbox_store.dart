@@ -7,7 +7,6 @@ import '../modules/categories/models/local/category_box.dart';
 import '../modules/specifications/models/local/specification_box.dart';
 import '../objectbox.g.dart';
 
-//TODO: de declarat toate boxurile si pe urma de creat store-ul
 class ObjectBoxStore {
   late final Store _store;
   late final Box<ProductBox> productBox;

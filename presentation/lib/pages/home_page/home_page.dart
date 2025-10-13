@@ -38,9 +38,6 @@ class _HomePageState extends State<HomePage> {
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-
-  //TODO: global internet connection controller
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

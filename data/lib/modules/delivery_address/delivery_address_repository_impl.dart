@@ -2,6 +2,8 @@ import 'package:common/constants/failure_class.dart';
 import 'package:dartz/dartz.dart';
 import 'package:data/mapper/cities_response_mapper.dart';
 import 'package:data/mapper/countries_mapper.dart';
+import 'package:data/mapper/dial_codes_mapper.dart';
+import 'package:data/mapper/flag_mapper.dart';
 import 'package:data/mapper/states_mapper.dart';
 import 'package:data/modules/delivery_address/models/remote/index.dart';
 import 'package:data/modules/delivery_address/sources/remote/delivery_address_api_service.dart';
@@ -50,6 +52,35 @@ class DeliveryAddressRepositoryImpl implements DeliveryAddressRepository {
       return Right(entities);
     } catch (e, stackTrace) {
       if (e is DioException) {
+        return Left(Failure.dio(e));
+      }
+      return Left(Failure.error(e, stackTrace));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<DialCodesEntity>>> getDialCodes() async{
+    try{
+      final response=await apiService.getDialCodes();
+      final entities =response.data.map((e)=>e.toEntity).toList();
+      return Right(entities);
+    } catch(e, stackTrace){
+      if(e is DioException){
+        return Left(Failure.dio(e));
+      }
+      return Left(Failure.error(e, stackTrace));
+    }
+  }
+
+
+  @override
+  Future<Either<Failure, List<FlagEntity>>> getFlags() async{
+    try{
+      final response=await apiService.getFlags();
+      final entities =response.data.map((e)=>e.toEntity).toList();
+      return Right(entities);
+    } catch(e, stackTrace){
+      if(e is DioException){
         return Left(Failure.dio(e));
       }
       return Left(Failure.error(e, stackTrace));

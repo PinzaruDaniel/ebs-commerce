@@ -24,7 +24,9 @@ class TextFieldViewModel extends BaseViewModel {
 }
 
 class TextFieldWidget extends StatefulWidget {
-  const TextFieldWidget({super.key, required this.itemViewModel});
+  const TextFieldWidget({super.key, required this.itemViewModel,   this.showTitle = true,
+  });
+  final bool showTitle;
 
   final TextFieldViewModel itemViewModel;
 
@@ -55,71 +57,70 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.showTitle) ...[
           Text(widget.itemViewModel.title),
           const SizedBox(height: 4),
-          FormField(
-            validator: (text) {
-              if (widget.itemViewModel.isRequiredValidation &&
-                  (controller.text.isEmpty)) {
-                return AppTexts.requiredField;
-              }
-              if (widget.itemViewModel.customValidator != null) {
-                return widget.itemViewModel.customValidator!(controller.text);
-              }
-              return null;
-            },
-            builder: (state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-
-                    controller: controller,
-                    focusNode: focusNode,
-                    minLines: widget.itemViewModel.minLines ?? 1,
-                    maxLines: widget.itemViewModel.minLines != null ? null : 1,
-                    keyboardType: widget.itemViewModel.textInputType ?? TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    cursorColor: AppColors.primary,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      errorText: state.errorText,
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: AppColors.red, width: 2.0),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: AppColors.redText, width: 1.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: AppColors.secondary, width: 2.0),
-                      ),
-                    ),
-                    onChanged: (value) {
-                      widget.itemViewModel.placeholder = value;
-                      state.validate();
-                    },
-                    onTapOutside: (_) {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    },
-                  ),
-                ],
-              );
-            },
-          ),
         ],
-      ),
+        FormField(
+          validator: (text) {
+            if (widget.itemViewModel.isRequiredValidation &&
+                (controller.text.isEmpty)) {
+              return AppTexts.requiredField;
+            }
+            if (widget.itemViewModel.customValidator != null) {
+              return widget.itemViewModel.customValidator!(controller.text);
+            }
+            return null;
+          },
+          builder: (state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+
+                  controller: controller,
+                  focusNode: focusNode,
+                  minLines: widget.itemViewModel.minLines ?? 1,
+                  maxLines: widget.itemViewModel.minLines != null ? null : 1,
+                  keyboardType: widget.itemViewModel.textInputType ?? TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                  cursorColor: AppColors.primary,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    errorText: state.errorText,
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: AppColors.red, width: 2.0),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: AppColors.redText, width: 1.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: AppColors.secondary, width: 2.0),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    widget.itemViewModel.placeholder = value;
+                    state.validate();
+                  },
+                  onTapOutside: (_) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                ),
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 }

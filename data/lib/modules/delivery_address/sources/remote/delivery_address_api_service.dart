@@ -21,6 +21,10 @@ abstract class DeliveryAddressApiService {
       @Query('state') String state,
       );
 
+  @GET('countries/codes')
+  Future<DialCodesResponseApiDto> getDialCodes();
 
+  @GET('countries/flag/unicode')
+  Future<FlagResponseApiDto> getFlags();
 
 }
