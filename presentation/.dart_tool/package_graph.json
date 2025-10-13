@@ -16,6 +16,7 @@
         "cupertino_icons",
         "di",
         "domain",
+        "dropdown_button2",
         "easy_localization",
         "flutter",
         "flutter_animate",
@@ -63,6 +64,14 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "dropdown_button2",
+      "version": "2.3.9",
+      "dependencies": [
+        "flutter",
+        "meta"
       ]
     },
     {

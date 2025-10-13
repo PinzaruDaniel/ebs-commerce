@@ -266,6 +266,13 @@
             </list>
           </value>
         </entry>
+        <entry key="dropdown_button2">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/dropdown_button2-2.3.9/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="easy_localization">
           <value>
             <list>
@@ -1262,6 +1269,7 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/dbus-0.7.11/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/dio-5.9.0/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/dio_web_adapter-2.1.1/lib" />
+      <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/dropdown_button2-2.3.9/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/easy_localization-3.0.8/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/easy_logger-0.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/equatable-2.0.7/lib" />
