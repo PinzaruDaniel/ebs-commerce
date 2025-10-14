@@ -51,7 +51,7 @@ class ContactInformationController extends GetxController {
           initialValue: existingUser?.number ?? '',
           customValidator: (text) {
             if (text == null || text.isEmpty) return AppTexts.numberIsRequired;
-            final phoneRegex = RegExp(r'^[0-9]{8,15}$');
+            final phoneRegex = RegExp(r'^[1-9][0-9]{7,14}$');
             if (!phoneRegex.hasMatch(text)) return AppTexts.invalidNumberPhone;
             return null;
           },

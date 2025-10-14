@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/base_view_model.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldViewModel extends BaseViewModel {
   final String title;
@@ -24,8 +25,12 @@ class TextFieldViewModel extends BaseViewModel {
 }
 
 class TextFieldWidget extends StatefulWidget {
-  const TextFieldWidget({super.key, required this.itemViewModel,   this.showTitle = true,
+  const TextFieldWidget({
+    super.key,
+    required this.itemViewModel,
+    this.showTitle = true,
   });
+
   final bool showTitle;
 
   final TextFieldViewModel itemViewModel;
@@ -80,35 +85,65 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
-
+                  inputFormatters:
+                      widget.itemViewModel.textInputType == TextInputType.phone
+                      ? [FilteringTextInputFormatter.digitsOnly]
+                      : [],
                   controller: controller,
                   focusNode: focusNode,
                   minLines: widget.itemViewModel.minLines ?? 1,
                   maxLines: widget.itemViewModel.minLines != null ? null : 1,
-                  keyboardType: widget.itemViewModel.textInputType ?? TextInputType.text,
+                  keyboardType:
+                      widget.itemViewModel.textInputType ?? TextInputType.text,
                   textInputAction: TextInputAction.done,
                   cursorColor: AppColors.primary,
                   decoration: InputDecoration(
                     isDense: true,
                     errorText: state.errorText,
+                    errorMaxLines: 3,
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: BorderSide(color: AppColors.red, width: 2.0),
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(color: AppColors.redText, width: 1.0),
+                      borderSide: BorderSide(
+                        color: AppColors.redText,
+                        width: 1.0,
+                      ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade300,
+                        width: 1.0,
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(color: AppColors.secondary, width: 2.0),
+                      borderSide: BorderSide(
+                        color: AppColors.secondary,
+                        width: 2.0,
+                      ),
                     ),
                   ),
                   onChanged: (value) {
+                    if (widget.itemViewModel.textInputType ==
+                        TextInputType.phone) {
+                      if (value.startsWith('0')) {
+                        value = value.replaceFirst(RegExp(r'^0+'), '');
+                      }
+                      if (value.length > 15) {
+                        value = value.substring(0, 15);
+                      }
+                      if (value != controller.text) {
+                        controller.text = value;
+                        controller.selection = TextSelection.fromPosition(
+                          TextPosition(offset: controller.text.length),
+                        );
+                      }
+                    }
+
                     widget.itemViewModel.placeholder = value;
                     state.validate();
                   },
