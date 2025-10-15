@@ -58,12 +58,11 @@ class ContactInformationController extends GetxController {
           },
         ),
         selectionViewModel: SelectionViewModel(
-          title: '',
           options: dialCodes.map((e) {
             final flag = getUnicodeFlag(e.code);
-            return '$flag ${e.name} (${e.code})';
+            return '$flag ${e.name} (${e.dialCode})';
           }).toList(),
-          initialValue: selectedDialCode.code,
+          initialValue: '${getUnicodeFlag(selectedDialCode.code)} ${selectedDialCode.name} (${selectedDialCode.dialCode})',
         ),
       ),
 

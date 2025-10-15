@@ -9,13 +9,13 @@ import '../../../util/routing/app_pop_up.dart';
 
 class SelectionViewModel extends BaseViewModel {
   final String? keyId;
-  final String title;
+  final String? title;
   final List<String> options;
   final RxString selectedValue;
 
   SelectionViewModel({
     this.keyId,
-    required this.title,
+     this.title,
     required this.options,
     String? initialValue,
   }) : selectedValue =
@@ -25,13 +25,11 @@ class SelectionViewModel extends BaseViewModel {
 class SelectionWidget extends StatelessWidget {
   final SelectionViewModel itemViewModel;
   final Function(String)? onSelectionChanged;
-  final bool showTitle;
 
   const SelectionWidget({
     super.key,
     required this.itemViewModel,
     this.onSelectionChanged,
-    this.showTitle = true,
   });
 
   bool _isPlaceholder(String value) {
@@ -46,8 +44,8 @@ class SelectionWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (showTitle) ...[
-            Text(itemViewModel.title),
+          if (itemViewModel.title !=null ) ...[
+            Text(itemViewModel.title!),
             const SizedBox(height: 4),
           ],
           SizedBox(height: 4),
@@ -61,7 +59,7 @@ class SelectionWidget extends StatelessWidget {
               onTap: () {
                 if (itemViewModel.options.length > 1) {
                   AppPopUp.showSelection(
-                    title: itemViewModel.title,
+                    title: itemViewModel.title?? '',
                     options: itemViewModel.options,
                     selectedValue: itemViewModel.selectedValue,
                     onSelectionChanged: onSelectionChanged,
