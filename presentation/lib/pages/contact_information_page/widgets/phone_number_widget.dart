@@ -3,7 +3,7 @@ import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/dial_codes_view_model.dart';
 import 'package:presentation/view/flag_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
+import '../../delivery_address_page/widgets/selection_widget.dart';
 
 class PhoneNumberViewModel extends BaseViewModel {
   final List<DialCodesViewModel> dialCodes;
@@ -42,46 +42,27 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  items: widget.itemViewModel.dialCodes.map((code) {
-                    return DropdownMenuItem<DialCodesViewModel>(
-                      value: code,
-                      child: Row(
-                        children: [
-                          Text(
-                            '${_getUnicodeFlag(code.code)} ${code.code} ${code.dialCode}',
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                  value: widget.itemViewModel.selectedDialCode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        widget.itemViewModel.selectedDialCode = value;
-                      });
-                    }
-                  },
-                  dropdownStyleData: DropdownStyleData(
-                    maxHeight: 300,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey.shade300, width: 2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+            Expanded(
+              flex: 0,
+              child: SelectionWidget(
+                showTitle: false,
+                itemViewModel: SelectionViewModel(
+                  title: '',
+                  options: widget.itemViewModel.dialCodes.map((e) => e.dialCode).toList(),
+                  initialValue: widget.itemViewModel.selectedDialCode.dialCode,
                 ),
+                onSelectionChanged: (selectedCountry) {
+                  final dial = widget.itemViewModel.dialCodes.firstWhere(
+                        (d) => d.code == selectedCountry || d.code == selectedCountry,
+                    orElse: () => widget.itemViewModel.selectedDialCode,
+                  );
+
+                  setState(() {
+                    widget.itemViewModel.selectedDialCode = dial;
+                  });
+                },
               ),
             ),
-
             const SizedBox(width: 8),
 
             Expanded(

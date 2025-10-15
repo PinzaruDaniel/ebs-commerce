@@ -12,6 +12,7 @@ void main() async {
   await initDi();
   await RootBinding().dependencies();
   await EasyLocalization.ensureInitialized();
+
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ru'), Locale('ro')],

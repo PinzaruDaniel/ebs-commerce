@@ -20,8 +20,11 @@ class SelectionViewModel extends BaseViewModel {
 class SelectionWidget extends StatelessWidget {
   final SelectionViewModel itemViewModel;
   final Function(String)? onSelectionChanged;
+  final bool showTitle;
 
-  const SelectionWidget({super.key, required this.itemViewModel, this.onSelectionChanged});
+  const SelectionWidget({super.key, required this.itemViewModel, this.onSelectionChanged,
+    this.showTitle = true,
+  });
 
   bool _isPlaceholder(String value) {
     var placeholders = ['Select country', 'Select region', 'Select city'];
@@ -35,7 +38,10 @@ class SelectionWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(itemViewModel.title),
+          if (showTitle) ...[
+            Text(itemViewModel.title),
+            const SizedBox(height: 4),
+          ],
           SizedBox(height: 4),
           Obx(() {
             final isPlaceholder = _isPlaceholder(itemViewModel.selectedValue.value);

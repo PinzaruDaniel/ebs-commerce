@@ -18,4 +18,6 @@ class AppIcons {
   static Image noImage({double? height, double? width}) =>
       Image(image: AssetImage('assets/icons/noimage.png'), width: width, height: height, fit: BoxFit.cover);
   static const String adBanner = 'assets/banner/banner.png';
+
+
 }
