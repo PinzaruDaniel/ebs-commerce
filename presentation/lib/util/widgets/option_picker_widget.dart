@@ -20,6 +20,9 @@ class OptionPickerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Temporary RxString to hold the picker's current selection
+    final RxString tempSelectedValue = selectedValue.value.obs;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -37,11 +40,16 @@ class OptionPickerWidget extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(24), color: AppColors.primary),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: AppColors.primary,
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10),
                     child: InkWell(
                       onTap: () {
+                        // Update selectedValue only when "Done" is tapped
+                        selectedValue.value = tempSelectedValue.value;
                         Get.back();
                         if (onSelectionChanged != null) {
                           onSelectionChanged!(selectedValue.value);
@@ -55,7 +63,6 @@ class OptionPickerWidget extends StatelessWidget {
             ],
           ),
         ),
-
         SizedBox(
           height: Get.height * 0.25,
           child: CupertinoPicker(
@@ -67,9 +74,12 @@ class OptionPickerWidget extends StatelessWidget {
                 border: Border.symmetric(horizontal: BorderSide(color: Colors.grey.shade300)),
               ),
             ),
-            scrollController: FixedExtentScrollController(initialItem: options.indexOf(selectedValue.value)),
+            scrollController: FixedExtentScrollController(
+              initialItem: options.indexOf(selectedValue.value),
+            ),
             onSelectedItemChanged: (int index) {
-              selectedValue.value = options[index];
+              // Update temporary value during scrolling
+              tempSelectedValue.value = options[index];
             },
             children: options
                 .map((opt) => Center(child: Text(opt, style: AppTextsStyle.medium.copyWith(fontSize: 23))))

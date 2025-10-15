@@ -3,12 +3,15 @@ import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/dial_codes_view_model.dart';
 import 'package:presentation/view/flag_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+
 import '../../delivery_address_page/widgets/selection_widget.dart';
 
 class PhoneNumberViewModel extends BaseViewModel {
   final List<DialCodesViewModel> dialCodes;
   final List<FlagViewModel> flags;
   final TextFieldViewModel textFieldViewModel;
+  final SelectionViewModel selectionViewModel;
   DialCodesViewModel selectedDialCode;
   final String title;
 
@@ -16,6 +19,7 @@ class PhoneNumberViewModel extends BaseViewModel {
     required this.dialCodes,
     required this.flags,
     required this.textFieldViewModel,
+    required this.selectionViewModel,
     required this.selectedDialCode,
     required this.title,
   });
@@ -46,14 +50,12 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
               flex: 0,
               child: SelectionWidget(
                 showTitle: false,
-                itemViewModel: SelectionViewModel(
-                  title: '',
-                  options: widget.itemViewModel.dialCodes.map((e) => e.dialCode).toList(),
-                  initialValue: widget.itemViewModel.selectedDialCode.dialCode,
-                ),
+                itemViewModel: widget.itemViewModel.selectionViewModel,
                 onSelectionChanged: (selectedCountry) {
+                  final dialCodeMatch = RegExp(r'\((.*?)\)').firstMatch(selectedCountry);
+                  final dialCode = dialCodeMatch != null ? dialCodeMatch.group(1) : widget.itemViewModel.selectedDialCode.code;
                   final dial = widget.itemViewModel.dialCodes.firstWhere(
-                        (d) => d.code == selectedCountry || d.code == selectedCountry,
+                        (d) => d.code == dialCode,
                     orElse: () => widget.itemViewModel.selectedDialCode,
                   );
 
@@ -77,11 +79,5 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
     );
   }
 
-  String _getUnicodeFlag(String countryCode) {
-    final flag = widget.itemViewModel.flags.firstWhere(
-      (f) => f.iso2 == countryCode,
-      orElse: () => FlagViewModel(iso2: '', unicodeFlag: '🏳️'),
-    );
-    return flag.unicodeFlag;
-  }
+
 }

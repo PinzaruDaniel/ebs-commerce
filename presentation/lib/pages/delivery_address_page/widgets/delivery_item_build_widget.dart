@@ -38,7 +38,10 @@ class DeliveryItemBuildWidget extends StatelessWidget {
       keyValue = 'selection_${viewModel.keyId}_${viewModel.title}';
     } else if (item is TextFieldViewModel) {
       final viewModel = item as TextFieldViewModel;
-      child = TextFieldWidget(itemViewModel: viewModel);
+      child = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextFieldWidget(itemViewModel: viewModel),
+      );
       keyValue = 'text_field_${viewModel.keyId}';
     } else {
       child = const SizedBox.shrink();

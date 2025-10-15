@@ -87,19 +87,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
-                  inputFormatters: widget.itemViewModel.textInputType == TextInputType.phone
-                      ? [
-                    LibPhonenumberTextFormatter(
-                      phoneNumberType: PhoneNumberType.mobile,
-                      phoneNumberFormat: PhoneNumberFormat.international,
-                      country: CountryManager().countries.firstWhere(
-                            (c) => c.countryCode == 'US',
-                        orElse: () => const CountryWithPhoneCode.us(),
-                      ),
-                      inputContainsCountryCode: true,
-                      shouldKeepCursorAtEndOfInput: true,
-                    ),
-                  ]
+                  inputFormatters:
+                  widget.itemViewModel.textInputType == TextInputType.phone
+                      ? [FilteringTextInputFormatter.digitsOnly]
                       : [],
                   controller: controller,
                   focusNode: focusNode,
@@ -140,7 +130,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                     ),
                   ),
                   onChanged: (value) {
-                   /* if (widget.itemViewModel.textInputType ==
+                    if (widget.itemViewModel.textInputType ==
                         TextInputType.phone) {
                       if (value.startsWith('0')) {
                         value = value.replaceFirst(RegExp(r'^0+'), '');
@@ -154,7 +144,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                           TextPosition(offset: controller.text.length),
                         );
                       }
-                    }*/
+                    }
 
                     widget.itemViewModel.placeholder = value;
                     state.validate();

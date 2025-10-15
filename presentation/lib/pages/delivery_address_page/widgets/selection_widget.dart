@@ -13,8 +13,13 @@ class SelectionViewModel extends BaseViewModel {
   final List<String> options;
   final RxString selectedValue;
 
-  SelectionViewModel({this.keyId, required this.title, required this.options, String? initialValue})
-    : selectedValue = (initialValue ?? (options.isNotEmpty ? options.first : '')).obs;
+  SelectionViewModel({
+    this.keyId,
+    required this.title,
+    required this.options,
+    String? initialValue,
+  }) : selectedValue =
+           (initialValue ?? (options.isNotEmpty ? options.first : '')).obs;
 }
 
 class SelectionWidget extends StatelessWidget {
@@ -22,7 +27,10 @@ class SelectionWidget extends StatelessWidget {
   final Function(String)? onSelectionChanged;
   final bool showTitle;
 
-  const SelectionWidget({super.key, required this.itemViewModel, this.onSelectionChanged,
+  const SelectionWidget({
+    super.key,
+    required this.itemViewModel,
+    this.onSelectionChanged,
     this.showTitle = true,
   });
 
@@ -44,7 +52,9 @@ class SelectionWidget extends StatelessWidget {
           ],
           SizedBox(height: 4),
           Obx(() {
-            final isPlaceholder = _isPlaceholder(itemViewModel.selectedValue.value);
+            final isPlaceholder = _isPlaceholder(
+              itemViewModel.selectedValue.value,
+            );
 
             return InkWell(
               splashColor: Colors.transparent,
@@ -57,7 +67,9 @@ class SelectionWidget extends StatelessWidget {
                     onSelectionChanged: onSelectionChanged,
                   );
                 } else {
-                  showFailureSnackBar(fallbackMessage: AppTexts.selectPreviousField);
+                  showFailureSnackBar(
+                    fallbackMessage: AppTexts.selectPreviousField,
+                  );
                 }
               },
               child: Container(
@@ -71,9 +83,14 @@ class SelectionWidget extends StatelessWidget {
                   children: [
                     Text(
                       itemViewModel.selectedValue.value,
-                      style: TextStyle(color: isPlaceholder ? Colors.grey : Colors.black),
+                      style: TextStyle(
+                        color: isPlaceholder ? Colors.grey : Colors.black,
+                      ),
                     ),
-                    Transform.rotate(angle: 4.7, child: AppIcons.backIcon(color: Colors.grey)),
+                    Transform.rotate(
+                      angle: 4.7,
+                      child: AppIcons.backIcon(color: Colors.grey),
+                    ),
                   ],
                 ),
               ),

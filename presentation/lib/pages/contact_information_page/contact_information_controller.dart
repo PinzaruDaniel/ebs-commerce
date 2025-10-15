@@ -14,6 +14,7 @@ import 'package:presentation/view/user_view_model.dart';
 
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/text_field_widget.dart';
+import '../delivery_address_page/widgets/selection_widget.dart';
 
 class ContactInformationController extends GetxController {
   final GetDialCodesUseCase getDialCodesUseCase = GetIt.instance<GetDialCodesUseCase>();
@@ -55,6 +56,14 @@ class ContactInformationController extends GetxController {
             if (!phoneRegex.hasMatch(text)) return AppTexts.invalidNumberPhone;
             return null;
           },
+        ),
+        selectionViewModel: SelectionViewModel(
+          title: '',
+          options: dialCodes.map((e) {
+            final flag = getUnicodeFlag(e.code);
+            return '$flag ${e.name} (${e.code})';
+          }).toList(),
+          initialValue: selectedDialCode.code,
         ),
       ),
 
@@ -125,5 +134,11 @@ class ContactInformationController extends GetxController {
     );
 
   }
-
+  String getUnicodeFlag(String countryCode) {
+    final flag = flags.firstWhere(
+          (f) => f.iso2 == countryCode,
+      orElse: () => FlagViewModel(iso2: '', unicodeFlag: '🏳️'),
+    );
+    return flag.unicodeFlag;
+  }
 }

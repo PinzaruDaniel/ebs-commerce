@@ -80,6 +80,7 @@ class AppPopUp {
     required List<String> options,
     required RxString selectedValue,
     Function(String)? onSelectionChanged,
+
   }) async {
     return await showCustomBottomSheet(
       isDismissible: false,
