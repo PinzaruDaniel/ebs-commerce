@@ -1,9 +1,18 @@
 import 'package:get/get.dart';
+import 'package:presentation/controllers/internet_controller.dart';
+
 import '../main_app_controller.dart';
 
 class RootBinding extends Bindings {
   @override
   Future<void> dependencies() async {
-    await Get.putAsync<MainAppController>(() async => MainAppController(), permanent: true);
+    await Get.putAsync<MainAppController>(
+      () async => MainAppController(),
+      permanent: true,
+    );
+    await Get.putAsync<InternetController>(
+      () async => InternetController(),
+      permanent: true,
+    );
   }
 }
