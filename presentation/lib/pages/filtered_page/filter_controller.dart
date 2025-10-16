@@ -15,7 +15,6 @@ class FilterController extends GetxController {
 
   final RxList<ProductViewModel> filteredProducts = RxList([]);
   RxBool isLoading = true.obs;
-
   final RxDouble minPrice = 1.0.obs;
   final RxDouble maxPrice = 50000.0.obs;
   final Rx<SfRangeValues> priceRange = SfRangeValues(1.0, 50000.0).obs;
@@ -23,11 +22,22 @@ class FilterController extends GetxController {
 
   void initItems() {
     getFilteredProductsCount(page: 1);
-    debounce<SfRangeValues>(priceRange, (_) => getFilteredProductsCount(page: 1), time: Duration(seconds: 1));
-    debounce<Set<int>>(selectedCategoryId, (_) => getFilteredProductsCount(page: 1), time: Duration(milliseconds: 2));
+    debounce<SfRangeValues>(
+      priceRange,
+      (_) => getFilteredProductsCount(page: 1),
+      time: Duration(seconds: 1),
+    );
+    debounce<Set<int>>(
+      selectedCategoryId,
+      (_) => getFilteredProductsCount(page: 1),
+      time: Duration(milliseconds: 2),
+    );
   }
 
-  void setCategoryData({required Set<int> selectedIds, required List<CategoryViewModel> allCategories}) {
+  void setCategoryData({
+    required Set<int> selectedIds,
+    required List<CategoryViewModel> allCategories,
+  }) {
     selectedCategoryId.value = Set.from(selectedIds);
     categories.value = List.from(allCategories);
   }

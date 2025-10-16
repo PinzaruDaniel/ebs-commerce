@@ -121,7 +121,6 @@ class _FilterPageState extends State<FilterPage> {
       ),
 
       bottomNavigationBar: Obx(() {
-        print(filterController.getFilteredProductsParams());
         final isLoading = filterController.isLoading.value;
         final filteredCount = filterController.filteredCount.value;
         var hasProducts = filteredCount > 0;
@@ -129,7 +128,8 @@ class _FilterPageState extends State<FilterPage> {
           openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
             type: ProductListType.filteredProducts,
             title: AppTexts.filteredProducts,
-            getFilteredProductsParams: filterController.getFilteredProductsParams(),
+            selectedCategoryIds: filterController.selectedCategoryId.toList(),
+            priceRange: filterController.priceRange.value,
           ),
           closedBuilder: (context, openContainer) {
             return BottomNavigationBarWidget(

@@ -7,15 +7,21 @@ import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dar
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
+
 import '../../util/enum/enums.dart';
 import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../view/product_view_model.dart';
 
 class ProductsDisplayController extends GetxController {
-  final StreamProductsUseCase getProductsUseCase = GetIt.instance<StreamProductsUseCase>();
-  final GetNewProductsUseCase getNewProductsUseCase = GetIt.instance<GetNewProductsUseCase>();
-  final GetSaleProductsUseCase getSaleProductsUseCase = GetIt.instance<GetSaleProductsUseCase>();
-  final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();
+  final StreamProductsUseCase getProductsUseCase =
+      GetIt.instance<StreamProductsUseCase>();
+  final GetNewProductsUseCase getNewProductsUseCase =
+      GetIt.instance<GetNewProductsUseCase>();
+  final GetSaleProductsUseCase getSaleProductsUseCase =
+      GetIt.instance<GetSaleProductsUseCase>();
+  final GetFilteredProductsUseCase getFilteredProductsUseCase =
+      GetIt.instance<GetFilteredProductsUseCase>();
   RxBool isLoading = true.obs;
   List<ProductViewModel> products = RxList([]);
 
@@ -27,7 +33,8 @@ class ProductsDisplayController extends GetxController {
   Future<void> loadProducts({
     bool loadMore = false,
     required ProductListType productType,
-    GetFilteredProductsParams? getFilteredProductsParams,
+    List<int>? selectedCategoryIds,
+    SfRangeValues? priceRange,
   }) async {
     if (loadMore) {
       if (isLoadingMore.value) return;
@@ -47,7 +54,7 @@ class ProductsDisplayController extends GetxController {
           break;
 
         case ProductListType.filteredProducts:
-          await getFilteredProducts(loadMore, getFilteredProductsParams!);
+          await getFilteredProducts(loadMore, selectedCategoryIds, priceRange);
           break;
 
         default:
@@ -66,52 +73,60 @@ class ProductsDisplayController extends GetxController {
   }
 
   Future<void> getSaleProducts(bool loadMore) async {
-    await getSaleProductsUseCase.call(GetSaleProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
-      either.fold(
-        (failure) {
-          isLoading.value = false;
-          isLoadingMore.value = false;
-          showFailureSnackBar(failure: failure);
-        },
-        (list) {
-          final newItems = list.map((e) => e.toModel).toList();
-          if (loadMore) {
-            products.addAll(newItems);
-          } else {
-            products.assignAll(newItems);
-          }
-        },
-      );
-    });
+    await getSaleProductsUseCase
+        .call(GetSaleProductsParams(page: currentPage.value, perPage: perPage))
+        .then((either) {
+          either.fold(
+            (failure) {
+              isLoading.value = false;
+              isLoadingMore.value = false;
+              showFailureSnackBar(failure: failure);
+            },
+            (list) {
+              final newItems = list.map((e) => e.toModel).toList();
+              if (loadMore) {
+                products.addAll(newItems);
+              } else {
+                products.assignAll(newItems);
+              }
+            },
+          );
+        });
   }
 
   Future<void> getNewProducts(bool loadMore) async {
-    await getNewProductsUseCase.call(GetNewProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
-      either.fold(
-        (failure) {
-          isLoading.value = false;
-          isLoadingMore.value = false;
-          showFailureSnackBar(failure: failure);
-        },
-        (list) {
-          final newItems = list.map((e) => e.toModel).toList();
-          if (loadMore) {
-            products.addAll(newItems);
-          } else {
-            products.assignAll(newItems);
-          }
-        },
-      );
-    });
+    await getNewProductsUseCase
+        .call(GetNewProductsParams(page: currentPage.value, perPage: perPage))
+        .then((either) {
+          either.fold(
+            (failure) {
+              isLoading.value = false;
+              isLoadingMore.value = false;
+              showFailureSnackBar(failure: failure);
+            },
+            (list) {
+              final newItems = list.map((e) => e.toModel).toList();
+              if (loadMore) {
+                products.addAll(newItems);
+              } else {
+                products.assignAll(newItems);
+              }
+            },
+          );
+        });
   }
 
-  Future<void> getFilteredProducts(bool loadMore, GetFilteredProductsParams getFilteredProductsParams) async {
+  Future<void> getFilteredProducts(
+    bool loadMore,
+    List<int>? selectedCategoryIds,
+    SfRangeValues? priceRange,
+  ) async {
     final either = await getFilteredProductsUseCase.call(
       GetFilteredProductsParams(
         page: currentPage.value,
-        priceGte: getFilteredProductsParams.priceGte,
-        priceLte: getFilteredProductsParams.priceLte,
-        categoriesId: getFilteredProductsParams.categoriesId,
+        priceGte: priceRange?.start,
+        priceLte: priceRange?.end,
+        categoriesId: selectedCategoryIds,
       ),
     );
 
