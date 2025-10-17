@@ -23,8 +23,7 @@ class SelectionViewModel<T> extends BaseViewModel {
 class SelectionWidget<T> extends StatelessWidget {
   final SelectionViewModel<T> itemViewModel;
   final Function(T)? onSelectionChanged;
-
-  final String Function(T)? displayText;
+  final  Function(T)? displayText;
 
   const SelectionWidget({
     super.key,

@@ -66,10 +66,10 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
                               child: TextFieldWidget(itemViewModel: item),
                             );
                           } else if (item is PhoneNumberViewModel) {
-                            /*return Padding(
+                            return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: PhoneNumberWidget(itemViewModel: item),
-                            );*/
+                            );
                           } else {
                             return const SizedBox.shrink();
                           }

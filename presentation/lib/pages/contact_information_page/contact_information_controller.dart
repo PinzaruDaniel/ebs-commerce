@@ -1,5 +1,4 @@
 import 'package:domain/modules/delivery_address/use_cases/dial_codes/get_dial_codes_use_case.dart';
-import 'package:domain/modules/delivery_address/use_cases/flags/get_flags_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -17,13 +16,11 @@ import '../../view/country_flag_dial_code_view_model.dart';
 class ContactInformationController extends GetxController {
   final GetDialCodesUseCase getDialCodesUseCase =
       GetIt.instance<GetDialCodesUseCase>();
-
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> user = Rxn<UserViewModel>();
   RxList<DialCodesViewModel> dialCodes = RxList([]);
   RxList<FlagViewModel> flags = RxList([]);
   Rxn<DialCodesViewModel> selectedDialCode = Rxn<DialCodesViewModel>();
-  RxBool isLoading = RxBool(false);
 
   Future<void> initAllItems() async {
     final existingUser = user.value;
@@ -42,13 +39,14 @@ class ContactInformationController extends GetxController {
         title: AppTexts.phone,
         initialValueTextField: existingUser?.number ?? '',
         selectedFlagDial:
-            nomenclatureController.countriesFlagsDialCode.isNotEmpty
-            ? nomenclatureController.countriesFlagsDialCode.first
+            nomenclatureController.countriesFlagsDialCode.value.isNotEmpty
+            ? nomenclatureController.countriesFlagsDialCode.value.first
             : CountryFlagDialCodeViewModel(
                 countryCode: 'US',
                 countryFlag: '🇺🇸',
                 countryName: 'United States',
                 countryDialCode: '1',
+              phoneMaskMobileInternational: '+0 000-000-0000',
               ),
       ),
 

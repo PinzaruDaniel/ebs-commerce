@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
+import 'package:get/get.dart';
 import 'package:presentation/view/base_view_model.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../../../controllers/nomenclature_controller.dart';
+import '../../../controllers/controller_imports.dart';
 import '../../../view/country_flag_dial_code_view_model.dart';
 import '../../delivery_address_page/widgets/selection_widget.dart';
 
 class PhoneNumberViewModel extends BaseViewModel {
   CountryFlagDialCodeViewModel selectedFlagDial;
-
   String? initialValueTextField;
   final String title;
 
   PhoneNumberViewModel({
     required this.selectedFlagDial,
-
     required this.title,
     required this.initialValueTextField,
   });
@@ -22,12 +22,10 @@ class PhoneNumberViewModel extends BaseViewModel {
 
 class PhoneNumberWidget extends StatefulWidget {
   final PhoneNumberViewModel itemViewModel;
-  final NomenclatureController nomenclatureController;
 
   const PhoneNumberWidget({
     super.key,
     required this.itemViewModel,
-    required this.nomenclatureController,
   });
 
   @override
@@ -43,24 +41,12 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
   @override
   void initState() {
     super.initState();
-
-    selectedFlagDial =
-        widget.nomenclatureController.countriesFlagsDialCode.isNotEmpty
-        ? widget.nomenclatureController.countriesFlagsDialCode.first
-        : CountryFlagDialCodeViewModel(
-            countryCode: 'US',
-            countryFlag: '🇺🇸',
-            countryDialCode: '1',
-            countryName: 'United States',
-          );
-
-    selectedCountryLibPhone = widget.nomenclatureController.countries
-        .firstWhere(
+    selectedFlagDial = widget.itemViewModel.selectedFlagDial;
+    selectedCountryLibPhone = nomenclatureController.countries.firstWhereOrNull(
           (c) =>
-              c.countryCode.toUpperCase() ==
-              selectedFlagDial.countryFlag.toUpperCase(),
-          orElse: () => const CountryWithPhoneCode.us(),
-        );
+      c.countryCode.toUpperCase() ==
+          selectedFlagDial.countryCode.toUpperCase(),
+    ) ?? const CountryWithPhoneCode.us();
 
     textController = TextEditingController(
       text: widget.itemViewModel.initialValueTextField,
@@ -78,9 +64,6 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final sortedFlags = widget.nomenclatureController.countriesFlagsDialCode
-      ..sort((a, b) => a.countryName.compareTo(b.countryName));
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -91,23 +74,22 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
             Expanded(
               child: SelectionWidget<CountryFlagDialCodeViewModel>(
                 itemViewModel: SelectionViewModel<CountryFlagDialCodeViewModel>(
-                  options: sortedFlags,
+                  options: nomenclatureController.countriesFlagsDialCode.value,
                   initialValue: selectedFlagDial,
                 ),
                 displayText: (item) =>
                     '${item.countryFlag} (+${item.countryDialCode})',
                 onSelectionChanged: (selectedItem) {
-                  final newCountry = widget.nomenclatureController.countries
-                      .firstWhere(
+                  final newCountry = nomenclatureController.countries
+                      .firstWhereOrNull(
                         (c) =>
                             c.countryCode.toUpperCase() ==
                             selectedItem.countryFlag.toUpperCase(),
-                        orElse: () => selectedCountryLibPhone,
                       );
                   setState(() {
                     selectedFlagDial = selectedItem;
                     widget.itemViewModel.selectedFlagDial = selectedItem;
-                    selectedCountryLibPhone = newCountry;
+                    selectedCountryLibPhone = newCountry??CountryWithPhoneCode.us();
                     textController.clear();
                     widget.itemViewModel.initialValueTextField = '';
                   });
@@ -116,6 +98,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
             ),
             const SizedBox(width: 4),
             Expanded(
+              flex: 2,
               child: TextField(
                 controller: textController,
                 keyboardType: TextInputType.phone,
@@ -128,8 +111,8 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                     inputContainsCountryCode: false,
                   ),
                 ],
-                decoration: const InputDecoration(
-                  hintText: 'Enter phone number',
+                decoration: InputDecoration(
+                  hintText: selectedCountryLibPhone.exampleNumberMobileNational,
                   border: OutlineInputBorder(),
                 ),
               ),

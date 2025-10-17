@@ -10,7 +10,7 @@ import '../resources/app_colors.dart';
 import '../resources/app_texts.dart';
 
 class AppPopUp {
-  static Future<void> showCustomBottomSheet({
+  static Future<void> showCustomBottomSheet<T>({
     required Widget child,
     bool isDismissible = true,
     bool enableDrag = true,
@@ -82,9 +82,9 @@ class AppPopUp {
     Function(T)? onSelectionChanged,
 
   }) async {
-    return await showCustomBottomSheet(
+    return await showCustomBottomSheet<T>(
       isDismissible: false,
-      child: OptionPickerWidget(
+      child: OptionPickerWidget<T>(
         title: title,
         options: options,
         selectedItem: selectedItem,

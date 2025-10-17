@@ -1,6 +1,5 @@
 import 'package:domain/modules/delivery_address/use_cases/flags/get_flags_use_case.dart';
-import 'package:flutter_libphonenumber/flutter_libphonenumber.dart'
-    as lib_phone_number;
+import 'package:flutter_libphonenumber/flutter_libphonenumber.dart' as lib_phone_number;
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/flags_mapper.dart';
@@ -12,9 +11,8 @@ import '../view/flag_view_model.dart';
 class NomenclatureController extends GetxController {
   final GetFlagsUseCase getFlagsUseCase = GetIt.instance<GetFlagsUseCase>();
   RxList<FlagViewModel> flags = RxList([]);
-  List<CountryFlagDialCodeViewModel> countriesFlagsDialCode = [];
+  RxList<CountryFlagDialCodeViewModel> countriesFlagsDialCode = RxList([]);
   final countries = lib_phone_number.CountryManager().countries;
-
   @override
   void onInit() async {
     super.onInit();
@@ -26,9 +24,10 @@ class NomenclatureController extends GetxController {
   Future<void> getFlags() async {
     await getFlagsUseCase.call().then((either) {
       either.fold(
-            (failure) {
+        (failure) {
+          showFailureSnackBar(failure: failure);
         },
-            (list) {
+        (list) {
           final newItems = list.map((e) => e.toModel).toList();
           flags.assignAll(newItems);
         },
@@ -37,21 +36,22 @@ class NomenclatureController extends GetxController {
   }
 
   void mapFlagsToCountries() {
-    countriesFlagsDialCode = [];
-
     for (var flag in flags) {
-      final country = countries.firstWhere(
+      final country =
+          lib_phone_number.CountryManager().countries.firstWhereOrNull(
             (c) => c.countryCode.toUpperCase() == flag.iso2.toUpperCase(),
-        orElse: () => lib_phone_number.CountryWithPhoneCode.us(),
-      );
+          ) ??
+          lib_phone_number.CountryWithPhoneCode.us();
       countriesFlagsDialCode.add(
         CountryFlagDialCodeViewModel(
           countryName: flag.name,
           countryCode: flag.iso2,
           countryFlag: flag.unicodeFlag,
           countryDialCode: country.phoneCode,
+          phoneMaskMobileInternational: country.phoneMaskMobileInternational,
         ),
       );
     }
+    countriesFlagsDialCode.sort((a, b) => a.countryName.compareTo(b.countryName));
   }
 }
