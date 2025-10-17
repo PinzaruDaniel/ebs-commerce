@@ -4,66 +4,52 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/pages/contact_information_page/widgets/phone_number_widget.dart';
-import 'package:presentation/util/mapper/dial_codes_mapper.dart';
-import 'package:presentation/util/mapper/flags_mapper.dart';
-import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/dial_codes_view_model.dart';
 import 'package:presentation/view/flag_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
 
+import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/widgets/text_field_widget.dart';
-import '../delivery_address_page/widgets/selection_widget.dart';
+import '../../view/country_flag_dial_code_view_model.dart';
 
 class ContactInformationController extends GetxController {
-  final GetDialCodesUseCase getDialCodesUseCase = GetIt.instance<GetDialCodesUseCase>();
-  final GetFlagsUseCase getFlagsUseCase = GetIt.instance<GetFlagsUseCase>();
+  final GetDialCodesUseCase getDialCodesUseCase =
+      GetIt.instance<GetDialCodesUseCase>();
 
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> user = Rxn<UserViewModel>();
   RxList<DialCodesViewModel> dialCodes = RxList([]);
   RxList<FlagViewModel> flags = RxList([]);
   Rxn<DialCodesViewModel> selectedDialCode = Rxn<DialCodesViewModel>();
-  RxBool isLoading=RxBool(true);
-
-
+  RxBool isLoading = RxBool(false);
 
   Future<void> initAllItems() async {
     final existingUser = user.value;
-    await getDialCodes();
-    await getFlags();
-    final selectedDialCode = dialCodes.firstWhere(
-          (d) => d.dialCode == existingUser?.dialCode,
-      orElse: () => dialCodes.first,
-    );
     allItems.value = [
-      TextFieldViewModel(keyId: 'name', title: AppTexts.name, initialValue: existingUser?.name ?? ''),
-      TextFieldViewModel(keyId: 'surname', title: AppTexts.surname, initialValue: existingUser?.surname ?? ''),
+      TextFieldViewModel(
+        keyId: 'name',
+        title: AppTexts.name,
+        initialValue: existingUser?.name ?? '',
+      ),
+      TextFieldViewModel(
+        keyId: 'surname',
+        title: AppTexts.surname,
+        initialValue: existingUser?.surname ?? '',
+      ),
       PhoneNumberViewModel(
         title: AppTexts.phone,
-        dialCodes: dialCodes,
-        flags: flags,
-        selectedDialCode:selectedDialCode,
-        textFieldViewModel: TextFieldViewModel(
-          keyId: 'phone',
-          title: '',
-          textInputType: TextInputType.phone,
-          initialValue: existingUser?.number ?? '',
-          customValidator: (text) {
-            if (text == null || text.isEmpty) return AppTexts.numberIsRequired;
-            final phoneRegex = RegExp(r'^[1-9][0-9]{7,14}$');
-            if (!phoneRegex.hasMatch(text)) return AppTexts.invalidNumberPhone;
-            return null;
-          },
-        ),
-        selectionViewModel: SelectionViewModel(
-          options: dialCodes.map((e) {
-            final flag = getUnicodeFlag(e.code);
-            return '$flag ${e.name} (${e.dialCode})';
-          }).toList(),
-          initialValue: '${getUnicodeFlag(selectedDialCode.code)} ${selectedDialCode.name} (${selectedDialCode.dialCode})',
-        ),
+        initialValueTextField: existingUser?.number ?? '',
+        selectedFlagDial:
+            nomenclatureController.countriesFlagsDialCode.isNotEmpty
+            ? nomenclatureController.countriesFlagsDialCode.first
+            : CountryFlagDialCodeViewModel(
+                countryCode: 'US',
+                countryFlag: '🇺🇸',
+                countryName: 'United States',
+                countryDialCode: '1',
+              ),
       ),
 
       TextFieldViewModel(
@@ -81,7 +67,7 @@ class ContactInformationController extends GetxController {
     ];
   }
 
-  Future<void> getDialCodes() async {
+  /*  Future<void> getDialCodes() async {
     await getDialCodesUseCase.call().then((either) {
       either.fold(
         (failure) {
@@ -93,50 +79,38 @@ class ContactInformationController extends GetxController {
         },
       );
     });
-  }
-
-  Future<void> getFlags() async {
-    await getFlagsUseCase.call().then((either) {
-      either.fold(
-        (failure) {
-          isLoading.value=false;
-          showFailureSnackBar(failure: failure);
-        },
-        (list) {
-          final newItems = list.map((e) => e.toModel).toList();
-          flags.assignAll(newItems);
-          isLoading.value=false;
-        },
-      );
-    });
-  }
+  }*/
 
   UserViewModel? toUserViewModel() {
     String getPlaceholderByKeyId(String keyId) {
-      final item = allItems.firstWhere(
-            (element) => element is TextFieldViewModel && element.keyId == keyId,
-        orElse: () => TextFieldViewModel(title: '', initialValue: ''),
-      ) as TextFieldViewModel;
+      final item =
+          allItems.firstWhere(
+                (element) =>
+                    element is TextFieldViewModel && element.keyId == keyId,
+                orElse: () => TextFieldViewModel(title: '', initialValue: ''),
+              )
+              as TextFieldViewModel;
 
       return item.placeholder;
     }
 
-    final phoneItem = allItems.firstWhereOrNull(
-          (element) => element is PhoneNumberViewModel,
-    ) as PhoneNumberViewModel?;
+    final phoneItem =
+        allItems.firstWhereOrNull((element) => element is PhoneNumberViewModel)
+            as PhoneNumberViewModel?;
+    print('phone number ${phoneItem?.initialValueTextField}');
     return user.value = UserViewModel(
       name: getPlaceholderByKeyId('name'),
       surname: getPlaceholderByKeyId('surname'),
-      number: phoneItem?.textFieldViewModel.placeholder ?? '',
-      dialCode:  phoneItem?.selectedDialCode.dialCode ?? '',
+      number: phoneItem?.initialValueTextField ?? '',
+      dialCode: phoneItem?.selectedFlagDial.countryDialCode ?? '',
       email: getPlaceholderByKeyId('email'),
     );
-
   }
+
   String getUnicodeFlag(String countryCode) {
     final flag = flags.firstWhere(
-          (f) => f.iso2 == countryCode,
-      orElse: () => FlagViewModel(iso2: '', unicodeFlag: '🏳️'),
+      (f) => f.iso2 == countryCode,
+      orElse: () => FlagViewModel(iso2: '', unicodeFlag: '🏳️', name: 'null'),
     );
     return flag.unicodeFlag;
   }

@@ -183,7 +183,7 @@ class DeliveryAddressController extends GetxController {
         title: AppTexts.office,
         options: pickupLocations,
         initialValue:
-            previousPickup ?? getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? pickupLocations.first,
+            previousPickup ?? getViewModel<SelectionViewModel>('sediu')?.selectedItem.value ?? pickupLocations.first,
       ),
     );
   }
@@ -222,14 +222,14 @@ class DeliveryAddressController extends GetxController {
   DeliveryAddressViewModel toDeliveryAddressViewModel() {
     final type = DeliveryTypeMapper.fromLabel(deliveryTypeVM.value.options.firstWhere((e) => e.isSelected).titleKey);
     if (type == DeliveryType.pickup) {
-      final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedValue.value ?? pickupLocations.first;
+      final pickupLocation = getViewModel<SelectionViewModel>('sediu')?.selectedItem.value ?? pickupLocations.first;
       final model = DeliveryAddressViewModel(deliveryType: type.label, pickupLocation: pickupLocation);
       addressVM.value = model;
       return model;
     } else {
-      final country = getViewModel<SelectionViewModel>('country')?.selectedValue.value ?? '';
-      final region = getViewModel<SelectionViewModel>('region')?.selectedValue.value ?? '';
-      final city = getViewModel<SelectionViewModel>('city')?.selectedValue.value ?? '';
+      final country = getViewModel<SelectionViewModel>('country')?.selectedItem.value ?? '';
+      final region = getViewModel<SelectionViewModel>('region')?.selectedItem.value ?? '';
+      final city = getViewModel<SelectionViewModel>('city')?.selectedItem.value ?? '';
       final postalCode = getViewModel<TextFieldViewModel>('postal_code')?.placeholder ?? '';
       final address = getViewModel<TextFieldViewModel>('address')?.placeholder ?? '';
       final comments = getViewModel<TextFieldViewModel>('other_comments')?.placeholder ?? '';

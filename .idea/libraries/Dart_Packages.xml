@@ -58,7 +58,7 @@
         <entry key="build">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build-3.0.2/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build-3.0.0/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build-3.1.0/lib" />
             </list>
           </value>
@@ -66,6 +66,7 @@
         <entry key="build_config">
           <value>
             <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_config-1.1.2/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_config-1.2.0/lib" />
             </list>
           </value>
@@ -80,7 +81,7 @@
         <entry key="build_resolvers">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_resolvers-3.0.2/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_resolvers-3.0.0/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_resolvers-3.0.3/lib" />
             </list>
           </value>
@@ -88,7 +89,7 @@
         <entry key="build_runner">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner-2.7.0/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner-2.6.0/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner-2.7.1/lib" />
             </list>
           </value>
@@ -96,7 +97,7 @@
         <entry key="build_runner_core">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner_core-9.3.0/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner_core-9.2.0/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner_core-9.3.1/lib" />
             </list>
           </value>
@@ -350,8 +351,8 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_hooks-0.21.2/lib" />
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_hooks-0.21.3/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_hooks-0.21.3+1/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_hooks-0.21.3/lib" />
             </list>
           </value>
         </entry>
@@ -800,7 +801,6 @@
         <entry key="protobuf">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/protobuf-4.2.0/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/protobuf-4.1.1/lib" />
             </list>
           </value>
@@ -1085,8 +1085,8 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/syncfusion_flutter_core-30.2.4/lib" />
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/syncfusion_flutter_core-30.2.5/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/syncfusion_flutter_core-30.2.7/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/syncfusion_flutter_core-30.2.5/lib" />
             </list>
           </value>
         </entry>
@@ -1094,8 +1094,8 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/syncfusion_flutter_sliders-30.2.4/lib" />
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/syncfusion_flutter_sliders-30.2.5/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/syncfusion_flutter_sliders-30.2.7/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/syncfusion_flutter_sliders-30.2.5/lib" />
             </list>
           </value>
         </entry>
@@ -1176,8 +1176,8 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.17/lib" />
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.18/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.19/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.18/lib" />
             </list>
           </value>
         </entry>
@@ -1269,15 +1269,16 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/async-2.13.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/awesome_dialog-3.2.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/boolean_selector-2.1.2/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build-3.0.2/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build-3.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build-3.1.0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_config-1.1.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_config-1.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_daemon-4.0.4/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_resolvers-3.0.2/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_resolvers-3.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_resolvers-3.0.3/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner-2.7.0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner-2.6.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner-2.7.1/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner_core-9.3.0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner_core-9.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/build_runner_core-9.3.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/built_collection-5.1.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/built_value-8.11.1/lib" />
@@ -1384,7 +1385,6 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pool-1.5.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pool-1.5.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/protobuf-4.1.1/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/protobuf-4.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pub_semver-2.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pubspec_parse-1.5.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pull_down_button-0.10.2/lib" />

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:flutter/services.dart';
 
 class TextFieldViewModel extends BaseViewModel {
-  final String title;
+  final String? title;
   final String? keyId;
   final TextInputType? textInputType;
   final bool isRequiredValidation;
@@ -16,7 +15,7 @@ class TextFieldViewModel extends BaseViewModel {
 
   TextFieldViewModel({
     this.keyId,
-    required this.title,
+     this.title,
     this.textInputType,
     this.customValidator,
     this.isRequiredValidation = true,
@@ -29,11 +28,7 @@ class TextFieldWidget extends StatefulWidget {
   const TextFieldWidget({
     super.key,
     required this.itemViewModel,
-    this.showTitle = true,
   });
-
-  final bool showTitle;
-
   final TextFieldViewModel itemViewModel;
 
   @override
@@ -66,12 +61,11 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.showTitle) ...[
-          Text(widget.itemViewModel.title),
+        if (widget.itemViewModel.title!=null) ...[
+          Text(widget.itemViewModel.title!),
           const SizedBox(height: 4),
         ],
         FormField(
-
           validator: (text) {
             if (widget.itemViewModel.isRequiredValidation &&
                 (controller.text.isEmpty)) {
@@ -145,7 +139,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                         );
                       }
                     }
-
                     widget.itemViewModel.placeholder = value;
                     state.validate();
                   },

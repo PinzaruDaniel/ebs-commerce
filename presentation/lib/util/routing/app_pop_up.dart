@@ -75,11 +75,11 @@ class AppPopUp {
     );
   }
 
-  static Future<void> showSelection({
+  static Future<void> showSelection<T>({
     required String title,
-    required List<String> options,
-    required RxString selectedValue,
-    Function(String)? onSelectionChanged,
+    required List<T> options,
+    required T selectedItem,
+    Function(T)? onSelectionChanged,
 
   }) async {
     return await showCustomBottomSheet(
@@ -87,7 +87,7 @@ class AppPopUp {
       child: OptionPickerWidget(
         title: title,
         options: options,
-        selectedValue: selectedValue,
+        selectedItem: selectedItem,
         onSelectionChanged: onSelectionChanged,
       ),
     );

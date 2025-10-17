@@ -30,10 +30,11 @@ class InternetController extends GetxController{
   Future<void> _updateConnectionStatus(List<ConnectivityResult> result) async {
     connectionStatus.assignAll(result);
     if (result.contains(ConnectivityResult.none)) {
-      showFailureSnackBar(
+      /*showFailureSnackBar(
         fallbackMessage: 'No internet connection',
         snackPosition: SnackPosition.TOP,
-      );
+      );*/
+      //TODO:del decomentat
     }
   }
 

@@ -4,23 +4,23 @@ import 'package:get/get.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_text_styles.dart';
 
-class OptionPickerWidget extends StatelessWidget {
+class OptionPickerWidget<T> extends StatelessWidget {
   final String title;
-  final List<String> options;
-  final RxString selectedValue;
-  final Function(String)? onSelectionChanged;
+  final List<T> options;
+  final T selectedItem;
+  final Function(T)? onSelectionChanged;
 
   const OptionPickerWidget({
     super.key,
     required this.title,
     required this.options,
-    required this.selectedValue,
-    required this.onSelectionChanged,
+    required this.selectedItem,
+    this.onSelectionChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    final RxString tempSelectedValue = selectedValue.value.obs;
+    final Rx<T> tempSelectedValue = selectedItem.obs;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -47,13 +47,15 @@ class OptionPickerWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10),
                     child: InkWell(
                       onTap: () {
-                        selectedValue.value = tempSelectedValue.value;
                         if (onSelectionChanged != null) {
-                          onSelectionChanged!(selectedValue.value);
+                          onSelectionChanged!(tempSelectedValue.value);
                         }
                         Navigator.pop(context);
                       },
-                      child: Text('Done', style: AppTextsStyle.medium.copyWith(color: Colors.white)),
+                      child: Text(
+                        'Done',
+                        style: AppTextsStyle.medium.copyWith(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
@@ -73,14 +75,20 @@ class OptionPickerWidget extends StatelessWidget {
               ),
             ),
             scrollController: FixedExtentScrollController(
-              initialItem: options.indexOf(selectedValue.value),
+              initialItem: options.indexOf(selectedItem),
             ),
             onSelectedItemChanged: (int index) {
               tempSelectedValue.value = options[index];
-
             },
             children: options
-                .map((opt) => Center(child: Text(opt, style: AppTextsStyle.medium.copyWith(fontSize: 23))))
+                .map(
+                  (opt) => Center(
+                child: Text(
+                  opt.toString(),
+                  style: AppTextsStyle.medium.copyWith(fontSize: 23),
+                ),
+              ),
+            )
                 .toList(),
           ),
         ),

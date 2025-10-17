@@ -33,8 +33,14 @@ class DeliveryItemBuildWidget extends StatelessWidget {
       child = DeliveryTypeWidget(itemViewModel: viewModel, onCallBack: onCallBack);
       keyValue = 'delivery_type';
     } else if (item is SelectionViewModel) {
-      final viewModel = item as SelectionViewModel;
-      child = SelectionWidget(itemViewModel: viewModel, onSelectionChanged: onSelectionChanged);
+      final viewModel = item as SelectionViewModel<String>;
+      child = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SelectionWidget<String>(
+          itemViewModel: viewModel,
+          onSelectionChanged: onSelectionChanged,
+        ),
+      );
       keyValue = 'selection_${viewModel.keyId}_${viewModel.title}';
     } else if (item is TextFieldViewModel) {
       final viewModel = item as TextFieldViewModel;

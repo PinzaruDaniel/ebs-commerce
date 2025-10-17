@@ -1066,7 +1066,7 @@ as String,
 /// @nodoc
 mixin _$FlagEntity {
 
- String get iso2; String get unicodeFlag;
+ String get name; String get iso2; String get unicodeFlag;
 /// Create a copy of FlagEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1077,16 +1077,16 @@ $FlagEntityCopyWith<FlagEntity> get copyWith => _$FlagEntityCopyWithImpl<FlagEnt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FlagEntity&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FlagEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,iso2,unicodeFlag);
+int get hashCode => Object.hash(runtimeType,name,iso2,unicodeFlag);
 
 @override
 String toString() {
-  return 'FlagEntity(iso2: $iso2, unicodeFlag: $unicodeFlag)';
+  return 'FlagEntity(name: $name, iso2: $iso2, unicodeFlag: $unicodeFlag)';
 }
 
 
@@ -1097,7 +1097,7 @@ abstract mixin class $FlagEntityCopyWith<$Res>  {
   factory $FlagEntityCopyWith(FlagEntity value, $Res Function(FlagEntity) _then) = _$FlagEntityCopyWithImpl;
 @useResult
 $Res call({
- String iso2, String unicodeFlag
+ String name, String iso2, String unicodeFlag
 });
 
 
@@ -1114,9 +1114,10 @@ class _$FlagEntityCopyWithImpl<$Res>
 
 /// Create a copy of FlagEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? iso2 = null,Object? unicodeFlag = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? iso2 = null,Object? unicodeFlag = null,}) {
   return _then(_self.copyWith(
-iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
 as String,unicodeFlag: null == unicodeFlag ? _self.unicodeFlag : unicodeFlag // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -1203,10 +1204,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String iso2,  String unicodeFlag)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String iso2,  String unicodeFlag)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FlagEntity() when $default != null:
-return $default(_that.iso2,_that.unicodeFlag);case _:
+return $default(_that.name,_that.iso2,_that.unicodeFlag);case _:
   return orElse();
 
 }
@@ -1224,10 +1225,10 @@ return $default(_that.iso2,_that.unicodeFlag);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String iso2,  String unicodeFlag)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String iso2,  String unicodeFlag)  $default,) {final _that = this;
 switch (_that) {
 case _FlagEntity():
-return $default(_that.iso2,_that.unicodeFlag);case _:
+return $default(_that.name,_that.iso2,_that.unicodeFlag);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1244,10 +1245,10 @@ return $default(_that.iso2,_that.unicodeFlag);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String iso2,  String unicodeFlag)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String iso2,  String unicodeFlag)?  $default,) {final _that = this;
 switch (_that) {
 case _FlagEntity() when $default != null:
-return $default(_that.iso2,_that.unicodeFlag);case _:
+return $default(_that.name,_that.iso2,_that.unicodeFlag);case _:
   return null;
 
 }
@@ -1259,9 +1260,10 @@ return $default(_that.iso2,_that.unicodeFlag);case _:
 
 
 class _FlagEntity implements FlagEntity {
-  const _FlagEntity({required this.iso2, required this.unicodeFlag});
+  const _FlagEntity({required this.name, required this.iso2, required this.unicodeFlag});
   
 
+@override final  String name;
 @override final  String iso2;
 @override final  String unicodeFlag;
 
@@ -1275,16 +1277,16 @@ _$FlagEntityCopyWith<_FlagEntity> get copyWith => __$FlagEntityCopyWithImpl<_Fla
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FlagEntity&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FlagEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,iso2,unicodeFlag);
+int get hashCode => Object.hash(runtimeType,name,iso2,unicodeFlag);
 
 @override
 String toString() {
-  return 'FlagEntity(iso2: $iso2, unicodeFlag: $unicodeFlag)';
+  return 'FlagEntity(name: $name, iso2: $iso2, unicodeFlag: $unicodeFlag)';
 }
 
 
@@ -1295,7 +1297,7 @@ abstract mixin class _$FlagEntityCopyWith<$Res> implements $FlagEntityCopyWith<$
   factory _$FlagEntityCopyWith(_FlagEntity value, $Res Function(_FlagEntity) _then) = __$FlagEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String iso2, String unicodeFlag
+ String name, String iso2, String unicodeFlag
 });
 
 
@@ -1312,9 +1314,10 @@ class __$FlagEntityCopyWithImpl<$Res>
 
 /// Create a copy of FlagEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? iso2 = null,Object? unicodeFlag = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? iso2 = null,Object? unicodeFlag = null,}) {
   return _then(_FlagEntity(
-iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
 as String,unicodeFlag: null == unicodeFlag ? _self.unicodeFlag : unicodeFlag // ignore: cast_nullable_to_non_nullable
 as String,
   ));

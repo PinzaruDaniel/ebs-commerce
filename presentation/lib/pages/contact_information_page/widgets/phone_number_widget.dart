@@ -1,111 +1,137 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/util/widgets/text_field_widget.dart';
+import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 import 'package:presentation/view/base_view_model.dart';
-import 'package:presentation/view/dial_codes_view_model.dart';
-import 'package:presentation/view/flag_view_model.dart';
 
+import '../../../controllers/nomenclature_controller.dart';
+import '../../../view/country_flag_dial_code_view_model.dart';
 import '../../delivery_address_page/widgets/selection_widget.dart';
 
 class PhoneNumberViewModel extends BaseViewModel {
-  final List<DialCodesViewModel> dialCodes;
-  final List<FlagViewModel> flags;
-  final TextFieldViewModel textFieldViewModel;
-  final SelectionViewModel selectionViewModel;
-  DialCodesViewModel selectedDialCode;
+  CountryFlagDialCodeViewModel selectedFlagDial;
+
+  String? initialValueTextField;
   final String title;
 
   PhoneNumberViewModel({
-    required this.dialCodes,
-    required this.flags,
-    required this.textFieldViewModel,
-    required this.selectionViewModel,
-    required this.selectedDialCode,
+    required this.selectedFlagDial,
+
     required this.title,
+    required this.initialValueTextField,
   });
 }
 
 class PhoneNumberWidget extends StatefulWidget {
   final PhoneNumberViewModel itemViewModel;
+  final NomenclatureController nomenclatureController;
 
-  const PhoneNumberWidget({super.key, required this.itemViewModel});
+  const PhoneNumberWidget({
+    super.key,
+    required this.itemViewModel,
+    required this.nomenclatureController,
+  });
 
   @override
   State<PhoneNumberWidget> createState() => _PhoneNumberWidgetState();
 }
 
 class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
+  late CountryFlagDialCodeViewModel selectedFlagDial;
+  late CountryWithPhoneCode selectedCountryLibPhone;
+  late TextEditingController textController;
+  bool keepCursorAtEnd = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    selectedFlagDial =
+        widget.nomenclatureController.countriesFlagsDialCode.isNotEmpty
+        ? widget.nomenclatureController.countriesFlagsDialCode.first
+        : CountryFlagDialCodeViewModel(
+            countryCode: 'US',
+            countryFlag: '🇺🇸',
+            countryDialCode: '1',
+            countryName: 'United States',
+          );
+
+    selectedCountryLibPhone = widget.nomenclatureController.countries
+        .firstWhere(
+          (c) =>
+              c.countryCode.toUpperCase() ==
+              selectedFlagDial.countryFlag.toUpperCase(),
+          orElse: () => const CountryWithPhoneCode.us(),
+        );
+
+    textController = TextEditingController(
+      text: widget.itemViewModel.initialValueTextField,
+    );
+    textController.addListener(() {
+      widget.itemViewModel.initialValueTextField = textController.text;
+    });
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final sortedFlags = widget.nomenclatureController.countriesFlagsDialCode
+      ..sort((a, b) => a.countryName.compareTo(b.countryName));
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(widget.itemViewModel.title),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-/*
-            DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  items: widget.itemViewModel.dialCodes.map((code) {
-                    return DropdownMenuItem<DialCodesViewModel>(
-                      value: code,
-                      child: Row(
-                        children: [
-                          Text(
-                            '${_getUnicodeFlag(code.code)} ${code.code} ${code.dialCode}',
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                  value: widget.itemViewModel.selectedDialCode,
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        widget.itemViewModel.selectedDialCode = value;
-                      });
-                    }
-                  },
-                  dropdownStyleData: DropdownStyleData(
-                    maxHeight: 300,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey.shade300, width: 2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-*/
-            SelectionWidget(
-              itemViewModel: widget.itemViewModel.selectionViewModel,
-              onSelectionChanged: (selectedCountry) {
-                final dialCodeMatch = RegExp(r'\((.*?)\)').firstMatch(selectedCountry);
-                final dialCode = dialCodeMatch?.group(1) ?? widget.itemViewModel.selectedDialCode.code;
-                setState(() {
-                  widget.itemViewModel.selectedDialCode = widget.itemViewModel.dialCodes.firstWhere(
-                        (d) => d.code == dialCode,
-                    orElse: () => widget.itemViewModel.selectedDialCode,
-                  );
-                });
-              },
-            ),
-            const SizedBox(width: 8),
-
             Expanded(
-              child: TextFieldWidget(
-                itemViewModel: widget.itemViewModel.textFieldViewModel,
-                showTitle: false,
+              child: SelectionWidget<CountryFlagDialCodeViewModel>(
+                itemViewModel: SelectionViewModel<CountryFlagDialCodeViewModel>(
+                  options: sortedFlags,
+                  initialValue: selectedFlagDial,
+                ),
+                displayText: (item) =>
+                    '${item.countryFlag} (+${item.countryDialCode})',
+                onSelectionChanged: (selectedItem) {
+                  final newCountry = widget.nomenclatureController.countries
+                      .firstWhere(
+                        (c) =>
+                            c.countryCode.toUpperCase() ==
+                            selectedItem.countryFlag.toUpperCase(),
+                        orElse: () => selectedCountryLibPhone,
+                      );
+                  setState(() {
+                    selectedFlagDial = selectedItem;
+                    widget.itemViewModel.selectedFlagDial = selectedItem;
+                    selectedCountryLibPhone = newCountry;
+                    textController.clear();
+                    widget.itemViewModel.initialValueTextField = '';
+                  });
+                },
+              ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: TextField(
+                controller: textController,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  LibPhonenumberTextFormatter(
+                    phoneNumberType: PhoneNumberType.mobile,
+                    phoneNumberFormat: PhoneNumberFormat.national,
+                    country: selectedCountryLibPhone,
+                    shouldKeepCursorAtEndOfInput: keepCursorAtEnd,
+                    inputContainsCountryCode: false,
+                  ),
+                ],
+                decoration: const InputDecoration(
+                  hintText: 'Enter phone number',
+                  border: OutlineInputBorder(),
+                ),
               ),
             ),
           ],
@@ -113,13 +139,4 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
       ],
     );
   }
-
-  String _getUnicodeFlag(String countryCode) {
-    final flag = widget.itemViewModel.flags.firstWhere(
-          (f) => f.iso2 == countryCode,
-      orElse: () => FlagViewModel(iso2: '', unicodeFlag: '🏳️'),
-    );
-    return flag.unicodeFlag;
-  }
-
 }

@@ -7,6 +7,7 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'controllers/bindings/root_bindings_controllers.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initDi();

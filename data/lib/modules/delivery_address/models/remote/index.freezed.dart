@@ -2463,7 +2463,7 @@ as List<FlagApiDto>,
 /// @nodoc
 mixin _$FlagApiDto {
 
- String get iso2; String get unicodeFlag;
+ String get name; String get iso2; String get unicodeFlag;
 /// Create a copy of FlagApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2476,16 +2476,16 @@ $FlagApiDtoCopyWith<FlagApiDto> get copyWith => _$FlagApiDtoCopyWithImpl<FlagApi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FlagApiDto&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FlagApiDto&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,iso2,unicodeFlag);
+int get hashCode => Object.hash(runtimeType,name,iso2,unicodeFlag);
 
 @override
 String toString() {
-  return 'FlagApiDto(iso2: $iso2, unicodeFlag: $unicodeFlag)';
+  return 'FlagApiDto(name: $name, iso2: $iso2, unicodeFlag: $unicodeFlag)';
 }
 
 
@@ -2496,7 +2496,7 @@ abstract mixin class $FlagApiDtoCopyWith<$Res>  {
   factory $FlagApiDtoCopyWith(FlagApiDto value, $Res Function(FlagApiDto) _then) = _$FlagApiDtoCopyWithImpl;
 @useResult
 $Res call({
- String iso2, String unicodeFlag
+ String name, String iso2, String unicodeFlag
 });
 
 
@@ -2513,9 +2513,10 @@ class _$FlagApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of FlagApiDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? iso2 = null,Object? unicodeFlag = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? iso2 = null,Object? unicodeFlag = null,}) {
   return _then(_self.copyWith(
-iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
 as String,unicodeFlag: null == unicodeFlag ? _self.unicodeFlag : unicodeFlag // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -2602,10 +2603,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String iso2,  String unicodeFlag)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String iso2,  String unicodeFlag)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FlagApiDto() when $default != null:
-return $default(_that.iso2,_that.unicodeFlag);case _:
+return $default(_that.name,_that.iso2,_that.unicodeFlag);case _:
   return orElse();
 
 }
@@ -2623,10 +2624,10 @@ return $default(_that.iso2,_that.unicodeFlag);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String iso2,  String unicodeFlag)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String iso2,  String unicodeFlag)  $default,) {final _that = this;
 switch (_that) {
 case _FlagApiDto():
-return $default(_that.iso2,_that.unicodeFlag);case _:
+return $default(_that.name,_that.iso2,_that.unicodeFlag);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -2643,10 +2644,10 @@ return $default(_that.iso2,_that.unicodeFlag);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String iso2,  String unicodeFlag)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String iso2,  String unicodeFlag)?  $default,) {final _that = this;
 switch (_that) {
 case _FlagApiDto() when $default != null:
-return $default(_that.iso2,_that.unicodeFlag);case _:
+return $default(_that.name,_that.iso2,_that.unicodeFlag);case _:
   return null;
 
 }
@@ -2658,9 +2659,10 @@ return $default(_that.iso2,_that.unicodeFlag);case _:
 @JsonSerializable()
 
 class _FlagApiDto implements FlagApiDto {
-  const _FlagApiDto({required this.iso2, required this.unicodeFlag});
+  const _FlagApiDto({required this.name, required this.iso2, required this.unicodeFlag});
   factory _FlagApiDto.fromJson(Map<String, dynamic> json) => _$FlagApiDtoFromJson(json);
 
+@override final  String name;
 @override final  String iso2;
 @override final  String unicodeFlag;
 
@@ -2677,16 +2679,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FlagApiDto&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FlagApiDto&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,iso2,unicodeFlag);
+int get hashCode => Object.hash(runtimeType,name,iso2,unicodeFlag);
 
 @override
 String toString() {
-  return 'FlagApiDto(iso2: $iso2, unicodeFlag: $unicodeFlag)';
+  return 'FlagApiDto(name: $name, iso2: $iso2, unicodeFlag: $unicodeFlag)';
 }
 
 
@@ -2697,7 +2699,7 @@ abstract mixin class _$FlagApiDtoCopyWith<$Res> implements $FlagApiDtoCopyWith<$
   factory _$FlagApiDtoCopyWith(_FlagApiDto value, $Res Function(_FlagApiDto) _then) = __$FlagApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String iso2, String unicodeFlag
+ String name, String iso2, String unicodeFlag
 });
 
 
@@ -2714,9 +2716,10 @@ class __$FlagApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of FlagApiDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? iso2 = null,Object? unicodeFlag = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? iso2 = null,Object? unicodeFlag = null,}) {
   return _then(_FlagApiDto(
-iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
 as String,unicodeFlag: null == unicodeFlag ? _self.unicodeFlag : unicodeFlag // ignore: cast_nullable_to_non_nullable
 as String,
   ));

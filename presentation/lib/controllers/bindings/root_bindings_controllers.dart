@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:presentation/controllers/internet_controller.dart';
+import 'package:presentation/controllers/nomenclature_controller.dart';
 
 import '../main_app_controller.dart';
 
@@ -12,6 +13,10 @@ class RootBinding extends Bindings {
     );
     await Get.putAsync<InternetController>(
       () async => InternetController(),
+      permanent: true,
+    );
+    await Get.putAsync<NomenclatureController>(
+      () async => NomenclatureController(),
       permanent: true,
     );
   }

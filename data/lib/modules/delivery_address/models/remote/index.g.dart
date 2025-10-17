@@ -122,12 +122,14 @@ Map<String, dynamic> _$FlagResponseApiDtoToJson(_FlagResponseApiDto instance) =>
     <String, dynamic>{'data': instance.data};
 
 _FlagApiDto _$FlagApiDtoFromJson(Map<String, dynamic> json) => _FlagApiDto(
+  name: json['name'] as String,
   iso2: json['iso2'] as String,
   unicodeFlag: json['unicodeFlag'] as String,
 );
 
 Map<String, dynamic> _$FlagApiDtoToJson(_FlagApiDto instance) =>
     <String, dynamic>{
+      'name': instance.name,
       'iso2': instance.iso2,
       'unicodeFlag': instance.unicodeFlag,
     };
