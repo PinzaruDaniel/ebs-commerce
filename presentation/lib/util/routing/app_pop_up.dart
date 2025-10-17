@@ -4,6 +4,7 @@ import 'package:presentation/util/enum/enums.dart';
 import 'package:presentation/util/widgets/option_picker_widget.dart';
 import 'package:presentation/util/widgets/payment_method_selection_widget.dart';
 import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
+import '../../pages/delivery_address_page/widgets/selection_widget.dart';
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
 import '../resources/app_colors.dart';
@@ -74,10 +75,24 @@ class AppPopUp {
       ),
     );
   }
-
-  static Future<void> showSelection<T>({
+  static Future<void> showSelection({
     required String title,
-    required List<T> options,
+  required SelectionViewModel selectionViewModel,
+required Function() onSelect,
+
+  }) async {
+    return await showCustomBottomSheet(
+      isDismissible: false,
+      child: OptionPickerWidget(
+        title: title,
+        selectionViewModel: selectionViewModel,
+        onSelect: onSelect,
+      ),
+    );
+  }
+ /* static Future<void> showSelection({
+    required String title,
+    required List options,
     required T selectedItem,
     Function(T)? onSelectionChanged,
 
@@ -91,7 +106,7 @@ class AppPopUp {
         onSelectionChanged: onSelectionChanged,
       ),
     );
-  }
+  }*/
 
   static Future<bool> showConfirmationDialog({
     required BuildContext context,

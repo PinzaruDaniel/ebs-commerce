@@ -1,26 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../pages/delivery_address_page/widgets/selection_widget.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_text_styles.dart';
 
 class OptionPickerWidget<T> extends StatelessWidget {
   final String title;
-  final List<T> options;
-  final T selectedItem;
-  final Function(T)? onSelectionChanged;
+  final SelectionViewModel selectionViewModel;
+  final Function() onSelect;
 
   const OptionPickerWidget({
     super.key,
     required this.title,
-    required this.options,
-    required this.selectedItem,
-    this.onSelectionChanged,
+    required this.selectionViewModel,
+    required this.onSelect,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Rx<T> tempSelectedValue = selectedItem.obs;
+   // final Rx<T> tempSelectedValue = selectedItem.obs;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -47,9 +46,9 @@ class OptionPickerWidget<T> extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10),
                     child: InkWell(
                       onTap: () {
-                        if (onSelectionChanged != null) {
+                       /* if (onSelectionChanged != null) {
                           onSelectionChanged!(tempSelectedValue.value);
-                        }
+                        }*/
                         Navigator.pop(context);
                       },
                       child: Text(
@@ -75,16 +74,16 @@ class OptionPickerWidget<T> extends StatelessWidget {
               ),
             ),
             scrollController: FixedExtentScrollController(
-              initialItem: options.indexOf(selectedItem),
+              initialItem: 1
             ),
             onSelectedItemChanged: (int index) {
-              tempSelectedValue.value = options[index];
+              //tempSelectedValue.value = options[index];
             },
-            children: options
+            children: selectionViewModel.options
                 .map(
                   (opt) => Center(
                 child: Text(
-                  opt.toString(),
+                  opt.titleKey,
                   style: AppTextsStyle.medium.copyWith(fontSize: 23),
                 ),
               ),

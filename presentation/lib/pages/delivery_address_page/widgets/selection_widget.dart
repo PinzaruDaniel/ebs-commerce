@@ -2,59 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
+import 'package:presentation/view/country_flag_dial_code_view_model.dart';
 
 import '../../../util/resources/app_icons.dart';
 import '../../../util/routing/app_pop_up.dart';
 
+class OptionViewModel<T> extends BaseViewModel {
+  final T data;
+  final String titleKey;
+
+  OptionViewModel({required this.data, required this.titleKey});
+}
+
 class SelectionViewModel<T> extends BaseViewModel {
   final String? keyId;
   final String? title;
-  final List<T> options;
-  final T selectedItem;
+  final List<OptionViewModel> options;
+  final OptionViewModel selectedItem;
 
-  SelectionViewModel({
-    this.keyId,
-    this.title,
-    required this.options,
-    required T initialValue,
-  }) : selectedItem = initialValue;
+  SelectionViewModel({this.keyId, this.title, required this.options, required OptionViewModel initialValue})
+    : selectedItem = initialValue;
 }
 
 class SelectionWidget<T> extends StatelessWidget {
-  final SelectionViewModel<T> itemViewModel;
-  final Function(T)? onSelectionChanged;
-  final  Function(T)? displayText;
+  final SelectionViewModel itemViewModel;
+  final Function? onSelectionChanged;
+  final Function? displayText;
 
-  const SelectionWidget({
-    super.key,
-    required this.itemViewModel,
-    this.onSelectionChanged,
-    this.displayText,
-  });
+  const SelectionWidget({super.key, required this.itemViewModel, this.onSelectionChanged, this.displayText});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (itemViewModel.title != null) ...[
-          Text(itemViewModel.title!),
-          const SizedBox(height: 4),
-        ],
+        if (itemViewModel.title != null) ...[Text(itemViewModel.title!), const SizedBox(height: 4)],
         InkWell(
           splashColor: Colors.transparent,
           onTap: () {
             if (itemViewModel.options.length > 1) {
-              AppPopUp.showSelection<T>(
+              Iterable<CountryFlagDialCodeViewModel> countries = itemViewModel.options
+                  .whereType<CountryFlagDialCodeViewModel>();
+              print('options view model ${countries.map((e) => (e).countryCode)}');
+              AppPopUp.showSelection(
                 title: itemViewModel.title ?? '',
-                options: itemViewModel.options,
-                selectedItem: itemViewModel.selectedItem,
-                onSelectionChanged: onSelectionChanged,
+                selectionViewModel: itemViewModel,
+                onSelect: () {},
               );
             } else {
-              showFailureSnackBar(
-                fallbackMessage: AppTexts.selectPreviousField,
-              );
+              showFailureSnackBar(fallbackMessage: AppTexts.selectPreviousField);
             }
           },
           child: Container(
@@ -67,20 +63,15 @@ class SelectionWidget<T> extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  displayText?.call(itemViewModel.selectedItem) ??
-                      itemViewModel.selectedItem.toString(),
+                  displayText?.call(itemViewModel.selectedItem) ?? itemViewModel.selectedItem.toString(),
                   style: TextStyle(
-                    color: (displayText?.call(itemViewModel.selectedItem) ??
-                        itemViewModel.selectedItem.toString())
-                        .isEmpty
+                    color:
+                        (displayText?.call(itemViewModel.selectedItem) ?? itemViewModel.selectedItem.toString()).isEmpty
                         ? Colors.grey
                         : Colors.black,
                   ),
                 ),
-                Transform.rotate(
-                  angle: 4.7,
-                  child: AppIcons.backIcon(color: Colors.grey),
-                ),
+                Transform.rotate(angle: 4.7, child: AppIcons.backIcon(color: Colors.grey)),
               ],
             ),
           ),
