@@ -36,10 +36,7 @@ class DeliveryItemBuildWidget extends StatelessWidget {
       final viewModel = item as SelectionViewModel<String>;
       child = Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SelectionWidget<String>(
-          itemViewModel: viewModel,
-          onSelectionChanged: onSelectionChanged,
-        ),
+        child: SelectionWidget<String>(itemViewModel: viewModel, onSelectionChanged: onSelectionChanged),
       );
       keyValue = 'selection_${viewModel.keyId}_${viewModel.title}';
     } else if (item is TextFieldViewModel) {
@@ -60,12 +57,6 @@ class DeliveryItemBuildWidget extends StatelessWidget {
       return KeyedSubtree(key: ValueKey(keyValue), child: child);
     }
 
-    return AnimatedListItemWrapper(
-      animation: animation,
-      index: index,
-      isRemoval: isRemoval,
-      child: child,
-    );
+    return AnimatedListItemWrapper(animation: animation, index: index, isRemoval: isRemoval, child: child);
   }
-
 }

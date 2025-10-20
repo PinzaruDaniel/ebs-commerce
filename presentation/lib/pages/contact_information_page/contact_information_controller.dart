@@ -100,7 +100,7 @@ class ContactInformationController extends GetxController {
       name: getPlaceholderByKeyId('name'),
       surname: getPlaceholderByKeyId('surname'),
       number: phoneItem?.initialValueTextField ?? '',
-      dialCode: phoneItem?.selectedFlagDial.countryDialCode ?? '',
+      dialCode: '+${phoneItem?.selectedFlagDial.countryDialCode ?? ''}',
       email: getPlaceholderByKeyId('email'),
     );
   }

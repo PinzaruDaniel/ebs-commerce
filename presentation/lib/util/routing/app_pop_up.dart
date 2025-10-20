@@ -90,23 +90,6 @@ required Function() onSelect,
       ),
     );
   }
- /* static Future<void> showSelection({
-    required String title,
-    required List options,
-    required T selectedItem,
-    Function(T)? onSelectionChanged,
-
-  }) async {
-    return await showCustomBottomSheet<T>(
-      isDismissible: false,
-      child: OptionPickerWidget<T>(
-        title: title,
-        options: options,
-        selectedItem: selectedItem,
-        onSelectionChanged: onSelectionChanged,
-      ),
-    );
-  }*/
 
   static Future<bool> showConfirmationDialog({
     required BuildContext context,

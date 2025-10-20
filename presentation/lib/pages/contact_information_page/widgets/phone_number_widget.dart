@@ -3,8 +3,6 @@ import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 import 'package:get/get.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
 import '../../../controllers/controller_imports.dart';
 import '../../../view/country_flag_dial_code_view_model.dart';
 import '../../delivery_address_page/widgets/selection_widget.dart';
@@ -67,6 +65,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
             Expanded(
               child: SelectionWidget<CountryFlagDialCodeViewModel>(
                 itemViewModel: SelectionViewModel<CountryFlagDialCodeViewModel>(
+                  displayText: (option) => '${selectedFlagDial.countryFlag} +(${selectedFlagDial.countryDialCode})',
                   options: nomenclatureController.countriesFlagsDialCode.value.map((e) {
                     return OptionViewModel(
                       data: e,
@@ -75,16 +74,17 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                   }).toList(),
                   initialValue: OptionViewModel(
                     data: nomenclatureController.countriesFlagsDialCode.value.first,
-                    titleKey: '${nomenclatureController.countriesFlagsDialCode.value.first.countryFlag} ${nomenclatureController.countriesFlagsDialCode.value.first.countryName} (+${nomenclatureController.countriesFlagsDialCode.value.first.countryDialCode})',
+                    titleKey:
+                        '${nomenclatureController.countriesFlagsDialCode.value.first.countryFlag} ${nomenclatureController.countriesFlagsDialCode.value.first.countryName} (+${nomenclatureController.countriesFlagsDialCode.value.first.countryDialCode})',
                   ),
                 ),
-                displayText: (option) =>
-                '${option.data.countryFlag} +${option.data.countryDialCode}',
-                onSelectionChanged: (selectedOption) {
+                onSelectionChanged: (OptionViewModel selectedOption) {
                   final selectedItem = selectedOption.data;
+
                   final newCountry = nomenclatureController.countries.firstWhereOrNull(
-                        (c) => c.countryCode.toUpperCase() == selectedItem.countryCode.toUpperCase(),
+                    (c) => c.countryCode.toUpperCase() == selectedItem.countryCode.toUpperCase(),
                   );
+
                   setState(() {
                     selectedFlagDial = selectedItem;
                     widget.itemViewModel.selectedFlagDial = selectedItem;
@@ -93,29 +93,27 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                     widget.itemViewModel.initialValueTextField = '';
                   });
                 },
-              )
-
+              ),
             ),
             const SizedBox(width: 4),
             Expanded(
-              flex: 3,
-              child:
-              TextFieldWidget(
-                  itemViewModel: TextFieldViewModel(
-                      keyId: 'phone',
-                      textInputType: TextInputType.phone,
-                    textController: textController,
-                    inputFormatter: [
-                      LibPhonenumberTextFormatter(
-                        phoneNumberType: PhoneNumberType.mobile,
-                        phoneNumberFormat: PhoneNumberFormat.national,
-                        country: selectedCountryLibPhone,
-                        shouldKeepCursorAtEndOfInput: true,
-                        inputContainsCountryCode: false,
-                      ),
-                    ]
-
-                  ))
+              flex: 2,
+              child: TextFieldWidget(
+                itemViewModel: TextFieldViewModel(
+                  keyId: 'phone',
+                  textInputType: TextInputType.phone,
+                  textController: textController,
+                  inputFormatter: [
+                    LibPhonenumberTextFormatter(
+                      phoneNumberType: PhoneNumberType.mobile,
+                      phoneNumberFormat: PhoneNumberFormat.national,
+                      country: selectedCountryLibPhone,
+                      shouldKeepCursorAtEndOfInput: true,
+                      inputContainsCountryCode: false,
+                    ),
+                  ],
+                ),
+              ),
 
               /*TextField(
                 controller: textController,

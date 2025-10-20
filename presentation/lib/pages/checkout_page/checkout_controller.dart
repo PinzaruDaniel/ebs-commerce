@@ -12,6 +12,7 @@ import 'package:presentation/view/user_view_model.dart';
 import '../../util/enum/enums.dart';
 import '../../util/resources/app_texts.dart';
 import '../../view/cart_products_view_model.dart';
+import '../../view/pickup_location_view_model.dart';
 
 class CheckoutController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
@@ -110,7 +111,7 @@ class CheckoutController extends GetxController {
   Map<String, String>? buildDeliveryInfo(DeliveryAddressViewModel? model) {
     var isPickUpType = model?.deliveryType == DeliveryType.pickup.label;
     if (isPickUpType) {
-      return {'Pickup Location: ${model?.pickupLocation ?? pickupLocations.first}': ''};
+      return {'Pickup Location: ${model?.pickupLocation ?? pickupLocations.first.address}': ''};
     } else if (!isPickUpType && model?.deliveryType != null) {
       return {
         'Country: ${model?.country ?? ''}': '',

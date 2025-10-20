@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
@@ -18,21 +19,29 @@ class SelectionViewModel<T> extends BaseViewModel {
   final String? keyId;
   final String? title;
   final List<OptionViewModel> options;
-  final OptionViewModel selectedItem;
+  OptionViewModel selectedItem;
+  final Function? displayText;
 
-  SelectionViewModel({this.keyId, this.title, required this.options, required OptionViewModel initialValue})
-    : selectedItem = initialValue;
+  SelectionViewModel({
+    this.keyId,
+    this.title,
+    required this.options,
+    required OptionViewModel initialValue,
+    this.displayText,
+  }) : selectedItem = initialValue;
 }
 
 class SelectionWidget<T> extends StatelessWidget {
   final SelectionViewModel itemViewModel;
   final Function? onSelectionChanged;
-  final Function? displayText;
 
-  const SelectionWidget({super.key, required this.itemViewModel, this.onSelectionChanged, this.displayText});
+  const SelectionWidget({super.key, required this.itemViewModel, this.onSelectionChanged});
 
   @override
   Widget build(BuildContext context) {
+    final String displayText = itemViewModel.displayText?.call(itemViewModel.selectedItem)
+        ?? itemViewModel.selectedItem.titleKey
+        ?? itemViewModel.selectedItem.toString();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,14 +49,19 @@ class SelectionWidget<T> extends StatelessWidget {
         InkWell(
           splashColor: Colors.transparent,
           onTap: () {
+            print('display Text: $displayText');
+
             if (itemViewModel.options.length > 1) {
               Iterable<CountryFlagDialCodeViewModel> countries = itemViewModel.options
                   .whereType<CountryFlagDialCodeViewModel>();
-              print('options view model ${countries.map((e) => (e).countryCode)}');
               AppPopUp.showSelection(
                 title: itemViewModel.title ?? '',
                 selectionViewModel: itemViewModel,
-                onSelect: () {},
+                onSelect: (){
+                  if (onSelectionChanged != null) {
+                    onSelectionChanged!(itemViewModel.selectedItem);
+                  }
+                }
               );
             } else {
               showFailureSnackBar(fallbackMessage: AppTexts.selectPreviousField);
@@ -62,15 +76,8 @@ class SelectionWidget<T> extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  displayText?.call(itemViewModel.selectedItem) ?? itemViewModel.selectedItem.toString(),
-                  style: TextStyle(
-                    color:
-                        (displayText?.call(itemViewModel.selectedItem) ?? itemViewModel.selectedItem.toString()).isEmpty
-                        ? Colors.grey
-                        : Colors.black,
-                  ),
-                ),
+                Text(displayText, style: TextStyle(color: displayText.isEmpty ? Colors.grey : Colors.black)),
+
                 Transform.rotate(angle: 4.7, child: AppIcons.backIcon(color: Colors.grey)),
               ],
             ),
