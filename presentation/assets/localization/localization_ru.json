@@ -87,6 +87,12 @@
   "voucherCode": "Промокод",
   "total": "Итого",
   "deliveryType": "Способ доставки",
-  "selectPreviousField": "Выберите предыдущее поле"
-
+  "selectPreviousField": "Выберите предыдущее поле",
+  "requiredNumberDigits": "Введите правильный номер телефона с точно",
+  "requiredLettersBetween": "Введите правильное имя/фамилию от",
+  "letters": "букв",
+  "digits": "цифр",
+  "choose": "Выберите",
+  "nameMustContainOnlyLetters": "Имя должно содержать только буквы",
+"surnameMustContainOnlyLetters": "Фамилия должна содержать только буквы"
 }

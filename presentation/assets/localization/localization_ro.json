@@ -87,6 +87,12 @@
   "voucherCode": "Cod voucher",
   "total": "Total",
   "deliveryType": "Tipul livrării",
-  "selectPreviousField": "Selectați câmpul anterior"
-
+  "selectPreviousField": "Selectați câmpul anterior",
+  "requiredNumberDigits": "Introduceți un număr de telefon valid cu exact",
+  "requiredLettersBetween":"Introduceți un nume/prenume valid între",
+  "letters":"litere",
+  "digits": "cifre",
+  "choose":"Alegeți",
+  "nameMustContainOnlyLetters": "Numele trebuie să conțină doar litere",
+"surnameMustContainOnlyLetters": "Prenumele trebuie să conțină doar litere"
 }

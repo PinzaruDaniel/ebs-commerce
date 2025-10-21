@@ -39,8 +39,8 @@ class TextFieldWidget extends StatefulWidget {
 }
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
-  late final TextEditingController controller;
-  late final bool _isExternalController;
+  TextEditingController controller = TextEditingController();
+  bool _isExternalController = false;
   final focusNode = FocusNode();
 
   @override
@@ -67,19 +67,21 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final vm = widget.itemViewModel;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (vm.title != null) ...[Text(vm.title!), const SizedBox(height: 4)],
+        if (widget.itemViewModel.title != null) ...[
+          Text(widget.itemViewModel.title!),
+          const SizedBox(height: 4),
+        ],
         FormField(
           validator: (text) {
-            if (vm.isRequiredValidation && controller.text.isEmpty) {
+            if (widget.itemViewModel.isRequiredValidation &&
+                controller.text.isEmpty) {
               return AppTexts.requiredField;
             }
-            if (vm.customValidator != null) {
-              return vm.customValidator!(controller.text);
+            if (widget.itemViewModel.customValidator != null) {
+              return widget.itemViewModel.customValidator!(controller.text);
             }
             return null;
           },
@@ -89,15 +91,16 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               children: [
                 TextFormField(
                   inputFormatters:
-                      vm.inputFormatter ??
-                      (vm.textInputType == TextInputType.phone
+                      widget.itemViewModel.inputFormatter ??
+                      (widget.itemViewModel.textInputType == TextInputType.phone
                           ? [FilteringTextInputFormatter.digitsOnly]
                           : []),
                   controller: controller,
                   focusNode: focusNode,
-                  minLines: vm.minLines ?? 1,
-                  maxLines: vm.minLines != null ? null : 1,
-                  keyboardType: vm.textInputType ?? TextInputType.text,
+                  minLines: widget.itemViewModel.minLines ?? 1,
+                  maxLines: widget.itemViewModel.minLines != null ? null : 1,
+                  keyboardType:
+                      widget.itemViewModel.textInputType ?? TextInputType.text,
                   textInputAction: TextInputAction.done,
                   cursorColor: AppColors.primary,
                   decoration: InputDecoration(
@@ -131,7 +134,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                     ),
                   ),
                   onChanged: (value) {
-                    if (vm.textInputType == TextInputType.phone) {
+                    if (widget.itemViewModel.textInputType ==
+                        TextInputType.phone) {
                       if (value.startsWith('0')) {
                         value = value.replaceFirst(RegExp(r'^0+'), '');
                       }
@@ -145,7 +149,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                         );
                       }
                     }
-                    vm.placeholder = value;
+                    widget.itemViewModel.placeholder = value;
                     state.validate();
                   },
                   onTapOutside: (_) {

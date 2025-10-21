@@ -29,11 +29,33 @@ class ContactInformationController extends GetxController {
         keyId: 'name',
         title: AppTexts.name,
         initialValue: existingUser?.name ?? '',
+        customValidator: (text) {
+          if (text == null || text.isEmpty) return AppTexts.requiredField;
+          if (text.length < 3 || text.length > 15) {
+            return '${AppTexts.requiredLettersBetween} 3-15 ${AppTexts.letters} ';
+          }
+          final regex = RegExp(r'^[a-zA-Z]+$');
+          if (!regex.hasMatch(text)) {
+            return AppTexts.nameMustContainOnlyLetters;
+          }
+          return null;
+        },
       ),
       TextFieldViewModel(
         keyId: 'surname',
         title: AppTexts.surname,
         initialValue: existingUser?.surname ?? '',
+        customValidator: (text) {
+          if (text == null || text.isEmpty) return AppTexts.requiredField;
+          if (text.length < 3 || text.length > 15) {
+            return '${AppTexts.requiredLettersBetween} 3-15 ${AppTexts.letters} ';
+          }
+          final regex = RegExp(r'^[a-zA-Z]+$');
+          if (!regex.hasMatch(text)) {
+            return AppTexts.surnameMustContainOnlyLetters;
+          }
+          return null;
+        },
       ),
       PhoneNumberViewModel(
         title: AppTexts.phone,

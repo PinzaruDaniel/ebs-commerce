@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 import 'package:get/get.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
@@ -46,7 +47,6 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
   @override
   void initState() {
     super.initState();
-
     selectedFlagDial = widget.itemViewModel.selectedFlagDial;
 
     selectedCountryLibPhone =
@@ -138,6 +138,26 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                       inputContainsCountryCode: false,
                     ),
                   ],
+                  customValidator: (text) {
+                    if (text == null || text.isEmpty) {
+                      return AppTexts.numberIsRequired;
+                    }
+                    final mask =
+                        selectedCountryLibPhone.phoneMaskMobileInternational;
+                    final firstSpaceIndex = mask.indexOf(' ');
+                    final nationalMask = firstSpaceIndex != -1
+                        ? mask.substring(firstSpaceIndex + 1)
+                        : mask;
+                    final expectedDigits = RegExp(
+                      r'0',
+                    ).allMatches(nationalMask).length;
+                    final digitsOnly = text.replaceAll(RegExp(r'\D'), '');
+                    if (digitsOnly.length != expectedDigits) {
+                      return '${AppTexts.requiredNumberDigits} $expectedDigits' ;
+                    }
+
+                    return null;
+                  },
                 ),
               ),
             ),

@@ -62,7 +62,7 @@
   "removeItemQuestion": "Do you want to remove this item from your cart?",
   "chooseDeliveryAddress": "Choose your Delivery Address",
   "cancel": "Cancel",
-  "nothingToShow":"Nothing to show right now",
+  "nothingToShow": "Nothing to show right now",
   "name": "Name",
   "surname": "Surname",
   "phone": "Phone",
@@ -87,6 +87,12 @@
   "voucherCode": "Voucher Code",
   "total": "Total",
   "deliveryType": "Delivery Type",
-  "selectPreviousField": "Select previous field"
-
+  "selectPreviousField": "Select previous field",
+  "requiredNumberDigits": "Enter a valid phone number with exactly",
+  "requiredLettersBetween": "Enter a valid name/surname with between",
+  "letters": "letters",
+  "digits": "digits",
+  "choose": "Choose",
+  "nameMustContainOnlyLetters": "Name must contain only letters",
+  "surnameMustContainOnlyLetters": "Surname must contain only letters"
 }
