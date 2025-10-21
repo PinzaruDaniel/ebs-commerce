@@ -4,12 +4,13 @@ import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reord
 import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_item_build_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
-import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
+import 'package:presentation/util/widgets/selection_widget.dart';
+
 import '../../util/widgets/text_field_widget.dart';
 import '../../view/base_view_model.dart';
 
@@ -58,9 +59,15 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               shrinkWrap: true,
               areItemsTheSame: (a, b) {
                 if (a.runtimeType != b.runtimeType) return false;
-                if (a is SelectionViewModel && b is SelectionViewModel) return a.keyId == b.keyId;
-                if (a is TextFieldViewModel && b is TextFieldViewModel) return a.keyId == b.keyId;
-                if (a is DeliveryTypeViewModel && b is DeliveryTypeViewModel) return a.selected == b.selected;
+                if (a is SelectionViewModel && b is SelectionViewModel) {
+                  return a.keyId == b.keyId;
+                }
+                if (a is TextFieldViewModel && b is TextFieldViewModel) {
+                  return a.keyId == b.keyId;
+                }
+                if (a is DeliveryTypeViewModel && b is DeliveryTypeViewModel) {
+                  return a.selected == b.selected;
+                }
                 return false;
               },
 
@@ -78,11 +85,12 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               },
 
               itemBuilder: (context, animation, item, index) {
-                void onSelectionChanged(String value) {
+                void onSelect(OptionViewModel selected) {
                   if (item is! SelectionViewModel) return;
                   final viewModel = item;
                   if (viewModel.keyId == 'country') {
-                    final country = deliveryAddressController.countries.firstWhere((c) => c.name == value);
+                    final country = deliveryAddressController.countries
+                        .firstWhere((c) => c.name == selected.titleKey);
                     deliveryAddressController.selectedCountry.value = country;
                     deliveryAddressController.selectedState.value = null;
                     deliveryAddressController.selectedCity.value = null;
@@ -90,15 +98,21 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                     deliveryAddressController.cities.clear();
                     deliveryAddressController.loadStates(country);
                   } else if (viewModel.keyId == 'region') {
-                    final state = deliveryAddressController.states.firstWhere((s) => s.name == value);
+                    final state = deliveryAddressController.states.firstWhere(
+                      (s) => s.name == selected.titleKey,
+                    );
                     deliveryAddressController.selectedState.value = state;
                     deliveryAddressController.selectedCity.value = null;
                     deliveryAddressController.cities.clear();
-                    deliveryAddressController.loadCities(deliveryAddressController.selectedCountry.value!, state);
-                  } else if (viewModel.keyId == 'city') {
-                    deliveryAddressController.selectedCity.value = deliveryAddressController.cities.firstWhere(
-                      (c) => c.name == value,
+                    deliveryAddressController.loadCities(
+                      deliveryAddressController.selectedCountry.value!,
+                      state,
                     );
+                  } else if (viewModel.keyId == 'city') {
+                    deliveryAddressController.selectedCity.value =
+                        deliveryAddressController.cities.firstWhere(
+                          (c) => c.name == selected.titleKey,
+                        );
                   }
                 }
 
@@ -107,7 +121,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                     await deliveryAddressController.removeAllItemsAnimated();
                     deliveryAddressController.updateAllItems();
                   },
-                  onSelectionChanged: onSelectionChanged,
+                  onSelect: onSelect,
                   item: item,
                   animation: animation,
                   index: index,
@@ -123,7 +137,9 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
             deliveryAddressController.onInit();
-            widget.onSave.call(deliveryAddressController.toDeliveryAddressViewModel());
+            widget.onSave.call(
+              deliveryAddressController.toDeliveryAddressViewModel(),
+            );
             Get.back();
           }
         },

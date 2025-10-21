@@ -1,12 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
-import 'package:presentation/view/country_flag_dial_code_view_model.dart';
-
-import '../../../util/resources/app_icons.dart';
-import '../../../util/routing/app_pop_up.dart';
+import '../resources/app_icons.dart';
+import '../routing/app_pop_up.dart';
 
 class OptionViewModel<T> extends BaseViewModel {
   final T data;
@@ -33,38 +30,46 @@ class SelectionViewModel<T> extends BaseViewModel {
 
 class SelectionWidget<T> extends StatelessWidget {
   final SelectionViewModel itemViewModel;
-  final Function? onSelectionChanged;
+  final Function? onSelect;
 
-  const SelectionWidget({super.key, required this.itemViewModel, this.onSelectionChanged});
+  const SelectionWidget({
+    super.key,
+    required this.itemViewModel,
+    this.onSelect,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final String displayText = itemViewModel.displayText?.call(itemViewModel.selectedItem)
-        ?? itemViewModel.selectedItem.titleKey
-        ?? itemViewModel.selectedItem.toString();
+    final String displayText =
+        itemViewModel.displayText?.call(itemViewModel.selectedItem) ??
+        itemViewModel.selectedItem.titleKey ??
+        itemViewModel.selectedItem.toString();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (itemViewModel.title != null) ...[Text(itemViewModel.title!), const SizedBox(height: 4)],
+        if (itemViewModel.title != null) ...[
+          Text(itemViewModel.title!),
+          const SizedBox(height: 4),
+        ],
         InkWell(
           splashColor: Colors.transparent,
           onTap: () {
             print('display Text: $displayText');
 
             if (itemViewModel.options.length > 1) {
-              Iterable<CountryFlagDialCodeViewModel> countries = itemViewModel.options
-                  .whereType<CountryFlagDialCodeViewModel>();
               AppPopUp.showSelection(
                 title: itemViewModel.title ?? '',
                 selectionViewModel: itemViewModel,
-                onSelect: (){
-                  if (onSelectionChanged != null) {
-                    onSelectionChanged!(itemViewModel.selectedItem);
+                onSelect: () {
+                  if (onSelect != null) {
+                    onSelect!(itemViewModel.selectedItem);
                   }
-                }
+                },
               );
             } else {
-              showFailureSnackBar(fallbackMessage: AppTexts.selectPreviousField);
+              showFailureSnackBar(
+                fallbackMessage: AppTexts.selectPreviousField,
+              );
             }
           },
           child: Container(
@@ -76,9 +81,17 @@ class SelectionWidget<T> extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(displayText, style: TextStyle(color: displayText.isEmpty ? Colors.grey : Colors.black)),
+                Text(
+                  displayText,
+                  style: TextStyle(
+                    color: displayText.isEmpty ? Colors.grey : Colors.black,
+                  ),
+                ),
 
-                Transform.rotate(angle: 4.7, child: AppIcons.backIcon(color: Colors.grey)),
+                Transform.rotate(
+                  angle: 4.7,
+                  child: AppIcons.backIcon(color: Colors.grey),
+                ),
               ],
             ),
           ),

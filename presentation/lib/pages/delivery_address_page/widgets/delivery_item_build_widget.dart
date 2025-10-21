@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
-import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
+import 'package:presentation/util/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/animated_list_items_build_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -11,7 +11,7 @@ class DeliveryItemBuildWidget extends StatelessWidget {
   final int index;
   final bool isRemoval;
   final Function onCallBack;
-  final Function(String)? onSelectionChanged;
+  final Function(OptionViewModel)? onSelect;
 
   const DeliveryItemBuildWidget({
     super.key,
@@ -20,7 +20,7 @@ class DeliveryItemBuildWidget extends StatelessWidget {
     required this.index,
     this.isRemoval = false,
     required this.onCallBack,
-    this.onSelectionChanged,
+    this.onSelect,
   });
 
   @override
@@ -36,7 +36,7 @@ class DeliveryItemBuildWidget extends StatelessWidget {
       final viewModel = item as SelectionViewModel<String>;
       child = Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SelectionWidget<String>(itemViewModel: viewModel, onSelectionChanged: onSelectionChanged),
+        child: SelectionWidget<String>(itemViewModel: viewModel, onSelect: onSelect),
       );
       keyValue = 'selection_${viewModel.keyId}_${viewModel.title}';
     } else if (item is TextFieldViewModel) {

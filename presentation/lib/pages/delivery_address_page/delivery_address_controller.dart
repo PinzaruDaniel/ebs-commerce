@@ -1,7 +1,4 @@
 import 'dart:async';
-import 'package:common/constants/constant_lists_string.dart';
-import 'package:domain/modules/delivery_address/use_cases/dial_codes/get_dial_codes_use_case.dart';
-import 'package:domain/modules/delivery_address/use_cases/flags/get_flags_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -9,7 +6,7 @@ import 'package:domain/modules/delivery_address/use_cases/cities/get_cities_use_
 import 'package:domain/modules/delivery_address/use_cases/countries/get_countries_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/states/get_states_use_case.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
-import 'package:presentation/pages/delivery_address_page/widgets/selection_widget.dart';
+import 'package:presentation/util/widgets/selection_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/mapper/cities_response_entity_mapper.dart';
 import 'package:presentation/util/mapper/countries_entity_mapper.dart';
@@ -31,6 +28,16 @@ class DeliveryAddressController extends GetxController {
   final GetCitiesUseCase getCitiesUseCase = GetIt.instance<GetCitiesUseCase>();
 
   RxList<BaseViewModel> allItems = RxList([]);
+  RxList<CountryViewModel> countries = RxList([]);
+  RxList<StateViewModel> states = RxList([]);
+  RxList<CityViewModel> cities = RxList([]);
+
+  final Rxn<DeliveryAddressViewModel> addressVM = Rxn<DeliveryAddressViewModel>();
+  Rxn<CountryViewModel> selectedCountry = Rxn<CountryViewModel>();
+  Rxn<StateViewModel> selectedState = Rxn<StateViewModel>();
+  Rxn<CityViewModel> selectedCity = Rxn<CityViewModel>();
+
+  RxBool isLoading = false.obs;
 
   Rx<DeliveryTypeViewModel> deliveryTypeVM = (DeliveryTypeViewModel(
     options: DeliveryType.values
@@ -44,18 +51,6 @@ class DeliveryAddressController extends GetxController {
         )
         .toList(),
   ).obs);
-
-  final Rxn<DeliveryAddressViewModel> addressVM = Rxn<DeliveryAddressViewModel>();
-
-  RxList<CountryViewModel> countries = RxList([]);
-  RxList<StateViewModel> states = RxList([]);
-  RxList<CityViewModel> cities = RxList([]);
-
-  Rxn<CountryViewModel> selectedCountry = Rxn<CountryViewModel>();
-  Rxn<StateViewModel> selectedState = Rxn<StateViewModel>();
-  Rxn<CityViewModel> selectedCity = Rxn<CityViewModel>();
-
-  RxBool isLoading = false.obs;
 
   Future<void> initItems() async {
     updateAllItems();
@@ -185,10 +180,8 @@ class DeliveryAddressController extends GetxController {
         }).toList(),
         initialValue: OptionViewModel(
           data: previousPickup,
-          titleKey: (getViewModel<SelectionViewModel>('sediu')?.selectedItem ?? pickupLocations.first.address).toString(),
+          titleKey: (getViewModel<SelectionViewModel>('sediu')?.selectedItem.titleKey ?? pickupLocations.first.address).toString(),
         ),
-
-        //previousPickup ?? getViewModel<SelectionViewModel>('sediu')?.selectedItem ?? pickupLocations.first,
       ),
     );
   }

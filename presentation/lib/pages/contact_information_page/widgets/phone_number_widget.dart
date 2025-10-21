@@ -3,16 +3,21 @@ import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 import 'package:get/get.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
+
 import '../../../controllers/controller_imports.dart';
+import '../../../util/widgets/selection_widget.dart';
 import '../../../view/country_flag_dial_code_view_model.dart';
-import '../../delivery_address_page/widgets/selection_widget.dart';
 
 class PhoneNumberViewModel extends BaseViewModel {
   CountryFlagDialCodeViewModel selectedFlagDial;
   String? initialValueTextField;
   final String title;
 
-  PhoneNumberViewModel({required this.selectedFlagDial, required this.title, required this.initialValueTextField});
+  PhoneNumberViewModel({
+    required this.selectedFlagDial,
+    required this.title,
+    required this.initialValueTextField,
+  });
 }
 
 class PhoneNumberWidget extends StatefulWidget {
@@ -35,11 +40,16 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
     selectedFlagDial = widget.itemViewModel.selectedFlagDial;
     selectedCountryLibPhone =
         nomenclatureController.countries.firstWhereOrNull(
-          (c) => c.countryCode.toUpperCase() == selectedFlagDial.countryCode.toUpperCase(),
+          (c) =>
+              c.countryCode.toUpperCase() ==
+              selectedFlagDial.countryCode.toUpperCase(),
         ) ??
         const CountryWithPhoneCode.us();
+    print('selectedCountrylib $selectedCountryLibPhone ');
 
-    textController = TextEditingController(text: widget.itemViewModel.initialValueTextField);
+    textController = TextEditingController(
+      text: widget.itemViewModel.initialValueTextField,
+    );
     textController.addListener(() {
       widget.itemViewModel.initialValueTextField = textController.text;
     });
@@ -56,41 +66,53 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
-
       children: [
         Text(widget.itemViewModel.title),
         const SizedBox(height: 4),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: SelectionWidget<CountryFlagDialCodeViewModel>(
                 itemViewModel: SelectionViewModel<CountryFlagDialCodeViewModel>(
-                  displayText: (option) => '${selectedFlagDial.countryFlag} +(${selectedFlagDial.countryDialCode})',
-                  options: nomenclatureController.countriesFlagsDialCode.value.map((e) {
+                  displayText: (option) =>
+                      '${selectedFlagDial.countryFlag} +(${selectedFlagDial.countryDialCode})',
+                  options: nomenclatureController.countriesFlagsDialCode.value.map((
+                    e,
+                  ) {
                     return OptionViewModel(
                       data: e,
-                      titleKey: '${e.countryFlag} ${e.countryName} (+${e.countryDialCode})',
+                      titleKey:
+                          '${e.countryFlag} ${e.countryName} (+${e.countryDialCode})',
                     );
                   }).toList(),
                   initialValue: OptionViewModel(
-                    data: nomenclatureController.countriesFlagsDialCode.value.first,
+                    data: selectedFlagDial,
                     titleKey:
-                        '${nomenclatureController.countriesFlagsDialCode.value.first.countryFlag} ${nomenclatureController.countriesFlagsDialCode.value.first.countryName} (+${nomenclatureController.countriesFlagsDialCode.value.first.countryDialCode})',
+                        '${selectedFlagDial.countryFlag} ${selectedFlagDial.countryName} (+${selectedFlagDial.countryDialCode})',
                   ),
                 ),
-                onSelectionChanged: (OptionViewModel selectedOption) {
+                onSelect: (OptionViewModel selectedOption) {
                   final selectedItem = selectedOption.data;
-
-                  final newCountry = nomenclatureController.countries.firstWhereOrNull(
-                    (c) => c.countryCode.toUpperCase() == selectedItem.countryCode.toUpperCase(),
-                  );
+                  final newCountry =
+                      nomenclatureController.countries.firstWhereOrNull(
+                        (c) =>
+                            c.countryCode.toUpperCase() ==
+                            selectedItem.countryCode.toUpperCase(),
+                      ) ??
+                      selectedCountryLibPhone;
 
                   setState(() {
                     selectedFlagDial = selectedItem;
                     widget.itemViewModel.selectedFlagDial = selectedItem;
-                    selectedCountryLibPhone = newCountry ?? const CountryWithPhoneCode.us();
+                    selectedCountryLibPhone = newCountry;
                     textController.clear();
                     widget.itemViewModel.initialValueTextField = '';
+                    print('selectedItem $selectedItem');
+                    print('titlekey ${selectedOption.titleKey}');
+                    print(
+                      'New Country $newCountry and $selectedCountryLibPhone',
+                    );
                   });
                 },
               ),

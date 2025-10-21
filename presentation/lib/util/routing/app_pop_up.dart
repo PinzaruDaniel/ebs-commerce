@@ -4,11 +4,12 @@ import 'package:presentation/util/enum/enums.dart';
 import 'package:presentation/util/widgets/option_picker_widget.dart';
 import 'package:presentation/util/widgets/payment_method_selection_widget.dart';
 import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
-import '../../pages/delivery_address_page/widgets/selection_widget.dart';
+
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_texts.dart';
+import '../widgets/selection_widget.dart';
 
 class AppPopUp {
   static Future<void> showCustomBottomSheet<T>({
@@ -75,11 +76,11 @@ class AppPopUp {
       ),
     );
   }
+
   static Future<void> showSelection({
     required String title,
-  required SelectionViewModel selectionViewModel,
-required Function() onSelect,
-
+    required SelectionViewModel selectionViewModel,
+    required Function() onSelect,
   }) async {
     return await showCustomBottomSheet(
       isDismissible: false,
@@ -119,7 +120,7 @@ required Function() onSelect,
                   Navigator.of(context).pop(true);
                 },
                 child: Text(
-                  confirmText?? AppTexts.ok,
+                  confirmText ?? AppTexts.ok,
                   style: TextStyle(color: AppColors.primary),
                 ),
               ),
