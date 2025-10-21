@@ -12,11 +12,12 @@ class NomenclatureController extends GetxController {
   final GetFlagsUseCase getFlagsUseCase = GetIt.instance<GetFlagsUseCase>();
   RxList<FlagViewModel> flags = RxList([]);
   RxList<CountryFlagDialCodeViewModel> countriesFlagsDialCode = RxList([]);
-  final countries = lib_phone_number.CountryManager().countries;
+  List<lib_phone_number.CountryWithPhoneCode> countries=[];
   @override
   void onInit() async {
     super.onInit();
     await lib_phone_number.init();
+     countries = lib_phone_number.CountryManager().countries;
     await getFlags();
     mapFlagsToCountries();
   }
