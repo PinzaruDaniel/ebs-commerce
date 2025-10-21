@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/base_view_model.dart';
-import 'package:flutter/services.dart';
 
 class TextFieldViewModel extends BaseViewModel {
   final String? title;
@@ -18,7 +18,7 @@ class TextFieldViewModel extends BaseViewModel {
 
   TextFieldViewModel({
     this.keyId,
-     this.title,
+    this.title,
     this.textInputType,
     this.customValidator,
     this.inputFormatter,
@@ -30,10 +30,8 @@ class TextFieldViewModel extends BaseViewModel {
 }
 
 class TextFieldWidget extends StatefulWidget {
-  const TextFieldWidget({
-    super.key,
-    required this.itemViewModel,
-  });
+  const TextFieldWidget({super.key, required this.itemViewModel});
+
   final TextFieldViewModel itemViewModel;
 
   @override
@@ -48,10 +46,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   void initState() {
     super.initState();
-
-    // Use external controller if provided, otherwise create one
     _isExternalController = widget.itemViewModel.textController != null;
-    controller = widget.itemViewModel.textController ??
+    controller =
+        widget.itemViewModel.textController ??
         TextEditingController(text: widget.itemViewModel.placeholder);
 
     controller.addListener(() {
@@ -61,7 +58,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
   @override
   void dispose() {
-    // Dispose only if it was internally created
     if (!_isExternalController) {
       controller.dispose();
     }
@@ -76,10 +72,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (vm.title != null) ...[
-          Text(vm.title!),
-          const SizedBox(height: 4),
-        ],
+        if (vm.title != null) ...[Text(vm.title!), const SizedBox(height: 4)],
         FormField(
           validator: (text) {
             if (vm.isRequiredValidation && controller.text.isEmpty) {
@@ -95,7 +88,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
-                  inputFormatters: vm.inputFormatter ??
+                  inputFormatters:
+                      vm.inputFormatter ??
                       (vm.textInputType == TextInputType.phone
                           ? [FilteringTextInputFormatter.digitsOnly]
                           : []),

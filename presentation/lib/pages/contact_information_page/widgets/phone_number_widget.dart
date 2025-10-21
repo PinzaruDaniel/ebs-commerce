@@ -30,26 +30,35 @@ class PhoneNumberWidget extends StatefulWidget {
 }
 
 class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
-  late CountryFlagDialCodeViewModel selectedFlagDial;
-  late CountryWithPhoneCode selectedCountryLibPhone;
-  late TextEditingController textController;
+  CountryFlagDialCodeViewModel selectedFlagDial = CountryFlagDialCodeViewModel(
+    countryName: '',
+    countryCode: '',
+    countryFlag: '🏳️',
+    countryDialCode: '',
+    phoneMaskMobileInternational: '',
+  );
+
+  CountryWithPhoneCode selectedCountryLibPhone =
+      const CountryWithPhoneCode.us();
+
+  TextEditingController textController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+
     selectedFlagDial = widget.itemViewModel.selectedFlagDial;
+
     selectedCountryLibPhone =
         nomenclatureController.countries.firstWhereOrNull(
-              (c) =>
-          c.countryCode.toUpperCase() ==
+          (c) =>
+              c.countryCode.toUpperCase() ==
               selectedFlagDial.countryCode.toUpperCase(),
         ) ??
-            const CountryWithPhoneCode.us();
-    print('selectedCountrylib $selectedCountryLibPhone ');
+        const CountryWithPhoneCode.us();
 
-    textController = TextEditingController(
-      text: widget.itemViewModel.initialValueTextField,
-    );
+    textController.text = widget.itemViewModel.initialValueTextField ?? '';
+
     textController.addListener(() {
       widget.itemViewModel.initialValueTextField = textController.text;
     });
@@ -65,7 +74,6 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(widget.itemViewModel.title),
         const SizedBox(height: 4),
@@ -76,45 +84,39 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
               child: SelectionWidget<CountryFlagDialCodeViewModel>(
                 itemViewModel: SelectionViewModel<CountryFlagDialCodeViewModel>(
                   displayText: (option) =>
-                  '${selectedFlagDial.countryFlag} +(${selectedFlagDial
-                      .countryDialCode})',
+                      '${selectedFlagDial.countryFlag} +(${selectedFlagDial.countryDialCode})',
                   options: nomenclatureController.countriesFlagsDialCode.value
-                      .map((e,) {
-                    return OptionViewModel(
-                      data: e,
-                      titleKey:
-                      '${e.countryFlag} ${e.countryName} (+${e
-                          .countryDialCode})',
-                    );
-                  }).toList(),
+                      .map(
+                        (e) => OptionViewModel(
+                          data: e,
+                          titleKey:
+                              '${e.countryFlag} ${e.countryName} (+${e.countryDialCode})',
+                        ),
+                      )
+                      .toList(),
                   initialValue: OptionViewModel(
                     data: selectedFlagDial,
                     titleKey:
-                    '${selectedFlagDial.countryFlag} ${selectedFlagDial
-                        .countryName} (+${selectedFlagDial.countryDialCode})',
+                        '${selectedFlagDial.countryFlag} ${selectedFlagDial.countryName} (+${selectedFlagDial.countryDialCode})',
                   ),
                 ),
                 onSelect: (OptionViewModel selectedOption) {
                   final selectedItem = selectedOption.data;
-                  final newCountry = nomenclatureController.countries
-                      .firstWhereOrNull(
+
+                  final newCountry =
+                      nomenclatureController.countries.firstWhereOrNull(
                         (c) =>
-                    c.countryCode.toUpperCase() ==
-                        selectedItem.countryCode.toUpperCase(),
-                  ) ?? const CountryWithPhoneCode.us();
-                  print('countries from api ${nomenclatureController.countries.isEmpty}');
+                            c.countryCode.toUpperCase() ==
+                            selectedItem.countryCode.toUpperCase(),
+                      ) ??
+                      const CountryWithPhoneCode.us();
+
                   setState(() {
-                    print('country code ${selectedItem.countryCode}');
                     selectedFlagDial = selectedItem;
                     widget.itemViewModel.selectedFlagDial = selectedItem;
-                    selectedCountryLibPhone =newCountry;
+                    selectedCountryLibPhone = newCountry;
                     textController.clear();
                     widget.itemViewModel.initialValueTextField = '';
-                    print('selectedItem $selectedItem');
-                    print('titlekey ${selectedOption.titleKey}');
-                    print(
-                      'New Country $newCountry and $selectedCountryLibPhone',
-                    );
                   });
                 },
               ),
@@ -138,26 +140,6 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                   ],
                 ),
               ),
-
-/*
-              TextField(
-                controller: textController,
-                keyboardType: TextInputType.phone,
-                inputFormatters: [
-                  LibPhonenumberTextFormatter(
-                    phoneNumberType: PhoneNumberType.mobile,
-                    phoneNumberFormat: PhoneNumberFormat.international,
-                    country: selectedCountryLibPhone,
-                    shouldKeepCursorAtEndOfInput: true,
-                    inputContainsCountryCode: false,
-                  ),
-                ],
-                decoration: InputDecoration(
-                  hintText: selectedCountryLibPhone.exampleNumberMobileInternational,
-                  border: OutlineInputBorder(),
-                ),
-              ),
-*/
             ),
           ],
         ),
