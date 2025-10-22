@@ -14,11 +14,7 @@ class PhoneNumberViewModel extends BaseViewModel {
   String? initialValueTextField;
   final String title;
 
-  PhoneNumberViewModel({
-    required this.selectedFlagDial,
-    required this.title,
-    required this.initialValueTextField,
-  });
+  PhoneNumberViewModel({required this.selectedFlagDial, required this.title, required this.initialValueTextField});
 }
 
 class PhoneNumberWidget extends StatefulWidget {
@@ -39,8 +35,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
     phoneMaskMobileInternational: '',
   );
 
-  CountryWithPhoneCode selectedCountryLibPhone =
-      const CountryWithPhoneCode.us();
+  CountryWithPhoneCode selectedCountryLibPhone = const CountryWithPhoneCode.us();
 
   TextEditingController textController = TextEditingController();
 
@@ -51,9 +46,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
 
     selectedCountryLibPhone =
         nomenclatureController.countries.firstWhereOrNull(
-          (c) =>
-              c.countryCode.toUpperCase() ==
-              selectedFlagDial.countryCode.toUpperCase(),
+          (c) => c.countryCode.toUpperCase() == selectedFlagDial.countryCode.toUpperCase(),
         ) ??
         const CountryWithPhoneCode.us();
 
@@ -70,6 +63,8 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
     super.dispose();
   }
 
+  String? parsedData;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -83,14 +78,12 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
             Expanded(
               child: SelectionWidget<CountryFlagDialCodeViewModel>(
                 itemViewModel: SelectionViewModel<CountryFlagDialCodeViewModel>(
-                  displayText: (option) =>
-                      '${selectedFlagDial.countryFlag} +(${selectedFlagDial.countryDialCode})',
+                  displayText: (option) => '${selectedFlagDial.countryFlag} +(${selectedFlagDial.countryDialCode})',
                   options: nomenclatureController.countriesFlagsDialCode.value
                       .map(
                         (e) => OptionViewModel(
                           data: e,
-                          titleKey:
-                              '${e.countryFlag} ${e.countryName} (+${e.countryDialCode})',
+                          titleKey: '${e.countryFlag} ${e.countryName} (+${e.countryDialCode})',
                         ),
                       )
                       .toList(),
@@ -105,9 +98,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
 
                   final newCountry =
                       nomenclatureController.countries.firstWhereOrNull(
-                        (c) =>
-                            c.countryCode.toUpperCase() ==
-                            selectedItem.countryCode.toUpperCase(),
+                        (c) => c.countryCode.toUpperCase() == selectedItem.countryCode.toUpperCase(),
                       ) ??
                       const CountryWithPhoneCode.us();
 
@@ -142,18 +133,15 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                     if (text == null || text.isEmpty) {
                       return AppTexts.numberIsRequired;
                     }
-                    final mask =
-                        selectedCountryLibPhone.phoneMaskMobileInternational;
+
+                    final mask = selectedCountryLibPhone.phoneMaskMobileInternational;
                     final firstSpaceIndex = mask.indexOf(' ');
-                    final nationalMask = firstSpaceIndex != -1
-                        ? mask.substring(firstSpaceIndex + 1)
-                        : mask;
-                    final expectedDigits = RegExp(
-                      r'0',
-                    ).allMatches(nationalMask).length;
+                    final nationalMask = firstSpaceIndex != -1 ? mask.substring(firstSpaceIndex + 1) : mask;
+                    final expectedDigits = RegExp(r'0').allMatches(nationalMask).length;
                     final digitsOnly = text.replaceAll(RegExp(r'\D'), '');
+
                     if (digitsOnly.length != expectedDigits) {
-                      return '${AppTexts.requiredNumberDigits} $expectedDigits' ;
+                      return '${AppTexts.requiredNumberDigits} $expectedDigits';
                     }
 
                     return null;

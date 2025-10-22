@@ -14,8 +14,7 @@ import '../../util/widgets/text_field_widget.dart';
 import '../../view/country_flag_dial_code_view_model.dart';
 
 class ContactInformationController extends GetxController {
-  final GetDialCodesUseCase getDialCodesUseCase =
-      GetIt.instance<GetDialCodesUseCase>();
+  final GetDialCodesUseCase getDialCodesUseCase = GetIt.instance<GetDialCodesUseCase>();
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> user = Rxn<UserViewModel>();
   RxList<DialCodesViewModel> dialCodes = RxList([]);
@@ -60,15 +59,14 @@ class ContactInformationController extends GetxController {
       PhoneNumberViewModel(
         title: AppTexts.phone,
         initialValueTextField: existingUser?.number ?? '',
-        selectedFlagDial:
-            nomenclatureController.countriesFlagsDialCode.value.isNotEmpty
+        selectedFlagDial: nomenclatureController.countriesFlagsDialCode.value.isNotEmpty
             ? nomenclatureController.countriesFlagsDialCode.value.first
             : CountryFlagDialCodeViewModel(
                 countryCode: 'US',
                 countryFlag: '🇺🇸',
                 countryName: 'United States',
                 countryDialCode: '1',
-              phoneMaskMobileInternational: '+0 000-000-0000',
+                phoneMaskMobileInternational: '+0 000-000-0000',
               ),
       ),
 
@@ -105,8 +103,7 @@ class ContactInformationController extends GetxController {
     String getPlaceholderByKeyId(String keyId) {
       final item =
           allItems.firstWhere(
-                (element) =>
-                    element is TextFieldViewModel && element.keyId == keyId,
+                (element) => element is TextFieldViewModel && element.keyId == keyId,
                 orElse: () => TextFieldViewModel(title: '', initialValue: ''),
               )
               as TextFieldViewModel;
@@ -114,9 +111,7 @@ class ContactInformationController extends GetxController {
       return item.placeholder;
     }
 
-    final phoneItem =
-        allItems.firstWhereOrNull((element) => element is PhoneNumberViewModel)
-            as PhoneNumberViewModel?;
+    final phoneItem = allItems.firstWhereOrNull((element) => element is PhoneNumberViewModel) as PhoneNumberViewModel?;
     print('phone number ${phoneItem?.initialValueTextField}');
     return user.value = UserViewModel(
       name: getPlaceholderByKeyId('name'),

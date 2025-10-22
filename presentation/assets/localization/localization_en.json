@@ -94,5 +94,7 @@
   "digits": "digits",
   "choose": "Choose",
   "nameMustContainOnlyLetters": "Name must contain only letters",
-  "surnameMustContainOnlyLetters": "Surname must contain only letters"
+  "surnameMustContainOnlyLetters": "Surname must contain only letters",
+  "pickupLocation": "Pickup Location",
+  "street": "Street"
 }

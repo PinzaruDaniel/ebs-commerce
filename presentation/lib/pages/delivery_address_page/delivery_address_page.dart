@@ -113,7 +113,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                         deliveryAddressController.cities.firstWhere(
                           (c) => c.name == selected.titleKey,
                         );
-                    deliveryAddressController.allItems.refresh();
                   }
                 }
 

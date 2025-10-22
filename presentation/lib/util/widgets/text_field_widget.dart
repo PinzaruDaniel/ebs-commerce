@@ -8,6 +8,7 @@ import 'package:presentation/view/base_view_model.dart';
 class TextFieldViewModel extends BaseViewModel {
   final String? title;
   final String? keyId;
+  final String? countryCode;
   final TextInputType? textInputType;
   final bool isRequiredValidation;
   final String? Function(String?)? customValidator;
@@ -19,6 +20,7 @@ class TextFieldViewModel extends BaseViewModel {
   TextFieldViewModel({
     this.keyId,
     this.title,
+    this.countryCode,
     this.textInputType,
     this.customValidator,
     this.inputFormatter,
@@ -54,6 +56,11 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     controller.addListener(() {
       widget.itemViewModel.placeholder = controller.text;
     });
+    focusNode.addListener(() async {
+      if (!focusNode.hasFocus) {
+        await _onFieldUnfocused(controller.text);
+      }
+    });
   }
 
   @override
@@ -64,7 +71,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     focusNode.dispose();
     super.dispose();
   }
-
+  String? _fieldError;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -79,6 +86,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             if (widget.itemViewModel.isRequiredValidation &&
                 controller.text.isEmpty) {
               return AppTexts.requiredField;
+            }
+            if (_fieldError != null) {
+              return _fieldError;
             }
             if (widget.itemViewModel.customValidator != null) {
               return widget.itemViewModel.customValidator!(controller.text);
@@ -162,5 +172,25 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         ),
       ],
     );
+  }
+  Future<void> _onFieldUnfocused(String text) async {
+    if (widget.itemViewModel.textInputType == TextInputType.phone) {
+      try {
+        //TODO: an option is to compare the length text from here and from digits that should be.
+        final parsed = await parse(
+          text,
+          region: widget.itemViewModel.countryCode,
+        );
+        setState(() {
+          _fieldError = null;
+        });
+        print('Parsed number on unfocus: $parsed');
+      } catch (e) {
+        setState(() {
+          _fieldError = AppTexts.invalidNumberPhone;
+        });
+        print('Failed to parse number on unfocus: $e');
+      }
+    }
   }
 }

@@ -35,8 +35,7 @@ class AppTexts {
 
   static String get filteredProducts => LocaleKeys.filteredProducts.tr();
 
-  static String get productsSpecifications =>
-      LocaleKeys.productsSpecifications.tr();
+  static String get productsSpecifications => LocaleKeys.productsSpecifications.tr();
 
   static String get productDescription => LocaleKeys.productDescription.tr();
 
@@ -126,8 +125,7 @@ class AppTexts {
 
   static String get removeItemQuestion => LocaleKeys.removeItemQuestion.tr();
 
-  static String get chooseDeliveryAddress =>
-      LocaleKeys.chooseDeliveryAddress.tr();
+  static String get chooseDeliveryAddress => LocaleKeys.chooseDeliveryAddress.tr();
 
   static String get cancel => LocaleKeys.cancel.tr();
 
@@ -187,11 +185,9 @@ class AppTexts {
 
   static String get selectPreviousField => LocaleKeys.selectPreviousField.tr();
 
-  static String get requiredNumberDigits =>
-      LocaleKeys.requiredNumberDigits.tr();
+  static String get requiredNumberDigits => LocaleKeys.requiredNumberDigits.tr();
 
-  static String get requiredLettersBetween =>
-      LocaleKeys.requiredLettersBetween.tr();
+  static String get requiredLettersBetween => LocaleKeys.requiredLettersBetween.tr();
 
   static String get letters => LocaleKeys.letters.tr();
 
@@ -199,9 +195,11 @@ class AppTexts {
 
   static String get choose => LocaleKeys.choose.tr();
 
-  static String get nameMustContainOnlyLetters =>
-      LocaleKeys.nameMustContainOnlyLetters.tr();
+  static String get nameMustContainOnlyLetters => LocaleKeys.nameMustContainOnlyLetters.tr();
 
-  static String get surnameMustContainOnlyLetters =>
-      LocaleKeys.surnameMustContainOnlyLetters.tr();
+  static String get surnameMustContainOnlyLetters => LocaleKeys.surnameMustContainOnlyLetters.tr();
+
+  static String get pickupLocation => LocaleKeys.pickupLocation.tr();
+
+  static String get street => LocaleKeys.street.tr();
 }

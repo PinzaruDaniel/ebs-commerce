@@ -111,14 +111,14 @@ class CheckoutController extends GetxController {
   Map<String, String>? buildDeliveryInfo(DeliveryAddressViewModel? model) {
     var isPickUpType = model?.deliveryType == DeliveryType.pickup.label;
     if (isPickUpType) {
-      return {'Pickup Location: ${model?.pickupLocation ?? pickupLocations.first.address}': ''};
+      return {'${AppTexts.pickupLocation}: ${model?.pickupLocation ?? pickupLocations.first.address}': ''};
     } else if (!isPickUpType && model?.deliveryType != null) {
       return {
-        'Country: ${model?.country ?? ''}': '',
-        'Region: ${model?.region ?? ''}': '',
-        'City: ${model?.city ?? ''}': '',
-        'Postal Code: ${model?.postalCode ?? ''}': '',
-        'Street: ${model?.address ?? ''}': '',
+        '${AppTexts.country}: ${model?.country ?? ''}': '',
+        '${AppTexts.region}: ${model?.region ?? ''}': '',
+        '${AppTexts.city}: ${model?.city ?? ''}': '',
+        '${AppTexts.postalCode}: ${model?.postalCode ?? ''}': '',
+        '${AppTexts.street}: ${model?.address ?? ''}': '',
       };
     }
     return null;

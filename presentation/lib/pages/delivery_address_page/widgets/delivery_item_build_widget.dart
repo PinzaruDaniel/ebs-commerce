@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
-import 'package:presentation/util/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/animated_list_items_build_widget.dart';
+import 'package:presentation/util/widgets/selection_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 

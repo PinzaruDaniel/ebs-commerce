@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
 import 'package:presentation/pages/contact_information_page/widgets/phone_number_widget.dart';
-import 'package:presentation/util/widgets/loading_overlay_widget.dart';
+
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
@@ -103,5 +103,4 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
       ),
     );
   }
-
 }

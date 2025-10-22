@@ -94,5 +94,7 @@
   "digits": "цифр",
   "choose": "Выберите",
   "nameMustContainOnlyLetters": "Имя должно содержать только буквы",
-"surnameMustContainOnlyLetters": "Фамилия должна содержать только буквы"
+  "surnameMustContainOnlyLetters": "Фамилия должна содержать только буквы",
+  "pickupLocation": "Пункт самовывоза",
+  "street": "Улица"
 }

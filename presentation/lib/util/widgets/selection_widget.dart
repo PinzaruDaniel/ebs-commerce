@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
+
 import '../resources/app_icons.dart';
 import '../routing/app_pop_up.dart';
 
@@ -28,48 +29,43 @@ class SelectionViewModel<T> extends BaseViewModel {
   }) : selectedItem = initialValue;
 }
 
-class SelectionWidget<T> extends StatelessWidget {
+class SelectionWidget<T> extends StatefulWidget {
   final SelectionViewModel itemViewModel;
   final Function? onSelect;
 
-  const SelectionWidget({
-    super.key,
-    required this.itemViewModel,
-    this.onSelect,
-  });
+  const SelectionWidget({super.key, required this.itemViewModel, this.onSelect});
 
+  @override
+  State<SelectionWidget<T>> createState() => _SelectionWidgetState<T>();
+}
+
+class _SelectionWidgetState<T> extends State<SelectionWidget<T>> {
   @override
   Widget build(BuildContext context) {
     final String displayText =
-        itemViewModel.displayText?.call(itemViewModel.selectedItem) ??
-        itemViewModel.selectedItem.titleKey ??
-        itemViewModel.selectedItem.toString();
+        widget.itemViewModel.displayText?.call(widget.itemViewModel.selectedItem) ??
+        widget.itemViewModel.selectedItem.titleKey ??
+        widget.itemViewModel.selectedItem.toString();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (itemViewModel.title != null) ...[
-          Text(itemViewModel.title!),
-          const SizedBox(height: 4),
-        ],
+        if (widget.itemViewModel.title != null) ...[Text(widget.itemViewModel.title!), const SizedBox(height: 4)],
         InkWell(
           splashColor: Colors.transparent,
           onTap: () {
-            print('display Text: $displayText');
-
-            if (itemViewModel.options.length > 1) {
+            if (widget.itemViewModel.options.length > 1) {
               AppPopUp.showSelection(
-                title: itemViewModel.title ?? '',
-                selectionViewModel: itemViewModel,
+                title: widget.itemViewModel.title ?? '',
+                selectionViewModel: widget.itemViewModel,
                 onSelect: () {
-                  if (onSelect != null) {
-                    onSelect!(itemViewModel.selectedItem);
+                  setState(() {});
+                  if (widget.onSelect != null) {
+                    widget.onSelect!(widget.itemViewModel.selectedItem);
                   }
                 },
               );
             } else {
-              showFailureSnackBar(
-                fallbackMessage: AppTexts.selectPreviousField,
-              );
+              showFailureSnackBar(fallbackMessage: AppTexts.selectPreviousField);
             }
           },
           child: Container(
@@ -81,17 +77,9 @@ class SelectionWidget<T> extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  displayText,
-                  style: TextStyle(
-                    color: displayText.isEmpty ? Colors.grey : Colors.black,
-                  ),
-                ),
+                Text(displayText, style: TextStyle(color: displayText.isEmpty ? Colors.grey : Colors.black)),
 
-                Transform.rotate(
-                  angle: 4.7,
-                  child: AppIcons.backIcon(color: Colors.grey),
-                ),
+                Transform.rotate(angle: 4.7, child: AppIcons.backIcon(color: Colors.grey)),
               ],
             ),
           ),
