@@ -18,6 +18,8 @@ class AppPopUp {
     bool enableDrag = true,
     bool showHandle = true,
     bool isScrollControlled = false,
+    Widget? saveButton,
+    String? title,
   }) async {
     if (Get.context != null) {
       return await showModalBottomSheet(
@@ -27,13 +29,29 @@ class AppPopUp {
         isScrollControlled: isScrollControlled,
         enableDrag: enableDrag,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(16),
-            topLeft: Radius.circular(16),
-          ),
+          borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
         ),
         context: Get.context!,
-        builder: (_) => child,
+        builder: (_) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+
+                  if(title!=null)
+                  Text(
+                    '${AppTexts.choose} ${title.toLowerCase()}',
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  if(saveButton!=null)
+                  saveButton,
+                ],
+              ),
+              child,
+            ],
+          );
+        },
       );
     }
   }
@@ -44,36 +62,20 @@ class AppPopUp {
     required int? maxValue,
   }) async {
     await showCustomBottomSheet(
-      child: ProductDetailAddToCartBottomSheetWidget(
-        item: item,
-        onAdd: onAdd,
-        maxValue: maxValue,
-      ),
+      child: ProductDetailAddToCartBottomSheetWidget(item: item, onAdd: onAdd, maxValue: maxValue),
     );
   }
 
-  static Future<void> paymentMethod({
-    required Function(PaymentMethod) onSelected,
-    PaymentMethod? initialMethod,
-  }) async {
+  static Future<void> paymentMethod({required Function(PaymentMethod) onSelected, PaymentMethod? initialMethod}) async {
     await showCustomBottomSheet(
-      child: PaymentMethodSelectionWidget(
-        onSelected: onSelected,
-        initialMethod: initialMethod,
-      ),
+      child: PaymentMethodSelectionWidget(onSelected: onSelected, initialMethod: initialMethod),
     );
   }
 
-  static Future<void> voucherCode({
-    required String initialValue,
-    required Function(String) onSubmit,
-  }) async {
+  static Future<void> voucherCode({required String initialValue, required Function(String) onSubmit}) async {
     await showCustomBottomSheet(
       isScrollControlled: true,
-      child: VoucherCodeInputWidget(
-        initialValue: initialValue,
-        onSubmit: onSubmit,
-      ),
+      child: VoucherCodeInputWidget(initialValue: initialValue, onSubmit: onSubmit),
     );
   }
 
@@ -84,11 +86,9 @@ class AppPopUp {
   }) async {
     return await showCustomBottomSheet(
       isDismissible: false,
-      child: OptionPickerWidget(
-        title: title,
-        selectionViewModel: selectionViewModel,
-        onSelect: onSelect,
-      ),
+      isScrollControlled: true,
+      //TODO: to add here title and row
+      child: OptionPickerWidget(title: title, selectionViewModel: selectionViewModel, onSelect: onSelect),
     );
   }
 
@@ -119,10 +119,7 @@ class AppPopUp {
                   onSave?.call();
                   Navigator.of(context).pop(true);
                 },
-                child: Text(
-                  confirmText ?? AppTexts.ok,
-                  style: TextStyle(color: AppColors.primary),
-                ),
+                child: Text(confirmText ?? AppTexts.ok, style: TextStyle(color: AppColors.primary)),
               ),
             ],
           ),

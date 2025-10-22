@@ -96,5 +96,6 @@
   "nameMustContainOnlyLetters": "Name must contain only letters",
   "surnameMustContainOnlyLetters": "Surname must contain only letters",
   "pickupLocation": "Pickup Location",
-  "street": "Street"
+  "street": "Street",
+  "done": "Done"
 }

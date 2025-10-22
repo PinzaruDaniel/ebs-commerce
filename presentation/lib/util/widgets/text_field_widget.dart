@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
@@ -44,22 +45,18 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   TextEditingController controller = TextEditingController();
   bool _isExternalController = false;
   final focusNode = FocusNode();
+  String? parsedData;
+  GlobalKey<FormFieldState> _fieldKey = GlobalKey();
+  String? _fieldError;
 
   @override
   void initState() {
     super.initState();
     _isExternalController = widget.itemViewModel.textController != null;
-    controller =
-        widget.itemViewModel.textController ??
-        TextEditingController(text: widget.itemViewModel.placeholder);
-
+    controller = widget.itemViewModel.textController ?? TextEditingController(text: widget.itemViewModel.placeholder);
+    _fieldKey = GlobalKey<FormFieldState>(debugLabel: widget.itemViewModel.keyId);
     controller.addListener(() {
       widget.itemViewModel.placeholder = controller.text;
-    });
-    focusNode.addListener(() async {
-      if (!focusNode.hasFocus) {
-        await _onFieldUnfocused(controller.text);
-      }
     });
   }
 
@@ -71,20 +68,18 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     focusNode.dispose();
     super.dispose();
   }
-  String? _fieldError;
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.itemViewModel.title != null) ...[
-          Text(widget.itemViewModel.title!),
-          const SizedBox(height: 4),
-        ],
+        if (widget.itemViewModel.title != null) ...[Text(widget.itemViewModel.title!), const SizedBox(height: 4)],
         FormField(
+          key: _fieldKey,
           validator: (text) {
-            if (widget.itemViewModel.isRequiredValidation &&
-                controller.text.isEmpty) {
+            if (widget.itemViewModel.isRequiredValidation && controller.text.isEmpty) {
               return AppTexts.requiredField;
             }
             if (_fieldError != null) {
@@ -109,8 +104,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   focusNode: focusNode,
                   minLines: widget.itemViewModel.minLines ?? 1,
                   maxLines: widget.itemViewModel.minLines != null ? null : 1,
-                  keyboardType:
-                      widget.itemViewModel.textInputType ?? TextInputType.text,
+                  keyboardType: widget.itemViewModel.textInputType ?? TextInputType.text,
                   textInputAction: TextInputAction.done,
                   cursorColor: AppColors.primary,
                   decoration: InputDecoration(
@@ -123,29 +117,19 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(
-                        color: AppColors.redText,
-                        width: 1.0,
-                      ),
+                      borderSide: BorderSide(color: AppColors.redText, width: 1.0),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade300,
-                        width: 1.0,
-                      ),
+                      borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(
-                        color: AppColors.secondary,
-                        width: 2.0,
-                      ),
+                      borderSide: BorderSide(color: AppColors.secondary, width: 2.0),
                     ),
                   ),
                   onChanged: (value) {
-                    if (widget.itemViewModel.textInputType ==
-                        TextInputType.phone) {
+                    if (widget.itemViewModel.textInputType == TextInputType.phone) {
                       if (value.startsWith('0')) {
                         value = value.replaceFirst(RegExp(r'^0+'), '');
                       }
@@ -154,13 +138,19 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                       }
                       if (value != controller.text) {
                         controller.text = value;
-                        controller.selection = TextSelection.fromPosition(
-                          TextPosition(offset: controller.text.length),
-                        );
+                        controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
                       }
+                    }
+                    if (_fieldError != null) {
+                      setState(() {
+                        _fieldError = null;
+                      });
                     }
                     widget.itemViewModel.placeholder = value;
                     state.validate();
+                  },
+                  onFieldSubmitted: (value) async {
+                    await _onFieldUnfocused(value);
                   },
                   onTapOutside: (_) {
                     FocusManager.instance.primaryFocus?.unfocus();
@@ -173,23 +163,27 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       ],
     );
   }
+
   Future<void> _onFieldUnfocused(String text) async {
     if (widget.itemViewModel.textInputType == TextInputType.phone) {
       try {
-        //TODO: an option is to compare the length text from here and from digits that should be.
-        final parsed = await parse(
-          text,
-          region: widget.itemViewModel.countryCode,
-        );
+        final parsed = await parse(text, region: widget.itemViewModel.countryCode);
+
+        const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+
+        if (!mounted) return;
+
         setState(() {
+          parsedData = encoder.convert(parsed);
           _fieldError = null;
         });
-        print('Parsed number on unfocus: $parsed');
       } catch (e) {
+        if (!mounted) return;
         setState(() {
+          parsedData = null;
           _fieldError = AppTexts.invalidNumberPhone;
         });
-        print('Failed to parse number on unfocus: $e');
+        _fieldKey.currentState?.validate();
       }
     }
   }

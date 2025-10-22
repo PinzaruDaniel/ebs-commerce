@@ -101,5 +101,6 @@ abstract class  LocaleKeys {
   static const surnameMustContainOnlyLetters = 'surnameMustContainOnlyLetters';
   static const pickupLocation = 'pickupLocation';
   static const street = 'street';
+  static const done = 'done';
 
 }

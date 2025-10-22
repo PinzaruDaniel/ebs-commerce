@@ -202,4 +202,6 @@ class AppTexts {
   static String get pickupLocation => LocaleKeys.pickupLocation.tr();
 
   static String get street => LocaleKeys.street.tr();
+
+  static String get done => LocaleKeys.done.tr();
 }

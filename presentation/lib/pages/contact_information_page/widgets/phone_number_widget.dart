@@ -36,8 +36,9 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
   );
 
   CountryWithPhoneCode selectedCountryLibPhone = const CountryWithPhoneCode.us();
-
   TextEditingController textController = TextEditingController();
+  String? parsedData;
+
 
   @override
   void initState() {
@@ -63,7 +64,6 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
     super.dispose();
   }
 
-  String? parsedData;
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +120,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                   keyId: 'phone',
                   textInputType: TextInputType.phone,
                   textController: textController,
+                  countryCode: selectedFlagDial.countryCode,
                   inputFormatter: [
                     LibPhonenumberTextFormatter(
                       phoneNumberType: PhoneNumberType.mobile,
