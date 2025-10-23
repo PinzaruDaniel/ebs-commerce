@@ -28,10 +28,10 @@ class PhoneNumberWidget extends StatefulWidget {
 
 class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
   CountryFlagDialCodeViewModel selectedFlagDial = CountryFlagDialCodeViewModel(
-    countryName: '',
-    countryCode: '',
-    countryFlag: '🏳️',
-    countryDialCode: '',
+    name: '',
+    iso2: '',
+    flag: '🏳️',
+    dialCode: '',
     phoneMaskMobileInternational: '',
   );
 
@@ -47,7 +47,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
 
     selectedCountryLibPhone =
         nomenclatureController.countries.firstWhereOrNull(
-          (c) => c.countryCode.toUpperCase() == selectedFlagDial.countryCode.toUpperCase(),
+          (c) => c.countryCode.toUpperCase() == selectedFlagDial.iso2.toUpperCase(),
         ) ??
         const CountryWithPhoneCode.us();
 
@@ -78,19 +78,19 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
             Expanded(
               child: SelectionWidget<CountryFlagDialCodeViewModel>(
                 itemViewModel: SelectionViewModel<CountryFlagDialCodeViewModel>(
-                  displayText: (option) => '${selectedFlagDial.countryFlag} +(${selectedFlagDial.countryDialCode})',
+                  displayText: (option) => '${selectedFlagDial.flag} +(${selectedFlagDial.dialCode})',
                   options: nomenclatureController.countriesFlagsDialCode.value
                       .map(
-                        (e) => OptionViewModel(
+                        (e) => OptionViewModel<CountryFlagDialCodeViewModel>(
                           data: e,
-                          titleKey: '${e.countryFlag} ${e.countryName} (+${e.countryDialCode})',
+                          titleKey: '${e.flag} ${e.name} (+${e.dialCode})',
                         ),
                       )
                       .toList(),
                   initialValue: OptionViewModel(
                     data: selectedFlagDial,
                     titleKey:
-                        '${selectedFlagDial.countryFlag} ${selectedFlagDial.countryName} (+${selectedFlagDial.countryDialCode})',
+                        '${selectedFlagDial.flag} ${selectedFlagDial.name} (+${selectedFlagDial.dialCode})',
                   ),
                 ),
                 onSelect: (OptionViewModel selectedOption) {
@@ -120,7 +120,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                   keyId: 'phone',
                   textInputType: TextInputType.phone,
                   textController: textController,
-                  countryCode: selectedFlagDial.countryCode,
+                  countryCode: selectedFlagDial.iso2,
                   inputFormatter: [
                     LibPhonenumberTextFormatter(
                       phoneNumberType: PhoneNumberType.mobile,

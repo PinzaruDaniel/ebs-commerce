@@ -4,7 +4,6 @@ import 'dart:developer' as developer;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 
-import '../util/widgets/failure_snack_bar_widget.dart';
 
 class InternetController extends GetxController{
   final RxList<ConnectivityResult> connectionStatus = <ConnectivityResult>[ConnectivityResult.none].obs;

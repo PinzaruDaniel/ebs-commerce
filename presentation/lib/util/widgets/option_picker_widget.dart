@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/util/widgets/text_field_widget.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_text_styles.dart';
 import '../resources/app_texts.dart';
@@ -18,40 +22,77 @@ class OptionPickerWidget<T> extends StatefulWidget {
 }
 
 class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
-  late final FixedExtentScrollController _scrollController;
-  final TextEditingController _searchController = TextEditingController();
+  FixedExtentScrollController scrollController = FixedExtentScrollController();
+  final TextEditingController searchController = TextEditingController();
 
-  String _searchQuery = '';
-//TODO:withoutSearchQuery
+  List<OptionViewModel> filteredOptions = [];
+  Timer? debounce;
+
   @override
   void initState() {
     super.initState();
-
+    filteredOptions = widget.selectionViewModel.options;
     final initialIndex = widget.selectionViewModel.options.indexWhere(
       (option) => option.data == widget.selectionViewModel.selectedItem.data,
     );
-    _scrollController = FixedExtentScrollController(initialItem: initialIndex == -1 ? 0 : initialIndex);
+    scrollController = FixedExtentScrollController(initialItem: initialIndex == -1 ? 0 : initialIndex);
 
-    _searchController.addListener(() {
+    searchController.addListener(onSearchChanged);
+  }
+
+  void onSearchChanged() {
+    if (debounce?.isActive ?? false) debounce!.cancel();
+
+    debounce = Timer(const Duration(seconds: 2), () {
+      final query = searchController.text.toLowerCase();
+
       setState(() {
-        _searchQuery = _searchController.text.toLowerCase();
+        filteredOptions = widget.selectionViewModel.options.where((opt) {
+          final data = opt.data;
+
+          // Try to access the fields with null safety and fallback to empty string if not present
+          String countryCode = '';
+          String countryName = '';
+          String countryDialCode = '';
+
+          try {
+            countryCode = (data as dynamic).iso2?.toLowerCase() ?? '';
+          } catch (_) {}
+
+          try {
+            countryName = (data as dynamic).name?.toLowerCase() ?? '';
+          } catch (_) {}
+
+          try {
+            countryDialCode = (data as dynamic).dialCode?.toLowerCase() ?? '';
+          } catch (_) {}
+
+          final titleKey = opt.titleKey.toLowerCase();
+
+          return titleKey.contains(query) ||
+              countryCode.contains(query) ||
+              countryName.contains(query) ||
+              countryDialCode.contains(query);
+        }).toList();
+
+        if (filteredOptions.isNotEmpty) {
+          scrollController.jumpToItem(0);
+        }
       });
     });
   }
 
+
   @override
   void dispose() {
-    _scrollController.dispose();
-    _searchController.dispose();
+    debounce?.cancel();
+    scrollController.dispose();
+    searchController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final allOptions = widget.selectionViewModel.options;
-
-    final filteredOptions = allOptions.where((opt) => opt.titleKey.toLowerCase().contains(_searchQuery)).toList();
-
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
@@ -62,21 +103,20 @@ class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     Center(
                       child: Text(
                         '${AppTexts.choose} ${widget.title.toLowerCase()}',
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
                       onTap: () {
-                        final selectedIndex = _scrollController.selectedItem;
                         if (filteredOptions.isNotEmpty) {
+                          final selectedIndex = scrollController.selectedItem;
                           widget.selectionViewModel.selectedItem = filteredOptions[selectedIndex];
                           widget.onSelect();
                         }
@@ -93,13 +133,8 @@ class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                child: TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                  ),
+                child: TextFieldWidget(
+                  itemViewModel: TextFieldViewModel(textController: searchController, isRequiredValidation: false),
                 ),
               ),
               SizedBox(
@@ -110,7 +145,7 @@ class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
                         itemExtent: 32,
                         useMagnifier: true,
                         magnification: 1.2,
-                        scrollController: _scrollController,
+                        scrollController: scrollController,
                         selectionOverlay: Container(
                           decoration: BoxDecoration(
                             border: Border.symmetric(horizontal: BorderSide(color: Colors.grey.shade300)),

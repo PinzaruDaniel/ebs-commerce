@@ -62,10 +62,10 @@ class ContactInformationController extends GetxController {
         selectedFlagDial: nomenclatureController.countriesFlagsDialCode.value.isNotEmpty
             ? nomenclatureController.countriesFlagsDialCode.value.first
             : CountryFlagDialCodeViewModel(
-                countryCode: 'US',
-                countryFlag: '🇺🇸',
-                countryName: 'United States',
-                countryDialCode: '1',
+                iso2: 'US',
+                flag: '🇺🇸',
+                name: 'United States',
+                dialCode: '1',
                 phoneMaskMobileInternational: '+0 000-000-0000',
               ),
       ),
@@ -117,7 +117,7 @@ class ContactInformationController extends GetxController {
       name: getPlaceholderByKeyId('name'),
       surname: getPlaceholderByKeyId('surname'),
       number: phoneItem?.initialValueTextField ?? '',
-      dialCode: '+${phoneItem?.selectedFlagDial.countryDialCode ?? ''}',
+      dialCode: '+${phoneItem?.selectedFlagDial.dialCode ?? ''}',
       email: getPlaceholderByKeyId('email'),
     );
   }

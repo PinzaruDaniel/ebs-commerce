@@ -33,6 +33,7 @@ class AppPopUp {
         ),
         context: Get.context!,
         builder: (_) {
+          //TODO: to add base_view_widget
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
