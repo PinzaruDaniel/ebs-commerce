@@ -204,4 +204,6 @@ class AppTexts {
   static String get street => LocaleKeys.street.tr();
 
   static String get done => LocaleKeys.done.tr();
+
+  static String get search=>LocaleKeys.search.tr();
 }

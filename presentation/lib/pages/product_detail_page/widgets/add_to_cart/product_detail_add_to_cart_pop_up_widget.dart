@@ -21,10 +21,10 @@ class ProductDetailAddToCartBottomSheetWidget extends StatefulWidget {
   final int? maxValue;
 
   @override
-  State<ProductDetailAddToCartBottomSheetWidget> createState() => _ProductDetailAddToCartBottomSheetWidgetState();
+  State<ProductDetailAddToCartBottomSheetWidget> createState() => ProductDetailAddToCartBottomSheetWidgetState();
 }
 
-class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailAddToCartBottomSheetWidget> {
+class ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailAddToCartBottomSheetWidget> {
   int quantity = 1;
 
   @override
@@ -66,18 +66,12 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
             ],
           ),
         ),
-        BottomNavigationBarWidget(
-          title: AppTexts.addToCart,
-          addToCart: true,
-          onTap: () {
-            Get.back();
-
-            widget.onAdd.call(quantity);
-
-          },
-          showIcon: true,
-        ),
       ],
     );
+  }
+
+  void onSave() {
+    Get.back();
+    widget.onAdd.call(quantity);
   }
 }

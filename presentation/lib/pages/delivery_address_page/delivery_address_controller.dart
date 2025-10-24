@@ -225,13 +225,15 @@ class DeliveryAddressController extends GetxController {
         ),
       ),
       TextFieldViewModel(
+        hintText: 'MD-2059',
         keyId: 'postal_code',
         title: AppTexts.postalCode,
         initialValue: '',
         textInputType: TextInputType.number,
       ),
-      TextFieldViewModel(keyId: 'address', title: AppTexts.address, initialValue: ''),
+      TextFieldViewModel(hintText: 'Calea Orheiului, 65',  keyId: 'address', title: AppTexts.address, initialValue: ''),
       TextFieldViewModel(
+        hintText: 'Anything you want',
         keyId: 'other_comments',
         title: AppTexts.otherComments,
         initialValue: '',

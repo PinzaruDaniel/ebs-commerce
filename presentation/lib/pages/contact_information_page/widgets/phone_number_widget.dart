@@ -33,12 +33,12 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
     flag: '🏳️',
     dialCode: '',
     phoneMaskMobileInternational: '',
+    exampleNumberMobileInternational: '',
   );
 
   CountryWithPhoneCode selectedCountryLibPhone = const CountryWithPhoneCode.us();
   TextEditingController textController = TextEditingController();
   String? parsedData;
-
 
   @override
   void initState() {
@@ -64,7 +64,6 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -78,6 +77,8 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
             Expanded(
               child: SelectionWidget<CountryFlagDialCodeViewModel>(
                 itemViewModel: SelectionViewModel<CountryFlagDialCodeViewModel>(
+                  showTitle: false,
+                  title: AppTexts.country,
                   displayText: (option) => '${selectedFlagDial.flag} +(${selectedFlagDial.dialCode})',
                   options: nomenclatureController.countriesFlagsDialCode.value
                       .map(
@@ -89,8 +90,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                       .toList(),
                   initialValue: OptionViewModel(
                     data: selectedFlagDial,
-                    titleKey:
-                        '${selectedFlagDial.flag} ${selectedFlagDial.name} (+${selectedFlagDial.dialCode})',
+                    titleKey: '${selectedFlagDial.flag} ${selectedFlagDial.name} (+${selectedFlagDial.dialCode})',
                   ),
                 ),
                 onSelect: (OptionViewModel selectedOption) {
@@ -98,7 +98,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
 
                   final newCountry =
                       nomenclatureController.countries.firstWhereOrNull(
-                        (c) => c.countryCode.toUpperCase() == selectedItem.countryCode.toUpperCase(),
+                        (c) => c.countryCode.toUpperCase() == selectedItem.iso2.toUpperCase(),
                       ) ??
                       const CountryWithPhoneCode.us();
 
@@ -117,6 +117,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
               flex: 2,
               child: TextFieldWidget(
                 itemViewModel: TextFieldViewModel(
+                  hintText: selectedFlagDial.exampleNumberMobileInternational,
                   keyId: 'phone',
                   textInputType: TextInputType.phone,
                   textController: textController,

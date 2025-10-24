@@ -8,7 +8,9 @@ import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/product_view_model.dart';
 import '../resources/app_colors.dart';
+import '../resources/app_text_styles.dart';
 import '../resources/app_texts.dart';
+import '../widgets/bottom_navigation_bar_widget.dart';
 import '../widgets/selection_widget.dart';
 
 class AppPopUp {
@@ -19,7 +21,12 @@ class AppPopUp {
     bool showHandle = true,
     bool isScrollControlled = false,
     Widget? saveButton,
+    Function? onDone,
     String? title,
+    Function? onSave,
+    bool? addToCart,
+    bool? showIcon,
+    String? barTitle,
   }) async {
     if (Get.context != null) {
       return await showModalBottomSheet(
@@ -37,19 +44,51 @@ class AppPopUp {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-
-                  if(title!=null)
-                  Text(
-                    '${AppTexts.choose} ${title.toLowerCase()}',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  if(saveButton!=null)
-                  saveButton,
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Stack(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (title != null)
+                          Text(
+                            '${AppTexts.choose} ${title.toLowerCase()}',
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        if (onDone != null)
+                          GestureDetector(
+                            onTap: () {
+                              onDone.call();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(24),
+                                color: AppColors.primary,
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10),
+                              child: Text(AppTexts.done, style: AppTextsStyle.medium.copyWith(color: Colors.white)),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               child,
+
+              if (onSave != null)
+                BottomNavigationBarWidget(
+                  title: barTitle ?? AppTexts.save,
+                  onTap: () => onSave.call(),
+                  showIcon: showIcon ?? false,
+                  addToCart: addToCart,
+                ),
             ],
           );
         },
@@ -62,19 +101,39 @@ class AppPopUp {
     required Function onAdd,
     required int? maxValue,
   }) async {
-    await showCustomBottomSheet(
-      child: ProductDetailAddToCartBottomSheetWidget(item: item, onAdd: onAdd, maxValue: maxValue),
+    final productDetailKey = GlobalKey<ProductDetailAddToCartBottomSheetWidgetState>();
+    return await showCustomBottomSheet(
+      barTitle: AppTexts.addToCart,
+      addToCart: true,
+      showIcon: true,
+      onSave: () {
+        productDetailKey.currentState?.onSave();
+      },
+      child: ProductDetailAddToCartBottomSheetWidget(
+        key: productDetailKey,
+        item: item,
+        onAdd: onAdd,
+        maxValue: maxValue,
+      ),
     );
   }
 
   static Future<void> paymentMethod({required Function(PaymentMethod) onSelected, PaymentMethod? initialMethod}) async {
-    await showCustomBottomSheet(
-      child: PaymentMethodSelectionWidget(onSelected: onSelected, initialMethod: initialMethod),
+    final paymentMethodWidgetKey = GlobalKey<PaymentMethodSelectionWidgetState>();
+    return await showCustomBottomSheet(
+      onSave: () {
+        paymentMethodWidgetKey.currentState?.onSave();
+      },
+      child: PaymentMethodSelectionWidget(
+        key: paymentMethodWidgetKey,
+        onSelected: onSelected,
+        initialMethod: initialMethod,
+      ),
     );
   }
 
   static Future<void> voucherCode({required String initialValue, required Function(String) onSubmit}) async {
-    await showCustomBottomSheet(
+    return await showCustomBottomSheet(
       isScrollControlled: true,
       child: VoucherCodeInputWidget(initialValue: initialValue, onSubmit: onSubmit),
     );
@@ -85,11 +144,20 @@ class AppPopUp {
     required SelectionViewModel selectionViewModel,
     required Function() onSelect,
   }) async {
+    final optionPickerKey = GlobalKey<OptionPickerWidgetState>();
     return await showCustomBottomSheet(
       isDismissible: false,
       isScrollControlled: true,
-      //TODO: to add here title and row
-      child: OptionPickerWidget(title: title, selectionViewModel: selectionViewModel, onSelect: onSelect),
+      title: title,
+      onDone: () {
+        optionPickerKey.currentState?.onDone();
+      },
+      child: OptionPickerWidget(
+        title: title,
+        selectionViewModel: selectionViewModel,
+        onSelect: onSelect,
+        key: optionPickerKey,
+      ),
     );
   }
 

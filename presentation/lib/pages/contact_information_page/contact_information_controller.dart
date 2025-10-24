@@ -25,6 +25,7 @@ class ContactInformationController extends GetxController {
     final existingUser = user.value;
     allItems.value = [
       TextFieldViewModel(
+        hintText: 'Pinzaru',
         keyId: 'name',
         title: AppTexts.name,
         initialValue: existingUser?.name ?? '',
@@ -41,6 +42,7 @@ class ContactInformationController extends GetxController {
         },
       ),
       TextFieldViewModel(
+        hintText: 'Daniel',
         keyId: 'surname',
         title: AppTexts.surname,
         initialValue: existingUser?.surname ?? '',
@@ -67,10 +69,12 @@ class ContactInformationController extends GetxController {
                 name: 'United States',
                 dialCode: '1',
                 phoneMaskMobileInternational: '+0 000-000-0000',
+                exampleNumberMobileInternational: '1 201-555-0123',
               ),
       ),
 
       TextFieldViewModel(
+        hintText: 'pinzaru.daniel@gmail.com',
         keyId: 'email',
         title: AppTexts.email,
         textInputType: TextInputType.emailAddress,
@@ -104,7 +108,7 @@ class ContactInformationController extends GetxController {
       final item =
           allItems.firstWhere(
                 (element) => element is TextFieldViewModel && element.keyId == keyId,
-                orElse: () => TextFieldViewModel(title: '', initialValue: ''),
+                orElse: () => TextFieldViewModel(title: '', initialValue: '', hintText: ''),
               )
               as TextFieldViewModel;
 

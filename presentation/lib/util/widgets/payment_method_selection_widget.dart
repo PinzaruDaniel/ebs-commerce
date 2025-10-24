@@ -11,19 +11,13 @@ class PaymentMethodSelectionWidget extends StatefulWidget {
   final PaymentMethod? initialMethod;
   final Function(PaymentMethod)? onSelected;
 
-  const PaymentMethodSelectionWidget({
-    super.key,
-    this.initialMethod,
-    this.onSelected,
-  });
+  const PaymentMethodSelectionWidget({super.key, this.initialMethod, this.onSelected});
 
   @override
-  State<PaymentMethodSelectionWidget> createState() =>
-      _PaymentMethodSelectionWidgetState();
+  State<PaymentMethodSelectionWidget> createState() => PaymentMethodSelectionWidgetState();
 }
 
-class _PaymentMethodSelectionWidgetState
-    extends State<PaymentMethodSelectionWidget> {
+class PaymentMethodSelectionWidgetState extends State<PaymentMethodSelectionWidget> {
   PaymentMethod? selectedMethod;
 
   @override
@@ -34,22 +28,15 @@ class _PaymentMethodSelectionWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final paymentMethods = PaymentMethod.values;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(
-          child: Text(
-            AppTexts.choosePaymentMethod,
-            style: AppTextsStyle.bold(size: 18),
-          ),
-        ),
+        Center(child: Text(AppTexts.choosePaymentMethod, style: AppTextsStyle.bold(size: 18))),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40),
           child: Column(
-            children: paymentMethods.map((option) {
+            children: PaymentMethod.values.map((option) {
               final isSelected = selectedMethod == option;
               return InkWell(
                 onTap: () {
@@ -61,20 +48,11 @@ class _PaymentMethodSelectionWidgetState
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2.0),
                   child: Container(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      right: 36,
-                      top: 8,
-                      bottom: 8,
-                    ),
+                    padding: const EdgeInsets.only(left: 8.0, right: 36, top: 8, bottom: 8),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                        color: isSelected
-                            ? AppColors.primary
-                            : Colors.grey.shade300,
-                      ),
+                      border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
@@ -82,11 +60,7 @@ class _PaymentMethodSelectionWidgetState
                         children: [
                           Text(
                             option.title,
-                            style: AppTextsStyle.medium.copyWith(
-                              color: isSelected
-                                  ? AppColors.primary
-                                  : Colors.black,
-                            ),
+                            style: AppTextsStyle.medium.copyWith(color: isSelected ? AppColors.primary : Colors.black),
                           ),
                         ],
                       ),
@@ -97,18 +71,14 @@ class _PaymentMethodSelectionWidgetState
             }).toList(),
           ),
         ),
-        BottomNavigationBarWidget(
-          title: AppTexts.save,
-          onTap: () {
-            if (selectedMethod != null) {
-              widget.onSelected?.call(selectedMethod!);
-            } else {
-              Get.back();
-            }
-          },
-          showIcon: false,
-        ),
       ],
     );
+  }
+  void onSave() {
+    if (selectedMethod != null) {
+      widget.onSelected?.call(selectedMethod!);
+    } else {
+      Get.back();
+    }
   }
 }

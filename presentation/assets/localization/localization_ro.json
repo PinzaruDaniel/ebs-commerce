@@ -97,6 +97,7 @@
   "surnameMustContainOnlyLetters": "Prenumele trebuie să conțină doar litere",
   "pickupLocation": "Locație de ridicare",
   "street": "Stradă",
-  "done": "Gata"
+  "done": "Gata",
+  "search": "Caută..."
 
 }

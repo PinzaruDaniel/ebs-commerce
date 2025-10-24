@@ -18,7 +18,6 @@ class NomenclatureController extends GetxController {
   List<lib_phone_number.CountryWithPhoneCode> countries = [];
   Timer? debounce;
 
-
   @override
   void onInit() async {
     super.onInit();
@@ -32,10 +31,10 @@ class NomenclatureController extends GetxController {
   Future<void> getFlags() async {
     await getFlagsUseCase.call().then((either) {
       either.fold(
-            (failure) {
+        (failure) {
           showFailureSnackBar(failure: failure);
         },
-            (list) {
+        (list) {
           final newItems = list.map((e) => e.toModel).toList();
           flags.assignAll(newItems);
         },
@@ -47,10 +46,8 @@ class NomenclatureController extends GetxController {
     countriesFlagsDialCode.clear();
     for (var flag in flags) {
       final country =
-          countries.firstWhereOrNull(
-                (c) => c.countryCode.toUpperCase() == flag.iso2.toUpperCase(),
-          ) ??
-              lib_phone_number.CountryWithPhoneCode.us();
+          countries.firstWhereOrNull((c) => c.countryCode.toUpperCase() == flag.iso2.toUpperCase()) ??
+          lib_phone_number.CountryWithPhoneCode.us();
       countriesFlagsDialCode.add(
         CountryFlagDialCodeViewModel(
           name: flag.name,
@@ -58,6 +55,7 @@ class NomenclatureController extends GetxController {
           flag: flag.unicodeFlag,
           dialCode: country.phoneCode,
           phoneMaskMobileInternational: country.phoneMaskMobileInternational,
+          exampleNumberMobileInternational: country.exampleNumberMobileInternational,
         ),
       );
     }
@@ -67,7 +65,7 @@ class NomenclatureController extends GetxController {
   void filterCountries(String query) {
     if (debounce?.isActive ?? false) debounce!.cancel();
 
-    debounce = Timer( Duration(milliseconds: 300), () {
+    debounce = Timer(Duration(milliseconds: 300), () {
       final q = query.toLowerCase().trim();
 
       if (q.isEmpty) {
@@ -82,10 +80,7 @@ class NomenclatureController extends GetxController {
           final dialCode = item.dialCode.replaceAll('+', '').toLowerCase();
           final iso = item.iso2.toLowerCase();
 
-          return flag.contains(q) ||
-              name.contains(q) ||
-              dialCode.contains(q) ||
-              iso.contains(q);
+          return flag.contains(q) || name.contains(q) || dialCode.contains(q) || iso.contains(q);
         }).toList(),
       );
     });

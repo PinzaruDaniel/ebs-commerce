@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
 import 'package:presentation/util/resources/app_colors.dart';
+import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/base_view_model.dart';
 
@@ -17,6 +18,7 @@ class TextFieldViewModel extends BaseViewModel {
   final TextEditingController? textController;
   String placeholder;
   int? minLines;
+  String? hintText;
 
   TextFieldViewModel({
     this.keyId,
@@ -27,7 +29,9 @@ class TextFieldViewModel extends BaseViewModel {
     this.inputFormatter,
     this.textController,
     this.isRequiredValidation = true,
+    this.hintText,
     String initialValue = '',
+
     this.minLines,
   }) : placeholder = initialValue;
 }
@@ -69,7 +73,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -108,6 +111,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   textInputAction: TextInputAction.done,
                   cursorColor: AppColors.primary,
                   decoration: InputDecoration(
+                    prefixIcon: widget.itemViewModel.hintText == AppTexts.search ? Icon(Icons.search_rounded) : null,
+                    hintText: widget.itemViewModel.hintText,
+                    hintStyle: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500),
                     isDense: true,
                     errorText: state.errorText,
                     errorMaxLines: 3,

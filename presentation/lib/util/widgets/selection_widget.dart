@@ -19,10 +19,12 @@ class SelectionViewModel<T> extends BaseViewModel {
   final List<OptionViewModel> options;
   OptionViewModel selectedItem;
   final Function? displayText;
+  final bool? showTitle;
 
   SelectionViewModel({
     this.keyId,
     this.title,
+    this.showTitle=true,
     required this.options,
     required OptionViewModel initialValue,
     this.displayText,
@@ -49,7 +51,7 @@ class _SelectionWidgetState<T> extends State<SelectionWidget<T>> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.itemViewModel.title != null) ...[Text(widget.itemViewModel.title!), const SizedBox(height: 4)],
+        if (widget.itemViewModel.title != null && widget.itemViewModel.showTitle==true) ...[Text(widget.itemViewModel.title!), const SizedBox(height: 4)],
         InkWell(
           splashColor: Colors.transparent,
           onTap: () {

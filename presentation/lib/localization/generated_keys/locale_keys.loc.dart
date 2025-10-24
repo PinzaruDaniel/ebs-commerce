@@ -102,5 +102,6 @@ abstract class  LocaleKeys {
   static const pickupLocation = 'pickupLocation';
   static const street = 'street';
   static const done = 'done';
+  static const search = 'search';
 
 }

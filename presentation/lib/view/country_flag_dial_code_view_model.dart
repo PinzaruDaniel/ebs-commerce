@@ -6,6 +6,8 @@ class CountryFlagDialCodeViewModel extends BaseViewModel {
   final String flag;
   final String dialCode;
   final String phoneMaskMobileInternational;
+  final String exampleNumberMobileInternational;
+
 
   CountryFlagDialCodeViewModel({
     required this.name,
@@ -13,5 +15,6 @@ class CountryFlagDialCodeViewModel extends BaseViewModel {
     required this.flag,
     required this.dialCode,
     required this.phoneMaskMobileInternational,
+    required this.exampleNumberMobileInternational,
   });
 }

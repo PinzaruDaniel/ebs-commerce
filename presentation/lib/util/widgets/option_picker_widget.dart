@@ -4,8 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
+import 'package:presentation/view/city_view_model.dart';
+import 'package:presentation/view/country_flag_dial_code_view_model.dart';
+import 'package:presentation/view/country_view_model.dart';
+import 'package:presentation/view/state_view_model.dart';
 
-import '../resources/app_colors.dart';
 import '../resources/app_text_styles.dart';
 import '../resources/app_texts.dart';
 import 'selection_widget.dart';
@@ -18,10 +21,10 @@ class OptionPickerWidget<T> extends StatefulWidget {
   const OptionPickerWidget({super.key, required this.title, required this.selectionViewModel, required this.onSelect});
 
   @override
-  State<OptionPickerWidget<T>> createState() => _OptionPickerWidgetState<T>();
+  State<OptionPickerWidget<T>> createState() => OptionPickerWidgetState<T>();
 }
 
-class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
+class OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
   FixedExtentScrollController scrollController = FixedExtentScrollController();
   final TextEditingController searchController = TextEditingController();
 
@@ -42,10 +45,9 @@ class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
 
   void onSearchChanged() {
     if (debounce?.isActive ?? false) debounce!.cancel();
-
-    debounce = Timer(const Duration(milliseconds: 300), () {
+    //todo: to remove try catch and to check by class
+    debounce = Timer(const Duration(milliseconds: 700), () {
       final query = searchController.text.toLowerCase();
-
       setState(() {
         filteredOptions = widget.selectionViewModel.options.where((opt) {
           final data = opt.data;
@@ -53,17 +55,16 @@ class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
           String countryName = '';
           String countryDialCode = '';
 
-          try {
-            countryCode = (data as dynamic).iso2?.toLowerCase() ?? '';
-          } catch (_) {}
-
-          try {
-            countryName = (data as dynamic).name?.toLowerCase() ?? '';
-          } catch (_) {}
-
-          try {
-            countryDialCode = (data as dynamic).dialCode?.toLowerCase() ?? '';
-          } catch (_) {}
+          if (data is CountryFlagDialCodeViewModel) {
+            countryCode = data.iso2.toLowerCase();
+            countryName = data.name.toLowerCase();
+            countryDialCode = data.dialCode;
+          } else if (data is CountryViewModel) {
+            countryCode = data.iso2.toLowerCase();
+            countryName = data.name.toLowerCase();
+          } else if (data is CityViewModel || data is StateViewModel) {
+            countryName = data.name.toLowerCase();
+          }
 
           final titleKey = opt.titleKey.toLowerCase();
 
@@ -88,6 +89,15 @@ class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
     super.dispose();
   }
 
+  void onDone() {
+    if (filteredOptions.isNotEmpty) {
+      final selectedIndex = scrollController.selectedItem;
+      widget.selectionViewModel.selectedItem = filteredOptions[selectedIndex];
+      widget.onSelect();
+    }
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -98,46 +108,17 @@ class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Spacer(),
-                    Center(
-                      child: Text(
-                        '${AppTexts.choose} ${widget.title.toLowerCase()}',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        if (filteredOptions.isNotEmpty) {
-                          final selectedIndex = scrollController.selectedItem;
-                          widget.selectionViewModel.selectedItem = filteredOptions[selectedIndex];
-                          widget.onSelect();
-                        }
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(24), color: AppColors.primary),
-                        padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10),
-                        child: Text(AppTexts.done, style: AppTextsStyle.medium.copyWith(color: Colors.white)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                padding: EdgeInsets.only(left: 12, right: 12, top: 12),
                 child: TextFieldWidget(
-                  itemViewModel: TextFieldViewModel(textController: searchController, isRequiredValidation: false),
+                  itemViewModel: TextFieldViewModel(
+                      hintText: AppTexts.search,
+                      textController: searchController, isRequiredValidation: false),
                 ),
               ),
               SizedBox(
                 height: Get.height * 0.25,
                 child: filteredOptions.isEmpty
-                    ? const Center(child: Text('No results found'))
+                    ? Center(child: Text(AppTexts.nothingToShow))
                     : CupertinoPicker(
                         itemExtent: 32,
                         useMagnifier: true,

@@ -97,5 +97,6 @@
   "surnameMustContainOnlyLetters": "Фамилия должна содержать только буквы",
   "pickupLocation": "Пункт самовывоза",
   "street": "Улица",
-  "done": "Готово"
+  "done": "Готово",
+  "Search": "Поиск..."
 }
