@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
+
 import '../resources/app_colors.dart';
 import '../resources/app_text_styles.dart';
 import '../resources/app_texts.dart';
@@ -43,14 +43,12 @@ class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
   void onSearchChanged() {
     if (debounce?.isActive ?? false) debounce!.cancel();
 
-    debounce = Timer(const Duration(seconds: 2), () {
+    debounce = Timer(const Duration(milliseconds: 300), () {
       final query = searchController.text.toLowerCase();
 
       setState(() {
         filteredOptions = widget.selectionViewModel.options.where((opt) {
           final data = opt.data;
-
-          // Try to access the fields with null safety and fallback to empty string if not present
           String countryCode = '';
           String countryName = '';
           String countryDialCode = '';
@@ -81,7 +79,6 @@ class _OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
       });
     });
   }
-
 
   @override
   void dispose() {
