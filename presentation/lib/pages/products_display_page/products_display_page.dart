@@ -67,12 +67,16 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
               await controller.loadProducts(
                 loadMore: false,
                 productType: widget.type,
+                selectedCategoryIds: widget.selectedCategoryIds,
+                priceRange: widget.priceRange,
               );
               _refreshController.refreshCompleted();
             },
             onLoading: () async {
               await controller.loadProducts(
                 loadMore: true,
+                selectedCategoryIds: widget.selectedCategoryIds,
+                priceRange: widget.priceRange,
                 productType: widget.type,
               );
               _refreshController.loadComplete();

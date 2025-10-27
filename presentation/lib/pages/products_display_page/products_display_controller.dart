@@ -37,6 +37,7 @@ class ProductsDisplayController extends GetxController {
     SfRangeValues? priceRange,
   }) async {
     if (loadMore) {
+      currentPage.value++;
       if (isLoadingMore.value) return;
     } else {
       isLoading.value = true;
@@ -59,9 +60,6 @@ class ProductsDisplayController extends GetxController {
 
         default:
           return;
-      }
-      if (loadMore) {
-        currentPage.value++;
       }
     } finally {
       isLoading.value = false;
@@ -124,8 +122,8 @@ class ProductsDisplayController extends GetxController {
     final either = await getFilteredProductsUseCase.call(
       GetFilteredProductsParams(
         page: currentPage.value,
-        priceGte: priceRange?.start,
-        priceLte: priceRange?.end,
+        priceGte: priceRange?.start??1,
+        priceLte: priceRange?.end??50000,
         categoriesId: selectedCategoryIds,
       ),
     );
