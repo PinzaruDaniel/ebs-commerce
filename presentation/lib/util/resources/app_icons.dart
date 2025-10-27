@@ -6,6 +6,7 @@ class AppIcons {
   //icons
   static SvgPicture cartIcon = SvgPicture.asset('assets/icons/Cart icon.svg');
 
+  static SvgPicture countryFlag({required String iso2}) => SvgPicture.asset('assets/flags/$iso2.svg', height: 20,);
   static Icon backIcon({Color? color, double? size}) =>
       Icon(Icons.arrow_back_ios_new_rounded, color: color ?? AppColors.primary, size: size ?? 20);
   static SvgPicture filtersIcon = SvgPicture.asset('assets/icons/filters.svg');

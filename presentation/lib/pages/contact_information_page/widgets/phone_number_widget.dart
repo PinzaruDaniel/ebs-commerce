@@ -6,6 +6,7 @@ import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
 import '../../../controllers/controller_imports.dart';
+import '../../../util/resources/app_icons.dart';
 import '../../../util/widgets/selection_widget.dart';
 import '../../../view/country_flag_dial_code_view_model.dart';
 
@@ -79,12 +80,20 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                 itemViewModel: SelectionViewModel<CountryFlagDialCodeViewModel>(
                   showTitle: false,
                   title: AppTexts.country,
-                  displayText: (option) => '${selectedFlagDial.flag} +(${selectedFlagDial.dialCode})',
+                  displayText: (option) => Row(
+                    children: [
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: AppIcons.countryFlag(iso2: selectedFlagDial.iso2.toLowerCase())),
+                      SizedBox(width: 4,),
+                      Text('+${selectedFlagDial.dialCode}'),
+                    ],
+                  ),
                   options: nomenclatureController.countriesFlagsDialCode.value
                       .map(
                         (e) => OptionViewModel<CountryFlagDialCodeViewModel>(
                           data: e,
-                          titleKey: '${e.flag} ${e.name} (+${e.dialCode})',
+                          titleKey: '${e.name}  (+${e.dialCode})',
                         ),
                       )
                       .toList(),

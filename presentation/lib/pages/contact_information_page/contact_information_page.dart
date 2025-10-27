@@ -80,12 +80,6 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
                 ],
               ),
             ),
-
-            /*Obx(() {
-              return contactInformationController.isLoading.value
-                  ? LoadingOverlayWidget(isLoading: false)
-                  : const SizedBox.shrink();
-            }),*/
           ],
         ),
       ),

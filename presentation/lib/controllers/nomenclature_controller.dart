@@ -61,34 +61,4 @@ class NomenclatureController extends GetxController {
     }
     countriesFlagsDialCode.sort((a, b) => a.name.compareTo(b.name));
   }
-
-  void filterCountries(String query) {
-    if (debounce?.isActive ?? false) debounce!.cancel();
-
-    debounce = Timer(Duration(milliseconds: 300), () {
-      final q = query.toLowerCase().trim();
-
-      if (q.isEmpty) {
-        filteredCountriesFlagsDialCode.assignAll(countriesFlagsDialCode);
-        return;
-      }
-
-      filteredCountriesFlagsDialCode.assignAll(
-        countriesFlagsDialCode.where((item) {
-          final flag = item.flag.toLowerCase();
-          final name = item.name.toLowerCase();
-          final dialCode = item.dialCode.replaceAll('+', '').toLowerCase();
-          final iso = item.iso2.toLowerCase();
-
-          return flag.contains(q) || name.contains(q) || dialCode.contains(q) || iso.contains(q);
-        }).toList(),
-      );
-    });
-  }
-
-  @override
-  void onClose() {
-    debounce?.cancel();
-    super.onClose();
-  }
 }

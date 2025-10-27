@@ -33,7 +33,7 @@ class AppPopUp {
         backgroundColor: Colors.white,
         showDragHandle: showHandle,
         isDismissible: isDismissible,
-        isScrollControlled: isScrollControlled,
+        isScrollControlled: true,
         enableDrag: enableDrag,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
@@ -41,55 +41,68 @@ class AppPopUp {
         context: Get.context!,
         builder: (_) {
           //TODO: to add base_view_widget
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Stack(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (title != null)
-                          Text(
-                            '${AppTexts.choose} ${title.toLowerCase()}',
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        if (onDone != null)
-                          GestureDetector(
-                            onTap: () {
-                              onDone.call();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(24),
-                                color: AppColors.primary,
-                              ),
-                              padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10),
-                              child: Text(AppTexts.done, style: AppTextsStyle.medium.copyWith(color: Colors.white)),
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: constraints.maxHeight),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Stack(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (title != null)
+                                  Text(
+                                    '${AppTexts.choose} ${title.toLowerCase()}',
+                                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                  ),
+                              ],
                             ),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              child,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                if (onDone != null)
+                                  GestureDetector(
+                                    onTap: () {
+                                      onDone.call();
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(24),
+                                        color: AppColors.primary,
+                                      ),
+                                      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10),
+                                      child: Text(
+                                        AppTexts.done,
+                                        style: AppTextsStyle.medium.copyWith(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      child,
 
-              if (onSave != null)
-                BottomNavigationBarWidget(
-                  title: barTitle ?? AppTexts.save,
-                  onTap: () => onSave.call(),
-                  showIcon: showIcon ?? false,
-                  addToCart: addToCart,
+                      if (onSave != null)
+                        BottomNavigationBarWidget(
+                          title: barTitle ?? AppTexts.save,
+                          onTap: () => onSave.call(),
+                          showIcon: showIcon ?? false,
+                          addToCart: addToCart,
+                        ),
+                    ],
+                  ),
                 ),
-            ],
+              );
+            },
           );
         },
       );
@@ -133,9 +146,14 @@ class AppPopUp {
   }
 
   static Future<void> voucherCode({required String initialValue, required Function(String) onSubmit}) async {
+    final voucherCodeKey = GlobalKey<VoucherCodeInputWidgetState>();
+
     return await showCustomBottomSheet(
       isScrollControlled: true,
-      child: VoucherCodeInputWidget(initialValue: initialValue, onSubmit: onSubmit),
+      onSave: () {
+        voucherCodeKey.currentState?.onDone();
+      },
+      child: VoucherCodeInputWidget(key: voucherCodeKey, initialValue: initialValue, onSubmit: onSubmit),
     );
   }
 

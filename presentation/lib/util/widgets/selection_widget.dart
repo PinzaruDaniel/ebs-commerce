@@ -24,7 +24,7 @@ class SelectionViewModel<T> extends BaseViewModel {
   SelectionViewModel({
     this.keyId,
     this.title,
-    this.showTitle=true,
+    this.showTitle = true,
     required this.options,
     required OptionViewModel initialValue,
     this.displayText,
@@ -44,14 +44,23 @@ class SelectionWidget<T> extends StatefulWidget {
 class _SelectionWidgetState<T> extends State<SelectionWidget<T>> {
   @override
   Widget build(BuildContext context) {
-    final String displayText =
-        widget.itemViewModel.displayText?.call(widget.itemViewModel.selectedItem) ??
-        widget.itemViewModel.selectedItem.titleKey ??
-        widget.itemViewModel.selectedItem.toString();
+    final Widget displayWidget;
+    if (widget.itemViewModel.displayText != null) {
+      displayWidget = widget.itemViewModel.displayText!(widget.itemViewModel.selectedItem);
+    } else {
+      displayWidget = Text(
+        widget.itemViewModel.selectedItem.titleKey,
+        style: TextStyle(color: widget.itemViewModel.selectedItem.titleKey.isEmpty ? Colors.grey : Colors.black),
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.itemViewModel.title != null && widget.itemViewModel.showTitle==true) ...[Text(widget.itemViewModel.title!), const SizedBox(height: 4)],
+        if (widget.itemViewModel.title != null && widget.itemViewModel.showTitle == true) ...[
+          Text(widget.itemViewModel.title!),
+          const SizedBox(height: 4),
+        ],
         InkWell(
           splashColor: Colors.transparent,
           onTap: () {
@@ -79,8 +88,7 @@ class _SelectionWidgetState<T> extends State<SelectionWidget<T>> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(displayText, style: TextStyle(color: displayText.isEmpty ? Colors.grey : Colors.black)),
-
+                displayWidget,
                 Transform.rotate(angle: 4.7, child: AppIcons.backIcon(color: Colors.grey)),
               ],
             ),
