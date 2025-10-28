@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:presentation/pages/products_display_page/products_display_controller.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
-import 'package:presentation/util/widgets/loading_overlay_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 
 class ProductsListContainer extends StatelessWidget {
