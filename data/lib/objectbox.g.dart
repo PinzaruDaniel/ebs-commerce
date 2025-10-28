@@ -17,6 +17,9 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import 'modules/categories/models/local/category_box.dart';
 import 'modules/products/models/local/product_box.dart';
 import 'modules/specifications/models/local/specification_box.dart';
+import 'modules/user_information/models/local/delivery_address/delivery_address_box.dart';
+import 'modules/user_information/models/local/payment_method/payment_method_box.dart';
+import 'modules/user_information/models/local/user/user_box.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -180,6 +183,144 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(4, 1391590698796611740),
+    name: 'DeliveryAddressBox',
+    lastPropertyId: const obx_int.IdUid(9, 3606986736891617364),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 1217101285192197916),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 5815903078799551594),
+        name: 'deliveryType',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 7438553885857084763),
+        name: 'comments',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 1419605393681883263),
+        name: 'pickupLocation',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 5798831176627381852),
+        name: 'country',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 4887930276554479760),
+        name: 'region',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 3358737473617736461),
+        name: 'city',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 3572427999256531823),
+        name: 'postalCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 3606986736891617364),
+        name: 'address',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(5, 5331394926556515126),
+    name: 'PaymentMethodBox',
+    lastPropertyId: const obx_int.IdUid(3, 4014327120835671699),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 7504281067291536916),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 9158848028279639401),
+        name: 'key',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 4014327120835671699),
+        name: 'titleKey',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(6, 417593517334926949),
+    name: 'UserBox',
+    lastPropertyId: const obx_int.IdUid(6, 1361046753532434034),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 1507152223618843587),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 8842457239495892617),
+        name: 'name',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 7764263670518709320),
+        name: 'surname',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 7742160915400199029),
+        name: 'number',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 6445842672435435804),
+        name: 'dialCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 1361046753532434034),
+        name: 'email',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -220,7 +361,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(3, 4554370860469021776),
+    lastEntityId: const obx_int.IdUid(6, 417593517334926949),
     lastIndexId: const obx_int.IdUid(2, 4504896009286587906),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -468,6 +609,200 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    DeliveryAddressBox: obx_int.EntityDefinition<DeliveryAddressBox>(
+      model: _entities[3],
+      toOneRelations: (DeliveryAddressBox object) => [],
+      toManyRelations: (DeliveryAddressBox object) => {},
+      getId: (DeliveryAddressBox object) => object.id,
+      setId: (DeliveryAddressBox object, int id) {
+        object.id = id;
+      },
+      objectToFB: (DeliveryAddressBox object, fb.Builder fbb) {
+        final deliveryTypeOffset = fbb.writeString(object.deliveryType);
+        final commentsOffset = object.comments == null
+            ? null
+            : fbb.writeString(object.comments!);
+        final pickupLocationOffset = object.pickupLocation == null
+            ? null
+            : fbb.writeString(object.pickupLocation!);
+        final countryOffset = object.country == null
+            ? null
+            : fbb.writeString(object.country!);
+        final regionOffset = object.region == null
+            ? null
+            : fbb.writeString(object.region!);
+        final cityOffset = object.city == null
+            ? null
+            : fbb.writeString(object.city!);
+        final postalCodeOffset = object.postalCode == null
+            ? null
+            : fbb.writeString(object.postalCode!);
+        final addressOffset = object.address == null
+            ? null
+            : fbb.writeString(object.address!);
+        fbb.startTable(10);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, deliveryTypeOffset);
+        fbb.addOffset(2, commentsOffset);
+        fbb.addOffset(3, pickupLocationOffset);
+        fbb.addOffset(4, countryOffset);
+        fbb.addOffset(5, regionOffset);
+        fbb.addOffset(6, cityOffset);
+        fbb.addOffset(7, postalCodeOffset);
+        fbb.addOffset(8, addressOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final deliveryTypeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final pickupLocationParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final countryParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final regionParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 14);
+        final cityParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 16);
+        final postalCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 18);
+        final addressParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 20);
+        final commentsParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final object = DeliveryAddressBox(
+          id: idParam,
+          deliveryType: deliveryTypeParam,
+          pickupLocation: pickupLocationParam,
+          country: countryParam,
+          region: regionParam,
+          city: cityParam,
+          postalCode: postalCodeParam,
+          address: addressParam,
+          comments: commentsParam,
+        );
+
+        return object;
+      },
+    ),
+    PaymentMethodBox: obx_int.EntityDefinition<PaymentMethodBox>(
+      model: _entities[4],
+      toOneRelations: (PaymentMethodBox object) => [],
+      toManyRelations: (PaymentMethodBox object) => {},
+      getId: (PaymentMethodBox object) => object.id,
+      setId: (PaymentMethodBox object, int id) {
+        object.id = id;
+      },
+      objectToFB: (PaymentMethodBox object, fb.Builder fbb) {
+        final keyOffset = fbb.writeString(object.key);
+        final titleKeyOffset = fbb.writeString(object.titleKey);
+        fbb.startTable(4);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, keyOffset);
+        fbb.addOffset(2, titleKeyOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final keyParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final titleKeyParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 8, '');
+        final object = PaymentMethodBox(
+          id: idParam,
+          key: keyParam,
+          titleKey: titleKeyParam,
+        );
+
+        return object;
+      },
+    ),
+    UserBox: obx_int.EntityDefinition<UserBox>(
+      model: _entities[5],
+      toOneRelations: (UserBox object) => [],
+      toManyRelations: (UserBox object) => {},
+      getId: (UserBox object) => object.id,
+      setId: (UserBox object, int id) {
+        object.id = id;
+      },
+      objectToFB: (UserBox object, fb.Builder fbb) {
+        final nameOffset = fbb.writeString(object.name);
+        final surnameOffset = fbb.writeString(object.surname);
+        final numberOffset = fbb.writeString(object.number);
+        final dialCodeOffset = fbb.writeString(object.dialCode);
+        final emailOffset = fbb.writeString(object.email);
+        fbb.startTable(7);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, nameOffset);
+        fbb.addOffset(2, surnameOffset);
+        fbb.addOffset(3, numberOffset);
+        fbb.addOffset(4, dialCodeOffset);
+        fbb.addOffset(5, emailOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final nameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final surnameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 8, '');
+        final numberParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 10, '');
+        final dialCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 12, '');
+        final emailParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 14, '');
+        final object = UserBox(
+          id: idParam,
+          name: nameParam,
+          surname: surnameParam,
+          number: numberParam,
+          dialCode: dialCodeParam,
+          email: emailParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -585,5 +920,104 @@ class SpecificationBox_ {
   /// See [SpecificationBox.attributeId].
   static final attributeId = obx.QueryIntegerProperty<SpecificationBox>(
     _entities[2].properties[4],
+  );
+}
+
+/// [DeliveryAddressBox] entity fields to define ObjectBox queries.
+class DeliveryAddressBox_ {
+  /// See [DeliveryAddressBox.id].
+  static final id = obx.QueryIntegerProperty<DeliveryAddressBox>(
+    _entities[3].properties[0],
+  );
+
+  /// See [DeliveryAddressBox.deliveryType].
+  static final deliveryType = obx.QueryStringProperty<DeliveryAddressBox>(
+    _entities[3].properties[1],
+  );
+
+  /// See [DeliveryAddressBox.comments].
+  static final comments = obx.QueryStringProperty<DeliveryAddressBox>(
+    _entities[3].properties[2],
+  );
+
+  /// See [DeliveryAddressBox.pickupLocation].
+  static final pickupLocation = obx.QueryStringProperty<DeliveryAddressBox>(
+    _entities[3].properties[3],
+  );
+
+  /// See [DeliveryAddressBox.country].
+  static final country = obx.QueryStringProperty<DeliveryAddressBox>(
+    _entities[3].properties[4],
+  );
+
+  /// See [DeliveryAddressBox.region].
+  static final region = obx.QueryStringProperty<DeliveryAddressBox>(
+    _entities[3].properties[5],
+  );
+
+  /// See [DeliveryAddressBox.city].
+  static final city = obx.QueryStringProperty<DeliveryAddressBox>(
+    _entities[3].properties[6],
+  );
+
+  /// See [DeliveryAddressBox.postalCode].
+  static final postalCode = obx.QueryStringProperty<DeliveryAddressBox>(
+    _entities[3].properties[7],
+  );
+
+  /// See [DeliveryAddressBox.address].
+  static final address = obx.QueryStringProperty<DeliveryAddressBox>(
+    _entities[3].properties[8],
+  );
+}
+
+/// [PaymentMethodBox] entity fields to define ObjectBox queries.
+class PaymentMethodBox_ {
+  /// See [PaymentMethodBox.id].
+  static final id = obx.QueryIntegerProperty<PaymentMethodBox>(
+    _entities[4].properties[0],
+  );
+
+  /// See [PaymentMethodBox.key].
+  static final key = obx.QueryStringProperty<PaymentMethodBox>(
+    _entities[4].properties[1],
+  );
+
+  /// See [PaymentMethodBox.titleKey].
+  static final titleKey = obx.QueryStringProperty<PaymentMethodBox>(
+    _entities[4].properties[2],
+  );
+}
+
+/// [UserBox] entity fields to define ObjectBox queries.
+class UserBox_ {
+  /// See [UserBox.id].
+  static final id = obx.QueryIntegerProperty<UserBox>(
+    _entities[5].properties[0],
+  );
+
+  /// See [UserBox.name].
+  static final name = obx.QueryStringProperty<UserBox>(
+    _entities[5].properties[1],
+  );
+
+  /// See [UserBox.surname].
+  static final surname = obx.QueryStringProperty<UserBox>(
+    _entities[5].properties[2],
+  );
+
+  /// See [UserBox.number].
+  static final number = obx.QueryStringProperty<UserBox>(
+    _entities[5].properties[3],
+  );
+
+  /// See [UserBox.dialCode].
+  static final dialCode = obx.QueryStringProperty<UserBox>(
+    _entities[5].properties[4],
+  );
+
+  /// See [UserBox.email].
+  static final email = obx.QueryStringProperty<UserBox>(
+    _entities[5].properties[5],
   );
 }

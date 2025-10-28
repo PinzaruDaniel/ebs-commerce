@@ -130,9 +130,126 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:1391590698796611740",
+      "lastPropertyId": "9:3606986736891617364",
+      "name": "DeliveryAddressBox",
+      "properties": [
+        {
+          "id": "1:1217101285192197916",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5815903078799551594",
+          "name": "deliveryType",
+          "type": 9
+        },
+        {
+          "id": "3:7438553885857084763",
+          "name": "comments",
+          "type": 9
+        },
+        {
+          "id": "4:1419605393681883263",
+          "name": "pickupLocation",
+          "type": 9
+        },
+        {
+          "id": "5:5798831176627381852",
+          "name": "country",
+          "type": 9
+        },
+        {
+          "id": "6:4887930276554479760",
+          "name": "region",
+          "type": 9
+        },
+        {
+          "id": "7:3358737473617736461",
+          "name": "city",
+          "type": 9
+        },
+        {
+          "id": "8:3572427999256531823",
+          "name": "postalCode",
+          "type": 9
+        },
+        {
+          "id": "9:3606986736891617364",
+          "name": "address",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:5331394926556515126",
+      "lastPropertyId": "3:4014327120835671699",
+      "name": "PaymentMethodBox",
+      "properties": [
+        {
+          "id": "1:7504281067291536916",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9158848028279639401",
+          "name": "key",
+          "type": 9
+        },
+        {
+          "id": "3:4014327120835671699",
+          "name": "titleKey",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:417593517334926949",
+      "lastPropertyId": "6:1361046753532434034",
+      "name": "UserBox",
+      "properties": [
+        {
+          "id": "1:1507152223618843587",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8842457239495892617",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7764263670518709320",
+          "name": "surname",
+          "type": 9
+        },
+        {
+          "id": "4:7742160915400199029",
+          "name": "number",
+          "type": 9
+        },
+        {
+          "id": "5:6445842672435435804",
+          "name": "dialCode",
+          "type": 9
+        },
+        {
+          "id": "6:1361046753532434034",
+          "name": "email",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:4554370860469021776",
+  "lastEntityId": "6:417593517334926949",
   "lastIndexId": "2:4504896009286587906",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

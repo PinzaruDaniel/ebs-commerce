@@ -22,6 +22,7 @@ class UserLocalDataSourceImpl implements UserLocalSource {
   @override
   Future<UserBox> getUser() async {
     final users = userBox.getAll();
-    return users.first;
+    print(' this is user from local data ${users.last.name}');
+    return users.last;
   }
 }
