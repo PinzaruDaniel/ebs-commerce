@@ -1,4 +1,3 @@
-import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_page.dart';

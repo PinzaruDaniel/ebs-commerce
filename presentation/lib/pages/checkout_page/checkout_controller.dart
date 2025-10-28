@@ -1,6 +1,5 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-import 'package:common/constants/constant_lists_string.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';

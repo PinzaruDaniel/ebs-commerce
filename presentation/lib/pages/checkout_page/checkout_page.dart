@@ -135,7 +135,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           );
                         }
                       },
-                      onRemoveTap: () {},
                     );
                   }
                   if (item is OrderSummaryViewModel) {
@@ -149,14 +148,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ),
       ),
       bottomNavigationBar: Obx(() {
-        final hasSelectedPayment = checkoutController.selectedPaymentMethod.value != null;
+        final hasSelectedPayment = checkoutController.selectedPaymentMethod.value !=null;
         final hasCompleteInfo = !checkoutController.hasIncompleteUserInfo();
+        final hasDeliveryAddress= checkoutController.deliveryModel.value !=null;
 
         return BottomNavigationBarWidget(
           titleDialog: AppTexts.oops,
           contentDialog: AppTexts.enterAllData,
-          title: hasSelectedPayment && hasCompleteInfo ? AppTexts.createOrder : AppTexts.enterAllData,
-          addToCart: hasSelectedPayment && hasCompleteInfo,
+          title: hasSelectedPayment && !hasCompleteInfo && hasDeliveryAddress ? AppTexts.createOrder : AppTexts.enterAllData,
+          addToCart: hasSelectedPayment && !hasCompleteInfo && hasDeliveryAddress,
           onTap: () {
             AwesomeDialog(
               context: context,

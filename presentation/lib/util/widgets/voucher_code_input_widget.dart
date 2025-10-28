@@ -3,7 +3,6 @@ import 'package:presentation/util/widgets/text_field_widget.dart';
 
 import '../resources/app_text_styles.dart';
 import '../resources/app_texts.dart';
-import 'bottom_navigation_bar_widget.dart';
 
 class VoucherCodeInputWidget extends StatefulWidget {
   final String initialValue;

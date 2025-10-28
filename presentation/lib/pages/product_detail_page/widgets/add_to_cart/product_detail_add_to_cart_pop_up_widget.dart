@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_image_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_title_widget.dart';
 import 'package:presentation/util/resources/app_texts.dart';
-import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/product_input_quantity_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';

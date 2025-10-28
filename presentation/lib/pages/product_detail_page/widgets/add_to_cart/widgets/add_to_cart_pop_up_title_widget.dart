@@ -13,9 +13,7 @@ class AddToCartPopUpTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brand = item.company?[AppTexts.brand] as String?;
-    final titleText = brand != null && brand.isNotEmpty
-        ? '${item.title} From $brand'
-        : item.title;
+    final titleText = brand != null && brand.isNotEmpty ? '${item.title} From $brand' : item.title;
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
       child: Column(
@@ -28,22 +26,20 @@ class AddToCartPopUpTitleWidget extends StatelessWidget {
                 style: AppTextsStyle.bold(),
                 children: [
                   TextSpan(text: titleText),
-                  if (item.discount?.isNotEmpty == true )
+                  if (item.discount?.isNotEmpty == true)
                     WidgetSpan(
                       alignment: PlaceholderAlignment.middle,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 4),
+                          padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 4),
                           decoration: BoxDecoration(
                             color: AppColors.pinkBackGround,
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
                             '${item.discount}%',
-                            style: AppTextsStyle.bold(
-                                size: 11, color: AppColors.redText),
+                            style: AppTextsStyle.bold(size: 11, color: AppColors.redText),
                           ),
                         ),
                       ),

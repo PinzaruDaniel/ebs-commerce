@@ -42,8 +42,7 @@ class SelectionWidget<T> extends StatefulWidget {
 }
 
 class _SelectionWidgetState<T> extends State<SelectionWidget<T>> {
-  @override
-  Widget build(BuildContext context) {
+  Widget displayWidget() {
     final Widget displayWidget;
     if (widget.itemViewModel.displayText != null) {
       displayWidget = widget.itemViewModel.displayText!(widget.itemViewModel.selectedItem);
@@ -53,7 +52,11 @@ class _SelectionWidgetState<T> extends State<SelectionWidget<T>> {
         style: TextStyle(color: widget.itemViewModel.selectedItem.titleKey.isEmpty ? Colors.grey : Colors.black),
       );
     }
+    return displayWidget;
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -88,7 +91,7 @@ class _SelectionWidgetState<T> extends State<SelectionWidget<T>> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                displayWidget,
+                displayWidget(),
                 Transform.rotate(angle: 4.7, child: AppIcons.backIcon(color: Colors.grey)),
               ],
             ),

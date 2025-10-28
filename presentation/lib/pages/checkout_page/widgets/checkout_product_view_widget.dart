@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/view/base_view_model.dart';
 
 import '../../../util/resources/app_text_styles.dart';
 import '../../../util/widgets/product_image_widget.dart';
 import '../../../view/cart_products_view_model.dart';
-
-class CheckoutProductViewModel extends BaseViewModel {}
 
 class CheckoutProductViewWidget extends StatefulWidget {
   const CheckoutProductViewWidget({super.key, required this.item});
@@ -17,19 +16,9 @@ class CheckoutProductViewWidget extends StatefulWidget {
   State<CheckoutProductViewWidget> createState() => _CheckoutProductViewWidgetState();
 }
 
-
 class _CheckoutProductViewWidgetState extends State<CheckoutProductViewWidget> {
-
-
   @override
   Widget build(BuildContext context) {
-
-    final priceString = (widget.item.discountedPrice != null) ? widget.item.discountedPrice : widget.item.price;
-    final price = double.tryParse(priceString ?? '') ?? 0.0;
-    final rawTotalPrice = price * widget.item.quantity;
-    final totalPrice = double.tryParse(rawTotalPrice.toStringAsFixed(2));
-
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -62,9 +51,9 @@ class _CheckoutProductViewWidgetState extends State<CheckoutProductViewWidget> {
                   ),
                   Row(
                     children: [
-                      Text('\$$price x ${widget.item.quantity}', style: AppTextsStyle.medium),
+                      Text('\$${widget.item.unitPrice} x ${widget.item.quantity}', style: AppTextsStyle.medium),
                       Spacer(),
-                      Text('\$$totalPrice ', style: AppTextsStyle.medium),
+                      Text('\$${widget.item.totalPrice}', style: AppTextsStyle.medium),
                     ],
                   ),
                 ],

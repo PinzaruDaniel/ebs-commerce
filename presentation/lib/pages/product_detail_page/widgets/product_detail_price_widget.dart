@@ -28,12 +28,11 @@ class _ProductDetailPriceWidgetState extends State<ProductDetailPriceWidget> {
                     const SizedBox(width: 8),
                     Text(
                       '\$ ${widget.item.price ?? '-'}',
-                      style: const TextStyle(
+                      style:  TextStyle(
                         decoration: TextDecoration.lineThrough,
-                        decorationColor: Color(0xffA0A5AB),
-                        color: Color(0xffA0A5AB),
+                        decorationColor: Colors.grey.shade500,
+                        color: Colors.grey.shade500,
                         fontSize: 12,
-                        fontFamily: 'Nunito-Sans',
                       ),
                     ),
                     widget.showDiscount == true

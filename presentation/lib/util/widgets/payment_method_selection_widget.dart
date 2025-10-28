@@ -5,7 +5,6 @@ import '../enum/enums.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_text_styles.dart';
 import '../resources/app_texts.dart';
-import 'bottom_navigation_bar_widget.dart';
 
 class PaymentMethodSelectionWidget extends StatefulWidget {
   final PaymentMethod? initialMethod;

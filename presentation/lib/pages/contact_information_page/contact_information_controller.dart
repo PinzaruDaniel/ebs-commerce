@@ -65,7 +65,7 @@ class ContactInformationController extends GetxController {
             ? nomenclatureController.countriesFlagsDialCode.value.first
             : CountryFlagDialCodeViewModel(
                 iso2: 'US',
-                flag: '🇺🇸',
+                //flag: '🇺🇸',
                 name: 'United States',
                 dialCode: '1',
                 phoneMaskMobileInternational: '+0 000-000-0000',
@@ -88,21 +88,6 @@ class ContactInformationController extends GetxController {
       ),
     ];
   }
-
-  /*  Future<void> getDialCodes() async {
-    await getDialCodesUseCase.call().then((either) {
-      either.fold(
-        (failure) {
-          showFailureSnackBar(failure: failure);
-        },
-        (list) {
-          final newItems = list.map((e) => e.toModel).toList();
-          dialCodes.assignAll(newItems);
-        },
-      );
-    });
-  }*/
-
   UserViewModel? toUserViewModel() {
     String getPlaceholderByKeyId(String keyId) {
       final item =
@@ -116,7 +101,6 @@ class ContactInformationController extends GetxController {
     }
 
     final phoneItem = allItems.firstWhereOrNull((element) => element is PhoneNumberViewModel) as PhoneNumberViewModel?;
-    print('phone number ${phoneItem?.initialValueTextField}');
     return user.value = UserViewModel(
       name: getPlaceholderByKeyId('name'),
       surname: getPlaceholderByKeyId('surname'),

@@ -31,7 +31,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
   CountryFlagDialCodeViewModel selectedFlagDial = CountryFlagDialCodeViewModel(
     name: '',
     iso2: '',
-    flag: '🏳️',
+    //flag: '🏳️',
     dialCode: '',
     phoneMaskMobileInternational: '',
     exampleNumberMobileInternational: '',
@@ -39,7 +39,6 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
 
   CountryWithPhoneCode selectedCountryLibPhone = const CountryWithPhoneCode.us();
   TextEditingController textController = TextEditingController();
-  String? parsedData;
 
   @override
   void initState() {
@@ -83,9 +82,10 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                   displayText: (option) => Row(
                     children: [
                       ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: AppIcons.countryFlag(iso2: selectedFlagDial.iso2.toLowerCase())),
-                      SizedBox(width: 4,),
+                        borderRadius: BorderRadius.circular(4),
+                        child: AppIcons.countryFlag(iso2: selectedFlagDial.iso2.toLowerCase()),
+                      ),
+                      const SizedBox(width: 4),
                       Text('+${selectedFlagDial.dialCode}'),
                     ],
                   ),
@@ -99,7 +99,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                       .toList(),
                   initialValue: OptionViewModel(
                     data: selectedFlagDial,
-                    titleKey: '${selectedFlagDial.flag} ${selectedFlagDial.name} (+${selectedFlagDial.dialCode})',
+                    titleKey: '${selectedFlagDial.name} (+${selectedFlagDial.dialCode})',
                   ),
                 ),
                 onSelect: (OptionViewModel selectedOption) {
