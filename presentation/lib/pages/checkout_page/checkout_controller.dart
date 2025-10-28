@@ -11,13 +11,14 @@ import 'package:presentation/view/user_view_model.dart';
 import '../../util/enum/enums.dart';
 import '../../util/resources/app_texts.dart';
 import '../../view/cart_products_view_model.dart';
+import '../../view/payment_method_view_model.dart';
 import '../../view/pickup_location_view_model.dart';
 
 class CheckoutController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
-  Rxn<PaymentMethod> selectedPaymentMethod = Rxn<PaymentMethod>();
+  Rxn<PaymentMethodViewModel> selectedPaymentMethod = Rxn<PaymentMethodViewModel>();
   RxString voucherCode = RxString('');
   RxList<CartViewModel> productItems = RxList([]);
   final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
@@ -60,7 +61,7 @@ class CheckoutController extends GetxController {
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.paymentMethod,
         placeholder: AppTexts.choosePaymentMethod,
-        titleKey: selectedPaymentMethod.value?.title,
+        titleKey: selectedPaymentMethod.value?.titleKey,
         infoItems: {},
       ),
 

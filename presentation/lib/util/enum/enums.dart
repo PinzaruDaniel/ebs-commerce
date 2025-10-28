@@ -1,8 +1,5 @@
 enum DeliveryType { pickup, fanCourier, dhl }
-enum PaymentMethod {
-  paypal,
-  cash,
-}
+
 
 enum DeliveryTypes {
   fanCourier('fan_courier');

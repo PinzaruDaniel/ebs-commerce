@@ -56,7 +56,7 @@ extension MapTextProductType on ProductListType {
     }
   }
 }
-
+/*
 extension PaymentMethodExtension on PaymentMethod {
   String get title {
     switch (this) {
@@ -66,4 +66,4 @@ extension PaymentMethodExtension on PaymentMethod {
         return AppTexts.cashPaymentMethod;
     }
   }
-}
+}*/

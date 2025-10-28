@@ -166,3 +166,4 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
     );
   }
 }
+//TODO: to save payment method, data user_information and delivery address in cash

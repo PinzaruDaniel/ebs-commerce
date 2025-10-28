@@ -105,7 +105,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               checkoutController.selectedPaymentMethod.value = value;
                               checkoutController.updateCheckoutInfoItem(
                                 keyId: CheckoutWidgetsType.paymentMethod,
-                                titleKey: value.title,
+                                titleKey: value.titleKey,
                               );
                               Get.back();
                             },

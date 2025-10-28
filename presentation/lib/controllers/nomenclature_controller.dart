@@ -18,16 +18,32 @@ class NomenclatureController extends GetxController {
   List<lib_phone_number.CountryWithPhoneCode> countries = [];
   Timer? debounce;
 
-  @override
-  void onInit() async {
-    super.onInit();
+  void initCountries() async {
     await lib_phone_number.init();
     countries = lib_phone_number.CountryManager().countries;
+    await getFlags();
     mapFlagsToCountries();
     filteredCountriesFlagsDialCode.assignAll(countriesFlagsDialCode);
   }
 
+  @override
+  void onInit() async {
+    super.onInit();
+  }
 
+  Future<void> getFlags() async {
+    await getFlagsUseCase.call().then((either) {
+      either.fold(
+        (failure) {
+          showFailureSnackBar(failure: failure);
+        },
+        (list) {
+          final newItems = list.map((e) => e.toModel).toList();
+          flags.assignAll(newItems);
+        },
+      );
+    });
+  }
 
   void mapFlagsToCountries() {
     countriesFlagsDialCode.clear();
@@ -39,7 +55,7 @@ class NomenclatureController extends GetxController {
         CountryFlagDialCodeViewModel(
           name: flag.name,
           iso2: flag.iso2,
-          //flag: flag.unicodeFlag,
+          // flag: flag.unicodeFlag,
           dialCode: country.phoneCode,
           phoneMaskMobileInternational: country.phoneMaskMobileInternational,
           exampleNumberMobileInternational: country.exampleNumberMobileInternational,

@@ -6,6 +6,7 @@ import 'package:presentation/util/widgets/payment_method_selection_widget.dart';
 import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
 
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
+import '../../view/payment_method_view_model.dart';
 import '../../view/product_view_model.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_text_styles.dart';
@@ -131,7 +132,7 @@ class AppPopUp {
     );
   }
 
-  static Future<void> paymentMethod({required Function(PaymentMethod) onSelected, PaymentMethod? initialMethod}) async {
+  static Future<void> paymentMethod({required Function(PaymentMethodViewModel) onSelected, PaymentMethodViewModel? initialMethod}) async {
     final paymentMethodWidgetKey = GlobalKey<PaymentMethodSelectionWidgetState>();
     return await showCustomBottomSheet(
       onSave: () {

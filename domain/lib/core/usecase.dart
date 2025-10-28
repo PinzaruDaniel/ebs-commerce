@@ -17,3 +17,4 @@ abstract class UseCaseNoEither<Type, Params>{
 abstract class UseCaseNoEitherNoParams<Type>{
   Stream<Type> call();
 }
+

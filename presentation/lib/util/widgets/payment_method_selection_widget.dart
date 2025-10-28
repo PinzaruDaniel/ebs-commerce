@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/util/enum/map_enums.dart';
-import '../enum/enums.dart';
+import '../../view/payment_method_view_model.dart';
 import '../resources/app_colors.dart';
 import '../resources/app_text_styles.dart';
 import '../resources/app_texts.dart';
 
 class PaymentMethodSelectionWidget extends StatefulWidget {
-  final PaymentMethod? initialMethod;
-  final Function(PaymentMethod)? onSelected;
+  final PaymentMethodViewModel? initialMethod;
+  final Function(PaymentMethodViewModel)? onSelected;
 
   const PaymentMethodSelectionWidget({super.key, this.initialMethod, this.onSelected});
 
@@ -17,7 +16,7 @@ class PaymentMethodSelectionWidget extends StatefulWidget {
 }
 
 class PaymentMethodSelectionWidgetState extends State<PaymentMethodSelectionWidget> {
-  PaymentMethod? selectedMethod;
+  PaymentMethodViewModel? selectedMethod;
 
   @override
   void initState() {
@@ -35,8 +34,8 @@ class PaymentMethodSelectionWidgetState extends State<PaymentMethodSelectionWidg
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40),
           child: Column(
-            children: PaymentMethod.values.map((option) {
-              final isSelected = selectedMethod == option;
+            children: paymentMethods.map((option) {
+              final isSelected = selectedMethod?.key == option.key;
               return InkWell(
                 onTap: () {
                   setState(() {
@@ -58,7 +57,7 @@ class PaymentMethodSelectionWidgetState extends State<PaymentMethodSelectionWidg
                       child: Row(
                         children: [
                           Text(
-                            option.title,
+                            option.titleKey,
                             style: AppTextsStyle.medium.copyWith(color: isSelected ? AppColors.primary : Colors.black),
                           ),
                         ],
@@ -73,6 +72,7 @@ class PaymentMethodSelectionWidgetState extends State<PaymentMethodSelectionWidg
       ],
     );
   }
+
   void onSave() {
     if (selectedMethod != null) {
       widget.onSelected?.call(selectedMethod!);
