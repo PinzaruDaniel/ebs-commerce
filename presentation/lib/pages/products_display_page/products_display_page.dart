@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/products_display_page/products_display_controller.dart';
+import 'package:presentation/pages/products_display_page/widgets/products_list_container.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
@@ -46,9 +47,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
     });
   }
 
-  final RefreshController _refreshController = RefreshController(
-    initialRefresh: false,
-  );
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
@@ -81,14 +80,18 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
               );
               _refreshController.loadComplete();
             },
-            //TODO: prin-trun container care
             child: controller.isLoading.value
                 ? LoadingOverlayWidget(isLoading: true)
                 : SingleChildScrollView(
-                    child: ProductsListDisplayWidget(
-                      title: widget.title,
-                      showHeaderTitle: false,
+                    child: ProductsListContainer(
                       products: controller.products,
+                      builder: (context, products) {
+                        return ProductsListDisplayWidget(
+                          title: widget.title,
+                          showHeaderTitle: false,
+                          products: controller.products,
+                        );
+                      },
                     ),
                   ),
           ),
@@ -97,13 +100,3 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
     );
   }
 }
-
-/*child: ProductsListContainer(
-                      builder: (context, products) {
-                        return ProductsListDisplayWidget(
-                          title: widget.title,
-                          showHeaderTitle: false,
-                          products: products,
-                        );
-                      }
-                    ),*/
