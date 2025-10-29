@@ -45,6 +45,12 @@ class CheckoutController extends GetxController {
       );
       await setUserUseCase(SetUserParams(user: user));
     }
+    /*if (userModel.value != null) {
+      final user = userModel.value;
+      user?.deliveryAddressViewModel=deliveryModel.value;
+      user?.paymentMethodViewModel=selectedPaymentMethod.value;
+      await setUserUseCase(SetUserParams(user: user!.toEntity));
+    }*/
 
     final retrievedUser = await getUserUseCase();
 
