@@ -9,7 +9,7 @@ class GetUserUseCase implements UseCaseNoEitherNoParamsNoStreamNullable<UserEnti
 
   @override
   Future<UserEntity?> call() {
-    return userInformationRepository.getUserProfile();
+    return userInformationRepository.getUser();
   }
 
 }

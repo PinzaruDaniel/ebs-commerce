@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';
+import 'package:presentation/util/mapper/delivery_address_mapper.dart';
+import 'package:presentation/util/mapper/payment_method_mapper.dart';
+import 'package:presentation/util/mapper/user_mapper.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -29,45 +32,38 @@ class CheckoutController extends GetxController {
   RxList<CartViewModel> productItems = RxList([]);
   final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
 
-  void someInitMethod() async {
-    final deliveryAddress = DeliveryAddressEntity(
-      id: 0,
-      deliveryType: 'delivery',
-      comments: 'comments',
-      pickupLocation: 'pickupLocation',
-      country: 'country',
-      region: 'region',
-      city: 'city',
-      postalCode: 'postalCode',
-      address: 'address',
-    );
-    final paymentMethod = PaymentMethodEntity(id: 0, key: 'cash', titleKey: AppTexts.cashPaymentMethod);
-
-    final user = UserEntity(
-      id: 0,
-      name: 'Alice',
-      surname: 'Smith',
-      number: '5551234',
-      dialCode: '+40',
-      email: 'alice@example.com',
-      deliveryAddressEntity: deliveryAddress,
-      paymentMethodEntity: paymentMethod,
-    );
-
-    await setUserUseCase(SetUserParams(user: user));
+  void setUserInfo() async {
+    if (userModel.value != null) {
+      final user = UserEntity(
+        name: userModel.value!.name,
+        surname: userModel.value!.surname,
+        number: userModel.value!.number,
+        dialCode: userModel.value!.dialCode,
+        email: userModel.value!.email,
+        deliveryAddressEntity: deliveryModel.value?.toEntity,
+        paymentMethodEntity: selectedPaymentMethod.value?.toEntity,
+      );
+      await setUserUseCase(SetUserParams(user: user));
+    }
 
     final retrievedUser = await getUserUseCase();
 
-    print('--- 🧍 USER INFO ---');
-    print('ID: ${retrievedUser?.id}');
-    print('Name: ${retrievedUser?.name}');
-    print('Surname: ${retrievedUser?.surname}');
-    print('Number: ${retrievedUser?.number}');
-    print('Dial code: ${retrievedUser?.dialCode}');
-    print('Email: ${retrievedUser?.email}');
+    if (retrievedUser == null) {
+      print('⚠️ No user found in local cache yet.');
+      return;
+    }
+
+    // Print all user info
+    print('--- 🧍 USER INFO from cache ---');
+    print('ID: ${retrievedUser.id}');
+    print('Name: ${retrievedUser.name}');
+    print('Surname: ${retrievedUser.surname}');
+    print('Number: ${retrievedUser.number}');
+    print('Dial code: ${retrievedUser.dialCode}');
+    print('Email: ${retrievedUser.email}');
 
     print('\n--- 🏠 DELIVERY ADDRESS ---');
-    final delivery = retrievedUser?.deliveryAddressEntity;
+    final delivery = retrievedUser.deliveryAddressEntity;
     if (delivery != null) {
       print('ID: ${delivery.id}');
       print('Type: ${delivery.deliveryType}');
@@ -83,7 +79,7 @@ class CheckoutController extends GetxController {
     }
 
     print('\n--- 💳 PAYMENT METHOD ---');
-    final payment = retrievedUser?.paymentMethodEntity;
+    final payment = retrievedUser.paymentMethodEntity;
     if (payment != null) {
       print('ID: ${payment.id}');
       print('Key: ${payment.key}');

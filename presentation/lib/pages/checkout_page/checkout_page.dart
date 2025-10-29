@@ -40,7 +40,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkoutController.initProductItems(widget.items);
       checkoutController.initAllItems();
-      checkoutController.someInitMethod();
+      //checkoutController.setUserInfo();
     });
   }
 
@@ -80,11 +80,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         if (item.keyId == CheckoutWidgetsType.userContactInfo) {
                           AppRouter.openContactInformationPage(
                             onSave: (UserViewModel? userVM) {
+                              checkoutController.userModel.value=userVM;
                               checkoutController.updateCheckoutInfoItem(
                                 keyId: CheckoutWidgetsType.userContactInfo,
                                 titleKey: '${userVM?.name} ${userVM?.surname}',
                                 infoItems: checkoutController.buildUserInfo(userVM),
                               );
+                              checkoutController.setUserInfo();
                             },
                           );
                         } else if (item.keyId == CheckoutWidgetsType.deliveryAddressInfo) {
@@ -97,7 +99,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 infoItems: checkoutController.buildDeliveryInfo(deliveryVM),
                               );
                               checkoutController.updateOrderSummary(checkoutController.calculateSubtotal());
+                              checkoutController.setUserInfo();
+
                             },
+
                           );
                         } else if (item.keyId == CheckoutWidgetsType.paymentMethod) {
                           AppPopUp.paymentMethod(
@@ -109,6 +114,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 titleKey: value.titleKey,
                               );
                               Get.back();
+                              checkoutController.setUserInfo();
+
                             },
                           );
                         } else if (item.keyId == CheckoutWidgetsType.voucherCode) {

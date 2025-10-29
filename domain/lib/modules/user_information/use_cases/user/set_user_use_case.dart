@@ -1,4 +1,3 @@
-
 import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 import 'package:domain/modules/user_information/user_information_repository.dart';
@@ -9,7 +8,7 @@ class SetUserUseCase extends UseCaseNoEither<void, SetUserParams> {
   SetUserUseCase({required this.userInformationRepository});
 
   Future<void> call(params) async {
-    return userInformationRepository.setUserProfile(params.user);
+    return userInformationRepository.setUser(params.user);
   }
 }
 

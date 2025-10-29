@@ -7,7 +7,7 @@ import '../../models/local/delivery_address_box.dart';
 abstract class DeliveryAddressLocalSource {
   Future<void> setDeliveryAddress({required DeliveryAddressEntity deliveryAddress});
 
-  Future<DeliveryAddressBox> getDeliveryAddress();
+  Future<DeliveryAddressBox?> getDeliveryAddress();
 }
 
 class DeliveryAddressLocalDataSourceImpl implements DeliveryAddressLocalSource {
@@ -20,8 +20,9 @@ class DeliveryAddressLocalDataSourceImpl implements DeliveryAddressLocalSource {
     deliveryAddressBox.put(deliveryAddress.toBox);
   }
   @override
-  Future<DeliveryAddressBox> getDeliveryAddress() async {
+  Future<DeliveryAddressBox?> getDeliveryAddress() async {
     final deliveryAddress=deliveryAddressBox.getAll();
+    if(deliveryAddress.isEmpty) return null;
     return deliveryAddress.last;
   }
 }

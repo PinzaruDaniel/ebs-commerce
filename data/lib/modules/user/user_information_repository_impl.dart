@@ -19,7 +19,7 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
   });
 
   @override
-  Future<void> setUserProfile(UserEntity user) async {
+  Future<void> setUser(UserEntity user) async {
     await userLocalSource.setUser(user: user);
     if (user.paymentMethodEntity != null) {
       await paymentMethodLocalSource.setPaymentMethod(paymentMethod: user.paymentMethodEntity!);
@@ -31,14 +31,16 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
   }
 
   @override
-  Future<UserEntity?> getUserProfile() async {
+  Future<UserEntity?> getUser() async {
     final userBox = await userLocalSource.getUser();
+    if (userBox == null) return null;
+
     final paymentMethod = await paymentMethodLocalSource.getPaymentMethod();
     final deliveryAddress = await deliveryAddressLocalSource.getDeliveryAddress();
 
     return userBox.toEntity.copyWith(
-      paymentMethodEntity: paymentMethod.toEntity,
-      deliveryAddressEntity: deliveryAddress.toEntity,
+      paymentMethodEntity: paymentMethod?.toEntity,
+      deliveryAddressEntity: deliveryAddress?.toEntity,
     );
   }
 }

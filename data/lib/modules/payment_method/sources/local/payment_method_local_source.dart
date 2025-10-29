@@ -5,7 +5,7 @@ import 'package:domain/modules/user_information/models/index.dart';
 import 'package:objectbox/objectbox.dart';
 abstract class PaymentMethodLocalSource{
   Future<void> setPaymentMethod({required PaymentMethodEntity paymentMethod});
-  Future <PaymentMethodBox> getPaymentMethod();
+  Future <PaymentMethodBox?> getPaymentMethod();
 }
 
 class PaymentMethodLocalDataSourceImpl implements PaymentMethodLocalSource{
@@ -18,8 +18,9 @@ class PaymentMethodLocalDataSourceImpl implements PaymentMethodLocalSource{
   }
 
   @override
-  Future<PaymentMethodBox> getPaymentMethod() async{
+  Future<PaymentMethodBox?> getPaymentMethod() async{
     final paymentMethod=paymentMethodBox.getAll();
+    if(paymentMethod.isEmpty) return null;
     return paymentMethod.last;
   }
 }
