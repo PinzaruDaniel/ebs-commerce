@@ -59,15 +59,15 @@ class CheckoutController extends GetxController {
     final retrievedUser = await getUserUseCase();
 
     print('--- 🧍 USER INFO ---');
-    print('ID: ${user.id}');
-    print('Name: ${user.name}');
-    print('Surname: ${user.surname}');
-    print('Number: ${user.number}');
-    print('Dial code: ${user.dialCode}');
-    print('Email: ${user.email}');
+    print('ID: ${retrievedUser?.id}');
+    print('Name: ${retrievedUser?.name}');
+    print('Surname: ${retrievedUser?.surname}');
+    print('Number: ${retrievedUser?.number}');
+    print('Dial code: ${retrievedUser?.dialCode}');
+    print('Email: ${retrievedUser?.email}');
 
     print('\n--- 🏠 DELIVERY ADDRESS ---');
-    final delivery = user.deliveryAddressEntity;
+    final delivery = retrievedUser?.deliveryAddressEntity;
     if (delivery != null) {
       print('ID: ${delivery.id}');
       print('Type: ${delivery.deliveryType}');
@@ -83,7 +83,7 @@ class CheckoutController extends GetxController {
     }
 
     print('\n--- 💳 PAYMENT METHOD ---');
-    final payment = user.paymentMethodEntity;
+    final payment = retrievedUser?.paymentMethodEntity;
     if (payment != null) {
       print('ID: ${payment.id}');
       print('Key: ${payment.key}');
@@ -93,19 +93,6 @@ class CheckoutController extends GetxController {
     }
 
     print('------------------------------');
-
-    /*await setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddress: deliveryAddress));
-
-    final retrievedDelivery = await getDeliveryAddressUseCase();
-    print(
-      'cached delivery address: ${retrievedDelivery.city},${retrievedDelivery.postalCode}, ${retrievedDelivery.region},  ',
-    );
-
-    final paymentMethod = PaymentMethodEntity(id: 0, key: 'cash', titleKey: AppTexts.cashPaymentMethod);
-    await setPaymentMethodUseCase(SetPaymentMethodParams(paymentMethod: paymentMethod));
-
-    final retrievedPayment = await getPaymentMethodUseCase();
-    print('Cached payment method: ${retrievedPayment.titleKey}  ${retrievedPayment.key}');*/
   }
 
   void initProductItems(List<CartViewModel> productItems) {
