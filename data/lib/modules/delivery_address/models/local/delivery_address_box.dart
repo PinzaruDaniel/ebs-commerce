@@ -2,7 +2,7 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class DeliveryAddressBox {
-  @Id()
+  @Id(assignable: true)
   int id;
   String deliveryType;
   String? comments;

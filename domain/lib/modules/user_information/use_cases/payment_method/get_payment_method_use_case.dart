@@ -1,3 +1,4 @@
+/*
 import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 import 'package:domain/modules/user_information/user_information_repository.dart';
@@ -8,6 +9,6 @@ class GetPaymentMethodUseCase implements UseCaseNoEitherNoParamsNoStream<Payment
 
   @override
   Future<PaymentMethodEntity> call(){
-    return userInformationRepository.getPaymentMethodLocalCache();
+    return userInformationRepository.getUserProfile();
   }
-}
+}*/

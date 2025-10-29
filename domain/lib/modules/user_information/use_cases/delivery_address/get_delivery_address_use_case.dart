@@ -1,6 +1,9 @@
+/*
 import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/user_information/models/index.dart';
-import 'package:domain/modules/user_information/user_information_repository.dart';
+import 'package:domain/modules/user_information/';
+
+import '../../user_information_repository.dart';
 
 class GetDeliveryAddressUseCase extends UseCaseNoEitherNoParamsNoStream<DeliveryAddressEntity>{
   final UserInformationRepository userInformationRepository;
@@ -10,4 +13,4 @@ class GetDeliveryAddressUseCase extends UseCaseNoEitherNoParamsNoStream<Delivery
   Future<DeliveryAddressEntity> call(){
     return userInformationRepository.getDeliveryAddressLocalCache();
   }
-}
+}*/

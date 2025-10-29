@@ -1,3 +1,4 @@
+/*
 import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 import 'package:domain/modules/user_information/user_information_repository.dart';
@@ -18,3 +19,4 @@ class SetDeliveryAddressParams {
 
   SetDeliveryAddressParams({required this.deliveryAddress});
 }
+*/

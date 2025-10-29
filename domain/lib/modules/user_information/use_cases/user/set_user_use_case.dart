@@ -9,7 +9,7 @@ class SetUserUseCase extends UseCaseNoEither<void, SetUserParams> {
   SetUserUseCase({required this.userInformationRepository});
 
   Future<void> call(params) async {
-    return userInformationRepository.setUserLocalCache(params.user);
+    return userInformationRepository.setUserProfile(params.user);
   }
 }
 

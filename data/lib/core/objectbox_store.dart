@@ -1,7 +1,7 @@
 import 'package:data/modules/products/models/local/product_box.dart';
-import 'package:data/modules/user_information/models/local/delivery_address/delivery_address_box.dart';
-import 'package:data/modules/user_information/models/local/payment_method/payment_method_box.dart';
-import 'package:data/modules/user_information/models/local/user/user_box.dart';
+import 'package:data/modules/delivery_address/models/local/delivery_address_box.dart';
+import 'package:data/modules/payment_method/models/local/payment_method_box.dart';
+import 'package:data/modules/user/models/local/user_box.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:path_provider/path_provider.dart';

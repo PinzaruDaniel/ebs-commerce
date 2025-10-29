@@ -16,7 +16,7 @@ Future<void> init() async {
   dataDi.registerLazySingleton<GetUserUseCase>(
     () => GetUserUseCase(userInformationRepository: dataDi<UserInformationRepository>()),
   );
-
+/*
   dataDi.registerLazySingleton<SetPaymentMethodUseCase>(
     () => SetPaymentMethodUseCase(userInformationRepository: dataDi<UserInformationRepository>()),
   );
@@ -29,7 +29,7 @@ Future<void> init() async {
   );
   dataDi.registerLazySingleton<GetDeliveryAddressUseCase>(
     () => GetDeliveryAddressUseCase(userInformationRepository: dataDi<UserInformationRepository>()),
-  );
+  );*/
 
 
 

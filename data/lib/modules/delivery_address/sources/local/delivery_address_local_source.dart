@@ -2,7 +2,7 @@ import 'package:data/mapper/delivery_address_mapper.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 import 'package:objectbox/objectbox.dart';
 
-import '../../../models/local/delivery_address/delivery_address_box.dart';
+import '../../models/local/delivery_address_box.dart';
 
 abstract class DeliveryAddressLocalSource {
   Future<void> setDeliveryAddress({required DeliveryAddressEntity deliveryAddress});

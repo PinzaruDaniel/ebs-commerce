@@ -1,10 +1,9 @@
-import 'package:data/modules/user_information/models/local/delivery_address/delivery_address_box.dart';
+import 'package:data/modules/delivery_address/models/local/delivery_address_box.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 
 extension DeliveryAddressToBoxMapper on DeliveryAddressEntity {
   DeliveryAddressBox get toBox {
     return DeliveryAddressBox(
-      id: id,
       deliveryType: deliveryType,
       pickupLocation: pickupLocation,
       country: country,
@@ -20,7 +19,6 @@ extension DeliveryAddressToBoxMapper on DeliveryAddressEntity {
 extension DeliveryAddressToEntityMapper on DeliveryAddressBox {
   DeliveryAddressEntity get toEntity {
     return DeliveryAddressEntity(
-      id: id,
       deliveryType: deliveryType,
       comments: comments,
       pickupLocation: pickupLocation,

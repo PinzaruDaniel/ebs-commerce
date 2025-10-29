@@ -1,5 +1,5 @@
 import 'package:data/mapper/payment_method_mapper.dart';
-import 'package:data/modules/user_information/models/local/payment_method/payment_method_box.dart';
+import 'package:data/modules/payment_method/models/local/payment_method_box.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 
 import 'package:objectbox/objectbox.dart';

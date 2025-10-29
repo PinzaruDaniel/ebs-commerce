@@ -15,11 +15,11 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'modules/categories/models/local/category_box.dart';
+import 'modules/delivery_address/models/local/delivery_address_box.dart';
+import 'modules/payment_method/models/local/payment_method_box.dart';
 import 'modules/products/models/local/product_box.dart';
 import 'modules/specifications/models/local/specification_box.dart';
-import 'modules/user_information/models/local/delivery_address/delivery_address_box.dart';
-import 'modules/user_information/models/local/payment_method/payment_method_box.dart';
-import 'modules/user_information/models/local/user/user_box.dart';
+import 'modules/user/models/local/user_box.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -193,7 +193,7 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(1, 1217101285192197916),
         name: 'id',
         type: 6,
-        flags: 1,
+        flags: 129,
       ),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 5815903078799551594),
@@ -257,7 +257,7 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(1, 7504281067291536916),
         name: 'id',
         type: 6,
-        flags: 1,
+        flags: 129,
       ),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 9158848028279639401),
@@ -278,14 +278,14 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(6, 417593517334926949),
     name: 'UserBox',
-    lastPropertyId: const obx_int.IdUid(6, 1361046753532434034),
+    lastPropertyId: const obx_int.IdUid(8, 376147744399201608),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
         id: const obx_int.IdUid(1, 1507152223618843587),
         name: 'id',
         type: 6,
-        flags: 1,
+        flags: 129,
       ),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 8842457239495892617),
@@ -316,6 +316,22 @@ final _entities = <obx_int.ModelEntity>[
         name: 'email',
         type: 9,
         flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 1880779291067750782),
+        name: 'deliveryAddressBoxId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(3, 9185293679041505068),
+        relationTarget: 'DeliveryAddressBox',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 376147744399201608),
+        name: 'paymentMethodBoxId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(4, 2762729652716390865),
+        relationTarget: 'PaymentMethodBox',
       ),
     ],
     relations: <obx_int.ModelRelation>[],
@@ -362,7 +378,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
     lastEntityId: const obx_int.IdUid(6, 417593517334926949),
-    lastIndexId: const obx_int.IdUid(2, 4504896009286587906),
+    lastIndexId: const obx_int.IdUid(4, 2762729652716390865),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
@@ -745,7 +761,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
     ),
     UserBox: obx_int.EntityDefinition<UserBox>(
       model: _entities[5],
-      toOneRelations: (UserBox object) => [],
+      toOneRelations: (UserBox object) => [
+        object.deliveryAddressBox,
+        object.paymentMethodBox,
+      ],
       toManyRelations: (UserBox object) => {},
       getId: (UserBox object) => object.id,
       setId: (UserBox object, int id) {
@@ -757,13 +776,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final numberOffset = fbb.writeString(object.number);
         final dialCodeOffset = fbb.writeString(object.dialCode);
         final emailOffset = fbb.writeString(object.email);
-        fbb.startTable(7);
+        fbb.startTable(9);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, nameOffset);
         fbb.addOffset(2, surnameOffset);
         fbb.addOffset(3, numberOffset);
         fbb.addOffset(4, dialCodeOffset);
         fbb.addOffset(5, emailOffset);
+        fbb.addInt64(6, object.deliveryAddressBox.targetId);
+        fbb.addInt64(7, object.paymentMethodBox.targetId);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -799,7 +820,20 @@ obx_int.ModelDefinition getObjectBoxModel() {
           dialCode: dialCodeParam,
           email: emailParam,
         );
-
+        object.deliveryAddressBox.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          16,
+          0,
+        );
+        object.deliveryAddressBox.attach(store);
+        object.paymentMethodBox.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          18,
+          0,
+        );
+        object.paymentMethodBox.attach(store);
         return object;
       },
     ),
@@ -1020,4 +1054,16 @@ class UserBox_ {
   static final email = obx.QueryStringProperty<UserBox>(
     _entities[5].properties[5],
   );
+
+  /// See [UserBox.deliveryAddressBox].
+  static final deliveryAddressBox =
+      obx.QueryRelationToOne<UserBox, DeliveryAddressBox>(
+        _entities[5].properties[6],
+      );
+
+  /// See [UserBox.paymentMethodBox].
+  static final paymentMethodBox =
+      obx.QueryRelationToOne<UserBox, PaymentMethodBox>(
+        _entities[5].properties[7],
+      );
 }

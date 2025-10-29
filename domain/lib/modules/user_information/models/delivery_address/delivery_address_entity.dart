@@ -3,7 +3,7 @@ part of '../index.dart';
 @freezed
 abstract class DeliveryAddressEntity with _$DeliveryAddressEntity {
   const factory DeliveryAddressEntity({
-    required int id,
+    int? id,
     required String deliveryType,
     required String? comments,
     required String? pickupLocation,

@@ -2,7 +2,7 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class PaymentMethodBox {
-  @Id()
+  @Id(assignable: true)
   int id;
   String key;
   String titleKey;

@@ -1,3 +1,4 @@
+/*
 import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 import 'package:domain/modules/user_information/user_information_repository.dart';
@@ -14,4 +15,4 @@ class SetPaymentMethodUseCase extends UseCaseNoEither<void, SetPaymentMethodPara
 class SetPaymentMethodParams {
   final PaymentMethodEntity paymentMethod;
   SetPaymentMethodParams({required this.paymentMethod});
-}
+}*/

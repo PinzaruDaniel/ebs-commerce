@@ -140,7 +140,7 @@
           "id": "1:1217101285192197916",
           "name": "id",
           "type": 6,
-          "flags": 1
+          "flags": 129
         },
         {
           "id": "2:5815903078799551594",
@@ -194,7 +194,7 @@
           "id": "1:7504281067291536916",
           "name": "id",
           "type": 6,
-          "flags": 1
+          "flags": 129
         },
         {
           "id": "2:9158848028279639401",
@@ -211,14 +211,14 @@
     },
     {
       "id": "6:417593517334926949",
-      "lastPropertyId": "6:1361046753532434034",
+      "lastPropertyId": "8:376147744399201608",
       "name": "UserBox",
       "properties": [
         {
           "id": "1:1507152223618843587",
           "name": "id",
           "type": 6,
-          "flags": 1
+          "flags": 129
         },
         {
           "id": "2:8842457239495892617",
@@ -244,13 +244,29 @@
           "id": "6:1361046753532434034",
           "name": "email",
           "type": 9
+        },
+        {
+          "id": "7:1880779291067750782",
+          "name": "deliveryAddressBoxId",
+          "indexId": "3:9185293679041505068",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "DeliveryAddressBox"
+        },
+        {
+          "id": "8:376147744399201608",
+          "name": "paymentMethodBoxId",
+          "indexId": "4:2762729652716390865",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "PaymentMethodBox"
         }
       ],
       "relations": []
     }
   ],
   "lastEntityId": "6:417593517334926949",
-  "lastIndexId": "2:4504896009286587906",
+  "lastIndexId": "4:2762729652716390865",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

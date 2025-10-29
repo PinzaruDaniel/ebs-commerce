@@ -21,3 +21,7 @@ abstract class UseCaseNoEitherNoParamsNoStream<Type>{
   Future<Type>call();
 }
 
+abstract class UseCaseNoEitherNoParamsNoStreamNullable<Type>{
+  Future<Type?> call();
+}
+

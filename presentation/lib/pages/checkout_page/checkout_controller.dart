@@ -1,10 +1,5 @@
 // ignore_for_file: invalid_use_of_protected_member
-
 import 'package:domain/modules/user_information/models/index.dart';
-import 'package:domain/modules/user_information/use_cases/delivery_address/get_delivery_address_use_case.dart';
-import 'package:domain/modules/user_information/use_cases/delivery_address/set_delivery_address_use_case.dart';
-import 'package:domain/modules/user_information/use_cases/payment_method/get_payment_method_use_case.dart';
-import 'package:domain/modules/user_information/use_cases/payment_method/set_payment_method_use_case.dart';
 import 'package:domain/modules/user_information/use_cases/user/get_user_use_case.dart';
 import 'package:domain/modules/user_information/use_cases/user/set_user_use_case.dart';
 import 'package:get/get.dart';
@@ -26,13 +21,6 @@ import '../../view/pickup_location_view_model.dart';
 class CheckoutController extends GetxController {
   final SetUserUseCase setUserUseCase = GetIt.instance<SetUserUseCase>();
   final GetUserUseCase getUserUseCase = GetIt.instance<GetUserUseCase>();
-
-  final SetDeliveryAddressUseCase setDeliveryAddressUseCase = GetIt.instance<SetDeliveryAddressUseCase>();
-  final GetDeliveryAddressUseCase getDeliveryAddressUseCase = GetIt.instance<GetDeliveryAddressUseCase>();
-
-  final SetPaymentMethodUseCase setPaymentMethodUseCase = GetIt.instance<SetPaymentMethodUseCase>();
-  final GetPaymentMethodUseCase getPaymentMethodUseCase = GetIt.instance<GetPaymentMethodUseCase>();
-
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
@@ -42,21 +30,6 @@ class CheckoutController extends GetxController {
   final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
 
   void someInitMethod() async {
-    final user = UserEntity(
-      id: 0,
-      name: 'Alice',
-      surname: 'Smith',
-      number: '5551234',
-      dialCode: '+40',
-      email: 'alice@example.com',
-    );
-
-    await setUserUseCase(SetUserParams(user: user));
-
-    final retrievedUser = await getUserUseCase();
-
-    print(' Cached user: ${retrievedUser.name}, ${retrievedUser.email}');
-
     final deliveryAddress = DeliveryAddressEntity(
       id: 0,
       deliveryType: 'delivery',
@@ -68,7 +41,60 @@ class CheckoutController extends GetxController {
       postalCode: 'postalCode',
       address: 'address',
     );
-    await setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddress: deliveryAddress));
+    final paymentMethod = PaymentMethodEntity(id: 0, key: 'cash', titleKey: AppTexts.cashPaymentMethod);
+
+    final user = UserEntity(
+      id: 0,
+      name: 'Alice',
+      surname: 'Smith',
+      number: '5551234',
+      dialCode: '+40',
+      email: 'alice@example.com',
+      deliveryAddressEntity: deliveryAddress,
+      paymentMethodEntity: paymentMethod,
+    );
+
+    await setUserUseCase(SetUserParams(user: user));
+
+    final retrievedUser = await getUserUseCase();
+
+    print('--- 🧍 USER INFO ---');
+    print('ID: ${user.id}');
+    print('Name: ${user.name}');
+    print('Surname: ${user.surname}');
+    print('Number: ${user.number}');
+    print('Dial code: ${user.dialCode}');
+    print('Email: ${user.email}');
+
+    print('\n--- 🏠 DELIVERY ADDRESS ---');
+    final delivery = user.deliveryAddressEntity;
+    if (delivery != null) {
+      print('ID: ${delivery.id}');
+      print('Type: ${delivery.deliveryType}');
+      print('Comments: ${delivery.comments}');
+      print('Pickup location: ${delivery.pickupLocation}');
+      print('Country: ${delivery.country}');
+      print('Region: ${delivery.region}');
+      print('City: ${delivery.city}');
+      print('Postal code: ${delivery.postalCode}');
+      print('Address: ${delivery.address}');
+    } else {
+      print('No delivery address found.');
+    }
+
+    print('\n--- 💳 PAYMENT METHOD ---');
+    final payment = user.paymentMethodEntity;
+    if (payment != null) {
+      print('ID: ${payment.id}');
+      print('Key: ${payment.key}');
+      print('Title: ${payment.titleKey}');
+    } else {
+      print('No payment method found.');
+    }
+
+    print('------------------------------');
+
+    /*await setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddress: deliveryAddress));
 
     final retrievedDelivery = await getDeliveryAddressUseCase();
     print(
@@ -79,7 +105,7 @@ class CheckoutController extends GetxController {
     await setPaymentMethodUseCase(SetPaymentMethodParams(paymentMethod: paymentMethod));
 
     final retrievedPayment = await getPaymentMethodUseCase();
-    print('Cached payment method: ${retrievedPayment.titleKey}  ${retrievedPayment.key}');
+    print('Cached payment method: ${retrievedPayment.titleKey}  ${retrievedPayment.key}');*/
   }
 
   void initProductItems(List<CartViewModel> productItems) {
