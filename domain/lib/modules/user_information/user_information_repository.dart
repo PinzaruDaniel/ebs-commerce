@@ -6,4 +6,7 @@ abstract class UserInformationRepository{
 
   Future<void> setPaymentMethodLocalCache(PaymentMethodEntity paymentMethod);
   Future<PaymentMethodEntity> getPaymentMethodLocalCache();
+
+  Future<void> setDeliveryAddressLocalCache(DeliveryAddressEntity deliveryAddress);
+  Future<DeliveryAddressEntity> getDeliveryAddressLocalCache();
 }
