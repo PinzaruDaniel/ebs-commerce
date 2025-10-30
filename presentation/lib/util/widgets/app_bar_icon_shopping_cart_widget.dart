@@ -18,7 +18,7 @@ class AppBarIconShoppingCartWidget extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          LiquidGlass(
+          /*LiquidGlass(
             shape: LiquidRoundedSuperellipse(borderRadius: Radius.circular(50)),
             settings: LiquidGlassSettings(
               blur: 1.6,
@@ -26,7 +26,7 @@ class AppBarIconShoppingCartWidget extends StatelessWidget {
               thickness: 10,
             ),
             child: SizedBox(height: 46, width: 46),
-          ),
+          ),*/
           IconButton(
             onPressed: () {
               AppRouter.openShoppingCartPage();

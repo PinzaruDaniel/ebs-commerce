@@ -40,7 +40,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkoutController.initProductItems(widget.items);
       checkoutController.initAllItems();
-      //checkoutController.setUserInfo();
+     // checkoutController.initUserInfo();
     });
   }
 

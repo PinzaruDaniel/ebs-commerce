@@ -39,11 +39,11 @@ class UserLocalDataSourceImpl implements UserLocalSource {
 
   @override
   Future<void> setDeliveryAddress({required DeliveryAddressEntity deliveryAddress}) async {
-    deliveryAddressBox.putAsync(DeliveryAddressToBoxMapper(deliveryAddress).toBox);
+    final addressId= deliveryAddressBox.putAsync(DeliveryAddressToBoxMapper(deliveryAddress).toBox);
     var delivery = await deliveryAddressBox.getAllAsync();
 
     final user = await getUser();
-    user?.deliveryAddressBox.target = delivery.last;//DeliveryAddressToBoxMapper(deliveryAddress).toBox;
+    user?.deliveryAddressBox.targetId =await addressId;//DeliveryAddressToBoxMapper(deliveryAddress).toBox;
     /*consoleLog(addressId);
     consoleLog(user?.id);*/
     userBox.put(user!);

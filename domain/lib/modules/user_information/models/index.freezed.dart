@@ -25,12 +25,12 @@ $UserEntityCopyWith<UserEntity> get copyWith => _$UserEntityCopyWithImpl<UserEnt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.number, number) || other.number == number)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode)&&(identical(other.email, email) || other.email == email)&&(identical(other.deliveryAddressEntity, deliveryAddressEntity) || other.deliveryAddressEntity == deliveryAddressEntity)&&const DeepCollectionEquality().equals(other.paymentMethodEntity, paymentMethodEntity));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.number, number) || other.number == number)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode)&&(identical(other.email, email) || other.email == email)&&(identical(other.deliveryAddressEntity, deliveryAddressEntity) || other.deliveryAddressEntity == deliveryAddressEntity)&&(identical(other.paymentMethodEntity, paymentMethodEntity) || other.paymentMethodEntity == paymentMethodEntity));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,surname,number,dialCode,email,deliveryAddressEntity,const DeepCollectionEquality().hash(paymentMethodEntity));
+int get hashCode => Object.hash(runtimeType,id,name,surname,number,dialCode,email,deliveryAddressEntity,paymentMethodEntity);
 
 @override
 String toString() {
@@ -49,7 +49,7 @@ $Res call({
 });
 
 
-$DeliveryAddressEntityCopyWith<$Res>? get deliveryAddressEntity;
+$DeliveryAddressEntityCopyWith<$Res>? get deliveryAddressEntity;$PaymentMethodEntityCopyWith<$Res>? get paymentMethodEntity;
 
 }
 /// @nodoc
@@ -86,6 +86,18 @@ $DeliveryAddressEntityCopyWith<$Res>? get deliveryAddressEntity {
 
   return $DeliveryAddressEntityCopyWith<$Res>(_self.deliveryAddressEntity!, (value) {
     return _then(_self.copyWith(deliveryAddressEntity: value));
+  });
+}/// Create a copy of UserEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PaymentMethodEntityCopyWith<$Res>? get paymentMethodEntity {
+    if (_self.paymentMethodEntity == null) {
+    return null;
+  }
+
+  return $PaymentMethodEntityCopyWith<$Res>(_self.paymentMethodEntity!, (value) {
+    return _then(_self.copyWith(paymentMethodEntity: value));
   });
 }
 }
@@ -247,12 +259,12 @@ _$UserEntityCopyWith<_UserEntity> get copyWith => __$UserEntityCopyWithImpl<_Use
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.number, number) || other.number == number)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode)&&(identical(other.email, email) || other.email == email)&&(identical(other.deliveryAddressEntity, deliveryAddressEntity) || other.deliveryAddressEntity == deliveryAddressEntity)&&const DeepCollectionEquality().equals(other.paymentMethodEntity, paymentMethodEntity));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.number, number) || other.number == number)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode)&&(identical(other.email, email) || other.email == email)&&(identical(other.deliveryAddressEntity, deliveryAddressEntity) || other.deliveryAddressEntity == deliveryAddressEntity)&&(identical(other.paymentMethodEntity, paymentMethodEntity) || other.paymentMethodEntity == paymentMethodEntity));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,surname,number,dialCode,email,deliveryAddressEntity,const DeepCollectionEquality().hash(paymentMethodEntity));
+int get hashCode => Object.hash(runtimeType,id,name,surname,number,dialCode,email,deliveryAddressEntity,paymentMethodEntity);
 
 @override
 String toString() {
@@ -271,7 +283,7 @@ $Res call({
 });
 
 
-@override $DeliveryAddressEntityCopyWith<$Res>? get deliveryAddressEntity;
+@override $DeliveryAddressEntityCopyWith<$Res>? get deliveryAddressEntity;@override $PaymentMethodEntityCopyWith<$Res>? get paymentMethodEntity;
 
 }
 /// @nodoc
@@ -309,6 +321,18 @@ $DeliveryAddressEntityCopyWith<$Res>? get deliveryAddressEntity {
 
   return $DeliveryAddressEntityCopyWith<$Res>(_self.deliveryAddressEntity!, (value) {
     return _then(_self.copyWith(deliveryAddressEntity: value));
+  });
+}/// Create a copy of UserEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PaymentMethodEntityCopyWith<$Res>? get paymentMethodEntity {
+    if (_self.paymentMethodEntity == null) {
+    return null;
+  }
+
+  return $PaymentMethodEntityCopyWith<$Res>(_self.paymentMethodEntity!, (value) {
+    return _then(_self.copyWith(paymentMethodEntity: value));
   });
 }
 }

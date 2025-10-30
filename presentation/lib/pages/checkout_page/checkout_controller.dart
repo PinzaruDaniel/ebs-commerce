@@ -1,7 +1,9 @@
 // ignore_for_file: invalid_use_of_protected_member
 import 'package:common/constants/logger.dart';
+import 'package:domain/modules/delivery_address/models/index.dart';
 import 'package:domain/modules/delivery_address/use_cases/get_delivery_address_cache_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/set_delivery_address_use_case.dart';
+import 'package:domain/modules/payment_method/index.dart';
 import 'package:domain/modules/payment_method/use_cases/get_payment_method_use_case.dart';
 import 'package:domain/modules/payment_method/use_cases/set_payment_method_use_case.dart';
 import 'package:domain/modules/user_information/models/index.dart';
@@ -45,8 +47,7 @@ class CheckoutController extends GetxController {
   final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
 
   void setUserInfo() async {
-
-      await setUserUseCase(SetUserParams(user: userModel.value!.toEntity));
+    await setUserUseCase(SetUserParams(user: userModel.value!.toEntity));
     /*if (userModel.value != null) {
       final user = userModel.value;
       user?.deliveryAddressViewModel=deliveryModel.value;
@@ -64,6 +65,10 @@ class CheckoutController extends GetxController {
 
     final retrievedDeliveryAddress = await getDeliveryAddressUseCase();
     consoleLog(retrievedDeliveryAddress);
+
+    final retrievedUser = await getUserUseCase();
+
+    consoleLog('user from cache when calling dsetdeliveryinfro $retrievedUser');
   }
 
   void setPaymentInfo() async {
@@ -72,6 +77,45 @@ class CheckoutController extends GetxController {
     final retrievedMethod = await getPaymentMethodUseCase();
 
     consoleLog(retrievedMethod);
+  }
+
+  void initUserInfo() async {
+    final user = UserEntity(name: 'name',
+        surname: 'surname',
+        number: 'number',
+        dialCode: 'dialCode',
+        email: 'email',
+        deliveryAddressEntity: null,
+        paymentMethodEntity: null);
+
+    await setUserUseCase(SetUserParams(user: user));
+    final retrievedUser=await getUserUseCase();
+    consoleLog('retrievedUser ${retrievedUser?.name} ${retrievedUser?.dialCode}');
+
+    final deliveryAddress = DeliveryAddressEntity(
+        id: 0,
+        deliveryType: 'deliveryType',
+        comments: 'comments',
+        pickupLocation: 'pickupLocation',
+        country: 'country',
+        region: 'region',
+        city: 'city',
+        postalCode: 'postalCode',
+        address: 'address');
+    await setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: deliveryAddress));
+    final retrievedDeliveryAddress = await getDeliveryAddressUseCase();
+    consoleLog('retrievedDeliveryAddress ${retrievedDeliveryAddress?.region} ${retrievedDeliveryAddress?.city}');
+
+    final paymentMethod = PaymentMethodEntity(id: 0, key: 'key', titleKey: 'titleKey');
+    await setPaymentMethodUseCase(SetPaymentMethodParams(paymentMethodEntity: paymentMethod));
+    final retrievedPaymentMethod = await getPaymentMethodUseCase();
+    consoleLog('retrievedPaymentMethod ${retrievedPaymentMethod?.key}');
+
+    final retrievedUsers=await getUserUseCase();
+    consoleLog('retrievedUsers ${retrievedUsers?.name} ${retrievedUsers?.dialCode} ${retrievedUsers?.deliveryAddressEntity?.city}');
+
+
+
   }
 
   void initProductItems(List<CartViewModel> productItems) {
@@ -194,8 +238,8 @@ class CheckoutController extends GetxController {
     orderSummary.subtotal.value = subtotal;
 
     orderSummary.shippingFee.value =
-        (deliveryModel.value?.deliveryType == DeliveryType.dhl.label ||
-            deliveryModel.value?.deliveryType == DeliveryType.fanCourier.label)
+    (deliveryModel.value?.deliveryType == DeliveryType.dhl.label ||
+        deliveryModel.value?.deliveryType == DeliveryType.fanCourier.label)
         ? 5.0
         : 0.0;
 

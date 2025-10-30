@@ -3,7 +3,7 @@ import 'package:presentation/view/payment_method_view_model.dart';
 
 extension PaymentMethodToEntity on PaymentMethodViewModel {
   PaymentMethodEntity get toEntity {
-    return PaymentMethodEntity(key: key, titleKey: titleKey);
+    return PaymentMethodEntity( id: 0,   key: key, titleKey: titleKey);
   }
 }
 
