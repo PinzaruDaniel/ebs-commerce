@@ -1,4 +1,4 @@
-import 'package:domain/modules/user_information/models/index.dart';
+import 'package:domain/modules/delivery_address/models/index.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 
 extension DeliveryAddressToEntity on DeliveryAddressViewModel {

@@ -1,4 +1,4 @@
-part of '../index.dart';
+part of 'index.dart';
 
 @freezed
 abstract class UserEntity with _$UserEntity{

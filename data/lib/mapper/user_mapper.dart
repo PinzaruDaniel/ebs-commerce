@@ -3,7 +3,7 @@ import 'package:data/mapper/payment_method_mapper.dart';
 import 'package:data/modules/user/models/local/user_box.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 
-extension UserToBoxMapper on UserBox {
+extension UserToEntityMapper on UserBox {
   UserEntity get toEntity {
     return UserEntity(name: name,
         surname: surname,
@@ -15,7 +15,7 @@ extension UserToBoxMapper on UserBox {
   }
 }
 
-extension UserToEntityMapper on UserEntity {
+extension UserToBoxMapper on UserEntity {
   UserBox get toBox {
     final box = UserBox(
       id: id ?? 0,

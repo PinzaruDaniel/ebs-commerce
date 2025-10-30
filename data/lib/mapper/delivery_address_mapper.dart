@@ -1,5 +1,5 @@
 import 'package:data/modules/delivery_address/models/local/delivery_address_box.dart';
-import 'package:domain/modules/user_information/models/index.dart';
+import 'package:domain/modules/delivery_address/models/index.dart';
 
 extension DeliveryAddressToBoxMapper on DeliveryAddressEntity {
   DeliveryAddressBox get toBox {

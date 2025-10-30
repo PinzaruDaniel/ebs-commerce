@@ -1,9 +1,7 @@
 import 'package:data/modules/categories/categories_repository_impl.dart';
 import 'package:data/modules/categories/sources/remote/categories_api_service.dart';
 import 'package:data/modules/delivery_address/delivery_address_repository_impl.dart';
-import 'package:data/modules/delivery_address/sources/local/delivery_address_local_source.dart';
 import 'package:data/modules/delivery_address/sources/remote/delivery_address_api_service.dart';
-import 'package:data/modules/payment_method/sources/local/payment_method_local_source.dart';
 import 'package:data/modules/products/products_repository_impl.dart';
 import 'package:data/modules/products/sources/local/products_local_source.dart';
 import 'package:data/modules/products/sources/remote/products_api_service.dart';
@@ -33,10 +31,6 @@ Future<void> init() async {
   );
 
   dataDi.registerLazySingleton<UserInformationRepository>(
-    () => UserInformationRepositoryImpl(
-      userLocalSource: dataDi<UserLocalSource>(),
-      paymentMethodLocalSource: dataDi<PaymentMethodLocalSource>(),
-      deliveryAddressLocalSource: dataDi<DeliveryAddressLocalSource>(),
-    ),
+    () => UserInformationRepositoryImpl(userLocalSource: dataDi<UserLocalSource>()),
   );
 }

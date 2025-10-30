@@ -1,7 +1,12 @@
 // ignore_for_file: invalid_use_of_protected_member
+import 'package:common/constants/logger.dart';
+import 'package:domain/modules/delivery_address/use_cases/get_delivery_address_cache_use_case.dart';
+import 'package:domain/modules/delivery_address/use_cases/set_delivery_address_use_case.dart';
+import 'package:domain/modules/payment_method/use_cases/get_payment_method_use_case.dart';
+import 'package:domain/modules/payment_method/use_cases/set_payment_method_use_case.dart';
 import 'package:domain/modules/user_information/models/index.dart';
-import 'package:domain/modules/user_information/use_cases/user/get_user_use_case.dart';
-import 'package:domain/modules/user_information/use_cases/user/set_user_use_case.dart';
+import 'package:domain/modules/user_information/use_cases/get_user_use_case.dart';
+import 'package:domain/modules/user_information/use_cases/set_user_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
@@ -24,6 +29,13 @@ import '../../view/pickup_location_view_model.dart';
 class CheckoutController extends GetxController {
   final SetUserUseCase setUserUseCase = GetIt.instance<SetUserUseCase>();
   final GetUserUseCase getUserUseCase = GetIt.instance<GetUserUseCase>();
+
+  final SetDeliveryAddressUseCase setDeliveryAddressUseCase = GetIt.instance<SetDeliveryAddressUseCase>();
+  final GetDeliveryAddressUseCase getDeliveryAddressUseCase = GetIt.instance<GetDeliveryAddressUseCase>();
+
+  final SetPaymentMethodUseCase setPaymentMethodUseCase = GetIt.instance<SetPaymentMethodUseCase>();
+  final GetPaymentMethodUseCase getPaymentMethodUseCase = GetIt.instance<GetPaymentMethodUseCase>();
+
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
@@ -33,18 +45,8 @@ class CheckoutController extends GetxController {
   final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
 
   void setUserInfo() async {
-    if (userModel.value != null) {
-      final user = UserEntity(
-        name: userModel.value!.name,
-        surname: userModel.value!.surname,
-        number: userModel.value!.number,
-        dialCode: userModel.value!.dialCode,
-        email: userModel.value!.email,
-        deliveryAddressEntity: deliveryModel.value?.toEntity,
-        paymentMethodEntity: selectedPaymentMethod.value?.toEntity,
-      );
-      await setUserUseCase(SetUserParams(user: user));
-    }
+
+      await setUserUseCase(SetUserParams(user: userModel.value!.toEntity));
     /*if (userModel.value != null) {
       final user = userModel.value;
       user?.deliveryAddressViewModel=deliveryModel.value;
@@ -54,47 +56,22 @@ class CheckoutController extends GetxController {
 
     final retrievedUser = await getUserUseCase();
 
-    if (retrievedUser == null) {
-      print('⚠️ No user found in local cache yet.');
-      return;
-    }
+    consoleLog(retrievedUser);
+  }
 
-    // Print all user info
-    print('--- 🧍 USER INFO from cache ---');
-    print('ID: ${retrievedUser.id}');
-    print('Name: ${retrievedUser.name}');
-    print('Surname: ${retrievedUser.surname}');
-    print('Number: ${retrievedUser.number}');
-    print('Dial code: ${retrievedUser.dialCode}');
-    print('Email: ${retrievedUser.email}');
+  void setDeliveryInfo() async {
+    await setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: deliveryModel.value!.toEntity));
 
-    print('\n--- 🏠 DELIVERY ADDRESS ---');
-    final delivery = retrievedUser.deliveryAddressEntity;
-    if (delivery != null) {
-      print('ID: ${delivery.id}');
-      print('Type: ${delivery.deliveryType}');
-      print('Comments: ${delivery.comments}');
-      print('Pickup location: ${delivery.pickupLocation}');
-      print('Country: ${delivery.country}');
-      print('Region: ${delivery.region}');
-      print('City: ${delivery.city}');
-      print('Postal code: ${delivery.postalCode}');
-      print('Address: ${delivery.address}');
-    } else {
-      print('No delivery address found.');
-    }
+    final retrievedDeliveryAddress = await getDeliveryAddressUseCase();
+    consoleLog(retrievedDeliveryAddress);
+  }
 
-    print('\n--- 💳 PAYMENT METHOD ---');
-    final payment = retrievedUser.paymentMethodEntity;
-    if (payment != null) {
-      print('ID: ${payment.id}');
-      print('Key: ${payment.key}');
-      print('Title: ${payment.titleKey}');
-    } else {
-      print('No payment method found.');
-    }
+  void setPaymentInfo() async {
+    await setPaymentMethodUseCase(SetPaymentMethodParams(paymentMethodEntity: selectedPaymentMethod.value!.toEntity));
 
-    print('------------------------------');
+    final retrievedMethod = await getPaymentMethodUseCase();
+
+    consoleLog(retrievedMethod);
   }
 
   void initProductItems(List<CartViewModel> productItems) {

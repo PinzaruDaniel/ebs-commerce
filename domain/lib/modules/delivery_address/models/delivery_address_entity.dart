@@ -1,4 +1,4 @@
-part of '../index.dart';
+part of 'index.dart';
 
 @freezed
 abstract class DeliveryAddressEntity with _$DeliveryAddressEntity {

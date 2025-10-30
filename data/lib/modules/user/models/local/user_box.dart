@@ -1,6 +1,5 @@
 import 'package:data/modules/delivery_address/models/local/delivery_address_box.dart';
 import 'package:data/modules/payment_method/models/local/payment_method_box.dart';
-import 'package:domain/modules/user_information/models/index.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

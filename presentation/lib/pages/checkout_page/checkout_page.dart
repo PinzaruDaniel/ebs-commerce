@@ -99,7 +99,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 infoItems: checkoutController.buildDeliveryInfo(deliveryVM),
                               );
                               checkoutController.updateOrderSummary(checkoutController.calculateSubtotal());
-                              checkoutController.setUserInfo();
+                              checkoutController.setDeliveryInfo();
 
                             },
 
@@ -114,7 +114,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 titleKey: value.titleKey,
                               );
                               Get.back();
-                              checkoutController.setUserInfo();
+                              checkoutController.setPaymentInfo();
 
                             },
                           );
