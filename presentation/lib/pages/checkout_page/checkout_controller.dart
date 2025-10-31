@@ -47,15 +47,16 @@ class CheckoutController extends GetxController {
   final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
 
   void setUserInfo() async {
-    await setUserUseCase(SetUserParams(user: userModel.value!.toEntity));
-    /*if (userModel.value != null) {
+    //await setUserUseCase(SetUserParams(user: userModel.value!.toEntity));
+    if (userModel.value != null) {
       final user = userModel.value;
       user?.deliveryAddressViewModel=deliveryModel.value;
       user?.paymentMethodViewModel=selectedPaymentMethod.value;
       await setUserUseCase(SetUserParams(user: user!.toEntity));
-    }*/
+    }
 
     final retrievedUser = await getUserUseCase();
+    userModel.value=retrievedUser?.toModel;
 
     consoleLog(retrievedUser);
   }
