@@ -9,15 +9,18 @@ import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
+import 'package:presentation/util/widgets/loading_overlay_widget.dart';
 import 'package:presentation/util/widgets/selection_widget.dart';
+import 'package:presentation/view/delivery_address_view_model.dart';
 
 import '../../util/widgets/text_field_widget.dart';
 import '../../view/base_view_model.dart';
 
 class DeliveryAddressPage extends StatefulWidget {
   final Function onSave;
+  final DeliveryAddressViewModel? deliveryAddressVM;
 
-  const DeliveryAddressPage({super.key, required this.onSave});
+  const DeliveryAddressPage({super.key, required this.onSave, required this.deliveryAddressVM});
 
   @override
   State<DeliveryAddressPage> createState() => _DeliveryAddressPageState();
@@ -33,7 +36,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
     super.initState();
     Get.put(DeliveryAddressController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      deliveryAddressController.initItems();
+      deliveryAddressController.initItems(widget.deliveryAddressVM);
     });
   }
 
@@ -49,12 +52,17 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         ),
       ),
       body: SafeArea(
-        child: Obx(() {
-          final items = deliveryAddressController.allItems.toList();
+        child:Obx(() {
+          final isLoading = deliveryAddressController.isLoadingCountries.value;
+
+          if (isLoading) {
+            return  LoadingOverlayWidget(isLoading: true);
+          }
+
           return Form(
             key: _formKey,
             child: ImplicitlyAnimatedList<BaseViewModel>(
-              items: items,
+              items: deliveryAddressController.allItems.toList(),
               padding: const EdgeInsets.only(bottom: 10),
               shrinkWrap: true,
               areItemsTheSame: (a, b) {
@@ -70,7 +78,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                 }
                 return false;
               },
-
               removeItemBuilder: (context, animation, oldItem) {
                 return DeliveryItemBuildWidget(
                   onCallBack: () async {
@@ -83,14 +90,14 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                   isRemoval: true,
                 );
               },
-
               itemBuilder: (context, animation, item, index) {
                 void onSelect(OptionViewModel selected) {
                   if (item is! SelectionViewModel) return;
                   final viewModel = item;
                   if (viewModel.keyId == 'country') {
-                    final country = deliveryAddressController.countries
-                        .firstWhere((c) => c.name == selected.titleKey);
+                    final country = deliveryAddressController.countries.firstWhere(
+                          (c) => c.name == selected.titleKey,
+                    );
                     deliveryAddressController.selectedCountry.value = country;
                     deliveryAddressController.selectedState.value = null;
                     deliveryAddressController.selectedCity.value = null;
@@ -99,20 +106,16 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
                     deliveryAddressController.loadStates(country);
                   } else if (viewModel.keyId == 'region') {
                     final state = deliveryAddressController.states.firstWhere(
-                      (s) => s.name == selected.titleKey,
-                    );
+                            (s) => s.name == selected.titleKey);
                     deliveryAddressController.selectedState.value = state;
                     deliveryAddressController.selectedCity.value = null;
                     deliveryAddressController.cities.clear();
                     deliveryAddressController.loadCities(
-                      deliveryAddressController.selectedCountry.value!,
-                      state,
-                    );
+                        deliveryAddressController.selectedCountry.value!, state);
                   } else if (viewModel.keyId == 'city') {
                     deliveryAddressController.selectedCity.value =
                         deliveryAddressController.cities.firstWhere(
-                          (c) => c.name == selected.titleKey,
-                        );
+                                (c) => c.name == selected.titleKey);
                   }
                 }
 
@@ -129,7 +132,8 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
               },
             ),
           );
-        }),
+        })
+
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
         title: AppTexts.save,
@@ -137,9 +141,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         onTap: () {
           if (_formKey.currentState?.validate() ?? false) {
             deliveryAddressController.onInit();
-            widget.onSave.call(
-              deliveryAddressController.toDeliveryAddressViewModel(),
-            );
+            widget.onSave.call(deliveryAddressController.toDeliveryAddressViewModel());
             Get.back();
           }
         },

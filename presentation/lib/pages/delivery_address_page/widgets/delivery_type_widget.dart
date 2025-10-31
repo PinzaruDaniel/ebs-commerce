@@ -28,7 +28,6 @@ class DeliveryTypeViewModel extends BaseViewModel {
 
 class DeliveryTypeWidget extends StatefulWidget {
   const DeliveryTypeWidget({super.key, required this.itemViewModel, required this.onCallBack});
-
   final DeliveryTypeViewModel itemViewModel;
   final Function onCallBack;
 
@@ -46,7 +45,6 @@ class _DeliveryTypeWidgetState extends State<DeliveryTypeWidget> {
         children: [
           Text(AppTexts.deliveryType),
           SizedBox(height: 4),
-
           GridView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),

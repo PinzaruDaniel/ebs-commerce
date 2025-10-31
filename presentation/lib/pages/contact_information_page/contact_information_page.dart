@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/contact_information_page/contact_information_controller.dart';
 import 'package:presentation/pages/contact_information_page/widgets/phone_number_widget.dart';
+import 'package:presentation/view/user_view_model.dart';
 
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
@@ -11,9 +12,10 @@ import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/text_field_widget.dart';
 
 class ContactInformationPage extends StatefulWidget {
-  const ContactInformationPage({super.key, required this.onSave});
+  const ContactInformationPage({super.key, required this.onSave, required this.userViewModel});
 
   final Function onSave;
+  final UserViewModel? userViewModel;
 
   @override
   State<ContactInformationPage> createState() => _ContactInformationPageState();
@@ -28,7 +30,7 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
     super.initState();
     Get.put(ContactInformationController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      contactInformationController.initAllItems();
+      contactInformationController.initAllItems(widget.userViewModel);
     });
   }
 

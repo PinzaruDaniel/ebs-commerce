@@ -40,7 +40,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkoutController.initProductItems(widget.items);
       checkoutController.initAllItems();
-     // checkoutController.initUserInfo();
     });
   }
 
@@ -78,7 +77,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       item: item,
                       onTap: () {
                         if (item.keyId == CheckoutWidgetsType.userContactInfo) {
-                          AppRouter.openContactInformationPage(
+                          AppRouter. openContactInformationPage(
+                            userViewModel: checkoutController.userModel.value,
                             onSave: (UserViewModel? userVM) {
                               checkoutController.userModel.value=userVM;
                               checkoutController.updateCheckoutInfoItem(
@@ -91,6 +91,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           );
                         } else if (item.keyId == CheckoutWidgetsType.deliveryAddressInfo) {
                           AppRouter.openDeliveryAddressPage(
+                            deliveryAddressVM: checkoutController.deliveryModel.value,
                             onSave: (DeliveryAddressViewModel? deliveryVM) {
                               checkoutController.deliveryModel.value = deliveryVM;
                               checkoutController.updateCheckoutInfoItem(
@@ -163,8 +164,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
         return BottomNavigationBarWidget(
           titleDialog: AppTexts.oops,
           contentDialog: AppTexts.enterAllData,
-          title: hasSelectedPayment && !hasCompleteInfo && hasDeliveryAddress ? AppTexts.createOrder : AppTexts.enterAllData,
-          addToCart: hasSelectedPayment && !hasCompleteInfo && hasDeliveryAddress,
+          title: hasSelectedPayment && hasCompleteInfo && hasDeliveryAddress ? AppTexts.createOrder : AppTexts.enterAllData,
+          addToCart: hasSelectedPayment && hasCompleteInfo && hasDeliveryAddress,
           onTap: () {
             AwesomeDialog(
               context: context,

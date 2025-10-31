@@ -1,4 +1,3 @@
-import 'package:common/constants/logger.dart';
 import 'package:data/mapper/delivery_address_mapper.dart';
 import 'package:data/mapper/payment_method_mapper.dart';
 import 'package:data/mapper/user_mapper.dart';
@@ -30,19 +29,21 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
   @override
   Future<UserEntity?> getUser() async {
     final userBox = await userLocalSource.getUser();
-    consoleLog('get user box ${userBox?.id} ${userBox?.name} ${userBox?.deliveryAddressBox.target?.pickupLocation} ');
-    return userBox?.toEntity;
+    if(userBox==null)return null;
+    return userBox.toEntity;
   }
 
   @override
   Future<DeliveryAddressEntity?> getDeliveryAddress() async {
     final deliveryAddress = await userLocalSource.getDeliveryAddress();
+    if(deliveryAddress==null)return null;
     return deliveryAddress.toEntity;
   }
 
   @override
   Future<PaymentMethodEntity?> getPaymentMethod() async {
     final paymentMethod = await userLocalSource.getPaymentMethod();
+    if(paymentMethod==null) return null;
     return paymentMethod.toEntity;
   }
 

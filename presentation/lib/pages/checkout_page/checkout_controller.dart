@@ -47,76 +47,15 @@ class CheckoutController extends GetxController {
   final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
 
   void setUserInfo() async {
-    //await setUserUseCase(SetUserParams(user: userModel.value!.toEntity));
-    if (userModel.value != null) {
-      final user = userModel.value;
-      user?.deliveryAddressViewModel=deliveryModel.value;
-      user?.paymentMethodViewModel=selectedPaymentMethod.value;
-      await setUserUseCase(SetUserParams(user: user!.toEntity));
-    }
-
-    final retrievedUser = await getUserUseCase();
-    userModel.value=retrievedUser?.toModel;
-
-    consoleLog(retrievedUser);
+    await setUserUseCase(SetUserParams(user: userModel.value!.toEntity));
   }
 
   void setDeliveryInfo() async {
     await setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: deliveryModel.value!.toEntity));
-
-    final retrievedDeliveryAddress = await getDeliveryAddressUseCase();
-    consoleLog(retrievedDeliveryAddress);
-
-    final retrievedUser = await getUserUseCase();
-
-    consoleLog('user from cache when calling dsetdeliveryinfro $retrievedUser');
   }
 
   void setPaymentInfo() async {
     await setPaymentMethodUseCase(SetPaymentMethodParams(paymentMethodEntity: selectedPaymentMethod.value!.toEntity));
-
-    final retrievedMethod = await getPaymentMethodUseCase();
-
-    consoleLog(retrievedMethod);
-  }
-
-  void initUserInfo() async {
-    final user = UserEntity(name: 'name',
-        surname: 'surname',
-        number: 'number',
-        dialCode: 'dialCode',
-        email: 'email',
-        deliveryAddressEntity: null,
-        paymentMethodEntity: null);
-
-    await setUserUseCase(SetUserParams(user: user));
-    final retrievedUser=await getUserUseCase();
-    consoleLog('retrievedUser ${retrievedUser?.name} ${retrievedUser?.dialCode}');
-
-    final deliveryAddress = DeliveryAddressEntity(
-        id: 0,
-        deliveryType: 'deliveryType',
-        comments: 'comments',
-        pickupLocation: 'pickupLocation',
-        country: 'country',
-        region: 'region',
-        city: 'city',
-        postalCode: 'postalCode',
-        address: 'address');
-    await setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: deliveryAddress));
-    final retrievedDeliveryAddress = await getDeliveryAddressUseCase();
-    consoleLog('retrievedDeliveryAddress ${retrievedDeliveryAddress?.region} ${retrievedDeliveryAddress?.city}');
-
-    final paymentMethod = PaymentMethodEntity(id: 0, key: 'key', titleKey: 'titleKey');
-    await setPaymentMethodUseCase(SetPaymentMethodParams(paymentMethodEntity: paymentMethod));
-    final retrievedPaymentMethod = await getPaymentMethodUseCase();
-    consoleLog('retrievedPaymentMethod ${retrievedPaymentMethod?.key}');
-
-    final retrievedUsers=await getUserUseCase();
-    consoleLog('retrievedUsers ${retrievedUsers?.name} ${retrievedUsers?.dialCode} ${retrievedUsers?.deliveryAddressEntity?.city}');
-
-
-
   }
 
   void initProductItems(List<CartViewModel> productItems) {
@@ -131,8 +70,24 @@ class CheckoutController extends GetxController {
     return user.surname.isEmpty || user.number.isEmpty || user.name.isEmpty || user.email.isEmpty;
   }
 
-  void initAllItems() {
+  Future<void> getUserInfo() async {
+    final cachedUser = await getUserUseCase();
+    userModel.value = cachedUser?.toModel??null;
+
+    final cachedDeliveryAddress = await getDeliveryAddressUseCase();
+    deliveryModel.value = cachedDeliveryAddress?.toModel;
+
+    final cachedPaymentMethod = await getPaymentMethodUseCase();
+    selectedPaymentMethod.value = cachedPaymentMethod?.toModel;
+
+    consoleLog('cachedUser ${userModel.value?.name} ${userModel.value?.deliveryAddressViewModel?.pickupLocation}  \n');
+    consoleLog('cachedDeliveryAddress ${deliveryModel.value?.pickupLocation}\n');
+    consoleLog('cachedPaymentMethod ${selectedPaymentMethod.value?.titleKey}');
+  }
+
+  Future<void> initAllItems() async {
     updateOrderSummary(calculateSubtotal());
+    await getUserInfo();
 
     allItems.value = [
       HeaderTitleViewModel(title: AppTexts.orderSummary),
@@ -239,8 +194,8 @@ class CheckoutController extends GetxController {
     orderSummary.subtotal.value = subtotal;
 
     orderSummary.shippingFee.value =
-    (deliveryModel.value?.deliveryType == DeliveryType.dhl.label ||
-        deliveryModel.value?.deliveryType == DeliveryType.fanCourier.label)
+        (deliveryModel.value?.deliveryType == DeliveryType.dhl.label ||
+            deliveryModel.value?.deliveryType == DeliveryType.fanCourier.label)
         ? 5.0
         : 0.0;
 

@@ -13,6 +13,7 @@ class DeliveryItemBuildWidget extends StatelessWidget {
   final Function onCallBack;
   final Function(OptionViewModel)? onSelect;
 
+
   const DeliveryItemBuildWidget({
     super.key,
     required this.item,

@@ -20,9 +20,9 @@ abstract class UserLocalSource {
 
   Future<UserBox?> getUser();
 
-  Future<PaymentMethodBox> getPaymentMethod();
+  Future<PaymentMethodBox?> getPaymentMethod();
 
-  Future<DeliveryAddressBox> getDeliveryAddress();
+  Future<DeliveryAddressBox?> getDeliveryAddress();
 }
 
 class UserLocalDataSourceImpl implements UserLocalSource {
@@ -31,23 +31,30 @@ class UserLocalDataSourceImpl implements UserLocalSource {
   Box<PaymentMethodBox> paymentMethodBox;
 
   UserLocalDataSourceImpl({required this.userBox, required this.deliveryAddressBox, required this.paymentMethodBox});
-
   @override
   Future<void> setUser({required UserEntity user}) async {
-    userBox.put(UserToBoxMapper(user).toBox);
+    final existingUsers = await userBox.getAllAsync();
+    if (existingUsers.isNotEmpty) {
+      final lastId = existingUsers.last.id;
+      final existingUser = userBox.get(lastId);
+      final updatedUserBox = UserToBoxMapper(user).toBox;
+      updatedUserBox.id = existingUser!.id;
+      updatedUserBox.deliveryAddressBox.targetId = existingUser.deliveryAddressBox.targetId;
+      updatedUserBox.paymentMethodBox.targetId = existingUser.paymentMethodBox.targetId;
+      userBox.put(updatedUserBox);
+    } else {
+      final newUserBox = UserToBoxMapper(user).toBox;
+      userBox.put(newUserBox);
+    }
   }
 
   @override
   Future<void> setDeliveryAddress({required DeliveryAddressEntity deliveryAddress}) async {
-    final addressId= deliveryAddressBox.putAsync(DeliveryAddressToBoxMapper(deliveryAddress).toBox);
-    var delivery = await deliveryAddressBox.getAllAsync();
-
+    final addressId = deliveryAddressBox.putAsync(DeliveryAddressToBoxMapper(deliveryAddress).toBox);
     final user = await getUser();
-    user?.deliveryAddressBox.targetId =await addressId;//DeliveryAddressToBoxMapper(deliveryAddress).toBox;
-    /*consoleLog(addressId);
-    consoleLog(user?.id);*/
+
+    user?.deliveryAddressBox.targetId = await addressId;
     userBox.put(user!);
-    consoleLog('setDeliveryAddress  ${user.deliveryAddressBox.target?.pickupLocation}');
   }
 
   @override
@@ -61,19 +68,21 @@ class UserLocalDataSourceImpl implements UserLocalSource {
   @override
   Future<UserBox?> getUser() async {
     final users = userBox.getAll();
+    if(users.isEmpty)return null;
     return users.last;
   }
 
   @override
-  Future<DeliveryAddressBox> getDeliveryAddress() async {
+  Future<DeliveryAddressBox?> getDeliveryAddress() async {
     final deliveryAddress = deliveryAddressBox.getAll();
-    consoleLog(deliveryAddress.last.id);
+    if(deliveryAddress.isEmpty) return null;
     return deliveryAddress.last;
   }
 
   @override
-  Future<PaymentMethodBox> getPaymentMethod() async {
+  Future<PaymentMethodBox?> getPaymentMethod() async {
     final paymentMethod = paymentMethodBox.getAll();
+    if(paymentMethod.isEmpty) return null;
     return paymentMethod.last;
   }
 }

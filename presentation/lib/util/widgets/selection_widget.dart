@@ -67,7 +67,7 @@ class _SelectionWidgetState<T> extends State<SelectionWidget<T>> {
         InkWell(
           splashColor: Colors.transparent,
           onTap: () {
-            if (widget.itemViewModel.options.length > 1) {
+            if (widget.itemViewModel.options.isNotEmpty) {
               AppPopUp.showSelection(
                 title: widget.itemViewModel.title ?? '',
                 selectionViewModel: widget.itemViewModel,
