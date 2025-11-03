@@ -1,8 +1,6 @@
 class ApiConstants {
   static const String baseUrl = 'https://api.ecommerce.ebsio.dev.devebs.net';
   static const String deliveryUrl = 'https://countriesnow.space/api/v0.1/';
-  static const Map<String, String> saasAppToken = {
-    'SAAS-APP-TOKEN': '51b5c181d7d441029a8d03c7689dbde7',
-  };
+  static const Map<String, String> saasAppToken = {'SAAS-APP-TOKEN': '51b5c181d7d441029a8d03c7689dbde7'};
+  static const String authUrl = 'http://10.1.1.81:8080/';
 }
-//TODO: iso code n=and dial dial_codes
