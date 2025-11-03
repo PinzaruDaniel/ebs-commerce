@@ -5,6 +5,7 @@ import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/localization/localization_loader.dart';
 import 'package:presentation/pages/authentification_page/authentification_page.dart';
 import 'package:presentation/pages/home_page/home_page.dart';
+import 'package:presentation/pages/welcome_page/welcome_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'controllers/bindings/root_bindings_controllers.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
       ),
 
       initialRoute: '/',
-      getPages: [GetPage(name: '/', page: () => AuthentificationPage())],
+      getPages: [GetPage(name: '/', page: () => WelcomePage())],
     );
   }
 }

@@ -8,4 +8,5 @@ class AppColors {
   static const Color red = Color(0xffCD0000);
   static const Color redText = Color(0xffCF1C0C);
   static const Color pinkBackGround=Color(0xfff8dcde);
+  static const Color greyText=Color(0xFF4F4D7B);
 }

@@ -1,13 +1,17 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/authentification_page/authentification_page.dart';
 import 'package:presentation/pages/checkout_page/checkout_page.dart';
 import 'package:presentation/pages/delivery_address_page/delivery_address_page.dart';
 import 'package:presentation/pages/filtered_page/filter_page.dart';
+import 'package:presentation/pages/greeting_page/greeting_page.dart';
 import 'package:presentation/pages/home_page/home_page.dart';
 import 'package:presentation/pages/products_display_page/products_display_page.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+
 import '../../pages/category_page/category_page.dart';
 import '../../pages/contact_information_page/contact_information_page.dart';
 import '../../pages/product_detail_page/product_detail_page.dart';
@@ -15,10 +19,8 @@ import '../../pages/shopping_cart_page/shopping_cart_page.dart';
 import '../../view/cart_products_view_model.dart';
 import '../../view/product_view_model.dart';
 import '../enum/enums.dart';
-import 'package:animations/animations.dart';
 
-Route<T> createSharedAxisRoute<T>(
-    {required Widget page, SharedAxisTransitionType? transitionType}) {
+Route<T> createSharedAxisRoute<T>({required Widget page, SharedAxisTransitionType? transitionType}) {
   return PageRouteBuilder<T>(
     transitionDuration: const Duration(milliseconds: 400),
     pageBuilder: (context, animation, secondaryAnimation) => page,
@@ -37,8 +39,7 @@ Route<T> createSharedAxisRoute<T>(
 class AppRouter {
   static void openHomePage() {
     if (Get.context != null) {
-      Navigator.push(
-          Get.context!, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => HomePage()));
     }
   }
 
@@ -54,15 +55,25 @@ class AppRouter {
 
   static void openShoppingCartPage() {
     if (Get.context != null) {
-      Navigator.of(Get.context!).push(
-          createSharedAxisRoute(page: ShoppingCartPage()));
+      Navigator.of(Get.context!).push(createSharedAxisRoute(page: ShoppingCartPage()));
     }
   }
 
+  static void openGreetingPage() {
+    if (Get.context != null) {
+      Navigator.of(Get.context!).push(createSharedAxisRoute(page: GreetingPage()));
+    }
+  }
+  static void openAuthPage() {
+    if (Get.context != null) {
+      Navigator.of(Get.context!).push(createSharedAxisRoute(page: AuthentificationPage()));
+    }
+  }
+
+
   static void openCategoryPickerPage({required Function onSave}) {
     if (Get.context != null) {
-      Navigator.push(Get.context!, MaterialPageRoute(
-          builder: (context) => CategoryPage(onSave: onSave)));
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => CategoryPage(onSave: onSave)));
     }
   }
 
@@ -70,11 +81,18 @@ class AppRouter {
     return FilterPage();
   }
 
-  static Widget openProductsDisplayPage(
-      {required ProductListType type, required String title, List<
-          int>? selectedCategoryIds, SfRangeValues? priceRange,}) {
+  static Widget openProductsDisplayPage({
+    required ProductListType type,
+    required String title,
+    List<int>? selectedCategoryIds,
+    SfRangeValues? priceRange,
+  }) {
     return ProductsDisplayPage(
-      title: title, type: type, selectedCategoryIds: selectedCategoryIds, priceRange: priceRange,);
+      title: title,
+      type: type,
+      selectedCategoryIds: selectedCategoryIds,
+      priceRange: priceRange,
+    );
   }
 
   static void openCheckoutPage({required List<CartViewModel> items}) {
@@ -90,15 +108,26 @@ class AppRouter {
 
   static void openContactInformationPage({required Function onSave, required UserViewModel? userViewModel}) {
     if (Get.context != null) {
-      Navigator.push(Get.context!, MaterialPageRoute(
-          builder: (context) => ContactInformationPage(onSave: onSave, userViewModel: userViewModel,)));
+      Navigator.push(
+        Get.context!,
+        MaterialPageRoute(
+          builder: (context) => ContactInformationPage(onSave: onSave, userViewModel: userViewModel),
+        ),
+      );
     }
   }
 
-  static void openDeliveryAddressPage({required Function onSave, required DeliveryAddressViewModel? deliveryAddressVM}) {
+  static void openDeliveryAddressPage({
+    required Function onSave,
+    required DeliveryAddressViewModel? deliveryAddressVM,
+  }) {
     if (Get.context != null) {
-      Navigator.push(Get.context!, MaterialPageRoute(
-          builder: (context) => DeliveryAddressPage(onSave: onSave, deliveryAddressVM: deliveryAddressVM,)));
+      Navigator.push(
+        Get.context!,
+        MaterialPageRoute(
+          builder: (context) => DeliveryAddressPage(onSave: onSave, deliveryAddressVM: deliveryAddressVM),
+        ),
+      );
     }
   }
 }
