@@ -62,7 +62,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     controller.addListener(() {
       widget.itemViewModel.placeholder = controller.text;
     });
-    focusNode.addListener((){
+    focusNode.addListener(() {
       if (!focusNode.hasFocus) {
         _onFieldUnfocused(controller.text);
       }
@@ -103,6 +103,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
+                  obscureText: widget.itemViewModel.keyId == 'password',
                   inputFormatters:
                       widget.itemViewModel.inputFormatter ??
                       (widget.itemViewModel.textInputType == TextInputType.phone

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/localization/localization_loader.dart';
+import 'package:presentation/pages/authentification_page/authentification_page.dart';
 import 'package:presentation/pages/home_page/home_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'controllers/bindings/root_bindings_controllers.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
       ),
 
       initialRoute: '/',
-      getPages: [GetPage(name: '/', page: () => HomePage())],
+      getPages: [GetPage(name: '/', page: () => AuthentificationPage())],
     );
   }
 }

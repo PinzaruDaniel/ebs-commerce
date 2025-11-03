@@ -32,6 +32,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "async_locks",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/async_locks-4.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "awesome_dialog",
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/awesome_dialog-3.2.1",
       "packageUri": "lib/",

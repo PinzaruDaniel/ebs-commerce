@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'modules/auth/models/local/auth_token_box.dart';
 import 'modules/categories/models/local/category_box.dart';
 import 'modules/delivery_address/models/local/delivery_address_box.dart';
 import 'modules/payment_method/models/local/payment_method_box.dart';
@@ -337,6 +338,34 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(8, 402596049160535341),
+    name: 'AuthTokenBox',
+    lastPropertyId: const obx_int.IdUid(3, 619486003639994429),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 1411789849216134019),
+        name: 'id',
+        type: 6,
+        flags: 129,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 4865536227153190358),
+        name: 'accessToken',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 619486003639994429),
+        name: 'refreshToken',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -377,13 +406,13 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(6, 8416903606595481555),
+    lastEntityId: const obx_int.IdUid(8, 402596049160535341),
     lastIndexId: const obx_int.IdUid(4, 2848478786834637998),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
-    retiredEntityUids: const [],
+    retiredEntityUids: const [5087326593272597010],
     retiredIndexUids: const [],
-    retiredPropertyUids: const [],
+    retiredPropertyUids: const [1289247803722517355, 1662344287195382789],
     retiredRelationUids: const [],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
@@ -837,6 +866,52 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    AuthTokenBox: obx_int.EntityDefinition<AuthTokenBox>(
+      model: _entities[6],
+      toOneRelations: (AuthTokenBox object) => [],
+      toManyRelations: (AuthTokenBox object) => {},
+      getId: (AuthTokenBox object) => object.id,
+      setId: (AuthTokenBox object, int id) {
+        object.id = id;
+      },
+      objectToFB: (AuthTokenBox object, fb.Builder fbb) {
+        final accessTokenOffset = object.accessToken == null
+            ? null
+            : fbb.writeString(object.accessToken!);
+        final refreshTokenOffset = object.refreshToken == null
+            ? null
+            : fbb.writeString(object.refreshToken!);
+        fbb.startTable(4);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, accessTokenOffset);
+        fbb.addOffset(2, refreshTokenOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final accessTokenParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 6);
+        final refreshTokenParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final object = AuthTokenBox(
+          id: idParam,
+          accessToken: accessTokenParam,
+          refreshToken: refreshTokenParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -1066,4 +1141,22 @@ class UserBox_ {
       obx.QueryRelationToOne<UserBox, PaymentMethodBox>(
         _entities[5].properties[7],
       );
+}
+
+/// [AuthTokenBox] entity fields to define ObjectBox queries.
+class AuthTokenBox_ {
+  /// See [AuthTokenBox.id].
+  static final id = obx.QueryIntegerProperty<AuthTokenBox>(
+    _entities[6].properties[0],
+  );
+
+  /// See [AuthTokenBox.accessToken].
+  static final accessToken = obx.QueryStringProperty<AuthTokenBox>(
+    _entities[6].properties[1],
+  );
+
+  /// See [AuthTokenBox.refreshToken].
+  static final refreshToken = obx.QueryStringProperty<AuthTokenBox>(
+    _entities[6].properties[2],
+  );
 }

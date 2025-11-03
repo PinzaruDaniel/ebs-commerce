@@ -737,6 +737,7 @@
       "name": "data",
       "version": "1.0.0",
       "dependencies": [
+        "async_locks",
         "common",
         "dartz",
         "dio",
@@ -1201,6 +1202,11 @@
     {
       "name": "flat_buffers",
       "version": "23.5.26",
+      "dependencies": []
+    },
+    {
+      "name": "async_locks",
+      "version": "4.0.2",
       "dependencies": []
     },
     {

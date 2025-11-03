@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
         showBorder: true,
-        leading: AppIcons.companyIcon,
+        leading: AppIcons.companyIcon(),
         actions: [
           LanguageDropdown(),
           OpenContainerAnimation(
