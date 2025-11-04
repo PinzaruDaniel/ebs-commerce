@@ -1,24 +1,22 @@
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/util/resources/app_icons.dart';
-import 'package:presentation/util/routing/app_pop_up.dart';
+import 'package:presentation/util/widgets/base/base_button_widget.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
   final String title;
-  final String? titleDialog;
-  final String? contentDialog;
   final Function()? onTap;
-  final bool? addToCart;
   final bool showIcon;
+  final Color? buttonColor;
+  final Color? textColor;
 
+  //TODO: remove nullable bool
   const BottomNavigationBarWidget({
     super.key,
     required this.title,
     this.onTap,
-    required this.showIcon,
-    this.addToCart,
-    this.titleDialog,
-    this.contentDialog,
+    this.showIcon = false,
+     this.textColor,
+     this.buttonColor,
   });
 
   @override
@@ -30,35 +28,16 @@ class BottomNavigationBarWidget extends StatelessWidget {
         boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: 12)],
       ),
       padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 16),
-      child: TextButton(
-        style: TextButton.styleFrom(
-          backgroundColor: (addToCart ?? true) ? AppColors.primary : Colors.grey,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          elevation: 2,
-        ),
-        onPressed: () {
-          if (addToCart == true) {
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 8.0),
+        child: BaseButtonWidget(
+          showIcon: showIcon,
+          buttonColor: buttonColor ?? AppColors.primary,
+          textColor: textColor ?? Colors.white,
+          onTap: () {
             onTap?.call();
-          } else if (addToCart == false) {
-             AppPopUp.showConfirmationDialog(
-            context: context,
-            title: titleDialog,
-            content: contentDialog,
-            );
-          } else {
-            onTap?.call();
-          }
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            showIcon ? AppIcons.toCartIcon : SizedBox.shrink(),
-            SizedBox(width: 6),
-            Text(
-              title,
-              style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
-            ),
-          ],
+          },
+          title: title,
         ),
       ),
     );

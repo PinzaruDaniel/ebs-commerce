@@ -137,10 +137,7 @@ class _FilterPageState extends State<FilterPage> {
                   ? AppTexts.loading
                   : (hasProducts ? '${AppTexts.showResults}($filteredCount)' : AppTexts.noProductsToShow),
               showIcon: false,
-              addToCart: !isLoading,
               onTap: isLoading ? null : openContainer,
-              titleDialog: AppTexts.oops,
-              contentDialog: AppTexts.noProductsToShow,
             );
           },
         );

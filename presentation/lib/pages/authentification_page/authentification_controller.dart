@@ -32,6 +32,8 @@ class AuthentificationController extends GetxController {
         keyId: 'password',
         title: 'Password',
         initialValue: password.value ?? '',
+        textInputType: TextInputType.visiblePassword,
+
       ),
     ];
     allItems.refresh();

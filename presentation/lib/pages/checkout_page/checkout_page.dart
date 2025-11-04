@@ -162,10 +162,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
         final hasDeliveryAddress= checkoutController.deliveryModel.value !=null;
 
         return BottomNavigationBarWidget(
-          titleDialog: AppTexts.oops,
-          contentDialog: AppTexts.enterAllData,
+          buttonColor: hasSelectedPayment && hasCompleteInfo && hasDeliveryAddress ? AppColors.primary: Colors.grey.shade300,
+          textColor: hasSelectedPayment && hasCompleteInfo && hasDeliveryAddress? Colors.white: Colors.black,
+
           title: hasSelectedPayment && hasCompleteInfo && hasDeliveryAddress ? AppTexts.createOrder : AppTexts.enterAllData,
-          addToCart: hasSelectedPayment && hasCompleteInfo && hasDeliveryAddress,
           onTap: () {
             AwesomeDialog(
               context: context,

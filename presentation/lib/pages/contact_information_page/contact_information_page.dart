@@ -94,8 +94,6 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
             Get.back();
           }
         },
-        titleDialog: AppTexts.oops,
-        contentDialog: AppTexts.noProductsToShow,
       ),
     );
   }

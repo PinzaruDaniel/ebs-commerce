@@ -5,6 +5,7 @@ import 'package:presentation/pages/product_detail_page/widgets/product_detail_ex
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_page_body_widget.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
+import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isItemValid = widget.item?.price != null && widget.item?.stock != null;
     return Scaffold(
       body: CustomScrollView(
         controller: scrollController,
@@ -89,13 +91,33 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ),
         ],
       ),
-
-      bottomNavigationBar: BottomNavigationBarWidget(
-        addToCart: widget.item?.price != null && widget.item?.stock != null,
-        title: widget.item?.price != null && widget.item?.stock != null ? AppTexts.addToCart : AppTexts.cantAddToCart,
-        showIcon: widget.item?.price != null && widget.item?.stock != null,
-        titleDialog: AppTexts.oops,
-        contentDialog: AppTexts.cantAddToCart,
+      bottomNavigationBar: /*BaseButtonWidget(
+        buttonColor: isItemValid? AppColors.primary: Colors.grey.shade300,
+        textColor: isItemValid? Colors.white: Colors.black,
+        onTap: () {
+          isItemValid
+              ? AppPopUp.showCartInfoPopUp(
+                  item: widget.item!,
+                  onAdd: (int quantity) {
+                    addCartController.cartItem.value?.quantity = quantity;
+                    final item = addCartController.cartItem.value;
+                    mainAppController.addToCart(item!);
+                    AppRouter.openShoppingCartPage();
+                  },
+                  maxValue: widget.item!.stock,
+                )
+              : AppPopUp.showConfirmationDialog(
+                  context: context,
+                  content: AppTexts.cantAddToCart,
+                  title: AppTexts.oops,
+                );
+        },
+        title: isItemValid ? AppTexts.addToCart : AppTexts.cantAddToCart,
+      ),*/ BottomNavigationBarWidget(
+        buttonColor: isItemValid? AppColors.primary: Colors.grey.shade300,
+        textColor: isItemValid? Colors.white: Colors.black,
+        title:isItemValid ? AppTexts.addToCart : AppTexts.cantAddToCart,
+        showIcon: isItemValid,
         onTap: () {
           AppPopUp.showCartInfoPopUp(
             item: widget.item!,

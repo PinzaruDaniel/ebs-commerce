@@ -3,6 +3,7 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/routing/app_router.dart';
+import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/select_checkbox_widget.dart';
 
 import '../../util/resources/app_icons.dart';
@@ -37,55 +38,56 @@ class _GreetingPageState extends State<GreetingPage> {
 
             Padding(
               padding: EdgeInsets.only(bottom: 50.0, top: 60, left: 24, right: 24),
-              child: SelectCheckboxWidget(
-                title: 'I agree with EBS App User Terms And Conditions and acknowledge the TFH Privacy notice',
-                selected: isChecked,
-                selectedColor: Colors.black,
-                tristate: false,
-                onChanged: (value) {
+              child: InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                onTap: (){
                   setState(() {
-                    isChecked = value!;
+                    isChecked=!isChecked;
                   });
                 },
-                textStyle: AppTextsStyle.medium.copyWith(color: AppColors.greyText, fontSize: 16),
+                child: SelectCheckboxWidget(
+                  title: 'I agree with EBS App User Terms And Conditions and acknowledge the TFH Privacy notice',
+                  selected: isChecked,
+                  selectedColor: Colors.black,
+                  tristate: false,
+                  onChanged: (value) {
+                    setState(() {
+                      isChecked = value!;
+                    });
+                  },
+                  textStyle: AppTextsStyle.medium.copyWith(color: AppColors.greyText, fontSize: 16),
+                ),
               ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: isChecked ? AppColors.primary : Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        AppPopUp.showConfirmationDialog(context: context, content: '', title: 'It is in progress');
-                      },
-                      child: Text(
-                        'Sign up',
-                        style: AppTextsStyle.bold(size: 14, color: isChecked ? Colors.white : Colors.grey),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                  BaseButtonWidget(
+                    buttonColor: isChecked ? AppColors.primary : Colors.grey.shade300,
+                    textColor: isChecked ? Colors.white : Colors.grey,
+                    onTap: () {
+                      AppPopUp.showConfirmationDialog(context: context, content: '', title: 'It is in progress');
+                    },
+                    title: 'Sign up',
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 16),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(12)),
-                      child: TextButton(
-                        onPressed: () {
-                          isChecked?
-                          AppRouter.openAuthPage(): AppPopUp.showConfirmationDialog(context: context, content: '', title: 'Please, check the box');
-                        },
-                        child: Text(
-                          'Log in',
-                          style: AppTextsStyle.bold(size: 14, color: isChecked ? Colors.black :  Colors.grey),
-                        ),
-                      ),
+                    child: BaseButtonWidget(
+                      buttonColor: Colors.grey.shade300,
+                      textColor: isChecked ? Colors.black : Colors.grey,
+                      onTap: () {
+                        isChecked
+                            ? AppRouter.openAuthPage()
+                            : AppPopUp.showConfirmationDialog(
+                                context: context,
+                                content: '',
+                                title: 'Please, check the box',
+                              );
+                      },
+                      title: 'Log in',
                     ),
                   ),
                 ],

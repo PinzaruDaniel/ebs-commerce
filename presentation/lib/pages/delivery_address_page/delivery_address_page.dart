@@ -145,8 +145,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
             Get.back();
           }
         },
-        titleDialog: AppTexts.oops,
-        contentDialog: AppTexts.noProductsToShow,
       ),
     );
   }

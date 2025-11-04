@@ -166,7 +166,6 @@ class _CategoryPageState extends State<CategoryPage> {
               Get.back();
             }
           },
-          addToCart: null,
         ),
       ),
     );

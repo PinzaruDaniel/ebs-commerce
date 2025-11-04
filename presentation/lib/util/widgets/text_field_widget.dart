@@ -13,6 +13,7 @@ class TextFieldViewModel extends BaseViewModel {
   final String? countryCode;
   final TextInputType? textInputType;
   final bool isRequiredValidation;
+  final bool isTextObscure;
   final String? Function(String?)? customValidator;
   final List<LibPhonenumberTextFormatter>? inputFormatter;
   final TextEditingController? textController;
@@ -30,6 +31,7 @@ class TextFieldViewModel extends BaseViewModel {
     this.textController,
     this.isRequiredValidation = true,
     this.hintText,
+    this.isTextObscure=false,
     String initialValue = '',
 
     this.minLines,
@@ -103,7 +105,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
-                  obscureText: widget.itemViewModel.keyId == 'password',
+                  obscureText:widget.itemViewModel.isTextObscure,
                   inputFormatters:
                       widget.itemViewModel.inputFormatter ??
                       (widget.itemViewModel.textInputType == TextInputType.phone
@@ -117,6 +119,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   textInputAction: TextInputAction.done,
                   cursorColor: AppColors.primary,
                   decoration: InputDecoration(
+                    suffix: ,
                     prefixIcon: widget.itemViewModel.hintText == AppTexts.search ? Icon(Icons.search_rounded) : null,
                     hintText: widget.itemViewModel.hintText,
                     hintStyle: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500),

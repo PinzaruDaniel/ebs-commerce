@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/util/enum/enums.dart';
+import 'package:presentation/util/widgets/base/base_view_widget.dart';
 import 'package:presentation/util/widgets/option_picker_widget.dart';
 import 'package:presentation/util/widgets/payment_method_selection_widget.dart';
 import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
@@ -9,9 +9,7 @@ import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_t
 import '../../view/payment_method_view_model.dart';
 import '../../view/product_view_model.dart';
 import '../resources/app_colors.dart';
-import '../resources/app_text_styles.dart';
 import '../resources/app_texts.dart';
-import '../widgets/bottom_navigation_bar_widget.dart';
 import '../widgets/selection_widget.dart';
 
 class AppPopUp {
@@ -25,8 +23,9 @@ class AppPopUp {
     Function? onDone,
     String? title,
     Function? onSave,
-    bool? addToCart,
-    bool? showIcon,
+    bool showIcon = false,
+    Color? buttonColor,
+    Color? textColor,
     String? barTitle,
   }) async {
     if (Get.context != null) {
@@ -41,69 +40,16 @@ class AppPopUp {
         ),
         context: Get.context!,
         builder: (_) {
-          //TODO: to add base_view_widget
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: constraints.maxHeight),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Stack(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                if (title != null)
-                                  Text(
-                                    '${AppTexts.choose} ${title.toLowerCase()}',
-                                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                                  ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                if (onDone != null)
-                                  GestureDetector(
-                                    onTap: () {
-                                      onDone.call();
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(24),
-                                        color: AppColors.primary,
-                                      ),
-                                      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10),
-                                      child: Text(
-                                        AppTexts.done,
-                                        style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      child,
-
-                      if (onSave != null)
-                        BottomNavigationBarWidget(
-                          title: barTitle ?? AppTexts.save,
-                          onTap: () => onSave.call(),
-                          showIcon: showIcon ?? false,
-                          addToCart: addToCart,
-                        ),
-                    ],
-                  ),
-                ),
-              );
-            },
+          return BaseViewWidget(
+            saveButton: saveButton,
+            onDone: onDone,
+            onSave: onSave,
+            title: title,
+            showIcon: showIcon,
+            buttonColor: buttonColor,
+            textColor: textColor,
+            barTitle: barTitle,
+            child: child,
           );
         },
       );
@@ -118,7 +64,6 @@ class AppPopUp {
     final productDetailKey = GlobalKey<ProductDetailAddToCartBottomSheetWidgetState>();
     return await showCustomBottomSheet(
       barTitle: AppTexts.addToCart,
-      addToCart: true,
       showIcon: true,
       onSave: () {
         productDetailKey.currentState?.onSave();
@@ -132,7 +77,10 @@ class AppPopUp {
     );
   }
 
-  static Future<void> paymentMethod({required Function(PaymentMethodViewModel) onSelected, PaymentMethodViewModel? initialMethod}) async {
+  static Future<void> paymentMethod({
+    required Function(PaymentMethodViewModel) onSelected,
+    PaymentMethodViewModel? initialMethod,
+  }) async {
     final paymentMethodWidgetKey = GlobalKey<PaymentMethodSelectionWidgetState>();
     return await showCustomBottomSheet(
       onSave: () {
