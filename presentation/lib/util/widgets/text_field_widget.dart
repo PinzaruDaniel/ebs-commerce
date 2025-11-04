@@ -119,7 +119,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   textInputAction: TextInputAction.done,
                   cursorColor: AppColors.primary,
                   decoration: InputDecoration(
-                    suffix: ,
                     prefixIcon: widget.itemViewModel.hintText == AppTexts.search ? Icon(Icons.search_rounded) : null,
                     hintText: widget.itemViewModel.hintText,
                     hintStyle: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500),
