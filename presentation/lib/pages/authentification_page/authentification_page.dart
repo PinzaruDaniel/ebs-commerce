@@ -29,11 +29,13 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Form(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
@@ -56,6 +58,27 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                     itemBuilder: (context, index) {
                       final item = items[index];
                       if (item is TextFieldViewModel) {
+                        if (item.keyId == 'password') {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Obx(
+                              () => TextFieldWidget(
+                                obscureText: authController.isPasswordVisible.value,
+                                itemViewModel: item,
+                                suffixIcon: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onPressed: () {
+                                    authController.toggleVisibilityPassword();
+                                  },
+                                  icon: authController.isPasswordVisible.value
+                                      ? Icon(Icons.visibility_off_rounded, color: AppColors.greyText)
+                                      : Icon(Icons.visibility_rounded, color: AppColors.greyText),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: TextFieldWidget(itemViewModel: item),
@@ -91,10 +114,16 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: BaseButtonWidget(buttonColor: AppColors.primary, textColor: Colors.white, onTap: (){}, title: 'Log in'),
-                )
-
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: BaseButtonWidget(
+                    buttonColor: AppColors.primary,
+                    textColor: Colors.white,
+                    onTap: () {
+                      authController.loginUser();
+                    },
+                    title: 'Log in',
+                  ),
+                ),
               ],
             ),
           ),

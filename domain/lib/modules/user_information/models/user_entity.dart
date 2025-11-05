@@ -12,4 +12,5 @@ abstract class UserEntity with _$UserEntity{
     required DeliveryAddressEntity? deliveryAddressEntity,
     required PaymentMethodEntity? paymentMethodEntity,
 })=_UserEntity;
+
 }

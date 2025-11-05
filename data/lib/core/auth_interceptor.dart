@@ -33,9 +33,9 @@ class RefreshInterceptor {
     bool success = false;
     try {
       String? refreshToken = await authLocalSource.getRefreshToken();
-      consoleLog('regreshToken $refreshToken');
+      consoleLog('refreshToken $refreshToken');
       try {
-        final response = await authApiService.refresh(RefreshRequest(refreshToken!));
+        final response = await authApiService.refresh({'refreshToken': refreshToken});
         await authLocalSource.insertAccessToken(response.accessToken!);
         success = true;
       } catch (e, stack) {

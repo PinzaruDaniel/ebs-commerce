@@ -7,6 +7,7 @@ abstract class AuthLocalSource {
   Future<String?> getAccessToken();
 
   Future<void> insertAccessToken(String accessToken);
+  Future<void> insertTokens(String accessToken, String refreshToken);
 }
 
 class AuthLocalSourceImpl implements AuthLocalSource {
@@ -31,5 +32,10 @@ class AuthLocalSourceImpl implements AuthLocalSource {
   @override
   Future<void> insertAccessToken(String accessToken) async {
     authTokenBox.putAsync(AuthTokenBox(accessToken: accessToken));
+  }
+  @override
+  Future<void> insertTokens(String accessToken, String refreshToken)async{
+    print('auth_local_source $accessToken $refreshToken');
+    authTokenBox.putAsync(AuthTokenBox(accessToken: accessToken, refreshToken: refreshToken));
   }
 }

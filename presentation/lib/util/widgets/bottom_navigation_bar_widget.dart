@@ -8,8 +8,6 @@ class BottomNavigationBarWidget extends StatelessWidget {
   final bool showIcon;
   final Color? buttonColor;
   final Color? textColor;
-
-  //TODO: remove nullable bool
   const BottomNavigationBarWidget({
     super.key,
     required this.title,

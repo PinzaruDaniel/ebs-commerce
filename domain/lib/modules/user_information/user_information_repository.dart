@@ -15,4 +15,5 @@ abstract class UserInformationRepository {
   Future<DeliveryAddressEntity?> getDeliveryAddress();
 
   Future<PaymentMethodEntity?> getPaymentMethod();
+  Future<UserEntity?> getUserFromApi(String accessToken);
 }

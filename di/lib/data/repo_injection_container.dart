@@ -1,3 +1,6 @@
+import 'package:data/modules/auth/auth_repository_impl.dart';
+import 'package:data/modules/auth/sources/local/auth_local_source.dart';
+import 'package:data/modules/auth/sources/remote/auth_api_service.dart';
 import 'package:data/modules/categories/categories_repository_impl.dart';
 import 'package:data/modules/categories/sources/remote/categories_api_service.dart';
 import 'package:data/modules/delivery_address/delivery_address_repository_impl.dart';
@@ -6,7 +9,9 @@ import 'package:data/modules/products/products_repository_impl.dart';
 import 'package:data/modules/products/sources/local/products_local_source.dart';
 import 'package:data/modules/products/sources/remote/products_api_service.dart';
 import 'package:data/modules/user/sources/local/user_local_source.dart';
+import 'package:data/modules/user/sources/remote/current_user_api_service.dart';
 import 'package:data/modules/user/user_information_repository_impl.dart';
+import 'package:domain/modules/auth/auth_repository.dart';
 import 'package:domain/modules/categories/categories_repository.dart';
 import 'package:domain/modules/delivery_address/delivery_address_repository.dart';
 import 'package:domain/modules/products/products_repository.dart';
@@ -31,6 +36,9 @@ Future<void> init() async {
   );
 
   dataDi.registerLazySingleton<UserInformationRepository>(
-    () => UserInformationRepositoryImpl(userLocalSource: dataDi<UserLocalSource>()),
+    () => UserInformationRepositoryImpl(userLocalSource: dataDi<UserLocalSource>(), currentUserApiService: dataDi<CurrentUserApiService>()),
+  );
+  dataDi.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(apiService: dataDi<AuthApiService>(), localSource: dataDi<AuthLocalSource>()),
   );
 }

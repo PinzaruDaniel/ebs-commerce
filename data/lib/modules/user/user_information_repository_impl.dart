@@ -2,6 +2,7 @@ import 'package:data/mapper/delivery_address_mapper.dart';
 import 'package:data/mapper/payment_method_mapper.dart';
 import 'package:data/mapper/user_mapper.dart';
 import 'package:data/modules/user/sources/local/user_local_source.dart';
+import 'package:data/modules/user/sources/remote/current_user_api_service.dart';
 import 'package:domain/modules/delivery_address/models/index.dart';
 import 'package:domain/modules/payment_method/index.dart';
 import 'package:domain/modules/user_information/models/index.dart';
@@ -9,8 +10,9 @@ import 'package:domain/modules/user_information/user_information_repository.dart
 
 class UserInformationRepositoryImpl implements UserInformationRepository {
   final UserLocalSource userLocalSource;
+  final CurrentUserApiService currentUserApiService;
 
-  UserInformationRepositoryImpl({required this.userLocalSource});
+  UserInformationRepositoryImpl({required this.userLocalSource, required this.currentUserApiService});
 
   @override
   Future<void> setUser(UserEntity user) async {
@@ -46,5 +48,13 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
     if(paymentMethod==null) return null;
     return paymentMethod.toEntity;
   }
+
+  @override
+  Future<UserEntity?> getUserFromApi(String accessToken) {
+    // TODO: implement getUserFromApi
+    throw UnimplementedError();
+  }
+  
+
 
 }

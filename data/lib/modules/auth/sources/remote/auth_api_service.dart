@@ -9,25 +9,11 @@ abstract class AuthApiService {
   factory AuthApiService(Dio dio, {String baseUrl}) = _AuthApiService;
 
   @POST('/auth/refresh')
-  Future<AuthTokensApiDto> refresh(@Body() RefreshRequest request);
+  Future<AuthTokensApiDto> refresh(@Body() Map<String, dynamic> body);
 
   @POST('/auth/login')
-  Future<AuthTokensApiDto> login(@Body() LoginRequest request);
-}
+  Future<AuthTokensApiDto> login(@Body() Map<String, dynamic> body);
 
-class RefreshRequest {
-  final String refreshToken;
+  //TODO: to move in another api service,
 
-  RefreshRequest(this.refreshToken);
-
-  Map<String, dynamic> toJson() => {'refreshToken': refreshToken};
-}
-
-class LoginRequest {
-  final String email;
-  final String password;
-
-  LoginRequest(this.email, this.password);
-
-  Map<String, dynamic> toJson() => {'email': email, 'password': password};
 }

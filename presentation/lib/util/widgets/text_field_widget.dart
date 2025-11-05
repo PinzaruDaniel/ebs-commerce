@@ -13,7 +13,6 @@ class TextFieldViewModel extends BaseViewModel {
   final String? countryCode;
   final TextInputType? textInputType;
   final bool isRequiredValidation;
-  final bool isTextObscure;
   final String? Function(String?)? customValidator;
   final List<LibPhonenumberTextFormatter>? inputFormatter;
   final TextEditingController? textController;
@@ -31,7 +30,6 @@ class TextFieldViewModel extends BaseViewModel {
     this.textController,
     this.isRequiredValidation = true,
     this.hintText,
-    this.isTextObscure=false,
     String initialValue = '',
 
     this.minLines,
@@ -39,8 +37,9 @@ class TextFieldViewModel extends BaseViewModel {
 }
 
 class TextFieldWidget extends StatefulWidget {
-  const TextFieldWidget({super.key, required this.itemViewModel});
-
+  const TextFieldWidget({super.key, required this.itemViewModel, this.suffixIcon, this.obscureText=false});
+  final Widget? suffixIcon;
+  final bool obscureText;
   final TextFieldViewModel itemViewModel;
 
   @override
@@ -85,7 +84,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.itemViewModel.title != null) ...[Text(widget.itemViewModel.title!), const SizedBox(height: 4)],
+        if (widget.itemViewModel.title != null) ...[Text(widget.itemViewModel.title!, style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade600),), const SizedBox(height: 4)],
         FormField(
           key: _fieldKey,
           validator: (text) {
@@ -105,7 +104,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
-                  obscureText:widget.itemViewModel.isTextObscure,
+              obscureText: widget.obscureText,
                   inputFormatters:
                       widget.itemViewModel.inputFormatter ??
                       (widget.itemViewModel.textInputType == TextInputType.phone
@@ -119,6 +118,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   textInputAction: TextInputAction.done,
                   cursorColor: AppColors.primary,
                   decoration: InputDecoration(
+                    suffixIcon: widget.suffixIcon,
                     prefixIcon: widget.itemViewModel.hintText == AppTexts.search ? Icon(Icons.search_rounded) : null,
                     hintText: widget.itemViewModel.hintText,
                     hintStyle: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500),
