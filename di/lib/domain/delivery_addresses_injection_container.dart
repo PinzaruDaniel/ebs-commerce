@@ -21,7 +21,5 @@ Future<void> init() async {
   dataDi.registerLazySingleton<GetDialCodesUseCase>(
     () => GetDialCodesUseCase(dialCodesRepository: dataDi<DeliveryAddressRepository>()),
   );
-  dataDi.registerLazySingleton<GetFlagsUseCase>(
-    () => GetFlagsUseCase(flagsRepository: dataDi<DeliveryAddressRepository>()),
-  );
+
 }

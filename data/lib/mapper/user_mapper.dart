@@ -1,17 +1,20 @@
 import 'package:data/mapper/delivery_address_mapper.dart';
 import 'package:data/mapper/payment_method_mapper.dart';
 import 'package:data/modules/user/models/local/user_box.dart';
+import 'package:data/modules/user/models/remote/index.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 
 extension UserToEntityMapper on UserBox {
   UserEntity get toEntity {
-    return UserEntity(name: name,
-        surname: surname,
-        number: number,
-        dialCode: dialCode,
-        email: email,
-        deliveryAddressEntity: deliveryAddressBox.target?.toEntity,
-        paymentMethodEntity: paymentMethodBox.target?.toEntity);
+    return UserEntity(
+      name: name,
+      surname: surname,
+      number: number,
+      dialCode: dialCode,
+      email: email,
+      deliveryAddressEntity: deliveryAddressBox.target?.toEntity,
+      paymentMethodEntity: paymentMethodBox.target?.toEntity,
+    );
   }
 }
 
@@ -21,8 +24,8 @@ extension UserToBoxMapper on UserEntity {
       id: id ?? 0,
       name: name,
       surname: surname,
-      number: number,
-      dialCode: dialCode,
+      number: number ?? '',
+      dialCode: dialCode ?? '',
       email: email,
     );
 
@@ -33,5 +36,11 @@ extension UserToBoxMapper on UserEntity {
       box.paymentMethodBox.target = paymentMethodEntity!.toBox;
     }
     return box;
+  }
+}
+
+extension UserFromDtoToEntityMapper on UserApiDto {
+  UserEntity get toEntity {
+    return UserEntity(name: firstName, surname: lastName, email: email);
   }
 }

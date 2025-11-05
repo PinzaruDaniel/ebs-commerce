@@ -6,11 +6,11 @@ abstract class UserEntity with _$UserEntity{
     int? id,
     required String name,
     required String surname,
-    required String number,
-    required String dialCode,
+    String? number,
+    String? dialCode,
     required String email,
-    required DeliveryAddressEntity? deliveryAddressEntity,
-    required PaymentMethodEntity? paymentMethodEntity,
+     DeliveryAddressEntity? deliveryAddressEntity,
+     PaymentMethodEntity? paymentMethodEntity,
 })=_UserEntity;
 
 }

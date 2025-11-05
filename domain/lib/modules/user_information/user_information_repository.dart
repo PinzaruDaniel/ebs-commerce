@@ -1,3 +1,5 @@
+import 'package:common/constants/failure_class.dart';
+import 'package:dartz/dartz.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 
 import '../delivery_address/models/index.dart';
@@ -15,5 +17,5 @@ abstract class UserInformationRepository {
   Future<DeliveryAddressEntity?> getDeliveryAddress();
 
   Future<PaymentMethodEntity?> getPaymentMethod();
-  Future<UserEntity?> getUserFromApi(String accessToken);
+  Future<Either<Failure, UserEntity>> getUserFromApi();
 }

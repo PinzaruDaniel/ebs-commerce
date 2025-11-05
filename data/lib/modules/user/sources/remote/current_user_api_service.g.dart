@@ -18,11 +18,10 @@ class _CurrentUserApiService implements CurrentUserApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<UserApiDto> getUserApi(String accessToken) async {
+  Future<UserApiDto> getUserApi() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': accessToken};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<UserApiDto>(
       Options(method: 'GET', headers: _headers, extra: _extra)

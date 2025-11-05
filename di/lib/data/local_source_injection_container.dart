@@ -26,12 +26,4 @@ Future<void> init() async {
 
   dataDi.registerLazySingleton<AuthLocalSource>(
       ()=>AuthLocalSourceImpl(authTokenBox: store.authTokenBox));
-/*
-  dataDi.registerLazySingleton<PaymentMethodLocalSource>(
-    () => PaymentMethodLocalDataSourceImpl(paymentMethodBox: store.paymentMethodBox),
-  );
-
-  dataDi.registerLazySingleton<DeliveryAddressLocalSource>(
-    () => DeliveryAddressLocalDataSourceImpl(deliveryAddressBox: store.deliveryAddressBox),
-  );*/
 }

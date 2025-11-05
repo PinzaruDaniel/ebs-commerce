@@ -22,8 +22,8 @@ extension UserToModelMapper on UserEntity {
     return UserViewModel(
       name: name,
       surname: surname,
-      number: number,
-      dialCode: dialCode,
+      number: number??'',
+      dialCode: dialCode??'',
       email: email,
       deliveryAddressViewModel: deliveryAddressEntity?.toModel,
       paymentMethodViewModel: paymentMethodEntity?.toModel,

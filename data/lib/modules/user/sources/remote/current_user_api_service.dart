@@ -9,5 +9,5 @@ abstract class CurrentUserApiService {
   factory CurrentUserApiService(Dio dio, {String baseUrl}) = _CurrentUserApiService;
 
   @GET('/user')
-  Future<UserApiDto> getUserApi(@Header('Authorization') String accessToken);
+  Future<UserApiDto> getUserApi();
 }

@@ -19,12 +19,13 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, AuthTokensEntity>> login(String email, String password) async {
     try {
-      final response = await apiService.login({'email': email, 'password': password});
+      consoleLog('the email that was sent $email $password ');
+      final response = await apiService.login({"email": email, "password": password});
       return Right(response.toEntity);
     } catch (e, stackTrace) {
       consoleLog('response is wrong)');
       if (e is DioException) {
-        consoleLog('response is wrong DioException: ${e.message} ${e.stackTrace} ${e.response}');
+        consoleLog('response is wrong DioException: ${e.message} ${e.error} ${e.response}');
 
         return Left(Failure.dio(e));
       }

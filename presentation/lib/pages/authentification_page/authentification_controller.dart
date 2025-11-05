@@ -48,7 +48,6 @@ class AuthentificationController extends GetxController {
 
   void toggleVisibilityPassword() {
     isPasswordVisible.toggle();
-    print('isPasswordVisible ${isPasswordVisible.value}');
   }
 
   Future<void> loginUser() async {
