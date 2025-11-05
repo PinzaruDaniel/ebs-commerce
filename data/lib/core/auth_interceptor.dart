@@ -274,4 +274,3 @@ class AuthInterceptor extends InterceptorsWrapper {
     handler.reject(err);
   }
 }
-

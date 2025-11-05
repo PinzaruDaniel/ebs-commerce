@@ -53,13 +53,18 @@ class AuthentificationController extends GetxController {
     isPasswordVisible.toggle();
   }
  Future<void> autoLogin() async {
-    try{
-      await getUserFromApiUseCase();
-      consoleLog('User already logged in: ${user.value?.email}');
-    }catch(e){
-      consoleLog('user is not logged in');
-      showFailureSnackBar(fallbackMessage: 'from controller ${e.toString()}');
-    }
+    final result = await getUserFromApiUseCase.call();
+    result.fold(
+      (failure) {
+        consoleLog('User is not logged in');
+      },
+      (entity) {
+        user.value = UserViewModel(name: entity.name, surname: entity.surname, email: entity.email);
+        consoleLog('User already logged in: ${user.value?.email}');
+        consoleLog('Successfully auto-logged in ${entity.name}');
+        Get.offAllNamed('/home');
+      },
+    );
   }
 
   Future<void> loginUser() async {
