@@ -51,25 +51,24 @@ class AuthentificationController extends GetxController {
   }
 
   Future<void> loginUser() async {
-    final userTest = toUserTest();
-    if (userTest == null) {
+    final user = toUserViewModel();
+    if (user == null) {
       showFailureSnackBar(failure: Failure.error('Email or password is empty'));
       return;
     }
 
-    final params = AuthLoginParams(email: userTest.email, password: userTest.password);
+    final params = AuthLoginParams(email: user.email??'', password: user.password??'');
     final either = await authLoginUseCase(params);
     either.fold(
           (failure) => showFailureSnackBar(failure: failure),
-          (response) {
+          (response) {/*
         consoleLog('AccessToken: ${response.accessToken}');
-        consoleLog('RefreshToken: ${response.refreshToken}');
+        consoleLog('RefreshToken: ${response.refreshToken}');*/
       },
     );
-
   }
 
-  UserTest? toUserTest() {
+  UserViewModel? toUserViewModel() {
     String getValueByKeyId(String keyId) {
       final item = allItems.firstWhere(
             (element) => element is TextFieldViewModel && element.keyId == keyId,
@@ -81,14 +80,8 @@ class AuthentificationController extends GetxController {
 
     final email = getValueByKeyId('email');
     final password = getValueByKeyId('password');
-    return UserTest(email: email, password: password);
+    return UserViewModel(email: email, password: password);
   }
 
 }
 
-class UserTest {
-  final String email;
-  final String password;
-
-  UserTest({required this.email, required this.password});
-}

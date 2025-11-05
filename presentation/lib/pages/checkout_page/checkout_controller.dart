@@ -1,12 +1,9 @@
 // ignore_for_file: invalid_use_of_protected_member
 import 'package:common/constants/logger.dart';
-import 'package:domain/modules/delivery_address/models/index.dart';
 import 'package:domain/modules/delivery_address/use_cases/get_delivery_address_cache_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/set_delivery_address_use_case.dart';
-import 'package:domain/modules/payment_method/index.dart';
 import 'package:domain/modules/payment_method/use_cases/get_payment_method_use_case.dart';
 import 'package:domain/modules/payment_method/use_cases/set_payment_method_use_case.dart';
-import 'package:domain/modules/user_information/models/index.dart';
 import 'package:domain/modules/user_information/use_cases/get_user_use_case.dart';
 import 'package:domain/modules/user_information/use_cases/set_user_use_case.dart';
 import 'package:get/get.dart';
@@ -67,7 +64,7 @@ class CheckoutController extends GetxController {
   bool hasIncompleteUserInfo() {
     final user = userModel.value;
     if (user == null) return true;
-    return user.surname.isEmpty || user.number.isEmpty || user.name.isEmpty || user.email.isEmpty;
+    return user.surname!.isEmpty || user.number!.isEmpty || user.name!.isEmpty || user.email!.isEmpty;
   }
 
   Future<void> getUserInfo() async {
@@ -178,13 +175,13 @@ class CheckoutController extends GetxController {
   Map<String, String> buildUserInfo(UserViewModel? model) {
     final info = <String, String>{};
     if (model != null) {
-      if ((model.number.isNotEmpty) && (model.dialCode.isNotEmpty)) {
+      if ((model.number!.isNotEmpty) && (model.dialCode!.isNotEmpty)) {
         info['${model.dialCode} ${model.number}'] = '';
-      } else if (model.number.isNotEmpty) {
-        info[model.number] = '';
+      } else if (model.number!.isNotEmpty) {
+        info[model.number??''] = '';
       }
-      if (model.email.isNotEmpty) {
-        info[model.email] = '';
+      if (model.email!.isNotEmpty) {
+        info[model.email??''] = '';
       }
     }
     return info;

@@ -8,6 +8,7 @@ import 'package:data/modules/delivery_address/sources/remote/delivery_address_ap
 import 'package:data/modules/products/products_repository_impl.dart';
 import 'package:data/modules/products/sources/local/products_local_source.dart';
 import 'package:data/modules/products/sources/remote/products_api_service.dart';
+import 'package:data/modules/settings/sources/local/setting_local_source.dart';
 import 'package:data/modules/user/sources/local/user_local_source.dart';
 import 'package:data/modules/user/sources/remote/current_user_api_service.dart';
 import 'package:data/modules/user/user_information_repository_impl.dart';
@@ -38,6 +39,10 @@ Future<void> init() async {
   dataDi.registerLazySingleton<UserInformationRepository>(
     () => UserInformationRepositoryImpl(userLocalSource: dataDi<UserLocalSource>(), currentUserApiService: dataDi<CurrentUserApiService>()),
   );
+ /* dataDi.registerLazySingleton<SettingsLocalSource>(
+      ()=>SettingsLocalSourceImpl(settingsBox: dataDi<>)
+    
+  )*/
   dataDi.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(apiService: dataDi<AuthApiService>(), localSource: dataDi<AuthLocalSource>()),
   );

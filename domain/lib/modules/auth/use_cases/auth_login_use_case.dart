@@ -5,13 +5,13 @@ import 'package:domain/modules/auth/models/index.dart';
 
 import '../../../core/usecase.dart';
 
-class AuthLoginUseCase extends UseCase<AuthTokensEntity, AuthLoginParams> {
+class AuthLoginUseCase extends UseCase<void, AuthLoginParams> {
   final AuthRepository authRepository;
 
   AuthLoginUseCase({required this.authRepository});
 
   @override
-  Future<Either<Failure, AuthTokensEntity>> call(params) async {
+  Future<Either<Failure, void>> call(params) async {
     return authRepository.login(params.email, params.password);
   }
 }

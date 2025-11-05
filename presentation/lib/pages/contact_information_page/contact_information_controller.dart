@@ -27,7 +27,7 @@ class ContactInformationController extends GetxController {
     CountryFlagDialCodeViewModel codeViewModel;
 
     if (user.value?.dialCode != null) {
-      final userDialCode = user.value!.dialCode.replaceAll('+', '');
+      final userDialCode = user.value!.dialCode?.replaceAll('+', '');
       codeViewModel = nomenclatureController.countriesFlagsDialCode.value.firstWhere(
             (flag) => flag.dialCode == userDialCode,
         orElse: () => CountryFlagDialCodeViewModel(

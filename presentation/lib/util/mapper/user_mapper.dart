@@ -6,11 +6,11 @@ import 'package:presentation/view/user_view_model.dart';
 extension UserToEntityMapper on UserViewModel {
   UserEntity get toEntity {
     return UserEntity(
-      name: name,
-      surname: surname,
+      name: name??'',
+      surname: surname??'',
       number: number,
       dialCode: dialCode,
-      email: email,
+      email: email??'',
       deliveryAddressEntity: deliveryAddressViewModel?.toEntity,
       paymentMethodEntity: paymentMethodViewModel?.toEntity,
     );

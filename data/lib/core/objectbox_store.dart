@@ -2,6 +2,7 @@ import 'package:data/modules/auth/models/local/auth_token_box.dart';
 import 'package:data/modules/products/models/local/product_box.dart';
 import 'package:data/modules/delivery_address/models/local/delivery_address_box.dart';
 import 'package:data/modules/payment_method/models/local/payment_method_box.dart';
+import 'package:data/modules/settings/models/local/settings_box.dart';
 import 'package:data/modules/user/models/local/user_box.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,21 +21,24 @@ class ObjectBoxStore {
   late final Box<UserBox> userBox;
   late final Box<PaymentMethodBox> paymentMethodBox;
   late final Box<DeliveryAddressBox> deliveryAddressBox;
-  ObjectBoxStore._create(this._store){
-    authTokenBox=Box<AuthTokenBox>(_store);
-    productBox=Box<ProductBox>(_store);
-    categoryBox=Box<CategoryBox>(_store);
-    specificationBox=Box<SpecificationBox>(_store);
-    userBox=Box<UserBox>(_store);
-    paymentMethodBox=Box<PaymentMethodBox>(_store);
-    deliveryAddressBox=Box<DeliveryAddressBox>(_store);
+  late final Box<SettingsBox> settingsBox;
 
+  ObjectBoxStore._create(this._store) {
+    authTokenBox = Box<AuthTokenBox>(_store);
+    productBox = Box<ProductBox>(_store);
+    categoryBox = Box<CategoryBox>(_store);
+    specificationBox = Box<SpecificationBox>(_store);
+    userBox = Box<UserBox>(_store);
+    paymentMethodBox = Box<PaymentMethodBox>(_store);
+    deliveryAddressBox = Box<DeliveryAddressBox>(_store);
+    settingsBox = Box<SettingsBox>(_store);
   }
+
   static Future<ObjectBoxStore> create() async {
     final store = await openStore(
-        directory:
-        p.join((await getApplicationDocumentsDirectory()).path, "obx-demo"),
-        macosApplicationGroup: "objectbox.demo");
+      directory: p.join((await getApplicationDocumentsDirectory()).path, "obx-demo"),
+      macosApplicationGroup: "objectbox.demo",
+    );
     return ObjectBoxStore._create(store);
   }
 }

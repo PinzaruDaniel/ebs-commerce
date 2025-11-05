@@ -45,10 +45,9 @@ Future<void> init() async {
   addressesClient.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
   //////TOKEN CLIENT//////
-
   var tokenClient = Dio(tokenOption);
-  tokenClient.interceptors.add(
-    InterceptorsWrapper(
+  tokenClient.interceptors.add(LogInterceptor(requestBody: true, responseBody: true)
+    /*InterceptorsWrapper(
       onResponse: (response, handler) {
         final contentType = response.headers.value(HttpHeaders.contentTypeHeader);
         if (contentType != null && contentType.contains('text/plain')) {
@@ -60,21 +59,21 @@ Future<void> init() async {
         }
         handler.next(response);
       },
-    ),
+    ),*/
   );
 
   GetIt.instance.registerLazySingleton<AuthApiService>(() => AuthApiService(tokenClient));
 
   ///AUTH CLIENT///////////
-  var authClient = Dio(authOption);
+ /* var authClient = Dio(authOption);
   var refreshInterceptor = RefreshInterceptor(
     authApiService: GetIt.instance<AuthApiService>(),
     authLocalSource: GetIt.instance<AuthLocalSource>(),
   );
-  authClient.interceptors.add(AuthInterceptor(dio: authClient, refreshInterceptor: refreshInterceptor));
+  authClient.interceptors.add(AuthInterceptor(dio: tokenClient, refreshInterceptor: refreshInterceptor));*/
 
   ///////////REGISTERING SERVICES///////
-  GetIt.instance.registerLazySingleton<CurrentUserApiService>(() => CurrentUserApiService(authClient));
+  //GetIt.instance.registerLazySingleton<CurrentUserApiService>(() => CurrentUserApiService(authClient));
 
   //TODO: add authClient only for services that request headers
 
