@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:common/constants/api_constants.dart';
 import 'package:data/core/auth_interceptor.dart';
 import 'package:data/modules/auth/sources/local/auth_local_source.dart';
@@ -46,34 +43,20 @@ Future<void> init() async {
 
   //////TOKEN CLIENT//////
   var tokenClient = Dio(tokenOption);
-  tokenClient.interceptors.add(LogInterceptor(requestBody: true, responseBody: true)
-    /*InterceptorsWrapper(
-      onResponse: (response, handler) {
-        final contentType = response.headers.value(HttpHeaders.contentTypeHeader);
-        if (contentType != null && contentType.contains('text/plain')) {
-          try {
-            response.data = jsonDecode(response.data);
-          } catch (e) {
-            return;
-          }
-        }
-        handler.next(response);
-      },
-    ),*/
-  );
+  tokenClient.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
   GetIt.instance.registerLazySingleton<AuthApiService>(() => AuthApiService(tokenClient));
 
   ///AUTH CLIENT///////////
- /* var authClient = Dio(authOption);
+  var authClient = Dio(authOption);
   var refreshInterceptor = RefreshInterceptor(
     authApiService: GetIt.instance<AuthApiService>(),
     authLocalSource: GetIt.instance<AuthLocalSource>(),
   );
-  authClient.interceptors.add(AuthInterceptor(dio: tokenClient, refreshInterceptor: refreshInterceptor));*/
+  authClient.interceptors.add(AuthInterceptor(dio: tokenClient, refreshInterceptor: refreshInterceptor));
 
   ///////////REGISTERING SERVICES///////
-  //GetIt.instance.registerLazySingleton<CurrentUserApiService>(() => CurrentUserApiService(authClient));
+  GetIt.instance.registerLazySingleton<CurrentUserApiService>(() => CurrentUserApiService(authClient));
 
   //TODO: add authClient only for services that request headers
 

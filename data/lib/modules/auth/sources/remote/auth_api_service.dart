@@ -9,11 +9,9 @@ abstract class AuthApiService {
   factory AuthApiService(Dio dio, {String baseUrl}) = _AuthApiService;
 
   @POST('/auth/refresh')
-  Future<dynamic> refresh(@Body() Map<String, dynamic> body);
+  Future<String> refresh(@Body() Map<String, dynamic> body);
 
   @POST('/auth/login')
   Future<dynamic> login(@Body() Map<String, dynamic> body);
-
-  //TODO: to move in another api service,
 
 }

@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
       ),
 
       initialRoute: '/',
-      getPages: [GetPage(name: '/', page: () => WelcomePage())],
+      getPages: [GetPage(name: '/', page: () => WelcomePage()), GetPage(name: '/home', page: ()=>HomePage())],
     );
   }
 }

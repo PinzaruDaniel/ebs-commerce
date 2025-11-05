@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:common/constants/failure_class.dart';
+import 'package:common/constants/logger.dart';
 import 'package:dartz/dartz.dart';
 import 'package:data/mapper/delivery_address_mapper.dart';
 import 'package:data/mapper/payment_method_mapper.dart';
@@ -57,8 +60,13 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
   Future<Either<Failure, UserEntity>> getUserFromApi() async {
     try{
       final response=await currentUserApiService.getUserApi();
+      consoleLog('userApiDto: ${response.email}');
+      response.toString();
+      consoleLog('response.toString() $response');
       return Right(response.toEntity);
     } catch(e, stackTrace){
+      consoleLog('ecsad $e');
+
       if (e is DioException) {
         return Left(Failure.dio(e));
       }

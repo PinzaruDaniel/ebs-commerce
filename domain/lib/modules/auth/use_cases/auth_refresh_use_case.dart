@@ -4,11 +4,11 @@ import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/auth/auth_repository.dart';
 import 'package:domain/modules/auth/models/index.dart';
 
-class AuthRefreshUseCase extends UseCase<AuthTokensEntity, AuthRefreshParams>{
+class AuthRefreshUseCase extends UseCase<String, AuthRefreshParams>{
   final AuthRepository authRepository;
   AuthRefreshUseCase({required this.authRepository});
   @override
-  Future<Either<Failure, AuthTokensEntity>> call(params)async{
+  Future<Either<Failure, String>> call(params)async{
     return authRepository.refresh(params.refreshToken);
   }
 }

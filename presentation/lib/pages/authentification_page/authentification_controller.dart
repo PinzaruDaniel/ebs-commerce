@@ -2,6 +2,7 @@ import 'package:common/constants/failure_class.dart';
 import 'package:common/constants/logger.dart';
 import 'package:domain/modules/auth/use_cases/auth_login_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_refresh_use_case.dart';
+import 'package:domain/modules/user_information/use_cases/get_user_from_api_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -15,12 +16,14 @@ import '../../view/user_view_model.dart';
 class AuthentificationController extends GetxController {
   final AuthLoginUseCase authLoginUseCase = GetIt.instance<AuthLoginUseCase>();
   final AuthRefreshUseCase authRefreshUseCase = GetIt.instance<AuthRefreshUseCase>();
+  GetUserFromApiUseCase getUserFromApiUseCase = GetIt.instance<GetUserFromApiUseCase>();
   RxList<BaseViewModel> allItems = RxList([]);
   Rxn<UserViewModel> user = Rxn<UserViewModel>();
   Rxn<String> password = Rxn<String>();
   RxBool isPasswordVisible = RxBool(false);
 
-  void initAllItems() {
+  Future<void> initAllItems() async {
+    await autoLogin();
     allItems.value = [
       TextFieldViewModel(
         hintText: 'pinzaru.daniel@gmail.com',
@@ -36,9 +39,9 @@ class AuthentificationController extends GetxController {
         },
       ),
       TextFieldViewModel(
-        hintText: 'Your Secret password',
+        hintText: AppTexts.yourSecretPassword,
         keyId: 'password',
-        title: 'Password',
+        title: AppTexts.password,
         initialValue: password.value ?? '',
         textInputType: TextInputType.visiblePassword,
       ),
@@ -49,31 +52,38 @@ class AuthentificationController extends GetxController {
   void toggleVisibilityPassword() {
     isPasswordVisible.toggle();
   }
+ Future<void> autoLogin() async {
+    try{
+      await getUserFromApiUseCase();
+      consoleLog('User already logged in: ${user.value?.email}');
+    }catch(e){
+      consoleLog('user is not logged in');
+      showFailureSnackBar(fallbackMessage: 'from controller ${e.toString()}');
+    }
+  }
 
   Future<void> loginUser() async {
     final user = toUserViewModel();
     if (user == null) {
-      showFailureSnackBar(failure: Failure.error('Email or password is empty'));
+      showFailureSnackBar(failure: Failure.error(AppTexts.emailOrPasswordEmpty));
       return;
     }
-
-    final params = AuthLoginParams(email: user.email??'', password: user.password??'');
+    final params = AuthLoginParams(email: user.email ?? '', password: user.password ?? '');
     final either = await authLoginUseCase(params);
-    either.fold(
-          (failure) => showFailureSnackBar(failure: failure),
-          (response) {/*
-        consoleLog('AccessToken: ${response.accessToken}');
-        consoleLog('RefreshToken: ${response.refreshToken}');*/
-      },
-    );
+    either.fold((failure) => showFailureSnackBar(failure: failure), (response) async {
+      showFailureSnackBar(isError: false, fallbackMessage: 'you have logged in Mr ');
+     await getUserFromApi();
+    });
   }
 
   UserViewModel? toUserViewModel() {
     String getValueByKeyId(String keyId) {
-      final item = allItems.firstWhere(
-            (element) => element is TextFieldViewModel && element.keyId == keyId,
-        orElse: () => TextFieldViewModel(title: '', initialValue: '', hintText: ''),
-      ) as TextFieldViewModel;
+      final item =
+          allItems.firstWhere(
+                (element) => element is TextFieldViewModel && element.keyId == keyId,
+                orElse: () => TextFieldViewModel(title: '', initialValue: '', hintText: ''),
+              )
+              as TextFieldViewModel;
 
       return item.placeholder;
     }
@@ -83,5 +93,21 @@ class AuthentificationController extends GetxController {
     return UserViewModel(email: email, password: password);
   }
 
-}
+  Future<void> getUserFromApi() async {
+    getUserFromApiUseCase.call().then((result) {
+      result.fold(
+        (failure) {
+          consoleLog('here error');
+          showFailureSnackBar(failure: failure);
+        },
+        (entity) {
+          user.value=UserViewModel(name: entity.name, surname: entity.surname, email: entity.email);
 
+          consoleLog('entity getUserFromApi ${entity.email}');
+          consoleLog('Succesfully login ${entity.name}');
+          Get.offAllNamed('/home');
+        },
+      );
+    });
+  }
+}

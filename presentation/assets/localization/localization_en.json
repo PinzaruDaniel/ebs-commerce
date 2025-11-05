@@ -98,5 +98,21 @@
   "pickupLocation": "Pickup Location",
   "street": "Street",
   "done": "Done",
-  "search": "Search..."
+  "search": "Search...",
+  "helloHuman": "Hello Human",
+  "tapToContinue": "Tap to continue",
+  "EbsForWish": "EBS e-commerce is your platform for every your wish",
+  "agreeUserTerms": "I agree with EBS App User Terms And Conditions and acknowledge the TFH Privacy notice",
+  "itIsInProgress": "It is in progress",
+  "signUp": "Sign up",
+  "pleaseAgree": "Please, read and agree with User Terms",
+  "logIn": "Log in",
+  "welcomeBack": "Welcome back, enter your details \nto access your account",
+  "emailOrPasswordEmpty": "Email or password is empty",
+  "password": "Password",
+  "enterWithoutPassword": "Enter without password",
+  "yourSecretPassword": "Your Secret password"
+
+
+
 }

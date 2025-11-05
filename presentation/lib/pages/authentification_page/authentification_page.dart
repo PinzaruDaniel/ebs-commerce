@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/authentification_page/authentification_controller.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
@@ -40,12 +41,12 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: 60.0),
-                  child: Text('Log in', style: AppTextsStyle.bold(size: 30)),
+                  child: Text(AppTexts.logIn, style: AppTextsStyle.bold(size: 30)),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 24.0, top: 8),
                   child: Text(
-                    'Welcome back, enter your details \nto access your account',
+                    AppTexts.welcomeBack,
                     style: AppTextsStyle.medium.copyWith(color: AppColors.greyText, fontSize: 16),
                   ),
                 ),
@@ -101,7 +102,7 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Enter without password',
+                          AppTexts.enterWithoutPassword,
                           style: AppTextsStyle.medium.copyWith(
                             color: Colors.transparent,
                             decoration: TextDecoration.underline,
@@ -121,7 +122,7 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                     onTap: () {
                       authController.loginUser();
                     },
-                    title: 'Log in',
+                    title: AppTexts.logIn,
                   ),
                 ),
               ],

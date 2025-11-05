@@ -205,5 +205,31 @@ class AppTexts {
 
   static String get done => LocaleKeys.done.tr();
 
-  static String get search=>LocaleKeys.search.tr();
+  static String get search => LocaleKeys.search.tr();
+
+  static String get helloHuman => LocaleKeys.helloHuman.tr();
+
+  static String get tapToContinue => LocaleKeys.tapToContinue.tr();
+
+  static String get ebsForWish => LocaleKeys.EbsForWish.tr();
+
+  static String get agreeUserTerms => LocaleKeys.agreeUserTerms.tr();
+
+  static String get itIsInProgress => LocaleKeys.itIsInProgress.tr();
+
+  static String get signUp => LocaleKeys.signUp.tr();
+
+  static String get pleaseAgree => LocaleKeys.pleaseAgree.tr();
+
+  static String get logIn => LocaleKeys.logIn.tr();
+
+  static String get welcomeBack => LocaleKeys.welcomeBack.tr();
+
+  static String get emailOrPasswordEmpty => LocaleKeys.emailOrPasswordEmpty.tr();
+
+  static String get password => LocaleKeys.password.tr();
+
+  static String get enterWithoutPassword => LocaleKeys.enterWithoutPassword.tr();
+
+  static String get yourSecretPassword => LocaleKeys.yourSecretPassword.tr();
 }

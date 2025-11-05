@@ -36,7 +36,7 @@ class RefreshInterceptor {
       consoleLog('refreshToken $refreshToken');
       try {
         final response = await authApiService.refresh({'refreshToken': refreshToken});
-        await authLocalSource.insertAccessToken(response.accessToken!);
+        await authLocalSource.insertAccessToken(response);
         success = true;
       } catch (e, stack) {
         consoleLog(stack);
@@ -77,8 +77,9 @@ class AuthInterceptor extends InterceptorsWrapper {
     }
 
     accessToken = await refreshInterceptor.authLocalSource.getAccessToken();
+    consoleLog('before  options.headers.addAll $accessToken');
 
-    options.headers.addAll({'Authorization': '$accessToken'});
+    options.headers.addAll({'Authorization': 'Bearer $accessToken'});
     return handler.next(options);
   }
 

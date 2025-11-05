@@ -98,6 +98,19 @@
   "pickupLocation": "Locație de ridicare",
   "street": "Stradă",
   "done": "Gata",
-  "search": "Caută..."
+  "search": "Caută...",
+  "helloHuman": "Salut, omule",
+  "tapToContinue": "Atinge pentru a continua",
+  "EbsForWish": "EBS e-commerce este platforma ta pentru fiecare dorință",
+  "agreeUserTerms": "Sunt de acord cu Termenii și condițiile de utilizare ale aplicației EBS și confirm că am luat la cunoștință Politica de confidențialitate TFH",
+  "itIsInProgress": "Este în curs de desfășurare",
+  "signUp": "Înregistrează-te",
+  "pleaseAgree": "Te rugăm să citești și să fii de acord cu Termenii de utilizare",
+  "logIn": "Autentifică-te",
+  "welcomeBack": "Bine ai revenit, introdu detaliile tale\npentru a accesa contul tău",
+  "emailOrPasswordEmpty": "Câmpul Email sau parola este gol",
+  "password": "Parolă",
+  "enterWithoutPassword": "Intră fără parolă",
+  "yourSecretPassword": "Parola ta secretă"
 
 }
