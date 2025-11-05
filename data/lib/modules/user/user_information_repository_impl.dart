@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:data/mapper/delivery_address_mapper.dart';
 import 'package:data/mapper/payment_method_mapper.dart';
 import 'package:data/mapper/user_mapper.dart';
+import 'package:data/modules/user/models/remote/index.dart';
 import 'package:data/modules/user/sources/local/user_local_source.dart';
 import 'package:data/modules/user/sources/remote/current_user_api_service.dart';
 import 'package:dio/dio.dart';
@@ -58,16 +59,14 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
 
   @override
   Future<Either<Failure, UserEntity>> getUserFromApi() async {
-    try{
-      final response=await currentUserApiService.getUserApi();
-      consoleLog('userApiDto: ${response.email}');
-      response.toString();
-      consoleLog('response.toString() $response');
+    try {
+      final response = await currentUserApiService.getUserApi();
       return Right(response.toEntity);
-    } catch(e, stackTrace){
+    } catch (e, stackTrace) {
       consoleLog('ecsad $e');
 
       if (e is DioException) {
+        print('dioExceptionion ${e.stackTrace}');
         return Left(Failure.dio(e));
       }
       return Left(Failure.error(e, stackTrace));

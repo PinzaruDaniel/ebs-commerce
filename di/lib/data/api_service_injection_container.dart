@@ -24,6 +24,7 @@ Future<void> init() async {
   );
   var authOption = BaseOptions(
     baseUrl: ApiConstants.authUrl,
+    responseType: ResponseType.json,
     receiveTimeout: Duration(seconds: 60),
     connectTimeout: Duration(seconds: 20),
   );
