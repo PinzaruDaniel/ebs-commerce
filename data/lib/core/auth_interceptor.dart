@@ -174,7 +174,6 @@ class RefreshInterceptor {
       consoleLog(stack);
     }
 
-    // Release all waiters
     int totalWaiters = lock.waiters + 1;
     for (int i = 0; i < totalWaiters; i++) {
       lock.release();
