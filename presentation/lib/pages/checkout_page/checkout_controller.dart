@@ -4,10 +4,11 @@ import 'package:domain/modules/delivery_address/use_cases/get_delivery_address_c
 import 'package:domain/modules/delivery_address/use_cases/set_delivery_address_use_case.dart';
 import 'package:domain/modules/payment_method/use_cases/get_payment_method_use_case.dart';
 import 'package:domain/modules/payment_method/use_cases/set_payment_method_use_case.dart';
-import 'package:domain/modules/user_information/use_cases/get_user_use_case.dart';
+import 'package:domain/modules/user_information/use_cases/stream_user_use_case.dart';
 import 'package:domain/modules/user_information/use_cases/set_user_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/mapper/delivery_address_mapper.dart';
@@ -27,7 +28,6 @@ import '../../view/pickup_location_view_model.dart';
 
 class CheckoutController extends GetxController {
   final SetUserUseCase setUserUseCase = GetIt.instance<SetUserUseCase>();
-  final GetUserUseCase getUserUseCase = GetIt.instance<GetUserUseCase>();
 
   final SetDeliveryAddressUseCase setDeliveryAddressUseCase = GetIt.instance<SetDeliveryAddressUseCase>();
   final GetDeliveryAddressUseCase getDeliveryAddressUseCase = GetIt.instance<GetDeliveryAddressUseCase>();
@@ -68,18 +68,20 @@ class CheckoutController extends GetxController {
   }
 
   Future<void> getUserInfo() async {
-    final cachedUser = await getUserUseCase();
-    userModel.value = cachedUser?.toModel??null;
+    userModel = currentUserController.userVM;
+    if (userModel.value != null) {
+      final cachedDeliveryAddress = await getDeliveryAddressUseCase();
+      deliveryModel.value = cachedDeliveryAddress?.toModel;
 
-    final cachedDeliveryAddress = await getDeliveryAddressUseCase();
-    deliveryModel.value = cachedDeliveryAddress?.toModel;
+      final cachedPaymentMethod = await getPaymentMethodUseCase();
+      selectedPaymentMethod.value = cachedPaymentMethod?.toModel;
+    }
 
-    final cachedPaymentMethod = await getPaymentMethodUseCase();
-    selectedPaymentMethod.value = cachedPaymentMethod?.toModel;
-
-    consoleLog('cachedUser ${userModel.value?.name} ${userModel.value?.deliveryAddressViewModel?.pickupLocation}  \n');
-    consoleLog('cachedDeliveryAddress ${deliveryModel.value?.pickupLocation}\n');
-    consoleLog('cachedPaymentMethod ${selectedPaymentMethod.value?.titleKey}');
+    consoleLog(
+      'cachedUser ${userModel.value?.name ?? 'null'} ${userModel.value?.deliveryAddressViewModel?.pickupLocation ?? 'null'}',
+    );
+    consoleLog('cachedDeliveryAddress ${deliveryModel.value?.pickupLocation ?? 'null'}');
+    consoleLog('cachedPaymentMethod ${selectedPaymentMethod.value?.titleKey ?? 'null'}');
   }
 
   Future<void> initAllItems() async {
@@ -178,10 +180,10 @@ class CheckoutController extends GetxController {
       if ((model.number!.isNotEmpty) && (model.dialCode!.isNotEmpty)) {
         info['${model.dialCode} ${model.number}'] = '';
       } else if (model.number!.isNotEmpty) {
-        info[model.number??''] = '';
+        info[model.number ?? ''] = '';
       }
       if (model.email!.isNotEmpty) {
-        info[model.email??''] = '';
+        info[model.email ?? ''] = '';
       }
     }
     return info;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/greeting_page/greeeting_controller.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
@@ -19,22 +19,14 @@ class GreetingPage extends StatefulWidget {
 }
 
 class _GreetingPageState extends State<GreetingPage> {
-  GreetingController get greetingController => Get.find();
   bool isChecked = false;
-
-  @override
-  void initState() {
-    super.initState();
-    Get.put(GreetingController());
-    greetingController.getSettings();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Obx(() {
-          final hasAgreed = greetingController.hasAgreedTerms.value;
+          final hasAgreed = currentUserController.hasAgreedTerms.value;
 
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -85,32 +77,42 @@ class _GreetingPageState extends State<GreetingPage> {
                       buttonColor: (isChecked || hasAgreed) ? AppColors.primary : Colors.grey.shade300,
                       textColor: (isChecked || hasAgreed) ? Colors.white : Colors.grey,
                       onTap: () {
-                        AppPopUp.showConfirmationDialog(context: context, content: '', title: AppTexts.itIsInProgress);
+                        if (isChecked || hasAgreed) {
+                          AppRouter.openAuthPage();
+                          Future.delayed(Duration(milliseconds: 300), () {
+                            currentUserController.hasAgreedTerms.value = true;
+                            currentUserController.setSettings();
+                          });
+                        } else {
+                          AppPopUp.showConfirmationDialog(context: context, content: '', title: AppTexts.pleaseAgree);
+                        }
                       },
-                      title: AppTexts.signUp,
+
+                      title: AppTexts.logIn,
                     ),
+
                     Padding(
                       padding: EdgeInsets.only(top: 8.0, bottom: 16),
-                      child: BaseButtonWidget(
-                        buttonColor: Colors.grey.shade300,
-                        textColor: (isChecked || hasAgreed) ? Colors.black : Colors.grey,
-                        onTap: () {
-                          if (isChecked || hasAgreed) {
-                            AppRouter.openAuthPage();
-                            Future.delayed(Duration(milliseconds: 300), () {
-                              greetingController.hasAgreedTerms.value = true;
-                              greetingController.setSettings();
-                            });
-                          } else {
-                            AppPopUp.showConfirmationDialog(
-                              context: context,
-                              content: '',
-                              title: AppTexts.pleaseAgree,
-                            );
-                          }
-                        },
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          await currentUserController.clearUserData();
 
-                        title: AppTexts.logIn,
+                          AppRouter.openHomePage();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            AppTexts.enterWithoutPassword,
+                            style: AppTextsStyle.medium.copyWith(
+                              color: Colors.transparent,
+                              decoration: TextDecoration.underline,
+                              decorationColor: AppColors.greyText,
+                              shadows: [Shadow(color: AppColors.greyText, offset: Offset(0, -2))],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],

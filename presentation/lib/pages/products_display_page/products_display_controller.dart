@@ -2,7 +2,7 @@
 import 'package:common/constants/failure_class.dart';
 import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
-import 'package:domain/modules/products/use_cases/get_products_use_case.dart';
+import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';

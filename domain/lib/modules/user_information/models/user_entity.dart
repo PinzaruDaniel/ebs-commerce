@@ -9,6 +9,7 @@ abstract class UserEntity with _$UserEntity{
     String? number,
     String? dialCode,
     required String email,
+    String? imageUrl,
      DeliveryAddressEntity? deliveryAddressEntity,
      PaymentMethodEntity? paymentMethodEntity,
 })=_UserEntity;

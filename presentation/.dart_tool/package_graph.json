@@ -18,6 +18,7 @@
         "domain",
         "dropdown_button2",
         "easy_localization",
+        "easy_sidemenu",
         "flutter",
         "flutter_animate",
         "flutter_hooks",
@@ -65,6 +66,14 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "easy_sidemenu",
+      "version": "0.7.1",
+      "dependencies": [
+        "flutter",
+        "provider"
       ]
     },
     {
@@ -1434,6 +1443,22 @@
       "name": "synchronized",
       "version": "3.4.0",
       "dependencies": []
+    },
+    {
+      "name": "provider",
+      "version": "6.1.5+1",
+      "dependencies": [
+        "collection",
+        "flutter",
+        "nested"
+      ]
+    },
+    {
+      "name": "nested",
+      "version": "1.0.0",
+      "dependencies": [
+        "flutter"
+      ]
     }
   ],
   "configVersion": 1

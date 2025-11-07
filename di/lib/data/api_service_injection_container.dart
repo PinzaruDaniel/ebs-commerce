@@ -59,8 +59,6 @@ Future<void> init() async {
   ///////////REGISTERING SERVICES///////
   GetIt.instance.registerLazySingleton<CurrentUserApiService>(() => CurrentUserApiService(authClient));
 
-  //TODO: add authClient only for services that request headers
-
   GetIt.instance.registerLazySingleton<ProductsApiService>(() => ProductsApiService(mainClient));
 
   GetIt.instance.registerLazySingleton<CategoriesApiService>(() => CategoriesApiService(mainClient));

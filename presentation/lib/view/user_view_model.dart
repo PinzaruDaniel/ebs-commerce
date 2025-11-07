@@ -9,6 +9,7 @@ class UserViewModel extends BaseViewModel {
   final String? dialCode;
   final String? email;
   final String? password;
+  final String? imageUrl;
   DeliveryAddressViewModel? deliveryAddressViewModel;
   PaymentMethodViewModel? paymentMethodViewModel;
 
@@ -19,6 +20,7 @@ class UserViewModel extends BaseViewModel {
     this.dialCode,
     this.email,
     this.password,
+    this.imageUrl,
     this.deliveryAddressViewModel,
     this.paymentMethodViewModel,
   });

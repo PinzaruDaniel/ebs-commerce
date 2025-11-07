@@ -37,10 +37,9 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
   }
 
   @override
-  Future<UserEntity?> getUser() async {
-    final userBox = await userLocalSource.getUser();
-    if (userBox == null) return null;
-    return userBox.toEntity;
+  Stream<UserEntity?> getUser()  {
+    final userBox =  userLocalSource.getUser();
+    return userBox.map((userBox) => userBox?.toEntity);
   }
 
   @override

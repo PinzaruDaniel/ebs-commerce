@@ -1,10 +1,8 @@
 import 'dart:math';
 
 import 'package:common/constants/failure_class.dart';
-import 'package:common/constants/logger.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/modules/auth/auth_repository.dart';
-import 'package:domain/modules/auth/models/index.dart';
 
 import '../../../core/usecase.dart';
 

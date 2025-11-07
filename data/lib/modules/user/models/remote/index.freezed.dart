@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserApiDto {
 
- int get id; String get firstName; String get lastName; String get email;
+ int get id; String get firstName; String get lastName; String get email; String? get imageUrl;
 /// Create a copy of UserApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserApiDtoCopyWith<UserApiDto> get copyWith => _$UserApiDtoCopyWithImpl<UserApi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserApiDto&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserApiDto&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName,email);
+int get hashCode => Object.hash(runtimeType,id,firstName,lastName,email,imageUrl);
 
 @override
 String toString() {
-  return 'UserApiDto(id: $id, firstName: $firstName, lastName: $lastName, email: $email)';
+  return 'UserApiDto(id: $id, firstName: $firstName, lastName: $lastName, email: $email, imageUrl: $imageUrl)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserApiDtoCopyWith<$Res>  {
   factory $UserApiDtoCopyWith(UserApiDto value, $Res Function(UserApiDto) _then) = _$UserApiDtoCopyWithImpl;
 @useResult
 $Res call({
- int id, String firstName, String lastName, String email
+ int id, String firstName, String lastName, String email, String? imageUrl
 });
 
 
@@ -65,13 +65,14 @@ class _$UserApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of UserApiDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? email = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? email = null,Object? imageUrl = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
+as String,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String firstName,  String lastName,  String email)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String firstName,  String lastName,  String email,  String? imageUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserApiDto() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName,_that.email);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.imageUrl);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String firstName,  String lastName,  String email)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String firstName,  String lastName,  String email,  String? imageUrl)  $default,) {final _that = this;
 switch (_that) {
 case _UserApiDto():
-return $default(_that.id,_that.firstName,_that.lastName,_that.email);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.imageUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String firstName,  String lastName,  String email)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String firstName,  String lastName,  String email,  String? imageUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _UserApiDto() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName,_that.email);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.email,_that.imageUrl);case _:
   return null;
 
 }
@@ -212,13 +213,14 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.email);case _:
 @JsonSerializable()
 
 class _UserApiDto implements UserApiDto {
-  const _UserApiDto({required this.id, required this.firstName, required this.lastName, required this.email});
+  const _UserApiDto({required this.id, required this.firstName, required this.lastName, required this.email, this.imageUrl});
   factory _UserApiDto.fromJson(Map<String, dynamic> json) => _$UserApiDtoFromJson(json);
 
 @override final  int id;
 @override final  String firstName;
 @override final  String lastName;
 @override final  String email;
+@override final  String? imageUrl;
 
 /// Create a copy of UserApiDto
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserApiDto&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserApiDto&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.email, email) || other.email == email)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName,email);
+int get hashCode => Object.hash(runtimeType,id,firstName,lastName,email,imageUrl);
 
 @override
 String toString() {
-  return 'UserApiDto(id: $id, firstName: $firstName, lastName: $lastName, email: $email)';
+  return 'UserApiDto(id: $id, firstName: $firstName, lastName: $lastName, email: $email, imageUrl: $imageUrl)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$UserApiDtoCopyWith<$Res> implements $UserApiDtoCopyWith<$
   factory _$UserApiDtoCopyWith(_UserApiDto value, $Res Function(_UserApiDto) _then) = __$UserApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String firstName, String lastName, String email
+ int id, String firstName, String lastName, String email, String? imageUrl
 });
 
 
@@ -270,13 +272,14 @@ class __$UserApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of UserApiDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? email = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? email = null,Object? imageUrl = freezed,}) {
   return _then(_UserApiDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
+as String,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

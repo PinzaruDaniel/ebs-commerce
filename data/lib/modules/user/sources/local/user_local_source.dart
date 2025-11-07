@@ -18,7 +18,7 @@ abstract class UserLocalSource {
 
   Future<void> setPaymentMethod({required PaymentMethodEntity paymentMethod});
 
-  Future<UserBox?> getUser();
+  Stream<UserBox?> getUser();
 
   Future<PaymentMethodBox?> getPaymentMethod();
 
@@ -31,6 +31,7 @@ class UserLocalDataSourceImpl implements UserLocalSource {
   Box<PaymentMethodBox> paymentMethodBox;
 
   UserLocalDataSourceImpl({required this.userBox, required this.deliveryAddressBox, required this.paymentMethodBox});
+
   @override
   Future<void> setUser({required UserEntity user}) async {
     final existingUsers = await userBox.getAllAsync();
@@ -50,39 +51,43 @@ class UserLocalDataSourceImpl implements UserLocalSource {
 
   @override
   Future<void> setDeliveryAddress({required DeliveryAddressEntity deliveryAddress}) async {
-    final addressId = deliveryAddressBox.putAsync(DeliveryAddressToBoxMapper(deliveryAddress).toBox);
-    final user = await getUser();
+    final addressId = await deliveryAddressBox.putAsync(DeliveryAddressToBoxMapper(deliveryAddress).toBox);
+    final user = await getUser().last;
 
-    user?.deliveryAddressBox.targetId = await addressId;
-    userBox.put(user!);
+    if (user != null) {
+      user.deliveryAddressBox.targetId = addressId;
+      userBox.put(user);
+    }
   }
 
   @override
   Future<void> setPaymentMethod({required PaymentMethodEntity paymentMethod}) async {
-    final paymentMethodId = paymentMethodBox.put(PaymentMethodToBoxMapper(paymentMethod).toBox);
-    final user = await getUser();
-    user?.paymentMethodBox.targetId = paymentMethodId;
-    userBox.put(user!);
+    final paymentMethodId = await paymentMethodBox.putAsync(PaymentMethodToBoxMapper(paymentMethod).toBox);
+    final user = await getUser().last;
+
+    if (user != null) {
+      user.paymentMethodBox.targetId = paymentMethodId;
+      userBox.put(user);
+    }
   }
 
   @override
-  Future<UserBox?> getUser() async {
-    final users = userBox.getAll();
-    if(users.isEmpty)return null;
-    return users.last;
+  Stream<UserBox?> getUser() {
+    return userBox.query().watch(triggerImmediately: true).map((query) => query.find().toList().last);
   }
+
 
   @override
   Future<DeliveryAddressBox?> getDeliveryAddress() async {
     final deliveryAddress = deliveryAddressBox.getAll();
-    if(deliveryAddress.isEmpty) return null;
+    if (deliveryAddress.isEmpty) return null;
     return deliveryAddress.last;
   }
 
   @override
   Future<PaymentMethodBox?> getPaymentMethod() async {
     final paymentMethod = paymentMethodBox.getAll();
-    if(paymentMethod.isEmpty) return null;
+    if (paymentMethod.isEmpty) return null;
     return paymentMethod.last;
   }
 }

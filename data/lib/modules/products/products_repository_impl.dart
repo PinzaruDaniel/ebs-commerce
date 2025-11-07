@@ -103,6 +103,4 @@ class ProductsRepositoryImpl implements ProductsRepository {
           (boxList) =>boxList.map((e) => e.toEntity).toList(),
     );
   }
-
-
 }

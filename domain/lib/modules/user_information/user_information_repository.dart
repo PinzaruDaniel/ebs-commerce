@@ -8,7 +8,7 @@ import '../payment_method/index.dart';
 abstract class UserInformationRepository {
   Future<void> setUser(UserEntity user);
 
-  Future<UserEntity?> getUser();
+  Stream<UserEntity?> getUser();
 
   Future<void> setDeliveryAddress(DeliveryAddressEntity deliveryAddress);
 

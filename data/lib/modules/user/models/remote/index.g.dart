@@ -11,6 +11,7 @@ _UserApiDto _$UserApiDtoFromJson(Map<String, dynamic> json) => _UserApiDto(
   firstName: json['firstName'] as String,
   lastName: json['lastName'] as String,
   email: json['email'] as String,
+  imageUrl: json['imageUrl'] as String?,
 );
 
 Map<String, dynamic> _$UserApiDtoToJson(_UserApiDto instance) =>
@@ -19,4 +20,5 @@ Map<String, dynamic> _$UserApiDtoToJson(_UserApiDto instance) =>
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'email': instance.email,
+      'imageUrl': instance.imageUrl,
     };

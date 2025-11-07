@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserEntity {
 
- int? get id; String get name; String get surname; String? get number; String? get dialCode; String get email; DeliveryAddressEntity? get deliveryAddressEntity; PaymentMethodEntity? get paymentMethodEntity;
+ int? get id; String get name; String get surname; String? get number; String? get dialCode; String get email; String? get imageUrl; DeliveryAddressEntity? get deliveryAddressEntity; PaymentMethodEntity? get paymentMethodEntity;
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $UserEntityCopyWith<UserEntity> get copyWith => _$UserEntityCopyWithImpl<UserEnt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.number, number) || other.number == number)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode)&&(identical(other.email, email) || other.email == email)&&(identical(other.deliveryAddressEntity, deliveryAddressEntity) || other.deliveryAddressEntity == deliveryAddressEntity)&&(identical(other.paymentMethodEntity, paymentMethodEntity) || other.paymentMethodEntity == paymentMethodEntity));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.number, number) || other.number == number)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode)&&(identical(other.email, email) || other.email == email)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.deliveryAddressEntity, deliveryAddressEntity) || other.deliveryAddressEntity == deliveryAddressEntity)&&(identical(other.paymentMethodEntity, paymentMethodEntity) || other.paymentMethodEntity == paymentMethodEntity));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,surname,number,dialCode,email,deliveryAddressEntity,paymentMethodEntity);
+int get hashCode => Object.hash(runtimeType,id,name,surname,number,dialCode,email,imageUrl,deliveryAddressEntity,paymentMethodEntity);
 
 @override
 String toString() {
-  return 'UserEntity(id: $id, name: $name, surname: $surname, number: $number, dialCode: $dialCode, email: $email, deliveryAddressEntity: $deliveryAddressEntity, paymentMethodEntity: $paymentMethodEntity)';
+  return 'UserEntity(id: $id, name: $name, surname: $surname, number: $number, dialCode: $dialCode, email: $email, imageUrl: $imageUrl, deliveryAddressEntity: $deliveryAddressEntity, paymentMethodEntity: $paymentMethodEntity)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $UserEntityCopyWith<$Res>  {
   factory $UserEntityCopyWith(UserEntity value, $Res Function(UserEntity) _then) = _$UserEntityCopyWithImpl;
 @useResult
 $Res call({
- int? id, String name, String surname, String? number, String? dialCode, String email, DeliveryAddressEntity? deliveryAddressEntity, PaymentMethodEntity? paymentMethodEntity
+ int? id, String name, String surname, String? number, String? dialCode, String email, String? imageUrl, DeliveryAddressEntity? deliveryAddressEntity, PaymentMethodEntity? paymentMethodEntity
 });
 
 
@@ -62,7 +62,7 @@ class _$UserEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? surname = null,Object? number = freezed,Object? dialCode = freezed,Object? email = null,Object? deliveryAddressEntity = freezed,Object? paymentMethodEntity = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? surname = null,Object? number = freezed,Object? dialCode = freezed,Object? email = null,Object? imageUrl = freezed,Object? deliveryAddressEntity = freezed,Object? paymentMethodEntity = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -70,7 +70,8 @@ as String,surname: null == surname ? _self.surname : surname // ignore: cast_nul
 as String,number: freezed == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
 as String?,dialCode: freezed == dialCode ? _self.dialCode : dialCode // ignore: cast_nullable_to_non_nullable
 as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,deliveryAddressEntity: freezed == deliveryAddressEntity ? _self.deliveryAddressEntity : deliveryAddressEntity // ignore: cast_nullable_to_non_nullable
+as String,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,deliveryAddressEntity: freezed == deliveryAddressEntity ? _self.deliveryAddressEntity : deliveryAddressEntity // ignore: cast_nullable_to_non_nullable
 as DeliveryAddressEntity?,paymentMethodEntity: freezed == paymentMethodEntity ? _self.paymentMethodEntity : paymentMethodEntity // ignore: cast_nullable_to_non_nullable
 as PaymentMethodEntity?,
   ));
@@ -181,10 +182,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String name,  String surname,  String? number,  String? dialCode,  String email,  DeliveryAddressEntity? deliveryAddressEntity,  PaymentMethodEntity? paymentMethodEntity)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String name,  String surname,  String? number,  String? dialCode,  String email,  String? imageUrl,  DeliveryAddressEntity? deliveryAddressEntity,  PaymentMethodEntity? paymentMethodEntity)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserEntity() when $default != null:
-return $default(_that.id,_that.name,_that.surname,_that.number,_that.dialCode,_that.email,_that.deliveryAddressEntity,_that.paymentMethodEntity);case _:
+return $default(_that.id,_that.name,_that.surname,_that.number,_that.dialCode,_that.email,_that.imageUrl,_that.deliveryAddressEntity,_that.paymentMethodEntity);case _:
   return orElse();
 
 }
@@ -202,10 +203,10 @@ return $default(_that.id,_that.name,_that.surname,_that.number,_that.dialCode,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String name,  String surname,  String? number,  String? dialCode,  String email,  DeliveryAddressEntity? deliveryAddressEntity,  PaymentMethodEntity? paymentMethodEntity)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String name,  String surname,  String? number,  String? dialCode,  String email,  String? imageUrl,  DeliveryAddressEntity? deliveryAddressEntity,  PaymentMethodEntity? paymentMethodEntity)  $default,) {final _that = this;
 switch (_that) {
 case _UserEntity():
-return $default(_that.id,_that.name,_that.surname,_that.number,_that.dialCode,_that.email,_that.deliveryAddressEntity,_that.paymentMethodEntity);case _:
+return $default(_that.id,_that.name,_that.surname,_that.number,_that.dialCode,_that.email,_that.imageUrl,_that.deliveryAddressEntity,_that.paymentMethodEntity);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -222,10 +223,10 @@ return $default(_that.id,_that.name,_that.surname,_that.number,_that.dialCode,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String name,  String surname,  String? number,  String? dialCode,  String email,  DeliveryAddressEntity? deliveryAddressEntity,  PaymentMethodEntity? paymentMethodEntity)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String name,  String surname,  String? number,  String? dialCode,  String email,  String? imageUrl,  DeliveryAddressEntity? deliveryAddressEntity,  PaymentMethodEntity? paymentMethodEntity)?  $default,) {final _that = this;
 switch (_that) {
 case _UserEntity() when $default != null:
-return $default(_that.id,_that.name,_that.surname,_that.number,_that.dialCode,_that.email,_that.deliveryAddressEntity,_that.paymentMethodEntity);case _:
+return $default(_that.id,_that.name,_that.surname,_that.number,_that.dialCode,_that.email,_that.imageUrl,_that.deliveryAddressEntity,_that.paymentMethodEntity);case _:
   return null;
 
 }
@@ -237,7 +238,7 @@ return $default(_that.id,_that.name,_that.surname,_that.number,_that.dialCode,_t
 
 
 class _UserEntity implements UserEntity {
-  const _UserEntity({this.id, required this.name, required this.surname, this.number, this.dialCode, required this.email, this.deliveryAddressEntity, this.paymentMethodEntity});
+  const _UserEntity({this.id, required this.name, required this.surname, this.number, this.dialCode, required this.email, this.imageUrl, this.deliveryAddressEntity, this.paymentMethodEntity});
   
 
 @override final  int? id;
@@ -246,6 +247,7 @@ class _UserEntity implements UserEntity {
 @override final  String? number;
 @override final  String? dialCode;
 @override final  String email;
+@override final  String? imageUrl;
 @override final  DeliveryAddressEntity? deliveryAddressEntity;
 @override final  PaymentMethodEntity? paymentMethodEntity;
 
@@ -259,16 +261,16 @@ _$UserEntityCopyWith<_UserEntity> get copyWith => __$UserEntityCopyWithImpl<_Use
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.number, number) || other.number == number)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode)&&(identical(other.email, email) || other.email == email)&&(identical(other.deliveryAddressEntity, deliveryAddressEntity) || other.deliveryAddressEntity == deliveryAddressEntity)&&(identical(other.paymentMethodEntity, paymentMethodEntity) || other.paymentMethodEntity == paymentMethodEntity));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.number, number) || other.number == number)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode)&&(identical(other.email, email) || other.email == email)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.deliveryAddressEntity, deliveryAddressEntity) || other.deliveryAddressEntity == deliveryAddressEntity)&&(identical(other.paymentMethodEntity, paymentMethodEntity) || other.paymentMethodEntity == paymentMethodEntity));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,surname,number,dialCode,email,deliveryAddressEntity,paymentMethodEntity);
+int get hashCode => Object.hash(runtimeType,id,name,surname,number,dialCode,email,imageUrl,deliveryAddressEntity,paymentMethodEntity);
 
 @override
 String toString() {
-  return 'UserEntity(id: $id, name: $name, surname: $surname, number: $number, dialCode: $dialCode, email: $email, deliveryAddressEntity: $deliveryAddressEntity, paymentMethodEntity: $paymentMethodEntity)';
+  return 'UserEntity(id: $id, name: $name, surname: $surname, number: $number, dialCode: $dialCode, email: $email, imageUrl: $imageUrl, deliveryAddressEntity: $deliveryAddressEntity, paymentMethodEntity: $paymentMethodEntity)';
 }
 
 
@@ -279,7 +281,7 @@ abstract mixin class _$UserEntityCopyWith<$Res> implements $UserEntityCopyWith<$
   factory _$UserEntityCopyWith(_UserEntity value, $Res Function(_UserEntity) _then) = __$UserEntityCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, String name, String surname, String? number, String? dialCode, String email, DeliveryAddressEntity? deliveryAddressEntity, PaymentMethodEntity? paymentMethodEntity
+ int? id, String name, String surname, String? number, String? dialCode, String email, String? imageUrl, DeliveryAddressEntity? deliveryAddressEntity, PaymentMethodEntity? paymentMethodEntity
 });
 
 
@@ -296,7 +298,7 @@ class __$UserEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? surname = null,Object? number = freezed,Object? dialCode = freezed,Object? email = null,Object? deliveryAddressEntity = freezed,Object? paymentMethodEntity = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? surname = null,Object? number = freezed,Object? dialCode = freezed,Object? email = null,Object? imageUrl = freezed,Object? deliveryAddressEntity = freezed,Object? paymentMethodEntity = freezed,}) {
   return _then(_UserEntity(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -304,7 +306,8 @@ as String,surname: null == surname ? _self.surname : surname // ignore: cast_nul
 as String,number: freezed == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
 as String?,dialCode: freezed == dialCode ? _self.dialCode : dialCode // ignore: cast_nullable_to_non_nullable
 as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,deliveryAddressEntity: freezed == deliveryAddressEntity ? _self.deliveryAddressEntity : deliveryAddressEntity // ignore: cast_nullable_to_non_nullable
+as String,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,deliveryAddressEntity: freezed == deliveryAddressEntity ? _self.deliveryAddressEntity : deliveryAddressEntity // ignore: cast_nullable_to_non_nullable
 as DeliveryAddressEntity?,paymentMethodEntity: freezed == paymentMethodEntity ? _self.paymentMethodEntity : paymentMethodEntity // ignore: cast_nullable_to_non_nullable
 as PaymentMethodEntity?,
   ));

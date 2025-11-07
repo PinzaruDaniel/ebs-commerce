@@ -5,8 +5,11 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
+import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
+
+import '../../controllers/controller_imports.dart';
 
 class AuthentificationPage extends StatefulWidget {
   const AuthentificationPage({super.key});
@@ -30,6 +33,7 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBarWidget(showBorder: false),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Form(
@@ -90,30 +94,6 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                   );
                 }),
                 Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () {
-                        AppRouter.openHomePage();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppTexts.enterWithoutPassword,
-                          style: AppTextsStyle.medium.copyWith(
-                            color: Colors.transparent,
-                            decoration: TextDecoration.underline,
-                            decorationColor: AppColors.greyText,
-                            shadows: [Shadow(color: AppColors.greyText, offset: Offset(0, -2))],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: BaseButtonWidget(

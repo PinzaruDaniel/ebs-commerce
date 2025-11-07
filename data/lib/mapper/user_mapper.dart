@@ -12,6 +12,7 @@ extension UserToEntityMapper on UserBox {
       number: number,
       dialCode: dialCode,
       email: email,
+      imageUrl: imageUrl,
       deliveryAddressEntity: deliveryAddressBox.target?.toEntity,
       paymentMethodEntity: paymentMethodBox.target?.toEntity,
     );
@@ -27,6 +28,7 @@ extension UserToBoxMapper on UserEntity {
       number: number ?? '',
       dialCode: dialCode ?? '',
       email: email,
+      imageUrl: imageUrl,
     );
 
     if (deliveryAddressEntity != null) {
@@ -41,6 +43,6 @@ extension UserToBoxMapper on UserEntity {
 
 extension UserFromDtoToEntityMapper on UserApiDto {
   UserEntity get toEntity {
-    return UserEntity(name: firstName, surname: lastName, email: email);
+    return UserEntity(name: firstName, surname: lastName, email: email, imageUrl: imageUrl);
   }
 }

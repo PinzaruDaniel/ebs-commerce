@@ -11,10 +11,10 @@ class UserBox {
   String number;
   String dialCode;
   String email;
+  String? imageUrl;
 
   final deliveryAddressBox = ToOne<DeliveryAddressBox>();
   final paymentMethodBox = ToOne<PaymentMethodBox>();
-
 
   UserBox({
     this.id = 0,
@@ -23,5 +23,6 @@ class UserBox {
     required this.number,
     required this.dialCode,
     required this.email,
+    this.imageUrl,
   });
 }

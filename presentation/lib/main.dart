@@ -7,6 +7,7 @@ import 'package:presentation/pages/authentification_page/authentification_page.d
 import 'package:presentation/pages/home_page/home_page.dart';
 import 'package:presentation/pages/welcome_page/welcome_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 import 'controllers/bindings/root_bindings_controllers.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -41,6 +42,15 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
       theme: ThemeData(
+        extensions: [
+          PullDownButtonTheme(
+            routeTheme: PullDownMenuRouteTheme(
+              backgroundColor: Colors.white,
+              shadow: BoxShadow(color: Colors.black45, spreadRadius: 1, blurRadius: 10, ),
+            ),
+            dividerTheme: PullDownMenuDividerTheme(dividerColor: Colors.black),
+          ),
+        ],
         bottomSheetTheme: BottomSheetThemeData(dragHandleColor: Colors.grey.shade300),
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Nunito-sans',
@@ -53,7 +63,10 @@ class MyApp extends StatelessWidget {
       ),
 
       initialRoute: '/',
-      getPages: [GetPage(name: '/', page: () => WelcomePage()), GetPage(name: '/home', page: ()=>HomePage())],
+      getPages: [
+        GetPage(name: '/', page: () => WelcomePage()),
+        GetPage(name: '/home', page: () => HomePage()),
+      ],
     );
   }
 }

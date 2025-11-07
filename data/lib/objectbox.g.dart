@@ -308,7 +308,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(7, 3297347648687439073),
     name: 'UserBox',
-    lastPropertyId: const obx_int.IdUid(8, 4774329565998230020),
+    lastPropertyId: const obx_int.IdUid(9, 8160501264428021294),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -362,6 +362,12 @@ final _entities = <obx_int.ModelEntity>[
         flags: 520,
         indexId: const obx_int.IdUid(4, 8024579335509009489),
         relationTarget: 'PaymentMethodBox',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 8160501264428021294),
+        name: 'imageUrl',
+        type: 9,
+        flags: 0,
       ),
     ],
     relations: <obx_int.ModelRelation>[],
@@ -874,7 +880,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final numberOffset = fbb.writeString(object.number);
         final dialCodeOffset = fbb.writeString(object.dialCode);
         final emailOffset = fbb.writeString(object.email);
-        fbb.startTable(9);
+        final imageUrlOffset = object.imageUrl == null
+            ? null
+            : fbb.writeString(object.imageUrl!);
+        fbb.startTable(10);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, nameOffset);
         fbb.addOffset(2, surnameOffset);
@@ -883,6 +892,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(5, emailOffset);
         fbb.addInt64(6, object.deliveryAddressBox.targetId);
         fbb.addInt64(7, object.paymentMethodBox.targetId);
+        fbb.addOffset(8, imageUrlOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -910,6 +920,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final emailParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 14, '');
+        final imageUrlParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 20);
         final object = UserBox(
           id: idParam,
           name: nameParam,
@@ -917,6 +930,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           number: numberParam,
           dialCode: dialCodeParam,
           email: emailParam,
+          imageUrl: imageUrlParam,
         );
         object.deliveryAddressBox.targetId = const fb.Int64Reader().vTableGet(
           buffer,
@@ -1220,6 +1234,11 @@ class UserBox_ {
       obx.QueryRelationToOne<UserBox, PaymentMethodBox>(
         _entities[6].properties[7],
       );
+
+  /// See [UserBox.imageUrl].
+  static final imageUrl = obx.QueryStringProperty<UserBox>(
+    _entities[6].properties[8],
+  );
 }
 
 /// [SettingsBox] entity fields to define ObjectBox queries.

@@ -3,13 +3,13 @@ import 'package:domain/modules/user_information/user_information_repository.dart
 
 import '../models/index.dart';
 
-class GetUserUseCase implements UseCaseNoEitherNoParamsNoStreamNullable<UserEntity>{
+class StreamUserUseCase implements UseCaseNoEitherNoParams<UserEntity?> {
   final UserInformationRepository userInformationRepository;
-  GetUserUseCase({required this.userInformationRepository});
+
+  StreamUserUseCase({required this.userInformationRepository});
 
   @override
-  Future<UserEntity?> call() {
-    return userInformationRepository.getUser();
+  Stream<UserEntity?> call() {
+    return userInformationRepository.getUser().distinct();
   }
-
 }
