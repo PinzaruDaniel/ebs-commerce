@@ -15,6 +15,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import '../../pages/category_page/category_page.dart';
 import '../../pages/contact_information_page/contact_information_page.dart';
 import '../../pages/product_detail_page/product_detail_page.dart';
+import '../../pages/profile_page/profile_page.dart';
 import '../../pages/shopping_cart_page/shopping_cart_page.dart';
 import '../../view/cart_products_view_model.dart';
 import '../../view/product_view_model.dart';
@@ -45,6 +46,9 @@ class AppRouter {
 
   static Widget detailsPage({required ProductViewModel item}) {
     return ProductDetailPage(item: item);
+  }
+  static Widget openProfilePage(){
+    return ProfilePage();
   }
 
   /*  static void openDetailsPage({required ProductViewModel item}) {

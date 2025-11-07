@@ -98,8 +98,7 @@ class _GreetingPageState extends State<GreetingPage> {
                         highlightColor: Colors.transparent,
                         onTap: () async {
                           await currentUserController.clearUserData();
-
-                          AppRouter.openHomePage();
+                          Get.offAllNamed('/home');
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),

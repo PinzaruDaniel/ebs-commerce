@@ -67,6 +67,8 @@ dependencies:
   dropdown_button2: ^2.3.9
   flutter_libphonenumber: ^2.5.1
   easy_sidemenu: ^0.7.1
+  crystal_navigation_bar: ^0.0.3
+  iconly: ^1.0.1
 
 dev_dependencies:
   flutter_test:

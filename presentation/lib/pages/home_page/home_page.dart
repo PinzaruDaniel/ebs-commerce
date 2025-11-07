@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
-import 'package:presentation/pages/home_page/widgets/language_dropdown_widget.dart';
+import 'package:presentation/pages/home_page/widgets/simple_bottom_menu.dart';
 import 'package:presentation/pages/home_page/widgets/user_menu_widget.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/resources/app_icons.dart';
+import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/open_container_animation_widget.dart';
-import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+
 import '../../util/routing/app_router.dart';
 import '../../util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import '../../util/widgets/horizontal_products_list_widget.dart';
@@ -29,7 +29,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   HomeController get homeController => Get.find();
   final _key = GlobalKey<ScaffoldState>();
-
+  int selectedIndex = 0;
 
   @override
   void initState() {
@@ -44,18 +44,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      drawerEdgeDragWidth: Get.height,
+      extendBody: true,
+      drawerEdgeDragWidth: Get.height * 0.05,
       key: _key,
-      drawer: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 36),
-        child: UserMenuWidget(),
-      ),
+      drawer: Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 36), child: UserMenuWidget()),
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
         showBorder: true,
-        leading:IconButton(
+        leading: IconButton(
           onPressed: () {
             _key.currentState?.openDrawer();
           },
@@ -107,8 +104,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      floatingActionButton: SimpleBottomMenu(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
     );
   }
-
-
 }
