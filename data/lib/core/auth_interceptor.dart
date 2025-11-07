@@ -257,6 +257,7 @@ class AuthInterceptor extends InterceptorsWrapper {
               ),
             );
           }
+
         } else {
           return handler.reject(
             DioException(
