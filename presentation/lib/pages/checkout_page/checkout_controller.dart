@@ -74,8 +74,9 @@ class CheckoutController extends GetxController {
   Future<void> getUserInfo() async {
     currentUserController.userVM.value;
     if (currentUserController.userVM.value != null) {
-      final cachedDeliveryAddress = await getDeliveryAddressUseCase();
-      deliveryModel.value = cachedDeliveryAddress?.toModel;
+     // final cachedDeliveryAddress = await getDeliveryAddressUseCase();
+
+      deliveryModel.value = currentUserController.userVM.value?.deliveryAddressViewModel;
 
       final cachedPaymentMethod = await getPaymentMethodUseCase();
       selectedPaymentMethod.value = cachedPaymentMethod?.toModel;
@@ -83,7 +84,7 @@ class CheckoutController extends GetxController {
     consoleLog(
       'cachedUser ${currentUserController.userVM.value?.name ?? 'null'}',
     );
-    consoleLog('cachedDeliveryAddress ${deliveryModel.value?.deliveryType ?? 'null'}');
+    consoleLog('cachedDeliveryAddress ${deliveryModel.value?.deliveryType ?? 'null'} ${deliveryModel.value?.country ?? 'null'}');
     consoleLog('cachedPaymentMethod ${selectedPaymentMethod.value?.titleKey ?? 'null'}');
   }
 
