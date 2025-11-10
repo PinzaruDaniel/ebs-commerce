@@ -12,6 +12,9 @@ _UserApiDto _$UserApiDtoFromJson(Map<String, dynamic> json) => _UserApiDto(
   lastName: json['lastName'] as String,
   email: json['email'] as String,
   imageUrl: json['imageUrl'] as String?,
+  address: DeliveryAddressUserApiDto.fromJson(
+    json['address'] as Map<String, dynamic>,
+  ),
 );
 
 Map<String, dynamic> _$UserApiDtoToJson(_UserApiDto instance) =>
@@ -21,4 +24,5 @@ Map<String, dynamic> _$UserApiDtoToJson(_UserApiDto instance) =>
       'lastName': instance.lastName,
       'email': instance.email,
       'imageUrl': instance.imageUrl,
+      'address': instance.address,
     };

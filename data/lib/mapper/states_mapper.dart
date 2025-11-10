@@ -3,6 +3,6 @@ import 'package:domain/modules/delivery_address/models/index.dart';
 
 extension StatesApiDtoMapper on StatesApiDto {
   StatesEntity get toEntity{
-    return StatesEntity(name: name, code: code);
+    return StatesEntity(name: name, code: code??'');
   }
 }

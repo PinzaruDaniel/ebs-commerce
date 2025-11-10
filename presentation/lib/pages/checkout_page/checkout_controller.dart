@@ -36,7 +36,6 @@ class CheckoutController extends GetxController {
   final GetPaymentMethodUseCase getPaymentMethodUseCase = GetIt.instance<GetPaymentMethodUseCase>();
 
   RxList<BaseViewModel> allItems = RxList([]);
-  Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
   Rxn<PaymentMethodViewModel> selectedPaymentMethod = Rxn<PaymentMethodViewModel>();
   RxString voucherCode = RxString('');
@@ -44,7 +43,7 @@ class CheckoutController extends GetxController {
   final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
 
   void setUserInfo() async {
-    await setUserUseCase(SetUserParams(user: userModel.value!.toEntity));
+    await setUserUseCase(SetUserParams(user: currentUserController.userVM.value!.toEntity));
   }
 
   void setDeliveryInfo() async {
@@ -62,14 +61,19 @@ class CheckoutController extends GetxController {
   }
 
   bool hasIncompleteUserInfo() {
-    final user = userModel.value;
+    final user = currentUserController.userVM.value;
     if (user == null) return true;
-    return user.surname!.isEmpty || user.number!.isEmpty || user.name!.isEmpty || user.email!.isEmpty;
+
+    return (user.surname?.isEmpty ?? true) ||
+        (user.number?.isEmpty ?? true) ||
+        (user.name?.isEmpty ?? true) ||
+        (user.email?.isEmpty ?? true);
   }
 
+
   Future<void> getUserInfo() async {
-    userModel = currentUserController.userVM;
-    if (userModel.value != null) {
+    currentUserController.userVM.value;
+    if (currentUserController.userVM.value != null) {
       final cachedDeliveryAddress = await getDeliveryAddressUseCase();
       deliveryModel.value = cachedDeliveryAddress?.toModel;
 
@@ -78,7 +82,7 @@ class CheckoutController extends GetxController {
     }
 
     consoleLog(
-      'cachedUser ${userModel.value?.name ?? 'null'} ${userModel.value?.deliveryAddressViewModel?.pickupLocation ?? 'null'}',
+      'cachedUser ${currentUserController.userVM.value?.name ?? 'null'} ${currentUserController.userVM.value?.deliveryAddressViewModel?.pickupLocation ?? 'null'}',
     );
     consoleLog('cachedDeliveryAddress ${deliveryModel.value?.pickupLocation ?? 'null'}');
     consoleLog('cachedPaymentMethod ${selectedPaymentMethod.value?.titleKey ?? 'null'}');
@@ -95,8 +99,8 @@ class CheckoutController extends GetxController {
       HeaderTitleViewModel(title: AppTexts.contactInformation),
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.userContactInfo,
-        titleKey: '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''}',
-        infoItems: buildUserInfo(userModel.value),
+        titleKey: '${currentUserController.userVM.value?.name ?? ''} ${currentUserController.userVM.value?.surname ?? ''}',
+        infoItems: buildUserInfo(currentUserController.userVM.value),
       ),
 
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
@@ -176,18 +180,28 @@ class CheckoutController extends GetxController {
 
   Map<String, String> buildUserInfo(UserViewModel? model) {
     final info = <String, String>{};
+
     if (model != null) {
-      if ((model.number!.isNotEmpty) && (model.dialCode!.isNotEmpty)) {
-        info['${model.dialCode} ${model.number}'] = '';
-      } else if (model.number!.isNotEmpty) {
-        info[model.number ?? ''] = '';
+      final number = model.number;
+      final dialCode = model.dialCode;
+      final email = model.email;
+
+      if (number != null && number.isNotEmpty) {
+        if (dialCode != null && dialCode.isNotEmpty) {
+          info['$dialCode $number'] = '';
+        } else {
+          info[number] = '';
+        }
       }
-      if (model.email!.isNotEmpty) {
-        info[model.email ?? ''] = '';
+
+      if (email != null && email.isNotEmpty) {
+        info[email] = '';
       }
     }
+
     return info;
   }
+
 
   void updateOrderSummary(double subtotal) {
     orderSummary.subtotal.value = subtotal;

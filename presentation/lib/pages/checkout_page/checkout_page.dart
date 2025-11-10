@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:common/constants/constant_lists_string.dart';
+import 'package:common/constants/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/checkout_page/checkout_controller.dart';
@@ -12,6 +13,7 @@ import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
+import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
@@ -78,9 +80,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       onTap: () {
                         if (item.keyId == CheckoutWidgetsType.userContactInfo) {
                           AppRouter. openContactInformationPage(
-                            userViewModel: checkoutController.userModel.value,
+                            userViewModel: currentUserController.userVM.value,
                             onSave: (UserViewModel? userVM) {
-                              checkoutController.userModel.value=userVM;
+                              consoleLog('User image: ${userVM?.imageUrl??''}');
+                              currentUserController.userVM.value=userVM;
                               checkoutController.updateCheckoutInfoItem(
                                 keyId: CheckoutWidgetsType.userContactInfo,
                                 titleKey: '${userVM?.name} ${userVM?.surname}',

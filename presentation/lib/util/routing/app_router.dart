@@ -47,8 +47,15 @@ class AppRouter {
   static Widget detailsPage({required ProductViewModel item}) {
     return ProductDetailPage(item: item);
   }
-  static Widget openProfilePage(){
+
+  static Widget openProfilePage() {
     return ProfilePage();
+  }
+
+  static void openProfilePageNoAnim() {
+    if (Get.context != null) {
+      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => ProfilePage()));
+    }
   }
 
   /*  static void openDetailsPage({required ProductViewModel item}) {
@@ -68,12 +75,12 @@ class AppRouter {
       Navigator.of(Get.context!).push(createSharedAxisRoute(page: GreetingPage()));
     }
   }
+
   static void openAuthPage() {
     if (Get.context != null) {
       Navigator.of(Get.context!).push(createSharedAxisRoute(page: AuthentificationPage()));
     }
   }
-
 
   static void openCategoryPickerPage({required Function onSave}) {
     if (Get.context != null) {

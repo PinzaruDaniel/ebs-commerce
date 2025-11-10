@@ -2,6 +2,7 @@ import 'package:data/mapper/delivery_address_mapper.dart';
 import 'package:data/mapper/payment_method_mapper.dart';
 import 'package:data/modules/user/models/local/user_box.dart';
 import 'package:data/modules/user/models/remote/index.dart';
+import 'package:domain/modules/delivery_address/models/index.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 
 extension UserToEntityMapper on UserBox {
@@ -43,6 +44,19 @@ extension UserToBoxMapper on UserEntity {
 
 extension UserFromDtoToEntityMapper on UserApiDto {
   UserEntity get toEntity {
-    return UserEntity(name: firstName, surname: lastName, email: email, imageUrl: imageUrl);
+    return UserEntity(
+      name: firstName,
+      surname: lastName,
+      email: email,
+      imageUrl: imageUrl,
+      deliveryAddressEntity: DeliveryAddressEntity(
+        country: address.country,
+        region: address.state,
+        city: address.city,
+        postalCode: address.zip,
+        address: address.street,
+        deliveryType: '',
+      ),
+    );
   }
 }

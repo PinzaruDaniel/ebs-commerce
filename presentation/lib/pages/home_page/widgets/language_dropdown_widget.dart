@@ -40,7 +40,7 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
               const Icon(Icons.language, color: Colors.black),
               Padding(
                 padding: EdgeInsets.only(left: 16.0),
-                child: Text('Language', style: AppTextsStyle.medium),
+                child: Text('Language', style: AppTextsStyle.bold()),
               ),
             ],
           ),

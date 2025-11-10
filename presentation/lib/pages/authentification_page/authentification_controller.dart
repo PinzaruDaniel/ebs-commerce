@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/util/mapper/delivery_address_mapper.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -63,6 +64,7 @@ class AuthentificationController extends GetxController {
           surname: entity.surname,
           email: entity.email,
           imageUrl: entity.imageUrl,
+          deliveryAddressViewModel: entity.deliveryAddressEntity?.toModel,
         );
         consoleLog('User already logged in: ${currentUserController.userVM.value?.email}');
         consoleLog('Successfully auto-logged in ${entity.name}');

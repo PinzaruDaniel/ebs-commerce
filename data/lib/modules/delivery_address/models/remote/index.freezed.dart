@@ -302,7 +302,7 @@ $StatesDataApiDtoCopyWith<$Res> get data {
 /// @nodoc
 mixin _$StatesApiDto {
 
- String get name;@JsonKey(name: 'state_code') String get code;
+ String get name;@JsonKey(name: 'state_code') String? get code;
 /// Create a copy of StatesApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -335,7 +335,7 @@ abstract mixin class $StatesApiDtoCopyWith<$Res>  {
   factory $StatesApiDtoCopyWith(StatesApiDto value, $Res Function(StatesApiDto) _then) = _$StatesApiDtoCopyWithImpl;
 @useResult
 $Res call({
- String name,@JsonKey(name: 'state_code') String code
+ String name,@JsonKey(name: 'state_code') String? code
 });
 
 
@@ -352,11 +352,11 @@ class _$StatesApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of StatesApiDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? code = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? code = freezed,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
-as String,
+as String,code: freezed == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -441,7 +441,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name, @JsonKey(name: 'state_code')  String code)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name, @JsonKey(name: 'state_code')  String? code)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StatesApiDto() when $default != null:
 return $default(_that.name,_that.code);case _:
@@ -462,7 +462,7 @@ return $default(_that.name,_that.code);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name, @JsonKey(name: 'state_code')  String code)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name, @JsonKey(name: 'state_code')  String? code)  $default,) {final _that = this;
 switch (_that) {
 case _StatesApiDto():
 return $default(_that.name,_that.code);case _:
@@ -482,7 +482,7 @@ return $default(_that.name,_that.code);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name, @JsonKey(name: 'state_code')  String code)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name, @JsonKey(name: 'state_code')  String? code)?  $default,) {final _that = this;
 switch (_that) {
 case _StatesApiDto() when $default != null:
 return $default(_that.name,_that.code);case _:
@@ -497,11 +497,11 @@ return $default(_that.name,_that.code);case _:
 @JsonSerializable()
 
 class _StatesApiDto implements StatesApiDto {
-  const _StatesApiDto({required this.name, @JsonKey(name: 'state_code') required this.code});
+  const _StatesApiDto({required this.name, @JsonKey(name: 'state_code') this.code});
   factory _StatesApiDto.fromJson(Map<String, dynamic> json) => _$StatesApiDtoFromJson(json);
 
 @override final  String name;
-@override@JsonKey(name: 'state_code') final  String code;
+@override@JsonKey(name: 'state_code') final  String? code;
 
 /// Create a copy of StatesApiDto
 /// with the given fields replaced by the non-null parameter values.
@@ -536,7 +536,7 @@ abstract mixin class _$StatesApiDtoCopyWith<$Res> implements $StatesApiDtoCopyWi
   factory _$StatesApiDtoCopyWith(_StatesApiDto value, $Res Function(_StatesApiDto) _then) = __$StatesApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String name,@JsonKey(name: 'state_code') String code
+ String name,@JsonKey(name: 'state_code') String? code
 });
 
 
@@ -553,11 +553,11 @@ class __$StatesApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of StatesApiDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? code = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? code = freezed,}) {
   return _then(_StatesApiDto(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
-as String,
+as String,code: freezed == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -2721,6 +2721,281 @@ class __$FlagApiDtoCopyWithImpl<$Res>
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
 as String,unicodeFlag: null == unicodeFlag ? _self.unicodeFlag : unicodeFlag // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$DeliveryAddressUserApiDto {
+
+ String get street; String get city; String get state; String get zip; String get country;
+/// Create a copy of DeliveryAddressUserApiDto
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DeliveryAddressUserApiDtoCopyWith<DeliveryAddressUserApiDto> get copyWith => _$DeliveryAddressUserApiDtoCopyWithImpl<DeliveryAddressUserApiDto>(this as DeliveryAddressUserApiDto, _$identity);
+
+  /// Serializes this DeliveryAddressUserApiDto to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeliveryAddressUserApiDto&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.zip, zip) || other.zip == zip)&&(identical(other.country, country) || other.country == country));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,street,city,state,zip,country);
+
+@override
+String toString() {
+  return 'DeliveryAddressUserApiDto(street: $street, city: $city, state: $state, zip: $zip, country: $country)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $DeliveryAddressUserApiDtoCopyWith<$Res>  {
+  factory $DeliveryAddressUserApiDtoCopyWith(DeliveryAddressUserApiDto value, $Res Function(DeliveryAddressUserApiDto) _then) = _$DeliveryAddressUserApiDtoCopyWithImpl;
+@useResult
+$Res call({
+ String street, String city, String state, String zip, String country
+});
+
+
+
+
+}
+/// @nodoc
+class _$DeliveryAddressUserApiDtoCopyWithImpl<$Res>
+    implements $DeliveryAddressUserApiDtoCopyWith<$Res> {
+  _$DeliveryAddressUserApiDtoCopyWithImpl(this._self, this._then);
+
+  final DeliveryAddressUserApiDto _self;
+  final $Res Function(DeliveryAddressUserApiDto) _then;
+
+/// Create a copy of DeliveryAddressUserApiDto
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? street = null,Object? city = null,Object? state = null,Object? zip = null,Object? country = null,}) {
+  return _then(_self.copyWith(
+street: null == street ? _self.street : street // ignore: cast_nullable_to_non_nullable
+as String,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String,state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
+as String,zip: null == zip ? _self.zip : zip // ignore: cast_nullable_to_non_nullable
+as String,country: null == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [DeliveryAddressUserApiDto].
+extension DeliveryAddressUserApiDtoPatterns on DeliveryAddressUserApiDto {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _DeliveryAddressUserApiDto value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _DeliveryAddressUserApiDto() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _DeliveryAddressUserApiDto value)  $default,){
+final _that = this;
+switch (_that) {
+case _DeliveryAddressUserApiDto():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _DeliveryAddressUserApiDto value)?  $default,){
+final _that = this;
+switch (_that) {
+case _DeliveryAddressUserApiDto() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String street,  String city,  String state,  String zip,  String country)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _DeliveryAddressUserApiDto() when $default != null:
+return $default(_that.street,_that.city,_that.state,_that.zip,_that.country);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String street,  String city,  String state,  String zip,  String country)  $default,) {final _that = this;
+switch (_that) {
+case _DeliveryAddressUserApiDto():
+return $default(_that.street,_that.city,_that.state,_that.zip,_that.country);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String street,  String city,  String state,  String zip,  String country)?  $default,) {final _that = this;
+switch (_that) {
+case _DeliveryAddressUserApiDto() when $default != null:
+return $default(_that.street,_that.city,_that.state,_that.zip,_that.country);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _DeliveryAddressUserApiDto implements DeliveryAddressUserApiDto {
+  const _DeliveryAddressUserApiDto({required this.street, required this.city, required this.state, required this.zip, required this.country});
+  factory _DeliveryAddressUserApiDto.fromJson(Map<String, dynamic> json) => _$DeliveryAddressUserApiDtoFromJson(json);
+
+@override final  String street;
+@override final  String city;
+@override final  String state;
+@override final  String zip;
+@override final  String country;
+
+/// Create a copy of DeliveryAddressUserApiDto
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DeliveryAddressUserApiDtoCopyWith<_DeliveryAddressUserApiDto> get copyWith => __$DeliveryAddressUserApiDtoCopyWithImpl<_DeliveryAddressUserApiDto>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$DeliveryAddressUserApiDtoToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeliveryAddressUserApiDto&&(identical(other.street, street) || other.street == street)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.zip, zip) || other.zip == zip)&&(identical(other.country, country) || other.country == country));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,street,city,state,zip,country);
+
+@override
+String toString() {
+  return 'DeliveryAddressUserApiDto(street: $street, city: $city, state: $state, zip: $zip, country: $country)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DeliveryAddressUserApiDtoCopyWith<$Res> implements $DeliveryAddressUserApiDtoCopyWith<$Res> {
+  factory _$DeliveryAddressUserApiDtoCopyWith(_DeliveryAddressUserApiDto value, $Res Function(_DeliveryAddressUserApiDto) _then) = __$DeliveryAddressUserApiDtoCopyWithImpl;
+@override @useResult
+$Res call({
+ String street, String city, String state, String zip, String country
+});
+
+
+
+
+}
+/// @nodoc
+class __$DeliveryAddressUserApiDtoCopyWithImpl<$Res>
+    implements _$DeliveryAddressUserApiDtoCopyWith<$Res> {
+  __$DeliveryAddressUserApiDtoCopyWithImpl(this._self, this._then);
+
+  final _DeliveryAddressUserApiDto _self;
+  final $Res Function(_DeliveryAddressUserApiDto) _then;
+
+/// Create a copy of DeliveryAddressUserApiDto
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? street = null,Object? city = null,Object? state = null,Object? zip = null,Object? country = null,}) {
+  return _then(_DeliveryAddressUserApiDto(
+street: null == street ? _self.street : street // ignore: cast_nullable_to_non_nullable
+as String,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String,state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
+as String,zip: null == zip ? _self.zip : zip // ignore: cast_nullable_to_non_nullable
+as String,country: null == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

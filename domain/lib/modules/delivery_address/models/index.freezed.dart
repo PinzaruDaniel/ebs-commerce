@@ -1529,7 +1529,7 @@ return $default(_that.id,_that.deliveryType,_that.comments,_that.pickupLocation,
 
 
 class _DeliveryAddressEntity implements DeliveryAddressEntity {
-  const _DeliveryAddressEntity({this.id, required this.deliveryType, required this.comments, required this.pickupLocation, required this.country, required this.region, required this.city, required this.postalCode, required this.address});
+  const _DeliveryAddressEntity({this.id, required this.deliveryType, this.comments, this.pickupLocation, this.country, this.region, this.city, this.postalCode, this.address});
   
 
 @override final  int? id;

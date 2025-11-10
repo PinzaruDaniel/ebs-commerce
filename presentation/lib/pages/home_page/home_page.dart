@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
-import 'package:presentation/pages/home_page/widgets/simple_bottom_menu.dart';
 import 'package:presentation/pages/home_page/widgets/user_menu_widget.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      drawerEdgeDragWidth: Get.height * 0.05,
+      drawerEdgeDragWidth: Get.height * 0.1,
       key: _key,
       drawer: Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 36), child: UserMenuWidget()),
       backgroundColor: Colors.white,
@@ -103,9 +102,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: SimpleBottomMenu(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
+      )
     );
   }
 }

@@ -25,7 +25,7 @@ Map<String, dynamic> _$StatesResponseApiDtoToJson(
 _StatesApiDto _$StatesApiDtoFromJson(Map<String, dynamic> json) =>
     _StatesApiDto(
       name: json['name'] as String,
-      code: json['state_code'] as String,
+      code: json['state_code'] as String?,
     );
 
 Map<String, dynamic> _$StatesApiDtoToJson(_StatesApiDto instance) =>
@@ -133,3 +133,23 @@ Map<String, dynamic> _$FlagApiDtoToJson(_FlagApiDto instance) =>
       'iso2': instance.iso2,
       'unicodeFlag': instance.unicodeFlag,
     };
+
+_DeliveryAddressUserApiDto _$DeliveryAddressUserApiDtoFromJson(
+  Map<String, dynamic> json,
+) => _DeliveryAddressUserApiDto(
+  street: json['street'] as String,
+  city: json['city'] as String,
+  state: json['state'] as String,
+  zip: json['zip'] as String,
+  country: json['country'] as String,
+);
+
+Map<String, dynamic> _$DeliveryAddressUserApiDtoToJson(
+  _DeliveryAddressUserApiDto instance,
+) => <String, dynamic>{
+  'street': instance.street,
+  'city': instance.city,
+  'state': instance.state,
+  'zip': instance.zip,
+  'country': instance.country,
+};
