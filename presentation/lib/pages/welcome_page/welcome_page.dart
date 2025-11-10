@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/routing/app_router.dart';
@@ -40,7 +43,12 @@ class WelcomePage extends StatelessWidget {
               highlightColor: Colors.transparent,
               focusColor: Colors.transparent,
               onTap: () {
-                AppRouter.openGreetingPage();
+                if(currentUserController.isUserLogged.value){
+                  Get.offAllNamed('/home');
+                }
+                else{
+                  AppRouter.openGreetingPage();
+                }
               },
               child: Padding(
                 padding: EdgeInsets.only(bottom: 24.0),

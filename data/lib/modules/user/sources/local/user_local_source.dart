@@ -34,6 +34,9 @@ class UserLocalDataSourceImpl implements UserLocalSource {
 
   @override
   Future<void> setUser({required UserEntity user}) async {
+    consoleLog('user set user ${user.imageUrl ?? ''}');
+    consoleLog('user set user ${user.number ?? ''}');
+    consoleLog('user set user ${user.deliveryAddressEntity?.address ?? ''}');
     final existingUsers = await userBox.getAllAsync();
     if (existingUsers.isNotEmpty) {
       final lastId = existingUsers.last.id;
@@ -75,7 +78,6 @@ class UserLocalDataSourceImpl implements UserLocalSource {
   Stream<UserBox?> getUser() {
     return userBox.query().watch(triggerImmediately: true).map((query) => query.find().toList().last);
   }
-
 
   @override
   Future<DeliveryAddressBox?> getDeliveryAddress() async {

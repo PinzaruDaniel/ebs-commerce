@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:common/constants/failure_class.dart';
 import 'package:common/constants/logger.dart';
 import 'package:domain/modules/auth/use_cases/auth_login_use_case.dart';
+import 'package:domain/modules/delivery_address/use_cases/set_delivery_address_use_case.dart';
 import 'package:domain/modules/user_information/use_cases/sync_user_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,11 +19,12 @@ import '../../view/user_view_model.dart';
 class AuthentificationController extends GetxController {
   AuthLoginUseCase authLoginUseCase = GetIt.instance<AuthLoginUseCase>();
   SyncUserUseCase syncUserUseCase = GetIt.instance<SyncUserUseCase>();
+  final SetDeliveryAddressUseCase setDeliveryAddressUseCase = GetIt.instance<SetDeliveryAddressUseCase>();
+
   RxList<BaseViewModel> allItems = RxList([]);
   RxBool isPasswordVisible = RxBool(false);
 
   Future<void> initAllItems() async {
-    autoLogin();
     allItems.value = [
       TextFieldViewModel(
         hintText: 'pinzaru.daniel@gmail.com',
@@ -52,6 +54,7 @@ class AuthentificationController extends GetxController {
     isPasswordVisible.toggle();
   }
 
+  /*
   Future<void> autoLogin() async {
     final result = await syncUserUseCase.call();
     result.fold(
@@ -71,10 +74,12 @@ class AuthentificationController extends GetxController {
         Get.offAllNamed('/home');
       },
     );
-  }
+  }*/
 
   Future<void> loginUser() async {
     final user = toUserViewModel();
+    final result = await syncUserUseCase.call();
+
     if (user == null) {
       showFailureSnackBar(failure: Failure.error(AppTexts.emailOrPasswordEmpty));
       return;
@@ -83,9 +88,27 @@ class AuthentificationController extends GetxController {
     final either = await authLoginUseCase(params);
     either.fold((failure) => showFailureSnackBar(failure: failure), (response) async {
       showFailureSnackBar(isError: false, fallbackMessage: 'you have logged in Mr ');
-      await autoLogin();
+      Get.offAllNamed('/home');
     });
+    result.fold(
+      (failure) {
+        consoleLog('User is not logged in');
+      },
+      (entity) {
+        currentUserController.userVM.value = UserViewModel(
+          name: entity.name,
+          surname: entity.surname,
+          email: entity.email,
+          imageUrl: entity.imageUrl,
+          deliveryAddressViewModel: entity.deliveryAddressEntity?.toModel,
+        );
+        setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: entity.deliveryAddressEntity!));
+        consoleLog('User already logged in: ${currentUserController.userVM.value?.email}');
+        consoleLog('Successfully auto-logged in ${entity.name}');
+      },
+    );
   }
+
   UserViewModel? toUserViewModel() {
     String getValueByKeyId(String keyId) {
       final item =

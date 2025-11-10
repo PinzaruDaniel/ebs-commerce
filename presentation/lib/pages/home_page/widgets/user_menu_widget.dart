@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/widgets/language_dropdown_widget.dart';
 import 'package:presentation/pages/profile_page/profile_page.dart';
+import 'package:presentation/view/user_view_model.dart';
 
 import '../../../controllers/controller_imports.dart';
 import '../../../util/resources/app_colors.dart';
@@ -11,8 +12,15 @@ import '../../../util/routing/app_router.dart';
 import '../../../util/widgets/base/base_button_widget.dart';
 import '../../../util/widgets/open_container_animation_widget.dart';
 
-class UserMenuWidget extends StatelessWidget {
+class UserMenuWidget extends StatefulWidget {
   const UserMenuWidget({super.key});
+
+  @override
+  State<UserMenuWidget> createState() => _UserMenuWidgetState();
+}
+
+class _UserMenuWidgetState extends State<UserMenuWidget> {
+  UserViewModel? get userVm => currentUserController.userVM.value;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,7 @@ class UserMenuWidget extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: 300,
+                height: 310,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
@@ -41,13 +49,13 @@ class UserMenuWidget extends StatelessWidget {
                         child: Image.network(
                           height: 100,
                           width: 100,
-                          currentUserController.userVM.value?.imageUrl ??
+                          userVm?.imageUrl ??
                               'https://cdn-icons-png.flaticon.com/512/6522/6522516.png',
                         ),
                       ),
                     ),
                     Text(
-                      '${currentUserController.userVM.value?.name ?? 'User'} ${currentUserController.userVM.value?.surname ?? ''} ',
+                      '${userVm?.name ?? 'User'} ${userVm?.surname ?? ''} ',
                       style: AppTextsStyle.bold(color: Colors.white),
                     ),
                     Spacer(),
@@ -55,45 +63,56 @@ class UserMenuWidget extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    '${AppTexts.address}:',
-                                    style: AppTextsStyle.bold(size: 14, color: Colors.white),
-                                  ),
-                                  Text(
-                                    '${currentUserController.userVM.value?.deliveryAddressViewModel?.country ?? ''}, ${currentUserController.userVM.value?.deliveryAddressViewModel?.city ?? ''} ',
-                                    style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                  ),
-                                  Text(
-                                    currentUserController.userVM.value?.deliveryAddressViewModel?.address ?? '',
-                                    style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            VerticalDivider(color: Colors.white, thickness: 2),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Text('Personal:', style: AppTextsStyle.bold(size: 14, color: Colors.white)),
-                                  Text(
-                                    '${currentUserController.userVM.value?.dialCode ?? ''} ${currentUserController.userVM.value?.number ?? ''} ',
-                                    style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      currentUserController.userVM.value?.email ?? '',
+                            SizedBox(width: 4),
+                            if (currentUserController.isUserLogged.value) ...[
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${AppTexts.address}:',
+                                      style: AppTextsStyle.bold(size: 14, color: Colors.white),
+                                    ),
+                                    SizedBox(height: 8),
+
+                                    Text(
+                                      '${userVm?.deliveryAddressViewModel?.country ?? ''}, ${userVm?.deliveryAddressViewModel?.city ?? ''} ',
                                       style: AppTextsStyle.medium.copyWith(color: Colors.white),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(height: 4),
+
+                                    Text(
+                                      userVm?.deliveryAddressViewModel?.address ?? '',
+                                      style: AppTextsStyle.medium.copyWith(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
+                              VerticalDivider(color: Colors.white, thickness: 2),
+                              SizedBox(width: 8),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Personal:', style: AppTextsStyle.bold(size: 14, color: Colors.white)),
+                                    SizedBox(height: 8),
+                                    Text(
+                                      '${userVm?.dialCode ?? ''} ${userVm?.number ?? ''} ',
+                                      style: AppTextsStyle.medium.copyWith(color: Colors.white),
+                                    ),
+                                    SizedBox(height: 4),
+
+                                    Expanded(
+                                      child: Text(
+                                        userVm?.email ?? '',
+                                        style: AppTextsStyle.medium.copyWith(color: Colors.white),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                       ),
@@ -135,17 +154,29 @@ class UserMenuWidget extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: BaseButtonWidget(
-                  buttonColor: AppColors.primary,
-                  textColor: Colors.white,
-                  onTap: () {
-                    AppRouter.openAuthPage();
-                  },
-                  title: AppTexts.logIn,
+              if (!currentUserController.isUserLogged.value) ...[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: BaseButtonWidget(
+                    buttonColor: Colors.grey.shade300,
+                    textColor: Colors.black,
+                    onTap: () {},
+                    title: AppTexts.signUp,
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: BaseButtonWidget(
+                    buttonColor: AppColors.primary,
+                    textColor: Colors.white,
+                    onTap: () {
+                      AppRouter.openAuthPage();
+                    },
+                    title: AppTexts.logIn,
+                  ),
+                ),
+              ] else
+                SizedBox(),
             ],
           ),
         ),

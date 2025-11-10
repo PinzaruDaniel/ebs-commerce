@@ -16,17 +16,16 @@ import '../../view/country_flag_dial_code_view_model.dart';
 class ContactInformationController extends GetxController {
   final GetDialCodesUseCase getDialCodesUseCase = GetIt.instance<GetDialCodesUseCase>();
   RxList<BaseViewModel> allItems = RxList([]);
-  Rxn<UserViewModel> user = Rxn<UserViewModel>();
   RxList<DialCodesViewModel> dialCodes = RxList([]);
   RxList<FlagViewModel> flags = RxList([]);
   Rxn<DialCodesViewModel> selectedDialCode = Rxn<DialCodesViewModel>();
 
   Future<void> initAllItems(UserViewModel? userViewModel) async {
-    user.value = userViewModel;
+    currentUserController.userVM.value = userViewModel;
     CountryFlagDialCodeViewModel codeViewModel;
 
-    if (user.value?.dialCode != null) {
-      final userDialCode = user.value!.dialCode?.replaceAll('+', '');
+    if (currentUserController.userVM.value?.dialCode != null) {
+      final userDialCode = currentUserController.userVM.value!.dialCode?.replaceAll('+', '');
       codeViewModel = nomenclatureController.countriesFlagsDialCode.value.firstWhere(
             (flag) => flag.dialCode == userDialCode,
         orElse: () => CountryFlagDialCodeViewModel(
@@ -53,7 +52,7 @@ class ContactInformationController extends GetxController {
         hintText: 'Pinzaru',
         keyId: 'name',
         title: AppTexts.name,
-        initialValue: user.value?.name ?? '',
+        initialValue: currentUserController.userVM.value?.name ?? '',
         customValidator: (text) {
           if (text == null || text.isEmpty) return AppTexts.requiredField;
           if (text.length < 3 || text.length > 15) {
@@ -70,7 +69,7 @@ class ContactInformationController extends GetxController {
         hintText: 'Daniel',
         keyId: 'surname',
         title: AppTexts.surname,
-        initialValue: user.value?.surname ?? '',
+        initialValue: currentUserController.userVM.value?.surname ?? '',
         customValidator: (text) {
           if (text == null || text.isEmpty) return AppTexts.requiredField;
           if (text.length < 3 || text.length > 15) {
@@ -85,7 +84,7 @@ class ContactInformationController extends GetxController {
       ),
       PhoneNumberViewModel(
         title: AppTexts.phone,
-        initialValueTextField: user.value?.number ?? '',
+        initialValueTextField: currentUserController.userVM.value?.number ?? '',
         selectedFlagDial: codeViewModel
       ),
 
@@ -94,7 +93,7 @@ class ContactInformationController extends GetxController {
         keyId: 'email',
         title: AppTexts.email,
         textInputType: TextInputType.emailAddress,
-        initialValue: user.value?.email ?? '',
+        initialValue: currentUserController.userVM.value?.email ?? '',
         customValidator: (text) {
           if (text == null || text.isEmpty) return AppTexts.emailIsRequired;
           final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
@@ -117,12 +116,13 @@ class ContactInformationController extends GetxController {
       return item.placeholder;
     }
     final phoneItem = allItems.firstWhereOrNull((element) => element is PhoneNumberViewModel) as PhoneNumberViewModel?;
-    return user.value = UserViewModel(
+    return currentUserController.userVM.value = UserViewModel(
       name: getPlaceholderByKeyId('name'),
       surname: getPlaceholderByKeyId('surname'),
       number: phoneItem?.initialValueTextField ?? '',
       dialCode: '+${phoneItem?.selectedFlagDial.dialCode ?? ''}',
       email: getPlaceholderByKeyId('email'),
+      imageUrl: currentUserController.userVM.value?.imageUrl
     );
   }
 }

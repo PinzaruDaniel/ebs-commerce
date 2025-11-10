@@ -23,7 +23,7 @@ class NomenclatureController extends GetxController {
   }
 
   void mapCountries() {
-
+    countriesFlagsDialCode.clear();
     for (var country in countries) {
       countriesFlagsDialCode.add(
         CountryFlagDialCodeViewModel(

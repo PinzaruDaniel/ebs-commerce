@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:common/constants/failure_class.dart';
 import 'package:common/constants/logger.dart';
 import 'package:dartz/dartz.dart';
 import 'package:data/mapper/delivery_address_mapper.dart';
 import 'package:data/mapper/payment_method_mapper.dart';
 import 'package:data/mapper/user_mapper.dart';
-import 'package:data/modules/user/models/remote/index.dart';
 import 'package:data/modules/user/sources/local/user_local_source.dart';
 import 'package:data/modules/user/sources/remote/current_user_api_service.dart';
 import 'package:dio/dio.dart';

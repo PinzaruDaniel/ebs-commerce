@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/delivery_address_page/delivery_address_controller.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_item_build_widget.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
@@ -36,7 +37,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
     super.initState();
     Get.put(DeliveryAddressController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      deliveryAddressController.initItems(widget.deliveryAddressVM);
+      deliveryAddressController.initItems(currentUserController.userVM.value?.deliveryAddressViewModel);
     });
   }
 

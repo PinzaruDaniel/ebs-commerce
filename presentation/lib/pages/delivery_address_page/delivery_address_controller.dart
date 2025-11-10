@@ -7,6 +7,7 @@ import 'package:domain/modules/delivery_address/use_cases/states/get_states_use_
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/mapper/cities_response_entity_mapper.dart';
@@ -317,6 +318,8 @@ class DeliveryAddressController extends GetxController {
         comments: comments,
       );
       deliveryAddressVM.value = model;
+      //todo: to think her
+      currentUserController.userVM.value?.deliveryAddressViewModel=model;
       return model;
     }
   }

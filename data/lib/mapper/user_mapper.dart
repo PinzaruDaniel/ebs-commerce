@@ -55,7 +55,7 @@ extension UserFromDtoToEntityMapper on UserApiDto {
         city: address.city,
         postalCode: address.zip,
         address: address.street,
-        deliveryType: '',
+        deliveryType: 'DHL',
       ),
     );
   }

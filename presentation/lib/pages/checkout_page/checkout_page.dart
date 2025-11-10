@@ -83,7 +83,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             userViewModel: currentUserController.userVM.value,
                             onSave: (UserViewModel? userVM) {
                               consoleLog('User image: ${userVM?.imageUrl??''}');
-                              currentUserController.userVM.value=userVM;
                               checkoutController.updateCheckoutInfoItem(
                                 keyId: CheckoutWidgetsType.userContactInfo,
                                 titleKey: '${userVM?.name} ${userVM?.surname}',

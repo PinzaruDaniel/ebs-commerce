@@ -2,6 +2,7 @@ import 'package:common/constants/failure_class.dart';
 import 'package:common/constants/logger.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/core/usecase.dart';
+import 'package:domain/modules/delivery_address/models/index.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 
 import '../user_information_repository.dart';
@@ -16,7 +17,9 @@ class SyncUserUseCase extends UseCaseNoParams<UserEntity> {
     final either = await userInformationRepository.getUserFromApi();
     either.fold((failure) {}, (userApi) {
       userInformationRepository.setUser(userApi);
-      consoleLog('userApi photo: ${userApi.imageUrl??'null'}');
+      userInformationRepository.setDeliveryAddress(
+        userApi.deliveryAddressEntity ?? DeliveryAddressEntity(deliveryType: 'DHL'),
+      );
     });
     return either;
   }

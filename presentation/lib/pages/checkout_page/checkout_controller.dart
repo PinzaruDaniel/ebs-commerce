@@ -80,11 +80,10 @@ class CheckoutController extends GetxController {
       final cachedPaymentMethod = await getPaymentMethodUseCase();
       selectedPaymentMethod.value = cachedPaymentMethod?.toModel;
     }
-
     consoleLog(
-      'cachedUser ${currentUserController.userVM.value?.name ?? 'null'} ${currentUserController.userVM.value?.deliveryAddressViewModel?.pickupLocation ?? 'null'}',
+      'cachedUser ${currentUserController.userVM.value?.name ?? 'null'}',
     );
-    consoleLog('cachedDeliveryAddress ${deliveryModel.value?.pickupLocation ?? 'null'}');
+    consoleLog('cachedDeliveryAddress ${deliveryModel.value?.deliveryType ?? 'null'}');
     consoleLog('cachedPaymentMethod ${selectedPaymentMethod.value?.titleKey ?? 'null'}');
   }
 
