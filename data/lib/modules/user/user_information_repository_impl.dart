@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:common/constants/failure_class.dart';
 import 'package:common/constants/logger.dart';
 import 'package:dartz/dartz.dart';
@@ -57,6 +59,7 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
   Future<Either<Failure, UserEntity>> getUserFromApi() async {
     try {
       final response = await currentUserApiService.getUserApi();
+      consoleLog('response getUserFromApi() ${response.runtimeType}');
       return Right(response.toEntity);
     } catch (e, stackTrace) {
       consoleLog('ecsad $e');

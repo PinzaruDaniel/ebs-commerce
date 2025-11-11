@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:common/constants/logger.dart';
+import 'package:domain/modules/delivery_address/use_cases/set_delivery_address_use_case.dart';
 import 'package:domain/modules/settings/models/index.dart';
 import 'package:domain/modules/settings/use_cases/get_settings_use_case.dart';
 import 'package:domain/modules/settings/use_cases/set_settings_use_case.dart';
 import 'package:domain/modules/user_information/use_cases/stream_user_use_case.dart';
+import 'package:domain/modules/user_information/use_cases/sync_user_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/user_mapper.dart';
@@ -14,6 +16,9 @@ class CurrentUserController extends GetxController {
   StreamUserUseCase streamUserUseCase = GetIt.instance<StreamUserUseCase>();
   SetSettingsUseCase setSettingsUseCase = GetIt.instance<SetSettingsUseCase>();
   GetSettingsUseCase getSettingsUseCase = GetIt.instance<GetSettingsUseCase>();
+  SyncUserUseCase syncUserUseCase = GetIt.instance<SyncUserUseCase>();
+   SetDeliveryAddressUseCase setDeliveryAddressUseCase = GetIt.instance<SetDeliveryAddressUseCase>();
+
   Rxn<UserViewModel> userVM = Rxn<UserViewModel>();
   RxBool hasAgreedTerms = RxBool(false);
   bool isUserFromApi = false;
@@ -54,5 +59,9 @@ class CurrentUserController extends GetxController {
     await _streamSubscription?.cancel();
     _streamSubscription = null;
     userVM.value = null;
+  }
+
+  void syncUser() async{
+     await syncUserUseCase.call();
   }
 }

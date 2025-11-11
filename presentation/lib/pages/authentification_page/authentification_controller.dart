@@ -31,7 +31,7 @@ class AuthentificationController extends GetxController {
         keyId: 'email',
         title: AppTexts.email,
         textInputType: TextInputType.emailAddress,
-        initialValue: currentUserController.userVM.value?.email ?? '',
+        initialValue: '',
         customValidator: (text) {
           if (text == null || text.isEmpty) return AppTexts.emailIsRequired;
           final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
@@ -43,8 +43,12 @@ class AuthentificationController extends GetxController {
         hintText: AppTexts.yourSecretPassword,
         keyId: 'password',
         title: AppTexts.password,
-        initialValue: currentUserController.userVM.value?.password ?? '',
+        initialValue: '',
         textInputType: TextInputType.visiblePassword,
+        customValidator: (text) {
+          if (text == null || text.isEmpty) return AppTexts.emailIsRequired;
+          return null;
+        },
       ),
     ];
     allItems.refresh();
@@ -54,42 +58,31 @@ class AuthentificationController extends GetxController {
     isPasswordVisible.toggle();
   }
 
-  /*
-  Future<void> autoLogin() async {
-    final result = await syncUserUseCase.call();
-    result.fold(
-      (failure) {
-        consoleLog('User is not logged in');
-      },
-      (entity) {
-        currentUserController.userVM.value = UserViewModel(
-          name: entity.name,
-          surname: entity.surname,
-          email: entity.email,
-          imageUrl: entity.imageUrl,
-          deliveryAddressViewModel: entity.deliveryAddressEntity?.toModel,
-        );
-        consoleLog('User already logged in: ${currentUserController.userVM.value?.email}');
-        consoleLog('Successfully auto-logged in ${entity.name}');
-        Get.offAllNamed('/home');
-      },
-    );
-  }*/
-
   Future<void> loginUser() async {
-    final user = toUserViewModel();
-    final result = await syncUserUseCase.call();
+    String? getValueByKeyId(String keyId) {
+      final item =
+          allItems.firstWhere(
+                (element) => element is TextFieldViewModel && element.keyId == keyId,
+                orElse: () => TextFieldViewModel(title: '', initialValue: '', hintText: ''),
+              )
+              as TextFieldViewModel;
+      return item.placeholder;
+    }
 
-    if (user == null) {
+    final email = getValueByKeyId('email') ?? '';
+    final password = getValueByKeyId('password') ?? '';
+
+    if (email.isEmpty || password.isEmpty) {
       showFailureSnackBar(failure: Failure.error(AppTexts.emailOrPasswordEmpty));
       return;
     }
-    final params = AuthLoginParams(email: user.email ?? '', password: user.password ?? '');
+
+    final params = AuthLoginParams(email: email, password: password);
     final either = await authLoginUseCase(params);
     either.fold((failure) => showFailureSnackBar(failure: failure), (response) async {
-      showFailureSnackBar(isError: false, fallbackMessage: 'you have logged in Mr ');
       Get.offAllNamed('/home');
     });
+    final result = await syncUserUseCase.call();
     result.fold(
       (failure) {
         consoleLog('User is not logged in');
@@ -107,22 +100,5 @@ class AuthentificationController extends GetxController {
         consoleLog('Successfully auto-logged in ${entity.name}');
       },
     );
-  }
-
-  UserViewModel? toUserViewModel() {
-    String getValueByKeyId(String keyId) {
-      final item =
-          allItems.firstWhere(
-                (element) => element is TextFieldViewModel && element.keyId == keyId,
-                orElse: () => TextFieldViewModel(title: '', initialValue: '', hintText: ''),
-              )
-              as TextFieldViewModel;
-
-      return item.placeholder;
-    }
-
-    final email = getValueByKeyId('email');
-    final password = getValueByKeyId('password');
-    return UserViewModel(email: email, password: password);
   }
 }

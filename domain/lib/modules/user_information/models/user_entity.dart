@@ -1,17 +1,16 @@
 part of 'index.dart';
 
 @freezed
-abstract class UserEntity with _$UserEntity{
+abstract class UserEntity with _$UserEntity {
   const factory UserEntity({
     int? id,
     required String name,
     required String surname,
-    String? number,
-    String? dialCode,
+    required String? number,
+    required String? dialCode,
     required String email,
-    String? imageUrl,
-     DeliveryAddressEntity? deliveryAddressEntity,
-     PaymentMethodEntity? paymentMethodEntity,
-})=_UserEntity;
-
+    required String? imageUrl,
+    required DeliveryAddressEntity? deliveryAddressEntity,
+    required PaymentMethodEntity? paymentMethodEntity,
+  }) = _UserEntity;
 }

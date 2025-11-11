@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/localization/localization_loader.dart';
-import 'package:presentation/pages/authentification_page/authentification_page.dart';
 import 'package:presentation/pages/home_page/home_page.dart';
 import 'package:presentation/pages/welcome_page/welcome_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
@@ -17,6 +16,7 @@ void main() async {
   await RootBinding().dependencies();
   await EasyLocalization.ensureInitialized();
   nomenclatureController.initCountries();
+  currentUserController.syncUser();
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ru'), Locale('ro')],

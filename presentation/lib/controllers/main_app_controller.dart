@@ -1,25 +1,41 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:presentation/util/mapper/product_mapper.dart';
+import 'package:presentation/view/ordered_products_view_model.dart';
 import '../view/cart_products_view_model.dart';
+import '../view/order_view_model.dart';
 
 class MainAppController extends GetxController {
   RxList<CartViewModel> cartItems = RxList([]);
-
+  RxList<OrderViewModel> orders = RxList([]);
 
   void addToCart(CartViewModel item) {
     final index = cartItems.indexWhere((i) => i.title == item.title);
     if (index != -1) {
-      cartItems[index].quantity;
+      cartItems[index].quantity++;
     } else {
       cartItems.add(item);
     }
   }
 
-  void changeLanguage(Locale locale, BuildContext context){
-      context.setLocale(locale);
-      Get.updateLocale(locale);
+  void changeLanguage(Locale locale, BuildContext context) {
+    context.setLocale(locale);
+    Get.updateLocale(locale);
+  }
 
+  void addOrderedProducts(List<CartViewModel> items) {
+    final orderedProducts = items.map((e) => e.toOrderedProducts).toList();
+
+    final newOrderId = orders.isEmpty ? 1 : orders.last.id + 1;
+
+    orders.add(
+      OrderViewModel(
+        id: newOrderId,
+        dateTime: DateTime.now(),
+        products: orderedProducts,
+      ),
+    );
   }
 }
+

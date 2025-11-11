@@ -1,4 +1,4 @@
-/*
+
 import 'package:data/modules/auth/sources/local/auth_local_source.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/core/usecase.dart';
@@ -127,4 +127,3 @@ class AuthInterceptor extends InterceptorsWrapper {
     return handler.reject(err);
   }
 }
-*/

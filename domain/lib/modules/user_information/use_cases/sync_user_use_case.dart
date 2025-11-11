@@ -15,8 +15,8 @@ class SyncUserUseCase extends UseCaseNoParams<UserEntity> {
   @override
   Future<Either<Failure, UserEntity>> call() async {
     final either = await userInformationRepository.getUserFromApi();
-    either.fold((failure) {}, (userApi) {
-      userInformationRepository.setUser(userApi);
+    either.fold((failure) {}, (userApi) async {
+      await userInformationRepository.setUser(userApi);
       userInformationRepository.setDeliveryAddress(
         userApi.deliveryAddressEntity ?? DeliveryAddressEntity(deliveryType: 'DHL'),
       );

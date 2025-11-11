@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/pages/greeting_page/greeting_page.dart';
 import 'package:presentation/pages/home_page/widgets/language_dropdown_widget.dart';
 import 'package:presentation/pages/profile_page/profile_page.dart';
+import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/view/user_view_model.dart';
 
 import '../../../controllers/controller_imports.dart';
@@ -49,8 +51,7 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                         child: Image.network(
                           height: 100,
                           width: 100,
-                          userVm?.imageUrl ??
-                              'https://cdn-icons-png.flaticon.com/512/6522/6522516.png',
+                          userVm?.imageUrl ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png',
                         ),
                       ),
                     ),
@@ -97,17 +98,16 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                                   children: [
                                     Text('Personal:', style: AppTextsStyle.bold(size: 14, color: Colors.white)),
                                     SizedBox(height: 8),
-                                    Text(
-                                      '${userVm?.dialCode ?? ''} ${userVm?.number ?? ''} ',
-                                      style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                    ),
-                                    SizedBox(height: 4),
-
                                     Expanded(
                                       child: Text(
                                         userVm?.email ?? '',
                                         style: AppTextsStyle.medium.copyWith(color: Colors.white),
                                       ),
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      '${userVm?.dialCode ?? ''} ${userVm?.number ?? ''} ',
+                                      style: AppTextsStyle.medium.copyWith(color: Colors.white),
                                     ),
                                   ],
                                 ),
@@ -129,24 +129,30 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                     padding: const EdgeInsets.symmetric(vertical: 0),
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
-                      OpenContainerAnimation(
-                        closedBuilder: (context, openContainer) {
-                          return ListTile(
-                            leading: const Icon(Icons.person, color: Colors.black),
-                            title: Text('My Profile', style: AppTextsStyle.bold()),
-                            onTap: openContainer,
-                          );
-                        },
-                        openBuilder: (context, closeContainer) => ProfilePage(),
+                      ListTile(
+                        leading: const Icon(Icons.person, color: Colors.black),
+                        title: Text('My Profile', style: AppTextsStyle.bold()),
+                        onTap: () => AppRouter.openProfilePageNoAnim(),
                       ),
+
                       LanguageDropdown(),
 
                       ListTile(
                         leading: const Icon(Icons.exit_to_app_rounded, color: Colors.black),
                         title: Text('Log out', style: AppTextsStyle.bold()),
-                        onTap: () {
-                          AppRouter.openGreetingPage();
-                          currentUserController.clearUserData();
+                        onTap: () async {
+                          /*AppPopUp.showConfirmationDialog(
+                            title: 'Are you sure you want to log out?',
+                            content: 'This will delete all saved data',
+                            context: context,
+                            onSave: () {
+                              AppRouter.openGreetingPage();
+                              currentUserController.clearUserData();
+                            },
+
+                          );*/
+                          await currentUserController.clearUserData();
+                          Get.off(GreetingPage());
                         },
                       ),
                     ],

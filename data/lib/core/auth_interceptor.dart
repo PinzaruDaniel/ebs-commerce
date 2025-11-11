@@ -1,5 +1,5 @@
-
 import 'dart:convert';
+import 'package:data/modules/auth/models/remote/index.dart';
 import 'package:data/modules/auth/sources/local/auth_local_source.dart';
 import 'package:dio/dio.dart';
 import 'package:common/constants/logger.dart';
@@ -12,10 +12,7 @@ class RefreshInterceptor {
   final lock = Lock();
   bool successRegenerate = false;
 
-  RefreshInterceptor({
-    required this.authApiService,
-    required this.authLocalSource,
-  });
+  RefreshInterceptor({required this.authApiService, required this.authLocalSource});
 
   Future<void> regenerateAccessToken() async {
     if (!lock.locked) {
@@ -37,7 +34,9 @@ class RefreshInterceptor {
       consoleLog('refreshToken: $refreshToken');
       if (refreshToken != null) {
         final response = await authApiService.refresh({'refreshToken': refreshToken});
-        await authLocalSource.insertAccessToken(response);
+        var decodedResponse = jsonDecode(response);
+        var accessToken = AuthTokensApiDto.fromJson(decodedResponse);
+        await authLocalSource.insertAccessToken(accessToken.accessToken!);
         success = true;
       }
     } catch (e, stack) {
@@ -64,6 +63,7 @@ class AuthInterceptor extends InterceptorsWrapper {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     String? accessToken = await refreshInterceptor.authLocalSource.getAccessToken();
+    accessToken.toString();
     String? refreshToken = await refreshInterceptor.authLocalSource.getRefreshToken();
     consoleLog('onRequest interceptor: access=$accessToken, refresh=$refreshToken');
 
@@ -106,36 +106,34 @@ class AuthInterceptor extends InterceptorsWrapper {
     try {
       if (err.response != null &&
           err.response!.data is Map &&
-          (err.response!.data as Map).containsKey('code') &&
-          (err.response!.data as Map)['code'] == 'token_not_valid') {
+          (err.response!.data as Map).containsKey('error') &&
+          (err.response!.data as Map)['error'] == 'jwt expired') {
         consoleLog('Token expired, starting refresh... ${refreshInterceptor.lock.locked}');
 
         await refreshInterceptor.regenerateAccessToken();
 
         if (refreshInterceptor.successRegenerate) {
           var newAccessToken = await refreshInterceptor.authLocalSource.getAccessToken();
+          newAccessToken.toString();
+          err.requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
+          consoleLog('bearer that was sent $newAccessToken');
+          var newRequest = await dio.fetch(err.requestOptions);
 
-          if (newAccessToken != null) {
-            err.requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
-            var newRequest = await dio.fetch(err.requestOptions);
-            return handler.resolve(newRequest);
-          } else {
-            return handler.reject(
-              DioException(
-                requestOptions: err.requestOptions,
-                response: Response(requestOptions: err.requestOptions, statusCode: 401),
-                error: {'reason': 'all_logged_out'},
-              ),
-            );
-          }
+          final data = newRequest.data is String ? jsonDecode(newRequest.data) : newRequest.data;
 
-        } else {
-          return handler.reject(
-            DioException(
+          consoleLog('Parsed data: $data');
+
+          return handler.resolve(
+            Response(
               requestOptions: err.requestOptions,
-              error: {'reason': 'all_logged_out2'},
+              data: data,
+              statusCode: newRequest.statusCode,
+              statusMessage: newRequest.statusMessage,
+              headers: newRequest.headers,
             ),
           );
+        } else {
+          return handler.reject(DioException(requestOptions: err.requestOptions, error: {'reason': 'all_logged_out2'}));
         }
       }
     } catch (e, s) {

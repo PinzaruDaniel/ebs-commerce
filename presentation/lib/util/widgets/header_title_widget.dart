@@ -8,19 +8,25 @@ import 'package:presentation/view/base_view_model.dart';
 
 import '../enum/enums.dart';
 
-
-
 class HeaderTitleViewModel extends BaseViewModel {
   final String title;
   final bool showDivider;
   final bool showSeeAll;
+  final double? fontSize;
   final ProductListType? type;
 
-  HeaderTitleViewModel({required this.title,  this.showDivider=true, this.showSeeAll=false, this.type,});
+  HeaderTitleViewModel({
+    required this.title,
+    this.showDivider = true,
+    this.showSeeAll = false,
+    this.type,
+    this.fontSize,
+  });
 }
 
 class HeaderTitleWidget extends StatelessWidget {
   const HeaderTitleWidget({super.key, required this.itemViewModel});
+
   final HeaderTitleViewModel itemViewModel;
 
   @override
@@ -30,20 +36,15 @@ class HeaderTitleWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(itemViewModel.title, style: AppTextsStyle.bold(size: 11)),
+            Text(itemViewModel.title, style: AppTextsStyle.bold(size: itemViewModel.fontSize ?? 11)),
             Spacer(),
             if (itemViewModel.showSeeAll)
               OpenContainerAnimation(
-                openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
-                  type: itemViewModel.type!,
-                  title: itemViewModel.title,
-                ),
+                openBuilder: (context, _) =>
+                    AppRouter.openProductsDisplayPage(type: itemViewModel.type!, title: itemViewModel.title),
                 closedBuilder: (context, openContainer) => TextButton(
                   onPressed: openContainer,
-                  child: Text(
-                    AppTexts.seeAll,
-                    style: AppTextsStyle.bold(size: 14, color: AppColors.primary),
-                  ),
+                  child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 14, color: AppColors.primary)),
                 ),
               ),
           ],

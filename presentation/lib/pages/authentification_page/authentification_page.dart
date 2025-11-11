@@ -68,7 +68,7 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Obx(
                               () => TextFieldWidget(
-                                obscureText: authController.isPasswordVisible.value,
+                                obscureText: !authController.isPasswordVisible.value,
                                 itemViewModel: item,
                                 suffixIcon: IconButton(
                                   splashColor: Colors.transparent,
@@ -76,7 +76,7 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                                   onPressed: () {
                                     authController.toggleVisibilityPassword();
                                   },
-                                  icon: authController.isPasswordVisible.value
+                                  icon: !authController.isPasswordVisible.value
                                       ? Icon(Icons.visibility_off_rounded, color: AppColors.greyText)
                                       : Icon(Icons.visibility_rounded, color: AppColors.greyText),
                                 ),

@@ -33,28 +33,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> refresh(String refreshToken) async {
-    try {
-      final response = await apiService.refresh({'refreshToken': refreshToken});
-      var result = jsonDecode(response);
-      var accessToken = AuthTokensApiDto.fromJson(result);
-      var accessTokenEntity = accessToken.toEntity;
-      return Right(accessTokenEntity.accessToken ?? '');
-    } catch (e, stackTrace) {
-      if (e is DioException) {
-        return Left(Failure.dio(e));
-      }
-      return Left(Failure.error(e, stackTrace));
-    }
-  }
-
-  @override
   Future<void> insertTokens(String accessToken, String refreshToken) async {
     localSource.insertTokens(accessToken, refreshToken);
     consoleLog('inserted Tokens: $accessToken $refreshToken');
-    var accessTokens = await localSource.getAccessToken();
-    consoleLog('cached accessTokens: $accessTokens');
-    var refreshTokens = await localSource.getRefreshToken();
-    consoleLog('cached accessTokens: $refreshTokens');
   }
 }

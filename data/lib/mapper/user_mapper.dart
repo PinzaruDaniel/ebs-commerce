@@ -57,6 +57,9 @@ extension UserFromDtoToEntityMapper on UserApiDto {
         address: address.street,
         deliveryType: 'DHL',
       ),
+      number: null,
+      dialCode: null,
+      paymentMethodEntity: null,
     );
   }
 }

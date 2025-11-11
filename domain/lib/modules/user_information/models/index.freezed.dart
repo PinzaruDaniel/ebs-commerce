@@ -238,7 +238,7 @@ return $default(_that.id,_that.name,_that.surname,_that.number,_that.dialCode,_t
 
 
 class _UserEntity implements UserEntity {
-  const _UserEntity({this.id, required this.name, required this.surname, this.number, this.dialCode, required this.email, this.imageUrl, this.deliveryAddressEntity, this.paymentMethodEntity});
+  const _UserEntity({this.id, required this.name, required this.surname, required this.number, required this.dialCode, required this.email, required this.imageUrl, required this.deliveryAddressEntity, required this.paymentMethodEntity});
   
 
 @override final  int? id;

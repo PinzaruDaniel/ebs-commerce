@@ -175,9 +175,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
               dialogType: DialogType.success,
               title: AppTexts.orderSuccess,
               btnOkText: AppTexts.ok,
-              btnOkOnPress: () {},
+              btnOkOnPress: () {
+                mainAppController.addOrderedProducts(checkoutController.productItems);
+              },
               btnOkColor: AppColors.primary,
             ).show();
+
+
           },
           showIcon: false,
         );

@@ -74,7 +74,6 @@ class CheckoutController extends GetxController {
   Future<void> getUserInfo() async {
     currentUserController.userVM.value;
     if (currentUserController.userVM.value != null) {
-     // final cachedDeliveryAddress = await getDeliveryAddressUseCase();
 
       deliveryModel.value = currentUserController.userVM.value?.deliveryAddressViewModel;
 
