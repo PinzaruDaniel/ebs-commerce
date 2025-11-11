@@ -8,6 +8,7 @@ class OrderBox {
   int id;
   DateTime dateTime;
 
+  @Backlink('order')
   final ToMany<OrderedProductBox> products;
 
   OrderBox({this.id = 0, required this.dateTime}) : products = ToMany<OrderedProductBox>();

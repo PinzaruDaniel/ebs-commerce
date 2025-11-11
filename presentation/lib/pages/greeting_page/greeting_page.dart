@@ -79,10 +79,8 @@ class _GreetingPageState extends State<GreetingPage> {
                       onTap: () {
                         if (isChecked || hasAgreed) {
                           AppRouter.openAuthPage();
-                          Future.delayed(Duration(milliseconds: 300), () {
                             currentUserController.hasAgreedTerms.value = true;
                             currentUserController.setSettings();
-                          });
                         } else {
                           AppPopUp.showConfirmationDialog(context: context, content: '', title: AppTexts.pleaseAgree);
                         }

@@ -314,14 +314,13 @@
     },
     {
       "id": "9:5348034590699370666",
-      "lastPropertyId": "6:7857336346938094501",
+      "lastPropertyId": "7:7248282151424079962",
       "name": "OrderedProductBox",
       "properties": [
         {
           "id": "1:8537251421454480496",
           "name": "idProduct",
-          "type": 6,
-          "flags": 129
+          "type": 6
         },
         {
           "id": "2:5532165469266638542",
@@ -342,9 +341,21 @@
           "id": "6:7857336346938094501",
           "name": "quantity",
           "type": 6
+        },
+        {
+          "id": "7:7248282151424079962",
+          "name": "id",
+          "type": 6,
+          "flags": 1
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "2:2131604065234961931",
+          "name": "order",
+          "targetId": "10:1620739928155077418"
+        }
+      ]
     },
     {
       "id": "10:1620739928155077418",
@@ -363,18 +374,12 @@
           "type": 10
         }
       ],
-      "relations": [
-        {
-          "id": "1:481600863557974112",
-          "name": "products",
-          "targetId": "9:5348034590699370666"
-        }
-      ]
+      "relations": []
     }
   ],
   "lastEntityId": "10:1620739928155077418",
   "lastIndexId": "4:8024579335509009489",
-  "lastRelationId": "1:481600863557974112",
+  "lastRelationId": "2:2131604065234961931",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -383,6 +388,8 @@
   "retiredPropertyUids": [
     2945180760397819957
   ],
-  "retiredRelationUids": [],
+  "retiredRelationUids": [
+    481600863557974112
+  ],
   "version": 1
 }

@@ -1,11 +1,12 @@
 import 'package:common/constants/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/profile_page/profie_controller.dart';
+import 'package:presentation/pages/profile_page/profile_controller.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
+import 'package:presentation/util/widgets/loading_overlay_widget.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/widgets/product_image_widget.dart';
 
@@ -17,13 +18,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  ProfileController get profileController => Get.find();
+  late final ProfileController profileController;
 
   @override
   void initState() {
     super.initState();
-    Get.put(ProfileController());
-    profileController.getOrders();
+    profileController = Get.put(ProfileController());
+    profileController.initController();
   }
 
   @override
@@ -32,125 +33,142 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBarWidget(showBorder: true, title: 'My Profile'),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 16),
-                child: Center(
-                  child: Container(
-                    width: double.infinity,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      boxShadow: [BoxShadow(blurRadius: 3, spreadRadius: 0.3, color: Colors.black26)],
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.network(
-                              currentUserController.userVM.value?.imageUrl ??
-                                  'https://cdn-icons-png.flaticon.com/512/6522/6522516.png',
-                              width: 150,
-                              height: 150,
+        child: Obx(() {
+          if (profileController.isLoading.value) {
+            return const Center(child: LoadingOverlayWidget());
+          }
+
+          if (profileController.orders.isEmpty) {
+            return const Center(
+              child: Text(
+                'No orders yet.',
+                style: AppTextsStyle.medium,
+              ),
+            );
+          }
+
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 16),
+                  child: Center(
+                    child: Container(
+                      width: double.infinity,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        boxShadow: [BoxShadow(blurRadius: 3, spreadRadius: 0.3, color: Colors.black26)],
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.network(
+                                currentUserController.userVM.value?.imageUrl ??
+                                    'https://cdn-icons-png.flaticon.com/512/6522/6522516.png',
+                                width: 150,
+                                height: 150,
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(text: '${AppTexts.name}: ', style: AppTextsStyle.bold(size: 18)),
-                                      TextSpan(
-                                        text:
-                                            '${currentUserController.userVM.value?.name ?? ''} ${currentUserController.userVM.value?.surname ?? ''}',
-                                        style: AppTextsStyle.medium.copyWith(fontSize: 18),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(text: '${AppTexts.email}: ', style: AppTextsStyle.bold()),
-                                      TextSpan(
-                                        text: currentUserController.userVM.value?.email ?? '',
-                                        style: AppTextsStyle.medium.copyWith(fontSize: 16),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                if (currentUserController.userVM.value?.number != null &&
-                                    currentUserController.userVM.value?.number != '')
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
                                   Text.rich(
                                     TextSpan(
                                       children: [
-                                        TextSpan(text: '${AppTexts.phone}: ', style: AppTextsStyle.bold()),
+                                        TextSpan(text: '${AppTexts.name}: ', style: AppTextsStyle.bold(size: 18)),
                                         TextSpan(
-                                          text: currentUserController.userVM.value?.number ?? '',
+                                          text:
+                                          '${currentUserController.userVM.value?.name ?? ''} ${currentUserController.userVM.value?.surname ?? ''}',
+                                          style: AppTextsStyle.medium.copyWith(fontSize: 18),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(text: '${AppTexts.email}: ', style: AppTextsStyle.bold()),
+                                        TextSpan(
+                                          text: currentUserController.userVM.value?.email ?? '',
                                           style: AppTextsStyle.medium.copyWith(fontSize: 16),
                                         ),
                                       ],
                                     ),
                                   ),
-                              ],
+                                  if (currentUserController.userVM.value?.number != null &&
+                                      currentUserController.userVM.value!.number!.isNotEmpty)
+                                    Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          TextSpan(text: '${AppTexts.phone}: ', style: AppTextsStyle.bold()),
+                                          TextSpan(
+                                            text: currentUserController.userVM.value?.number ?? '',
+                                            style: AppTextsStyle.medium.copyWith(fontSize: 16),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: HeaderTitleWidget(
-                  itemViewModel: HeaderTitleViewModel(title: 'ORDER HISTORY', showDivider: false, fontSize: 14),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                    boxShadow: [BoxShadow(blurRadius: 3, spreadRadius: 0.3, color: Colors.black26)],
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: HeaderTitleWidget(
+                    itemViewModel: HeaderTitleViewModel(
+                      title: 'ORDER HISTORY',
+                      showDivider: false,
+                      fontSize: 14,
+                    ),
                   ),
-                  child: ListView.builder(
-                    itemCount: profileController.orders.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, orderIndex) {
-                      final order = profileController.orders[orderIndex];
-                      final isLastOrder = orderIndex == profileController.orders.value.length - 1;
+                ),
 
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text(
-                                'Order placed on ${order.dateTime.toString().split('.')[0]}',
-                                style: AppTextsStyle.bold(size: 16),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      boxShadow: [BoxShadow(blurRadius: 3, spreadRadius: 0.3, color: Colors.black26)],
+                    ),
+                    child: ListView.builder(
+                      itemCount: profileController.orders.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, orderIndex) {
+                        final order = profileController.orders[orderIndex];
+                        final isLastOrder = orderIndex == profileController.orders.length - 1;
+
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Text(
+                                  'Order placed on ${order.dateTime.toString().split('.')[0]}',
+                                  style: AppTextsStyle.bold(size: 16),
+                                ),
                               ),
-                            ),
-
-                            ...order.products.map(
-                              (item) => Padding(
+                              ...order.products.map((item) => Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                                 child: Row(
                                   children: [
@@ -186,23 +204,23 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ],
                                 ),
-                              ),
-                            ),
-                            if (!isLastOrder)
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16),
-                                child: Divider(thickness: 1.2, color: Colors.grey),
-                              ),
-                          ],
-                        ),
-                      );
-                    },
+                              )),
+                              if (!isLastOrder)
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16),
+                                  child: Divider(thickness: 1.2, color: Colors.grey),
+                                ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }

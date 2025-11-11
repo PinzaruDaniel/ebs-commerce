@@ -56,7 +56,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
           final isLoading = deliveryAddressController.isLoadingCountries.value;
 
           if (isLoading) {
-            return  LoadingOverlayWidget(isLoading: true);
+            return  LoadingOverlayWidget();
           }
 
           return Form(

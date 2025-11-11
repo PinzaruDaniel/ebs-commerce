@@ -81,7 +81,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
               _refreshController.loadComplete();
             },
             child: controller.isLoading.value
-                ? LoadingOverlayWidget(isLoading: true)
+                ? LoadingOverlayWidget()
                 : SingleChildScrollView(
                     child: ProductsListContainer(
                       products: controller.products,

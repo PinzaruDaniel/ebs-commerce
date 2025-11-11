@@ -14,7 +14,8 @@ Future<void> init() async {
       productBox: store.productBox,
       specBox: store.specificationBox,
       categoryBox: store.categoryBox,
-      orderBox: store.orderBox
+      orderBox: store.orderBox,
+      orderedProductBox: store.orderedProductBox,
     ),
   );
 

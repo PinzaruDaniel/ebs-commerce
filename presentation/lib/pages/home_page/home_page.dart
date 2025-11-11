@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               if (homeController.isLoading.value && homeController.currentPage.value == 1)
-                LoadingOverlayWidget(isLoading: true),
+                LoadingOverlayWidget(),
             ],
           ),
         ),
