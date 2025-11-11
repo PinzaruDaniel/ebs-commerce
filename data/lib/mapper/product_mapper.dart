@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:data/mapper/category_mapper.dart';
 import 'package:data/mapper/specification_mapper.dart';
+import 'package:data/modules/products/models/local/order_box.dart';
+import 'package:data/modules/products/models/local/ordered_product_box.dart';
+import 'package:data/objectbox.g.dart';
 import 'package:domain/modules/products/models/index.dart';
 import '../modules/products/models/local/product_box.dart';
 import '../modules/products/models/remote/index.dart';
@@ -80,5 +83,37 @@ extension ProductBoxToEntityMapper on ProductBox {
       specification: specifications.map((e) => e.toEntity).toList(),
       category: categories.map((e) => e.toEntity).toList(),
     );
+  }
+}
+
+extension OrderedProductBoxToEntity on OrderedProductBox {
+  OrderedProductEntity get toEntity {
+    return OrderedProductEntity(
+      idProduct: idProduct,
+      title: title,
+      imageUrl: imageUrl,
+      price: price,
+      quantity: quantity,
+    );
+  }
+}
+
+extension OrderedProductToBoxEntity on OrderedProductEntity {
+  OrderedProductBox get toBox {
+    return OrderedProductBox(idProduct: idProduct, title: title, imageUrl: imageUrl, price: price, quantity: quantity);
+  }
+}
+
+extension OrderToEntity on OrderBox {
+  OrderEntity get toEntity {
+    return OrderEntity(id: id, dateTime: dateTime, products: products.map((p) => p.toEntity).toList());
+  }
+}
+
+extension OrderToBox on OrderEntity {
+  OrderBox get toBox {
+    final box = OrderBox(id: id, dateTime: dateTime);
+    box.products.addAll(products.map((p) => p.toBox));
+    return box;
   }
 }

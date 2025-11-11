@@ -2,6 +2,7 @@ import 'package:domain/modules/products/models/index.dart';
 import 'package:presentation/util/mapper/category_mapper.dart';
 import 'package:presentation/util/mapper/specification_mapper.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
+import 'package:presentation/view/order_view_model.dart';
 import 'package:presentation/view/ordered_products_view_model.dart';
 import 'package:presentation/view/product_view_model.dart';
 
@@ -51,12 +52,30 @@ extension CartProductsToOrdered on CartViewModel {
     } else {
       priceOrdered = price;
     }
-    return OrderedProductsViewModel(
-      id: id,
-      title: title,
-      imageUrl: imageUrl,
-      price: priceOrdered,
-      dateTime: DateTime.now(),
-    );
+    return OrderedProductsViewModel(id: id, title: title, imageUrl: imageUrl, price: priceOrdered);
+  }
+}
+
+extension OrderToEntity on OrderViewModel {
+  OrderEntity get toEntity {
+    return OrderEntity(id: id, dateTime: dateTime, products: products.map((e) => e.toEntity).toList());
+  }
+}
+
+extension OrderToModel on OrderEntity {
+  OrderViewModel get toModel {
+    return OrderViewModel(id: id, dateTime: dateTime, products: products.map((e) => e.toModel).toList());
+  }
+}
+
+extension OrderedProductsToEntity on OrderedProductsViewModel {
+  OrderedProductEntity get toEntity {
+    return OrderedProductEntity(idProduct: id, title: title, imageUrl: imageUrl, price: price, quantity: quantity);
+  }
+}
+
+extension OrderedProductsToeModel on OrderedProductEntity {
+  OrderedProductsViewModel get toModel {
+    return OrderedProductsViewModel(id: idProduct, title: title, imageUrl: imageUrl, price: price, quantity: quantity);
   }
 }

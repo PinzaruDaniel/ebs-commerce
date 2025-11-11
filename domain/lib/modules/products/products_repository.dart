@@ -26,4 +26,7 @@ abstract class ProductsRepository {
   Future<Either<Failure, List<ProductEntity>>> getNewProducts(int page, int perPage);
 
   Stream<List<ProductEntity>> getProductsLocalCache();
+
+  Stream<List<OrderEntity>> getOrdersLocalCache();
+  Future<void> setOrderedLocalCache(List<OrderEntity> orders);
 }

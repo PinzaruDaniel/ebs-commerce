@@ -5,7 +5,6 @@ class OrderedProductsViewModel extends BaseViewModel {
   final String title;
   final String? imageUrl;
   final String? price;
-  final DateTime dateTime;
   int quantity;
 
   OrderedProductsViewModel({
@@ -13,7 +12,6 @@ class OrderedProductsViewModel extends BaseViewModel {
     required this.title,
     required this.imageUrl,
     required this.price,
-    required this.dateTime,
     this.quantity = 1,
   });
 }

@@ -1,5 +1,7 @@
 import 'package:common/constants/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:presentation/pages/profile_page/profie_controller.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
@@ -7,14 +9,28 @@ import 'package:presentation/util/widgets/header_title_widget.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/widgets/product_image_widget.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  ProfileController get profileController => Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    Get.put(ProfileController());
+    profileController.getOrders();
+  }
 
   @override
   Widget build(BuildContext context) {
     consoleLog('user number ${currentUserController.userVM.value?.number}');
     return Scaffold(
-      appBar: AppBarWidget(showBorder: true),
+      appBar: AppBarWidget(showBorder: true, title: 'My Profile'),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -98,7 +114,7 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: HeaderTitleWidget(
                   itemViewModel: HeaderTitleViewModel(title: 'ORDER HISTORY', showDivider: false, fontSize: 14),
                 ),
@@ -113,80 +129,77 @@ class ProfilePage extends StatelessWidget {
                     boxShadow: [BoxShadow(blurRadius: 3, spreadRadius: 0.3, color: Colors.black26)],
                   ),
                   child: ListView.builder(
-                    itemCount: mainAppController.orders.length,
+                    itemCount: profileController.orders.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, orderIndex) {
-                      final order = mainAppController.orders[orderIndex];
-                      final isLastOrder = orderIndex == mainAppController.orders.length - 1;
+                      final order = profileController.orders[orderIndex];
+                      final isLastOrder = orderIndex == profileController.orders.value.length - 1;
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // 🧾 Order header
                             Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Text(
-                                  'Order placed on ${order.dateTime.toString().split('.')[0]}',
+                                'Order placed on ${order.dateTime.toString().split('.')[0]}',
                                 style: AppTextsStyle.bold(size: 16),
                               ),
                             ),
 
-                            ...order.products.map((item) => Padding(
-                              padding:
-                              const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-                              child: Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(16),
-                                    child: ProductImageWidget(
-                                      height: 64,
-                                      width: 64,
-                                      imageUrl: item.imageUrl != null &&
-                                          item.imageUrl!.isNotEmpty
-                                          ? item.imageUrl
-                                          : null,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(item.title,
-                                              style: AppTextsStyle.medium,
-                                              softWrap: true,
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis),
-                                          const SizedBox(height: 4),
-                                          Text('\$${item.price}', style: AppTextsStyle.medium),
-                                        ],
+                            ...order.products.map(
+                              (item) => Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                                child: Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: ProductImageWidget(
+                                        height: 80,
+                                        width: 80,
+                                        imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty
+                                            ? item.imageUrl
+                                            : null,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              item.title,
+                                              softWrap: true,
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text('\$${item.price}'),
+                                            const SizedBox(height: 4),
+                                            Text('${AppTexts.quantity.capitalizeFirst}: ${item.quantity}'),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )),
-
-                            // 🔹 Divider between orders
+                            ),
                             if (!isLastOrder)
                               const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                                padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16),
                                 child: Divider(thickness: 1.2, color: Colors.grey),
                               ),
                           ],
                         ),
                       );
                     },
-                  )
-
+                  ),
                 ),
-              )
-
-
+              ),
             ],
           ),
         ),

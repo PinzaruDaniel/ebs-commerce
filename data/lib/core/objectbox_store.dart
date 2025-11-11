@@ -1,4 +1,6 @@
 import 'package:data/modules/auth/models/local/auth_token_box.dart';
+import 'package:data/modules/products/models/local/order_box.dart';
+import 'package:data/modules/products/models/local/ordered_product_box.dart';
 import 'package:data/modules/products/models/local/product_box.dart';
 import 'package:data/modules/delivery_address/models/local/delivery_address_box.dart';
 import 'package:data/modules/payment_method/models/local/payment_method_box.dart';
@@ -22,8 +24,12 @@ class ObjectBoxStore {
   late final Box<PaymentMethodBox> paymentMethodBox;
   late final Box<DeliveryAddressBox> deliveryAddressBox;
   late final Box<SettingsBox> settingsBox;
+  late final Box<OrderedProductBox> orderedProductBox;
+  late final Box<OrderBox> orderBox;
 
   ObjectBoxStore._create(this._store) {
+    orderedProductBox=Box<OrderedProductBox>(_store);
+    orderBox=Box<OrderBox>(_store);
     authTokenBox = Box<AuthTokenBox>(_store);
     productBox = Box<ProductBox>(_store);
     categoryBox = Box<CategoryBox>(_store);
@@ -32,6 +38,8 @@ class ObjectBoxStore {
     paymentMethodBox = Box<PaymentMethodBox>(_store);
     deliveryAddressBox = Box<DeliveryAddressBox>(_store);
     settingsBox = Box<SettingsBox>(_store);
+
+
   }
 
   static Future<ObjectBoxStore> create() async {

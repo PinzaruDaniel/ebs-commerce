@@ -1,12 +1,17 @@
+import 'package:common/constants/logger.dart';
+import 'package:domain/modules/products/use_cases/set_orders_use_case.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/view/ordered_products_view_model.dart';
 import '../view/cart_products_view_model.dart';
 import '../view/order_view_model.dart';
 
 class MainAppController extends GetxController {
+  SetOrdersUseCase setOrdersUseCase = GetIt.instance<SetOrdersUseCase>();
+
   RxList<CartViewModel> cartItems = RxList([]);
   RxList<OrderViewModel> orders = RxList([]);
 
@@ -26,16 +31,16 @@ class MainAppController extends GetxController {
 
   void addOrderedProducts(List<CartViewModel> items) {
     final orderedProducts = items.map((e) => e.toOrderedProducts).toList();
-
     final newOrderId = orders.isEmpty ? 1 : orders.last.id + 1;
 
-    orders.add(
-      OrderViewModel(
-        id: newOrderId,
-        dateTime: DateTime.now(),
-        products: orderedProducts,
-      ),
+    final newOrder = OrderViewModel(
+      id: newOrderId,
+      dateTime: DateTime.now(),
+      products: orderedProducts,
     );
+
+    orders.add(newOrder);
+    consoleLog('added newOrder: ${newOrder.dateTime}  ${newOrder.products.length}  ');
+    setOrdersUseCase.call(SetOrdersParams(orders: orders.value.map((e) => e.toEntity).toList()));
   }
 }
-

@@ -177,6 +177,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               btnOkText: AppTexts.ok,
               btnOkOnPress: () {
                 mainAppController.addOrderedProducts(checkoutController.productItems);
+                mainAppController.cartItems.clear();
               },
               btnOkColor: AppColors.primary,
             ).show();

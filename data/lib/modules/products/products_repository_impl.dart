@@ -12,7 +12,9 @@ import 'package:domain/modules/products/products_repository.dart';
 class ProductsRepositoryImpl implements ProductsRepository {
   final ProductsApiService apiService;
   final ProductsLocalDataSource localDataSource;
+
   ProductsRepositoryImpl({required this.apiService, required this.localDataSource});
+
   @override
   Future<Either<Failure, ProductResponseEntity>> getFilteredProducts(page, priceGte, priceLte, categoriesId) async {
     try {
@@ -31,6 +33,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
       return Left(Failure.error(e, stackTrace));
     }
   }
+
   @override
   Future<Either<Failure, int>> getFilteredProductsCount(page, priceGte, priceLte, categoriesId) async {
     try {
@@ -70,7 +73,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getNewProducts(page, perPage) async{
+  Future<Either<Failure, List<ProductEntity>>> getNewProducts(page, perPage) async {
     try {
       final Map<String, dynamic> queries = {'page': page, 'per_page': perPage, 'marks': 'new'};
       final response = await apiService.getProducts(queries);
@@ -82,8 +85,10 @@ class ProductsRepositoryImpl implements ProductsRepository {
       }
       return Left(Failure.error(e, stackTrace));
     }
-  }  @override
-  Future<Either<Failure, List<ProductEntity>>> getSaleProducts(page, perPage) async{
+  }
+
+  @override
+  Future<Either<Failure, List<ProductEntity>>> getSaleProducts(page, perPage) async {
     try {
       final Map<String, dynamic> queries = {'page': page, 'per_page': perPage, 'marks': 'new'};
       final response = await apiService.getProducts(queries);
@@ -99,8 +104,16 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Stream<List<ProductEntity>> getProductsLocalCache() {
-    return localDataSource.getProducts().map(
-          (boxList) =>boxList.map((e) => e.toEntity).toList(),
-    );
+    return localDataSource.getProducts().map((boxList) => boxList.map((e) => e.toEntity).toList());
+  }
+
+  @override
+  Stream<List<OrderEntity>> getOrdersLocalCache() {
+    return localDataSource.getOrders().map((boxList) => boxList.map((e) => e.toEntity).toList());
+  }
+
+  @override
+  Future<void> setOrderedLocalCache(List<OrderEntity> orders) {
+    return localDataSource.setOrders(orders: orders);
   }
 }
