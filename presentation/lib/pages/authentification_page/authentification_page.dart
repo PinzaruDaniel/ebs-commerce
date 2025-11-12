@@ -23,7 +23,7 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
     super.initState();
     Get.put(AuthentificationController());
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await authController.clearAuthFields();
+      await authController.initAllItems();
     });
   }
 

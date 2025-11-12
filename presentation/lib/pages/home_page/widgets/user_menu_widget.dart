@@ -1,3 +1,4 @@
+import 'package:common/constants/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/greeting_page/greeting_page.dart';
@@ -24,6 +25,7 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
 
   @override
   Widget build(BuildContext context) {
+    consoleLog('deliverryAddressUser= ${userVm?.deliveryAddressViewModel?.country}');
     return Align(
       alignment: Alignment.centerLeft,
       child: ClipRRect(

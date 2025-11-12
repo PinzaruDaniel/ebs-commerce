@@ -129,6 +129,8 @@ class ContactInformationController extends GetxController {
       dialCode: '+${phoneItem?.selectedFlagDial.dialCode ?? ''}',
       email: getPlaceholderByKeyId('email'),
       imageUrl: currentUserController.userVM.value?.imageUrl,
+      deliveryAddressViewModel: currentUserController.userVM.value?.deliveryAddressViewModel,
+      paymentMethodViewModel: currentUserController.userVM.value?.paymentMethodViewModel,
     );
   }
 }

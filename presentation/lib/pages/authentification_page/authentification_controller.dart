@@ -23,10 +23,7 @@ class AuthentificationController extends GetxController {
 
   RxList<BaseViewModel> allItems = RxList([]);
   RxBool isPasswordVisible = RxBool(false);
-  Future<void> clearAuthFields() async {
-    allItems.clear();
-    await initAllItems();
-  }
+
   Future<void> initAllItems() async {
     allItems.value = [
       TextFieldViewModel(
