@@ -6,6 +6,7 @@ import 'package:presentation/view/user_view_model.dart';
 extension UserToEntityMapper on UserViewModel {
   UserEntity get toEntity {
     return UserEntity(
+      id: id,
       name: name ?? '',
       surname: surname ?? '',
       number: number,
@@ -21,6 +22,7 @@ extension UserToEntityMapper on UserViewModel {
 extension UserToModelMapper on UserEntity {
   UserViewModel get toModel {
     return UserViewModel(
+      id: id,
       name: name,
       surname: surname,
       number: number ?? '',

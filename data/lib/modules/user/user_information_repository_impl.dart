@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:common/constants/failure_class.dart';
 import 'package:common/constants/logger.dart';
 import 'package:dartz/dartz.dart';
@@ -26,33 +24,30 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
   }
 
   @override
-  Future<void> setDeliveryAddress(DeliveryAddressEntity deliveryAddress) async {
-    await userLocalSource.setDeliveryAddress(deliveryAddress: deliveryAddress);
+  Future<void> setDeliveryAddress({required int userId, required DeliveryAddressEntity deliveryAddress}) async {
+    await userLocalSource.setDeliveryAddress(userId: userId, deliveryAddress: deliveryAddress);
   }
 
   @override
-  Future<void> setPaymentMethod(PaymentMethodEntity paymentMethod) async {
-    await userLocalSource.setPaymentMethod(paymentMethod: paymentMethod);
+  Future<void> setPaymentMethod({required int userId, required PaymentMethodEntity paymentMethod}) async {
+    await userLocalSource.setPaymentMethod(userId: userId, paymentMethod: paymentMethod);
   }
 
   @override
-  Stream<UserEntity?> getUser()  {
-    final userBox =  userLocalSource.getUser();
-    return userBox.map((userBox) => userBox?.toEntity);
+  Stream<UserEntity?> getUser(int userId) {
+    return userLocalSource.getUser(userId).map((userBox) => userBox?.toEntity);
   }
 
   @override
-  Future<DeliveryAddressEntity?> getDeliveryAddress() async {
-    final deliveryAddress = await userLocalSource.getDeliveryAddress();
-    if (deliveryAddress == null) return null;
-    return deliveryAddress.toEntity;
+  Future<DeliveryAddressEntity?> getDeliveryAddress(int userId) async {
+    final deliveryAddress = await userLocalSource.getDeliveryAddress(userId);
+    return deliveryAddress?.toEntity;
   }
 
   @override
-  Future<PaymentMethodEntity?> getPaymentMethod() async {
-    final paymentMethod = await userLocalSource.getPaymentMethod();
-    if (paymentMethod == null) return null;
-    return paymentMethod.toEntity;
+  Future<PaymentMethodEntity?> getPaymentMethod(int userId) async {
+    final paymentMethod = await userLocalSource.getPaymentMethod(userId);
+    return paymentMethod?.toEntity;
   }
 
   @override
@@ -62,12 +57,13 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
       consoleLog('response getUserFromApi() ${response.runtimeType}');
       return Right(response.toEntity);
     } catch (e, stackTrace) {
-      consoleLog('ecsad $e');
+      consoleLog('getUserFromApi error: $e');
 
       if (e is DioException) {
-        print('dioExceptionion ${e.stackTrace}');
+        consoleLog('DioException stackTrace: ${e.stackTrace}');
         return Left(Failure.dio(e));
       }
+
       return Left(Failure.error(e, stackTrace));
     }
   }

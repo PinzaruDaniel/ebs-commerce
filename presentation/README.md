@@ -26,4 +26,11 @@ in order to add new localization key:
     - run **presentation % flutter pub run easy_localization:generate -S assets/localization/ -s
       localization_en.json -f keys -O lib/localization/generated_keys/ -o locale_keys.loc.dart
       **  to generate the key-constants;
- 
+
+
+### Dart tool warnings
+- Use this command to remove unused imports dart fix --apply --code=unused_import
+
+
+### Promo codes to use
+Find promo codes in constant_lists_string.dart

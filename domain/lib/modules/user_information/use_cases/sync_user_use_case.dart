@@ -1,5 +1,4 @@
 import 'package:common/constants/failure_class.dart';
-import 'package:common/constants/logger.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/delivery_address/models/index.dart';
@@ -18,7 +17,8 @@ class SyncUserUseCase extends UseCaseNoParams<UserEntity> {
     either.fold((failure) {}, (userApi) async {
       await userInformationRepository.setUser(userApi);
       userInformationRepository.setDeliveryAddress(
-        userApi.deliveryAddressEntity ?? DeliveryAddressEntity(deliveryType: 'DHL'),
+        userId: userApi.id ?? 0,
+        deliveryAddress: userApi.deliveryAddressEntity ?? DeliveryAddressEntity(deliveryType: 'DHL'),
       );
     });
     return either;

@@ -2,7 +2,6 @@ import 'package:domain/modules/delivery_address/delivery_address_repository.dart
 import 'package:domain/modules/delivery_address/use_cases/cities/get_cities_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/countries/get_countries_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/dial_codes/get_dial_codes_use_case.dart';
-import 'package:domain/modules/delivery_address/use_cases/flags/get_flags_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/states/get_states_use_case.dart';
 import 'package:get_it/get_it.dart';
 

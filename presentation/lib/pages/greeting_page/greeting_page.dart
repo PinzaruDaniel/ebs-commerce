@@ -19,105 +19,102 @@ class GreetingPage extends StatefulWidget {
 }
 
 class _GreetingPageState extends State<GreetingPage> {
-  bool isChecked = false;
+  bool isChecked = currentUserController.hasAgreedTerms.value;
+  var hasAgreed = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Obx(() {
-          final hasAgreed = currentUserController.hasAgreedTerms.value;
-
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              AppIcons.ebsIcon,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
-                child: Text(AppTexts.ebsForWish, style: AppTextsStyle.bold(size: 36), textAlign: TextAlign.center),
-              ),
-              Visibility(
-                visible: !hasAgreed,
-                maintainSize: true,
-                maintainAnimation: true,
-                maintainState: true,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 50.0, top: 60, left: 24, right: 24),
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    onTap: () {
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
+            AppIcons.ebsIcon,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
+              child: Text(AppTexts.ebsForWish, style: AppTextsStyle.bold(size: 36), textAlign: TextAlign.center),
+            ),
+            Visibility(
+              visible: !isChecked,
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 50.0, top: 60, left: 24, right: 24),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  onTap: () {
+                    setState(() {
+                      hasAgreed = !hasAgreed;
+                    });
+                  },
+                  child: SelectCheckboxWidget(
+                    title: AppTexts.agreeUserTerms,
+                    selected:  hasAgreed,
+                    selectedColor: Colors.black,
+                    tristate: false,
+                    onChanged: (value) {
                       setState(() {
-                        isChecked = !isChecked;
+                        hasAgreed = value ?? false;
                       });
                     },
-                    child: SelectCheckboxWidget(
-                      title: AppTexts.agreeUserTerms,
-                      selected: isChecked || hasAgreed,
-                      selectedColor: Colors.black,
-                      tristate: false,
-                      onChanged: (value) {
-                        setState(() {
-                          isChecked = value ?? false;
-                        });
-                      },
-                      textStyle: AppTextsStyle.medium.copyWith(color: AppColors.greyText, fontSize: 16),
-                    ),
+                    textStyle: AppTextsStyle.medium.copyWith(color: AppColors.greyText, fontSize: 16),
                   ),
                 ),
               ),
+            ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  children: [
-                    BaseButtonWidget(
-                      buttonColor: (isChecked || hasAgreed) ? AppColors.primary : Colors.grey.shade300,
-                      textColor: (isChecked || hasAgreed) ? Colors.white : Colors.grey,
-                      onTap: () {
-                        if (isChecked || hasAgreed) {
-                          AppRouter.openAuthPage();
-                            currentUserController.hasAgreedTerms.value = true;
-                            currentUserController.setSettings();
-                        } else {
-                          AppPopUp.showConfirmationDialog(context: context, content: '', title: AppTexts.pleaseAgree);
-                        }
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                children: [
+                  BaseButtonWidget(
+                    buttonColor: (isChecked || hasAgreed) ? AppColors.primary : Colors.grey.shade300,
+                    textColor: (isChecked || hasAgreed) ? Colors.white : Colors.grey,
+                    onTap: () {
+                      if (isChecked || hasAgreed) {
+                        AppRouter.openAuthPage();
+                        currentUserController.hasAgreedTerms.value = true;
+                        currentUserController.setSettings();
+                      } else {
+                        AppPopUp.showConfirmationDialog(context: context, content: '', title: AppTexts.pleaseAgree);
+                      }
+                    },
+
+                    title: AppTexts.logIn,
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.0, bottom: 16),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        await currentUserController.clearUserData();
+                        Get.offAllNamed('/home');
                       },
-
-                      title: AppTexts.logIn,
-                    ),
-
-                    Padding(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 16),
-                      child: InkWell(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          await currentUserController.clearUserData();
-                          Get.offAllNamed('/home');
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            AppTexts.enterWithoutPassword,
-                            style: AppTextsStyle.medium.copyWith(
-                              color: Colors.transparent,
-                              decoration: TextDecoration.underline,
-                              decorationColor: AppColors.greyText,
-                              shadows: [Shadow(color: AppColors.greyText, offset: Offset(0, -2))],
-                            ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          AppTexts.enterWithoutPassword,
+                          style: AppTextsStyle.medium.copyWith(
+                            color: Colors.transparent,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.greyText,
+                            shadows: [Shadow(color: AppColors.greyText, offset: Offset(0, -2))],
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          );
-        }),
+            ),
+          ],
+        ),
       ),
     );
   }

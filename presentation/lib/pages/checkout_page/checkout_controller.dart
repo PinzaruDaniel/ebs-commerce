@@ -4,7 +4,6 @@ import 'package:domain/modules/delivery_address/use_cases/get_delivery_address_c
 import 'package:domain/modules/delivery_address/use_cases/set_delivery_address_use_case.dart';
 import 'package:domain/modules/payment_method/use_cases/get_payment_method_use_case.dart';
 import 'package:domain/modules/payment_method/use_cases/set_payment_method_use_case.dart';
-import 'package:domain/modules/user_information/use_cases/stream_user_use_case.dart';
 import 'package:domain/modules/user_information/use_cases/set_user_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -47,11 +46,11 @@ class CheckoutController extends GetxController {
   }
 
   void setDeliveryInfo() async {
-    await setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: deliveryModel.value!.toEntity));
+    await setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: deliveryModel.value!.toEntity, userId: currentUserController.userVM.value?.id??1));
   }
 
   void setPaymentInfo() async {
-    await setPaymentMethodUseCase(SetPaymentMethodParams(paymentMethodEntity: selectedPaymentMethod.value!.toEntity));
+    await setPaymentMethodUseCase(SetPaymentMethodParams(paymentMethodEntity: selectedPaymentMethod.value!.toEntity, userId: currentUserController.userVM.value?.id??1));
   }
 
   void initProductItems(List<CartViewModel> productItems) {
@@ -77,7 +76,7 @@ class CheckoutController extends GetxController {
 
       deliveryModel.value = currentUserController.userVM.value?.deliveryAddressViewModel;
 
-      final cachedPaymentMethod = await getPaymentMethodUseCase();
+      final cachedPaymentMethod = await getPaymentMethodUseCase(GetPaymentMethodParams(userId: currentUserController.userVM.value?.id??1));
       selectedPaymentMethod.value = cachedPaymentMethod?.toModel;
     }
     consoleLog(

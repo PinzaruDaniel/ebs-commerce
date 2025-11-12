@@ -1,4 +1,3 @@
-import 'package:data/modules/auth/models/remote/index.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 

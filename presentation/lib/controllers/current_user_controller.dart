@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:common/constants/logger.dart';
+import 'package:domain/modules/auth/use_cases/delete_tokens_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/set_delivery_address_use_case.dart';
 import 'package:domain/modules/settings/models/index.dart';
 import 'package:domain/modules/settings/use_cases/get_settings_use_case.dart';
@@ -17,7 +18,8 @@ class CurrentUserController extends GetxController {
   SetSettingsUseCase setSettingsUseCase = GetIt.instance<SetSettingsUseCase>();
   GetSettingsUseCase getSettingsUseCase = GetIt.instance<GetSettingsUseCase>();
   SyncUserUseCase syncUserUseCase = GetIt.instance<SyncUserUseCase>();
-   SetDeliveryAddressUseCase setDeliveryAddressUseCase = GetIt.instance<SetDeliveryAddressUseCase>();
+  SetDeliveryAddressUseCase setDeliveryAddressUseCase = GetIt.instance<SetDeliveryAddressUseCase>();
+  DeleteTokensUseCase deleteTokensUseCase=GetIt.instance<DeleteTokensUseCase>();
 
   Rxn<UserViewModel> userVM = Rxn<UserViewModel>();
   RxBool hasAgreedTerms = RxBool(false);
@@ -48,10 +50,12 @@ class CurrentUserController extends GetxController {
 
   Future<void> streamUser() async {
     _streamSubscription?.cancel();
-    _streamSubscription = streamUserUseCase.call().distinct().listen((userEntity) {
+    _streamSubscription = streamUserUseCase.call(StreamUserParams(id: userVM.value?.id ?? 1)).distinct().listen((
+      userEntity,
+    ) {
       userVM.value = userEntity?.toModel;
 
-      consoleLog('userEntity photo: ${userEntity?.imageUrl ?? 'no image'}');
+      consoleLog('userEntity photo: ${userEntity?.imageUrl ?? 'no image'}  userId= ${userEntity?.id}');
     });
   }
 
@@ -61,7 +65,11 @@ class CurrentUserController extends GetxController {
     userVM.value = null;
   }
 
-  void syncUser() async{
-     await syncUserUseCase.call();
+  void syncUser() async {
+    await syncUserUseCase.call();
+  }
+
+  void deleteTokens() async{
+    await deleteTokensUseCase.call();
   }
 }

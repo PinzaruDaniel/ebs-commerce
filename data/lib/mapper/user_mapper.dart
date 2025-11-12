@@ -8,6 +8,7 @@ import 'package:domain/modules/user_information/models/index.dart';
 extension UserToEntityMapper on UserBox {
   UserEntity get toEntity {
     return UserEntity(
+      id: id,
       name: name,
       surname: surname,
       number: number,
@@ -45,6 +46,7 @@ extension UserToBoxMapper on UserEntity {
 extension UserFromDtoToEntityMapper on UserApiDto {
   UserEntity get toEntity {
     return UserEntity(
+      id: id,
       name: firstName,
       surname: lastName,
       email: email,

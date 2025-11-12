@@ -1,21 +1,26 @@
 import 'package:common/constants/failure_class.dart';
 import 'package:dartz/dartz.dart';
+import 'package:domain/modules/delivery_address/models/index.dart';
+import 'package:domain/modules/payment_method/index.dart';
 import 'package:domain/modules/user_information/models/index.dart';
-
-import '../delivery_address/models/index.dart';
-import '../payment_method/index.dart';
 
 abstract class UserInformationRepository {
   Future<void> setUser(UserEntity user);
 
-  Stream<UserEntity?> getUser();
+  Stream<UserEntity?> getUser(int userId);
 
-  Future<void> setDeliveryAddress(DeliveryAddressEntity deliveryAddress);
+  Future<void> setDeliveryAddress({
+    required int userId,
+    required DeliveryAddressEntity deliveryAddress,
+  });
+  Future<void> setPaymentMethod({
+    required int userId,
+    required PaymentMethodEntity paymentMethod,
+  });
 
-  Future<void> setPaymentMethod(PaymentMethodEntity paymentMethod);
+  Future<DeliveryAddressEntity?> getDeliveryAddress(int userId);
 
-  Future<DeliveryAddressEntity?> getDeliveryAddress();
+  Future<PaymentMethodEntity?> getPaymentMethod(int userId);
 
-  Future<PaymentMethodEntity?> getPaymentMethod();
   Future<Either<Failure, UserEntity>> getUserFromApi();
 }

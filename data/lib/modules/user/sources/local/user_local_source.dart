@@ -8,88 +8,111 @@ import 'package:domain/modules/payment_method/index.dart';
 import 'package:domain/modules/user_information/models/index.dart';
 import 'package:objectbox/objectbox.dart';
 
+import '../../../../objectbox.g.dart';
 import '../../../delivery_address/models/local/delivery_address_box.dart';
 import '../../../payment_method/models/local/payment_method_box.dart';
 
 abstract class UserLocalSource {
   Future<void> setUser({required UserEntity user});
 
-  Future<void> setDeliveryAddress({required DeliveryAddressEntity deliveryAddress});
+  Future<void> setDeliveryAddress({
+    required int userId,
+    required DeliveryAddressEntity deliveryAddress,
+  });
 
-  Future<void> setPaymentMethod({required PaymentMethodEntity paymentMethod});
+  Future<void> setPaymentMethod({
+    required int userId,
+    required PaymentMethodEntity paymentMethod,
+  });
 
-  Stream<UserBox?> getUser();
+  Stream<UserBox?> getUser(int id);
 
-  Future<PaymentMethodBox?> getPaymentMethod();
+  Future<PaymentMethodBox?> getPaymentMethod(int userId);
 
-  Future<DeliveryAddressBox?> getDeliveryAddress();
+  Future<DeliveryAddressBox?> getDeliveryAddress(int userId);
 }
 
-class UserLocalDataSourceImpl implements UserLocalSource {
-  Box<UserBox> userBox;
-  Box<DeliveryAddressBox> deliveryAddressBox;
-  Box<PaymentMethodBox> paymentMethodBox;
 
-  UserLocalDataSourceImpl({required this.userBox, required this.deliveryAddressBox, required this.paymentMethodBox});
+class UserLocalDataSourceImpl implements UserLocalSource {
+  final Box<UserBox> userBox;
+  final Box<DeliveryAddressBox> deliveryAddressBox;
+  final Box<PaymentMethodBox> paymentMethodBox;
+
+  UserLocalDataSourceImpl({
+    required this.userBox,
+    required this.deliveryAddressBox,
+    required this.paymentMethodBox,
+  });
 
   @override
   Future<void> setUser({required UserEntity user}) async {
-    consoleLog('user set user ${user.imageUrl ?? ''}');
-    consoleLog('user set user ${user.number ?? ''}');
-    consoleLog('user set user ${user.deliveryAddressEntity?.address ?? ''}');
-    final existingUsers = await userBox.getAllAsync();
-    if (existingUsers.isNotEmpty) {
-      final lastId = existingUsers.last.id;
-      final existingUser = userBox.get(lastId);
-      final updatedUserBox = UserToBoxMapper(user).toBox;
-      updatedUserBox.id = existingUser!.id;
-      updatedUserBox.deliveryAddressBox.targetId = existingUser.deliveryAddressBox.targetId;
-      updatedUserBox.paymentMethodBox.targetId = existingUser.paymentMethodBox.targetId;
-      userBox.put(updatedUserBox);
-    } else {
-      final newUserBox = UserToBoxMapper(user).toBox;
-      userBox.put(newUserBox);
+    consoleLog('Saving user: ${user.number ?? ''}');
+    final userBoxModel = UserToBoxMapper(user).toBox;
+
+    // Update existing user if ID exists
+    if (user.id != null) {
+      final existingUser = await userBox.getAsync(user.id!);
+      if (existingUser != null) {
+        userBoxModel.id = existingUser.id;
+        userBoxModel.deliveryAddressBox.targetId =
+            existingUser.deliveryAddressBox.targetId;
+        userBoxModel.paymentMethodBox.targetId =
+            existingUser.paymentMethodBox.targetId;
+      }
     }
+
+    await userBox.putAsync(userBoxModel);
   }
 
   @override
-  Future<void> setDeliveryAddress({required DeliveryAddressEntity deliveryAddress}) async {
-    final addressId = await deliveryAddressBox.putAsync(DeliveryAddressToBoxMapper(deliveryAddress).toBox);
-    final user = await getUser().last;
+  Future<void> setDeliveryAddress({
+    required int userId,
+    required DeliveryAddressEntity deliveryAddress,
+  }) async {
+    final user = await userBox.getAsync(userId);
+    if (user == null) return;
 
-    if (user != null) {
-      user.deliveryAddressBox.targetId = addressId;
-      userBox.put(user);
-    }
+    final addressBoxModel =
+        DeliveryAddressToBoxMapper(deliveryAddress).toBox;
+    final addressId = await deliveryAddressBox.putAsync(addressBoxModel);
+
+    user.deliveryAddressBox.targetId = addressId;
+    await userBox.putAsync(user);
   }
 
   @override
-  Future<void> setPaymentMethod({required PaymentMethodEntity paymentMethod}) async {
-    final paymentMethodId = await paymentMethodBox.putAsync(PaymentMethodToBoxMapper(paymentMethod).toBox);
-    final user = await getUser().last;
+  Future<void> setPaymentMethod({
+    required int userId,
+    required PaymentMethodEntity paymentMethod,
+  }) async {
+    final user = await userBox.getAsync(userId);
+    if (user == null) return;
 
-    if (user != null) {
-      user.paymentMethodBox.targetId = paymentMethodId;
-      userBox.put(user);
-    }
+    final paymentBoxModel =
+        PaymentMethodToBoxMapper(paymentMethod).toBox;
+    final paymentId = await paymentMethodBox.putAsync(paymentBoxModel);
+
+    user.paymentMethodBox.targetId = paymentId;
+    await userBox.putAsync(user);
   }
 
   @override
-  Stream<UserBox?> getUser() {
-    return userBox.query().watch(triggerImmediately: true).map((query) => query.find().toList().last);
+  Stream<UserBox?> getUser(int id) {
+    return userBox
+        .query(UserBox_.id.equals(id))
+        .watch(triggerImmediately: true)
+        .map((query) => query.findFirst());
   }
 
   @override
-  Future<DeliveryAddressBox?> getDeliveryAddress() async {
-    final deliveryAddress = deliveryAddressBox.getAll();
-    if (deliveryAddress.isEmpty) return null;
-    return deliveryAddress.last;
+  Future<DeliveryAddressBox?> getDeliveryAddress(int userId) async {
+    final user = await userBox.getAsync(userId);
+    return user?.deliveryAddressBox.target;
   }
 
   @override
-  Future<PaymentMethodBox?> getPaymentMethod() async {
-    final paymentMethod = paymentMethodBox.getAll();
-    if (paymentMethod.isEmpty) return null;
-    return paymentMethod.last;
+  Future<PaymentMethodBox?> getPaymentMethod(int userId) async {
+    final user = await userBox.getAsync(userId);
+    return user?.paymentMethodBox.target;
   }
 }

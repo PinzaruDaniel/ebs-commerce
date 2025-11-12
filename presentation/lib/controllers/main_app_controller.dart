@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:common/constants/logger.dart';
 import 'package:domain/modules/products/use_cases/set_orders_use_case.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -5,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
-import 'package:presentation/view/ordered_products_view_model.dart';
 import '../view/cart_products_view_model.dart';
 import '../view/order_view_model.dart';
 

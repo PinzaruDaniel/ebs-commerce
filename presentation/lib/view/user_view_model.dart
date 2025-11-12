@@ -3,6 +3,7 @@ import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/payment_method_view_model.dart';
 
 class UserViewModel extends BaseViewModel {
+  int? id;
   final String? name;
   final String? surname;
   final String? number;
@@ -14,6 +15,7 @@ class UserViewModel extends BaseViewModel {
   PaymentMethodViewModel? paymentMethodViewModel;
 
   UserViewModel({
+    this.id,
     this.name,
     this.surname,
     this.number,

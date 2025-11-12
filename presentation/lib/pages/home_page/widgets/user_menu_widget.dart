@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/greeting_page/greeting_page.dart';
 import 'package:presentation/pages/home_page/widgets/language_dropdown_widget.dart';
-import 'package:presentation/pages/profile_page/profile_page.dart';
-import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/view/user_view_model.dart';
 
 import '../../../controllers/controller_imports.dart';
 import '../../../util/resources/app_colors.dart';
 import '../../../util/resources/app_text_styles.dart';
 import '../../../util/resources/app_texts.dart';
+import '../../../util/routing/app_pop_up.dart';
 import '../../../util/routing/app_router.dart';
 import '../../../util/widgets/base/base_button_widget.dart';
-import '../../../util/widgets/open_container_animation_widget.dart';
 
 class UserMenuWidget extends StatefulWidget {
   const UserMenuWidget({super.key});
@@ -141,18 +139,18 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                         leading: const Icon(Icons.exit_to_app_rounded, color: Colors.black),
                         title: Text('Log out', style: AppTextsStyle.bold()),
                         onTap: () async {
-                          /*AppPopUp.showConfirmationDialog(
+                          AppPopUp.showConfirmationDialog(
                             title: 'Are you sure you want to log out?',
                             content: 'This will delete all saved data',
                             context: context,
-                            onSave: () {
-                              AppRouter.openGreetingPage();
-                              currentUserController.clearUserData();
+                            onSave: () async {
+                              await currentUserController.clearUserData();
+                              currentUserController.deleteTokens();
+                              Get.off(GreetingPage());
                             },
 
-                          );*/
-                          await currentUserController.clearUserData();
-                          Get.off(GreetingPage());
+                          );
+
                         },
                       ),
                     ],

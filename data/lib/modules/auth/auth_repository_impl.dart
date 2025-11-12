@@ -37,4 +37,9 @@ class AuthRepositoryImpl implements AuthRepository {
     localSource.insertTokens(accessToken, refreshToken);
     consoleLog('inserted Tokens: $accessToken $refreshToken');
   }
+
+  @override
+  Future<void> deleteTokens() async{
+    localSource.deleteTokens();
+  }
 }

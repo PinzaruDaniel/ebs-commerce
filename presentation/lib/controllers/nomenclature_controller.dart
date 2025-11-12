@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart' as lib_phone_number;
 import 'package:get/get.dart';

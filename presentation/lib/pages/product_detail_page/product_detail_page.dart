@@ -5,7 +5,6 @@ import 'package:presentation/pages/product_detail_page/widgets/product_detail_ex
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_page_body_widget.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
-import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';

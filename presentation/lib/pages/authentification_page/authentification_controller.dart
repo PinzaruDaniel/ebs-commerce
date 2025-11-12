@@ -23,7 +23,10 @@ class AuthentificationController extends GetxController {
 
   RxList<BaseViewModel> allItems = RxList([]);
   RxBool isPasswordVisible = RxBool(false);
-
+  Future<void> clearAuthFields() async {
+    allItems.clear();
+    await initAllItems();
+  }
   Future<void> initAllItems() async {
     allItems.value = [
       TextFieldViewModel(
@@ -69,8 +72,8 @@ class AuthentificationController extends GetxController {
       return item.placeholder;
     }
 
-    final email = getValueByKeyId('email') ?? '';
-    final password = getValueByKeyId('password') ?? '';
+    var email = getValueByKeyId('email') ?? '';
+    var password = getValueByKeyId('password') ?? '';
 
     if (email.isEmpty || password.isEmpty) {
       showFailureSnackBar(failure: Failure.error(AppTexts.emailOrPasswordEmpty));
@@ -95,7 +98,7 @@ class AuthentificationController extends GetxController {
           imageUrl: entity.imageUrl,
           deliveryAddressViewModel: entity.deliveryAddressEntity?.toModel,
         );
-        setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: entity.deliveryAddressEntity!));
+        setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: entity.deliveryAddressEntity!, userId: currentUserController.userVM.value?.id??1));
         consoleLog('User already logged in: ${currentUserController.userVM.value?.email}');
         consoleLog('Successfully auto-logged in ${entity.name}');
       },

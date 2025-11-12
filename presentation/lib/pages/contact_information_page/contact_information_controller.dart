@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:domain/modules/delivery_address/use_cases/dial_codes/get_dial_codes_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -27,7 +29,7 @@ class ContactInformationController extends GetxController {
     if (currentUserController.userVM.value?.dialCode != null) {
       final userDialCode = currentUserController.userVM.value!.dialCode?.replaceAll('+', '');
       codeViewModel = nomenclatureController.countriesFlagsDialCode.value.firstWhere(
-            (flag) => flag.dialCode == userDialCode,
+        (flag) => flag.dialCode == userDialCode,
         orElse: () => CountryFlagDialCodeViewModel(
           iso2: 'US',
           name: 'United States',
@@ -40,12 +42,12 @@ class ContactInformationController extends GetxController {
       codeViewModel = nomenclatureController.countriesFlagsDialCode.value.isNotEmpty
           ? nomenclatureController.countriesFlagsDialCode.value.first
           : CountryFlagDialCodeViewModel(
-        iso2: 'US',
-        name: 'United States',
-        dialCode: '1',
-        phoneMaskMobileInternational: '+0 000-000-0000',
-        exampleNumberMobileInternational: '1 201-555-0123',
-      );
+              iso2: 'US',
+              name: 'United States',
+              dialCode: '1',
+              phoneMaskMobileInternational: '+0 000-000-0000',
+              exampleNumberMobileInternational: '1 201-555-0123',
+            );
     }
     allItems.value = [
       TextFieldViewModel(
@@ -85,7 +87,7 @@ class ContactInformationController extends GetxController {
       PhoneNumberViewModel(
         title: AppTexts.phone,
         initialValueTextField: currentUserController.userVM.value?.number ?? '',
-        selectedFlagDial: codeViewModel
+        selectedFlagDial: codeViewModel,
       ),
 
       TextFieldViewModel(
@@ -107,22 +109,26 @@ class ContactInformationController extends GetxController {
   UserViewModel? toUserViewModel() {
     String getPlaceholderByKeyId(String keyId) {
       final item =
-      allItems.firstWhere(
-            (element) => element is TextFieldViewModel && element.keyId == keyId,
-        orElse: () => TextFieldViewModel(title: '', initialValue: '', hintText: ''),
-      )
-      as TextFieldViewModel;
+          allItems.firstWhere(
+                (element) => element is TextFieldViewModel && element.keyId == keyId,
+                orElse: () => TextFieldViewModel(title: '', initialValue: '', hintText: ''),
+              )
+              as TextFieldViewModel;
 
       return item.placeholder;
     }
+
     final phoneItem = allItems.firstWhereOrNull((element) => element is PhoneNumberViewModel) as PhoneNumberViewModel?;
     return currentUserController.userVM.value = UserViewModel(
+      id: currentUserController.userVM.value?.id != null
+          ? (currentUserController.userVM.value!.id = currentUserController.userVM.value!.id! + 1)
+          : 0,
       name: getPlaceholderByKeyId('name'),
       surname: getPlaceholderByKeyId('surname'),
       number: phoneItem?.initialValueTextField ?? '',
       dialCode: '+${phoneItem?.selectedFlagDial.dialCode ?? ''}',
       email: getPlaceholderByKeyId('email'),
-      imageUrl: currentUserController.userVM.value?.imageUrl
+      imageUrl: currentUserController.userVM.value?.imageUrl,
     );
   }
 }

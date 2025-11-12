@@ -4,12 +4,9 @@ import 'package:presentation/pages/authentification_page/authentification_contro
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';
-import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
-
-import '../../controllers/controller_imports.dart';
 
 class AuthentificationPage extends StatefulWidget {
   const AuthentificationPage({super.key});
@@ -25,8 +22,8 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
   void initState() {
     super.initState();
     Get.put(AuthentificationController());
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      authController.initAllItems();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await authController.clearAuthFields();
     });
   }
 
@@ -99,8 +96,9 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                   child: BaseButtonWidget(
                     buttonColor: AppColors.primary,
                     textColor: Colors.white,
-                    onTap: () {
-                      authController.loginUser();
+                    onTap: () async {
+                      await authController.loginUser();
+                      authController.allItems.clear();
                     },
                     title: AppTexts.logIn,
                   ),

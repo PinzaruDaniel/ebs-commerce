@@ -3,7 +3,6 @@ import 'package:data/mapper/category_mapper.dart';
 import 'package:data/mapper/specification_mapper.dart';
 import 'package:data/modules/products/models/local/order_box.dart';
 import 'package:data/modules/products/models/local/ordered_product_box.dart';
-import 'package:data/objectbox.g.dart';
 import 'package:domain/modules/products/models/index.dart';
 import '../modules/products/models/local/product_box.dart';
 import '../modules/products/models/remote/index.dart';

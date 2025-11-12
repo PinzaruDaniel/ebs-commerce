@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/util/enum/map_enums.dart';
-import 'package:presentation/view/base_view_model.dart';
 
 import '../../../util/resources/app_text_styles.dart';
 import '../../../util/widgets/product_image_widget.dart';

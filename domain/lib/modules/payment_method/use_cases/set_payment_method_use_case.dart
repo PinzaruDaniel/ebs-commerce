@@ -9,12 +9,13 @@ class SetPaymentMethodUseCase extends UseCaseNoEither<void, SetPaymentMethodPara
 
   @override
   Future<void> call(params) async {
-    await userInformationRepository.setPaymentMethod(params.paymentMethodEntity);
+    await userInformationRepository.setPaymentMethod(userId: params.userId, paymentMethod: params.paymentMethodEntity);
   }
 }
 
 class SetPaymentMethodParams {
   final PaymentMethodEntity paymentMethodEntity;
+  final int userId;
 
-  SetPaymentMethodParams({required this.paymentMethodEntity});
+  SetPaymentMethodParams({required this.paymentMethodEntity, required this.userId});
 }
