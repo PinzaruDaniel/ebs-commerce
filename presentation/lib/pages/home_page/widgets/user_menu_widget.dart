@@ -25,7 +25,6 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    consoleLog('deliverryAddressUser= ${userVm?.deliveryAddressViewModel?.country}');
     return Align(
       alignment: Alignment.centerLeft,
       child: ClipRRect(
@@ -35,93 +34,95 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
           color: Colors.white,
           child: Column(
             children: [
-              Container(
-                height: 310,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-                  color: AppColors.primary,
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 24.0, bottom: 16),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          height: 100,
-                          width: 100,
-                          userVm?.imageUrl ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png',
+              Flexible(
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+                    color: AppColors.primary,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 24.0, bottom: 16),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(
+                            height: 100,
+                            width: 100,
+                            userVm?.imageUrl ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png',
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      '${userVm?.name ?? 'User'} ${userVm?.surname ?? ''} ',
-                      style: AppTextsStyle.bold(color: Colors.white),
-                    ),
-                    Spacer(),
-                    IntrinsicHeight(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16),
-                        child: Row(
-                          children: [
-                            SizedBox(width: 4),
-                            if (currentUserController.isUserLogged.value) ...[
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${AppTexts.address}:',
-                                      style: AppTextsStyle.bold(size: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(height: 8),
+                      Text(
+                        '${userVm?.name ?? 'User'} ${userVm?.surname ?? ''} ',
+                        style: AppTextsStyle.bold(color: Colors.white),
+                      ),
 
-                                    Text(
-                                      '${userVm?.deliveryAddressViewModel?.country ?? ''}, ${userVm?.deliveryAddressViewModel?.city ?? ''} ',
-                                      style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                    ),
-                                    SizedBox(height: 4),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                        child: IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              SizedBox(width: 4),
+                              if (currentUserController.isUserLogged.value) ...[
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${AppTexts.address}:',
+                                        style: AppTextsStyle.bold(size: 14, color: Colors.white),
+                                      ),
+                                      SizedBox(height: 8),
 
-                                    Text(
-                                      userVm?.deliveryAddressViewModel?.address ?? '',
-                                      style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              VerticalDivider(color: Colors.white, thickness: 2),
-                              SizedBox(width: 8),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Personal:', style: AppTextsStyle.bold(size: 14, color: Colors.white)),
-                                    SizedBox(height: 8),
-                                    Expanded(
-                                      child: Text(
-                                        userVm?.email ?? '',
+                                      Text(
+                                        '${userVm?.deliveryAddressViewModel?.country ?? ''}, ${userVm?.deliveryAddressViewModel?.city ?? ''} ',
                                         style: AppTextsStyle.medium.copyWith(color: Colors.white),
                                       ),
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      '${userVm?.dialCode ?? ''} ${userVm?.number ?? ''} ',
-                                      style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                    ),
-                                  ],
+                                      SizedBox(height: 4),
+
+                                      Text(
+                                        userVm?.deliveryAddressViewModel?.address ?? '',
+                                        style: AppTextsStyle.medium.copyWith(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                                VerticalDivider(color: Colors.white, thickness: 2),
+                                SizedBox(width: 8),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Personal:', style: AppTextsStyle.bold(size: 14, color: Colors.white)),
+                                      SizedBox(height: 8),
+                                      Expanded(
+                                        child: Text(
+                                          userVm?.email ?? '',
+                                          style: AppTextsStyle.medium.copyWith(color: Colors.white),
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        '${userVm?.dialCode ?? ''} ${userVm?.number ?? ''} ',
+                                        style: AppTextsStyle.medium.copyWith(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ],
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 30),
                 child: Container(
                   decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: BorderRadius.circular(20)),
                   child: ListView(

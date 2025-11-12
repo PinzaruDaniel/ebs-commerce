@@ -5,23 +5,25 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 import '../../util/resources/app_texts.dart';
 import '../home_page/widgets/language_dropdown_widget.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
 
   @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+final typerController = AnimatedTextController();
+
+class _WelcomePageState extends State<WelcomePage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(
-        showBorder: false,
-        leading: SizedBox(),
-        actions: [
-          LanguageDropdown(),
-        ],
-      ),
+      appBar: AppBarWidget(showBorder: false, leading: SizedBox(), actions: [LanguageDropdown()]),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,16 +38,32 @@ class WelcomePage extends StatelessWidget {
                 ),
               ],
             ),
+            Row(
+              children: [
+                DefaultTextStyle(
+                  style: AppTextsStyle.bold(size: 36),
+                  child: AnimatedTextKit(
+                    isRepeatingAnimation: false,
+                    animatedTexts: [
+                      TyperAnimatedText(
+                        'hello, ${currentUserController.userVM.value?.name}',
+                        speed: Duration(milliseconds: 100),
+                      ),
+                    ],
+                    controller: typerController,
+                  ),
+                ),
+              ],
+            ),
             Spacer(),
             InkWell(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               focusColor: Colors.transparent,
               onTap: () {
-                if(currentUserController.isUserLogged.value){
+                if (currentUserController.isUserLogged.value) {
                   Get.offAllNamed('/home');
-                }
-                else{
+                } else {
                   AppRouter.openGreetingPage();
                 }
               },

@@ -7,19 +7,18 @@
       "name": "presentation",
       "version": "1.0.0+1",
       "dependencies": [
+        "animated_text_kit",
         "animations",
         "awesome_dialog",
         "cached_network_image",
         "carousel_slider",
         "common",
         "connectivity_plus",
-        "crystal_navigation_bar",
         "cupertino_icons",
         "di",
         "domain",
         "dropdown_button2",
         "easy_localization",
-        "easy_sidemenu",
         "flutter",
         "flutter_animate",
         "flutter_hooks",
@@ -27,7 +26,6 @@
         "flutter_svg",
         "get",
         "get_it",
-        "iconly",
         "implicitly_animated_reorderable_list_2",
         "infinite_scroll_pagination",
         "input_quantity",
@@ -71,25 +69,11 @@
       ]
     },
     {
-      "name": "iconly",
-      "version": "1.0.1",
+      "name": "animated_text_kit",
+      "version": "4.3.0",
       "dependencies": [
+        "characters",
         "flutter"
-      ]
-    },
-    {
-      "name": "crystal_navigation_bar",
-      "version": "0.0.3",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
-      "name": "easy_sidemenu",
-      "version": "0.7.1",
-      "dependencies": [
-        "flutter",
-        "provider"
       ]
     },
     {
@@ -445,13 +429,9 @@
       ]
     },
     {
-      "name": "provider",
-      "version": "6.1.5+1",
-      "dependencies": [
-        "collection",
-        "flutter",
-        "nested"
-      ]
+      "name": "characters",
+      "version": "1.4.0",
+      "dependencies": []
     },
     {
       "name": "flutter_libphonenumber_web",
@@ -730,11 +710,6 @@
       ]
     },
     {
-      "name": "characters",
-      "version": "1.4.0",
-      "dependencies": []
-    },
-    {
       "name": "dio",
       "version": "5.9.0",
       "dependencies": [
@@ -867,13 +842,6 @@
       "dependencies": [
         "source_span",
         "string_scanner"
-      ]
-    },
-    {
-      "name": "nested",
-      "version": "1.0.0",
-      "dependencies": [
-        "flutter"
       ]
     },
     {
