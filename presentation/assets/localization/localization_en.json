@@ -99,7 +99,8 @@
   "street": "Street",
   "done": "Done",
   "search": "Search...",
-  "helloHuman": "Hello Human",
+  "hello": "Hello",
+  "human": "human",
   "tapToContinue": "Tap to continue",
   "EbsForWish": "EBS e-commerce is your platform for every your wish",
   "agreeUserTerms": "I agree with EBS App User Terms And Conditions and acknowledge the TFH Privacy notice",
@@ -111,8 +112,13 @@
   "emailOrPasswordEmpty": "Email or password is empty",
   "password": "Password",
   "enterWithoutPassword": "Enter without password",
-  "yourSecretPassword": "Your Secret password"
-
-
-
+  "yourSecretPassword": "Your Secret password",
+  "myOrders": "My Orders",
+  "logOut": "Log out",
+  "confirmLogOut": "Are you sure you want to log out?",
+  "deleteDataWarning": "This will delete all saved data",
+  "personalLabel": "Personal:",
+  "userLabel": "User",
+  "languageLabel": "Language",
+  "orderPlacedOn": "Order placed on"
 }

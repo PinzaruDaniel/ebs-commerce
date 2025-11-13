@@ -99,7 +99,9 @@
   "street": "Stradă",
   "done": "Gata",
   "search": "Caută...",
-  "helloHuman": "Salut, omule",
+  "hello": "Salut",
+  "human": "omule",
+
   "tapToContinue": "Atinge pentru a continua",
   "EbsForWish": "EBS e-commerce este platforma ta pentru fiecare dorință",
   "agreeUserTerms": "Sunt de acord cu Termenii și condițiile de utilizare ale aplicației EBS și confirm că am luat la cunoștință Politica de confidențialitate TFH",
@@ -111,6 +113,13 @@
   "emailOrPasswordEmpty": "Câmpul Email sau parola este gol",
   "password": "Parolă",
   "enterWithoutPassword": "Intră fără parolă",
-  "yourSecretPassword": "Parola ta secretă"
-
+  "yourSecretPassword": "Parola ta secretă",
+  "myOrders": "Comenzile mele",
+  "logOut": "Deconectare",
+  "confirmLogOut": "Sigur vrei să te deconectezi?",
+  "deleteDataWarning": "Aceasta va șterge toate datele salvate",
+  "personalLabel": "Personal:",
+  "userLabel": "Utilizator",
+  "languageLabel": "Limbă",
+  "orderPlacedOn": "Comandă plasată pe"
 }

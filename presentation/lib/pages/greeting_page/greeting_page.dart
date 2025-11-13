@@ -27,15 +27,51 @@ class _GreetingPageState extends State<GreetingPage> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const Spacer(),
-            AppIcons.ebsIcon,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
-              child: Text(AppTexts.ebsForWish, style: AppTextsStyle.bold(size: 36), textAlign: TextAlign.center),
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AppIcons.ebsIcon,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
+                      child: Text(AppTexts.ebsForWish, style: AppTextsStyle.bold(size: 36), textAlign: TextAlign.center),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Visibility(
+
+
+            if(!isChecked)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50.0, left: 24, right: 24),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  onTap: () {
+                    setState(() {
+                      hasAgreed = !hasAgreed;
+                    });
+                  },
+                  child: SelectCheckboxWidget(
+                    title: AppTexts.agreeUserTerms,
+                    selected:  hasAgreed,
+                    selectedColor: Colors.black,
+                    tristate: false,
+                    onChanged: (value) {
+                      setState(() {
+                        hasAgreed = value ?? false;
+                      });
+                    },
+                    textStyle: AppTextsStyle.medium.copyWith(color: AppColors.greyText, fontSize: 16),
+                  ),
+                ),
+              ),
+            /*Visibility(
               visible: !isChecked,
               maintainSize: true,
               maintainAnimation: true,
@@ -65,11 +101,13 @@ class _GreetingPageState extends State<GreetingPage> {
                   ),
                 ),
               ),
-            ),
+            ),*/
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+
                 children: [
                   BaseButtonWidget(
                     buttonColor: (isChecked || hasAgreed) ? AppColors.primary : Colors.grey.shade300,
@@ -93,8 +131,13 @@ class _GreetingPageState extends State<GreetingPage> {
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        await currentUserController.clearUserData();
-                        Get.offAllNamed('/home');
+                        if (isChecked || hasAgreed) {
+                          currentUserController.hasAgreedTerms.value = true;
+                          currentUserController.setSettings();
+                          await currentUserController.clearUserData();
+                          Get.offAllNamed('/home');
+                        }
+
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

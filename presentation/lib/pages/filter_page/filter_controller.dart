@@ -96,9 +96,11 @@ class FilterController extends GetxController {
     }
   }
 
-  void resetFilters() {
+  void resetFilters({bool exitPage = false}) {
     selectedCategoryId.clear();
     priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
-    getFilteredProductsCount(page: 1);
+    if(!exitPage) {
+      getFilteredProductsCount(page: 1);
+    }
   }
 }

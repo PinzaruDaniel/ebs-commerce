@@ -207,7 +207,9 @@ class AppTexts {
 
   static String get search => LocaleKeys.search.tr();
 
-  static String get helloHuman => LocaleKeys.helloHuman.tr();
+  static String get hello => LocaleKeys.hello.tr();
+
+  static String get human => LocaleKeys.human.tr();
 
   static String get tapToContinue => LocaleKeys.tapToContinue.tr();
 
@@ -232,4 +234,20 @@ class AppTexts {
   static String get enterWithoutPassword => LocaleKeys.enterWithoutPassword.tr();
 
   static String get yourSecretPassword => LocaleKeys.yourSecretPassword.tr();
+
+  static String get logOut => LocaleKeys.logOut.tr();
+
+  static String get confirmLogOut => LocaleKeys.confirmLogOut.tr();
+
+  static String get deleteDataWarning => LocaleKeys.deleteDataWarning.tr();
+
+  static String get personalLabel => LocaleKeys.personalLabel.tr();
+
+  static String get userLabel => LocaleKeys.userLabel.tr();
+
+  static String get languageLabel => LocaleKeys.languageLabel.tr();
+
+  static String get myOrders => LocaleKeys.myOrders.tr();
+
+  static String get orderPlacedOn => LocaleKeys.orderPlacedOn.tr();
 }

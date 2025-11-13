@@ -3,29 +3,34 @@ import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
 import '../resources/app_icons.dart';
 import '../routing/app_router.dart';
 
 class AppBarIconShoppingCartWidget extends StatelessWidget {
-  const AppBarIconShoppingCartWidget({super.key});
+  final bool showLiquid;
+  const AppBarIconShoppingCartWidget({super.key, this.showLiquid=false});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right:4),
+      padding: const EdgeInsets.only(right: 4),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          /*LiquidGlass(
-            shape: LiquidRoundedSuperellipse(borderRadius: Radius.circular(50)),
+          if(showLiquid)
+          LiquidGlassLayer(
             settings: LiquidGlassSettings(
-              blur: 1.6,
-              glassColor: Colors.white38,
-              thickness: 10,
+                glassColor: Color.fromARGB(65, 255, 255, 255),
+                blur: 2, lightAngle: 10 * 3.14, chromaticAberration: 0.5, ambientStrength: 2),
+            child: LiquidGlass(
+              glassContainsChild: false,
+              shape: LiquidRoundedSuperellipse(borderRadius: 50),
+
+              child: SizedBox(height: 46, width: 46),
             ),
-            child: SizedBox(height: 46, width: 46),
-          ),*/
+          ),
           IconButton(
             onPressed: () {
               AppRouter.openShoppingCartPage();

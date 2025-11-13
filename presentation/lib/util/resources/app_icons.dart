@@ -5,6 +5,7 @@ import 'package:presentation/util/resources/app_colors.dart';
 class AppIcons {
   //icons
   static SvgPicture cartIcon = SvgPicture.asset('assets/icons/Cart icon.svg');
+  static SvgPicture orderIcon= SvgPicture.asset('assets/icons/icon_order.svg', height: 10, width: 10,);
 
   static SvgPicture countryFlag({required String iso2}) => SvgPicture.asset('assets/flags/$iso2.svg', height: 20);
 

@@ -459,7 +459,7 @@
     },
     {
       "name": "liquid_glass_renderer",
-      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/liquid_glass_renderer-0.1.1-dev.10",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/liquid_glass_renderer-0.2.0-dev.3",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -504,6 +504,12 @@
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/mock_data-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "motor",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/motor-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
     },
     {
       "name": "nm",

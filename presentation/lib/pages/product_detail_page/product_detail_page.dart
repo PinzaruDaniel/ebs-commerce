@@ -78,7 +78,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               icon: AppIcons.backIcon(color: AppColors.blue, size: 20),
               onPressed: () => Navigator.pop(context),
             ),
-            actions: [AppBarIconShoppingCartWidget()],
+            actions: [AppBarIconShoppingCartWidget(showLiquid: true,)],
             flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),
           ),
           SliverToBoxAdapter(
@@ -90,29 +90,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ),
         ],
       ),
-      bottomNavigationBar: /*BaseButtonWidget(
-        buttonColor: isItemValid? AppColors.primary: Colors.grey.shade300,
-        textColor: isItemValid? Colors.white: Colors.black,
-        onTap: () {
-          isItemValid
-              ? AppPopUp.showCartInfoPopUp(
-                  item: widget.item!,
-                  onAdd: (int quantity) {
-                    addCartController.cartItem.value?.quantity = quantity;
-                    final item = addCartController.cartItem.value;
-                    mainAppController.addToCart(item!);
-                    AppRouter.openShoppingCartPage();
-                  },
-                  maxValue: widget.item!.stock,
-                )
-              : AppPopUp.showConfirmationDialog(
-                  context: context,
-                  content: AppTexts.cantAddToCart,
-                  title: AppTexts.oops,
-                );
-        },
-        title: isItemValid ? AppTexts.addToCart : AppTexts.cantAddToCart,
-      ),*/ BottomNavigationBarWidget(
+      bottomNavigationBar: BottomNavigationBarWidget(
         buttonColor: isItemValid? AppColors.primary: Colors.grey.shade300,
         textColor: isItemValid? Colors.white: Colors.black,
         title:isItemValid ? AppTexts.addToCart : AppTexts.cantAddToCart,

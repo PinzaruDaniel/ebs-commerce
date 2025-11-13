@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../../localization/localization_loader.dart';
+import '../../localization/localization_loader.dart';
 
 class LanguageDropdown extends StatefulWidget {
   const LanguageDropdown({super.key});
@@ -40,7 +41,7 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
               const Icon(Icons.language, color: Colors.black),
               Padding(
                 padding: EdgeInsets.only(left: 16.0),
-                child: Text('Language', style: AppTextsStyle.bold()),
+                child: Text(AppTexts.languageLabel, style: AppTextsStyle.bold()),
               ),
             ],
           ),

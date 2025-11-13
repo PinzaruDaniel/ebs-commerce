@@ -67,4 +67,9 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
       return Left(Failure.error(e, stackTrace));
     }
   }
+
+  @override
+  Future<void> deleteAllUsers() async {
+    userLocalSource.deleteAllUsers();
+  }
 }

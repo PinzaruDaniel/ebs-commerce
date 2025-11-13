@@ -23,4 +23,5 @@ abstract class UserInformationRepository {
   Future<PaymentMethodEntity?> getPaymentMethod(int userId);
 
   Future<Either<Failure, UserEntity>> getUserFromApi();
+  Future<void> deleteAllUsers();
 }

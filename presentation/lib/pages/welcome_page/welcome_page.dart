@@ -8,7 +8,7 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 import '../../util/resources/app_texts.dart';
-import '../home_page/widgets/language_dropdown_widget.dart';
+import '../../util/widgets/language_dropdown_widget.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -29,31 +29,32 @@ class _WelcomePageState extends State<WelcomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 16.0),
-                  child: Text(AppTexts.helloHuman, style: AppTextsStyle.bold(size: 36)),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                DefaultTextStyle(
-                  style: AppTextsStyle.bold(size: 36),
-                  child: AnimatedTextKit(
-                    isRepeatingAnimation: false,
-                    animatedTexts: [
-                      TyperAnimatedText(
-                        'hello, ${currentUserController.userVM.value?.name}',
-                        speed: Duration(milliseconds: 100),
-                      ),
-                    ],
-                    controller: typerController,
+            Padding(
+              padding:  EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+
+
+                  DefaultTextStyle(
+                    key: ValueKey('${AppTexts.hello}_${Get.locale?.languageCode}'),
+
+                    style: AppTextsStyle.bold(size: 36),
+                    child: AnimatedTextKit(
+                      isRepeatingAnimation: false,
+                      animatedTexts: [
+                        TypewriterAnimatedText(
+                          currentUserController.userVM.value!=null ?
+                          '${AppTexts.hello}, ${currentUserController.userVM.value?.name}':
+                        '${AppTexts.hello}, ${AppTexts.human}',
+                          speed: Duration(milliseconds: 100),
+                          cursor: '|'
+                        ),
+                      ],
+                      controller: typerController,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Spacer(),
             InkWell(

@@ -99,7 +99,8 @@
   "street": "Улица",
   "done": "Готово",
   "Search": "Поиск...",
-  "helloHuman": "Привет, человек",
+  "hello": "Привет",
+  "human": "человек",
   "tapToContinue": "Нажмите, чтобы продолжить",
   "EbsForWish": "EBS e-commerce — это платформа для каждого вашего желания",
   "agreeUserTerms": "Я согласен с Условиями использования приложения EBS и подтверждаю, что ознакомился с Уведомлением о конфиденциальности TFH",
@@ -111,6 +112,15 @@
   "emailOrPasswordEmpty": "Поле Email или пароль пустое",
   "password": "Пароль",
   "enterWithoutPassword": "Войти без пароля",
-  "yourSecretPassword": "Ваш секретный пароль"
+  "yourSecretPassword": "Ваш секретный пароль",
+  "myOrders": "Мои заказы",
+  "logOut": "Выйти",
+  "confirmLogOut": "Вы уверены, что хотите выйти?",
+  "deleteDataWarning": "Это удалит все сохранённые данные",
+  "personalLabel": "Личное:",
+  "userLabel": "Пользователь",
+  "languageLabel": "Язык",
+  "orderPlacedOn": "Заказ оформлен"
+
 
 }

@@ -1,8 +1,8 @@
-import 'package:common/constants/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/greeting_page/greeting_page.dart';
-import 'package:presentation/pages/home_page/widgets/language_dropdown_widget.dart';
+import 'package:presentation/util/widgets/language_dropdown_widget.dart';
+import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/view/user_view_model.dart';
 
 import '../../../controllers/controller_imports.dart';
@@ -56,7 +56,7 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                         ),
                       ),
                       Text(
-                        '${userVm?.name ?? 'User'} ${userVm?.surname ?? ''} ',
+                        '${userVm?.name ?? AppTexts.userLabel} ${userVm?.surname ?? ''} ',
                         style: AppTextsStyle.bold(color: Colors.white),
                       ),
 
@@ -96,7 +96,10 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('Personal:', style: AppTextsStyle.bold(size: 14, color: Colors.white)),
+                                      Text(
+                                        AppTexts.personalLabel,
+                                        style: AppTextsStyle.bold(size: 14, color: Colors.white),
+                                      ),
                                       SizedBox(height: 8),
                                       Expanded(
                                         child: Text(
@@ -131,29 +134,28 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
                       ListTile(
-                        leading: const Icon(Icons.person, color: Colors.black),
-                        title: Text('My Profile', style: AppTextsStyle.bold()),
-                        onTap: () => AppRouter.openProfilePageNoAnim(),
+                        leading: SizedBox(height: 24, width: 24, child: AppIcons.orderIcon),
+                        title: Text(AppTexts.myOrders, style: AppTextsStyle.bold()),
+                        onTap: () => AppRouter.openOrdersPage(),
                       ),
 
                       LanguageDropdown(),
 
                       ListTile(
                         leading: const Icon(Icons.exit_to_app_rounded, color: Colors.black),
-                        title: Text('Log out', style: AppTextsStyle.bold()),
+                        title: Text(AppTexts.logOut, style: AppTextsStyle.bold()),
                         onTap: () async {
                           AppPopUp.showConfirmationDialog(
-                            title: 'Are you sure you want to log out?',
-                            content: 'This will delete all saved data',
+                            title: AppTexts.confirmLogOut,
+                            content: AppTexts.deleteDataWarning,
                             context: context,
                             onSave: () async {
                               await currentUserController.clearUserData();
                               currentUserController.deleteTokens();
-                              Get.off(GreetingPage());
+                              currentUserController.deleteUsers();
+                              Get.off(()=>GreetingPage());
                             },
-
                           );
-
                         },
                       ),
                     ],

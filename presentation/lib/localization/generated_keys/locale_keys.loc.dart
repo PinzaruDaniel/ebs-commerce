@@ -103,7 +103,8 @@ abstract class  LocaleKeys {
   static const street = 'street';
   static const done = 'done';
   static const search = 'search';
-  static const helloHuman = 'helloHuman';
+  static const hello = 'hello';
+  static const human = 'human';
   static const tapToContinue = 'tapToContinue';
   static const EbsForWish = 'EbsForWish';
   static const agreeUserTerms = 'agreeUserTerms';
@@ -116,5 +117,13 @@ abstract class  LocaleKeys {
   static const password = 'password';
   static const enterWithoutPassword = 'enterWithoutPassword';
   static const yourSecretPassword = 'yourSecretPassword';
+  static const myOrders = 'myOrders';
+  static const logOut = 'logOut';
+  static const confirmLogOut = 'confirmLogOut';
+  static const deleteDataWarning = 'deleteDataWarning';
+  static const personalLabel = 'personalLabel';
+  static const userLabel = 'userLabel';
+  static const languageLabel = 'languageLabel';
+  static const orderPlacedOn = 'orderPlacedOn';
 
 }

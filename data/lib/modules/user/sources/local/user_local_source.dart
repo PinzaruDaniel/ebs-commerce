@@ -30,6 +30,7 @@ abstract class UserLocalSource {
   Future<PaymentMethodBox?> getPaymentMethod(int userId);
 
   Future<DeliveryAddressBox?> getDeliveryAddress(int userId);
+  Future<void> deleteAllUsers();
 }
 
 
@@ -114,5 +115,10 @@ class UserLocalDataSourceImpl implements UserLocalSource {
   Future<PaymentMethodBox?> getPaymentMethod(int userId) async {
     final user = await userBox.getAsync(userId);
     return user?.paymentMethodBox.target;
+  }
+
+  @override
+  Future<void> deleteAllUsers()async {
+    userBox.removeAll();
   }
 }

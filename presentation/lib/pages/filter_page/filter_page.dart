@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/pages/filtered_page/filter_controller.dart';
-import 'package:presentation/pages/filtered_page/widgets/add_to_category_button_widget.dart';
-import 'package:presentation/pages/filtered_page/widgets/price_slider_widget.dart';
+import 'package:presentation/pages/filter_page/widgets/add_to_category_button_widget.dart';
+import 'package:presentation/pages/filter_page/widgets/price_slider_widget.dart';
+import 'package:presentation/pages/filter_page/widgets/selected_category_button_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
-import 'package:presentation/pages/filtered_page/widgets/selected_category_button_widget.dart';
 import '../../util/enum/enums.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
 
 import '../../util/widgets/open_container_animation_widget.dart';
 import '../../view/category_view_model.dart';
+import 'filter_controller.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -28,7 +28,7 @@ class _FilterPageState extends State<FilterPage> {
 
   @override
   void dispose() {
-    filterController.resetFilters();
+    filterController.resetFilters(exitPage: true);
     super.dispose();
   }
 

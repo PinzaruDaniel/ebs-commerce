@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:presentation/view/order_view_model.dart';
 
-class ProfileController extends GetxController {
+class OrdersController extends GetxController {
   final GetOrdersUseCase getOrdersUseCase = GetIt.instance<GetOrdersUseCase>();
   final RxList<OrderViewModel> orders = RxList([]);
   final RxBool isLoading = true.obs;
