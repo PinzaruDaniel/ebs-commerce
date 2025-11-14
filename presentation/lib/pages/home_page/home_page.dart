@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
-import 'package:presentation/pages/home_page/widgets/user_menu_widget.dart';
+import 'package:presentation/pages/home_page/widgets/user_menu/user_menu_widget.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/resources/app_icons.dart';

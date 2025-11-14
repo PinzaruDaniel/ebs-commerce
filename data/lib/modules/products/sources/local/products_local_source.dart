@@ -77,7 +77,27 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
 
   @override
   Stream<List<OrderBox>> getOrders() {
-    return orderBox.query().watch(triggerImmediately: true).map((query) => query.find().reversed.toList());
+    return orderBox
+        .query()
+        .watch(triggerImmediately: true)
+        .asyncMap((query) async {
+      final orders = query.find();
+
+      final now = DateTime.now();
+      final threshold = now.subtract(Duration(days: 7));
+
+      final outdated = orders.where((o) => o.dateTime.isBefore(threshold)).toList();
+
+      for (final o in outdated) {
+        await orderBox.removeAsync(o.id);
+      }
+
+      return orders
+          .where((o) => !outdated.contains(o))
+          .toList()
+          .reversed
+          .toList();
+    });
   }
 
   Future<void> setProductsSpecs({required List<ProductEntity> products}) async {

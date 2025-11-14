@@ -44,7 +44,7 @@ class _HomeProductsItemWidgetState extends State<HomeProductsItemWidget> {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(widget.item.title, style: AppTextsStyle.medium),
+                  Text(widget.item.title, style: AppTextsStyle.medium, overflow: TextOverflow.ellipsis, maxLines: 1,),
                   Text(widget.item.company?[AppTexts.brand] as String? ?? '', style: AppTextsStyle.medium),
                   Text('\$ ${widget.item.price ?? '-'}', style: AppTextsStyle.bold()),
                 ],

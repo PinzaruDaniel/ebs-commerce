@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/greeting_page/greeting_page.dart';
-import 'package:presentation/util/widgets/language_dropdown_widget.dart';
+import 'package:presentation/pages/home_page/widgets/user_menu/widgets/delivery_address_widget.dart';
+import 'package:presentation/pages/home_page/widgets/user_menu/widgets/user_info_widget.dart';
 import 'package:presentation/util/resources/app_icons.dart';
+import 'package:presentation/util/widgets/language_dropdown_widget.dart';
 import 'package:presentation/view/user_view_model.dart';
 
-import '../../../controllers/controller_imports.dart';
-import '../../../util/resources/app_colors.dart';
-import '../../../util/resources/app_text_styles.dart';
-import '../../../util/resources/app_texts.dart';
-import '../../../util/routing/app_pop_up.dart';
-import '../../../util/routing/app_router.dart';
-import '../../../util/widgets/base/base_button_widget.dart';
+import '../../../../controllers/controller_imports.dart';
+import '../../../../util/resources/app_colors.dart';
+import '../../../../util/resources/app_text_styles.dart';
+import '../../../../util/resources/app_texts.dart';
+import '../../../../util/routing/app_pop_up.dart';
+import '../../../../util/routing/app_router.dart';
+import '../../../../util/widgets/base/base_button_widget.dart';
 
 class UserMenuWidget extends StatefulWidget {
   const UserMenuWidget({super.key});
@@ -34,7 +36,8 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
           color: Colors.white,
           child: Column(
             children: [
-              Flexible(
+              Expanded(
+                flex: 2,
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -67,54 +70,10 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                             children: [
                               SizedBox(width: 4),
                               if (currentUserController.isUserLogged.value) ...[
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${AppTexts.address}:',
-                                        style: AppTextsStyle.bold(size: 14, color: Colors.white),
-                                      ),
-                                      SizedBox(height: 8),
-
-                                      Text(
-                                        '${userVm?.deliveryAddressViewModel?.country ?? ''}, ${userVm?.deliveryAddressViewModel?.city ?? ''} ',
-                                        style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                      ),
-                                      SizedBox(height: 4),
-
-                                      Text(
-                                        userVm?.deliveryAddressViewModel?.address ?? '',
-                                        style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                DeliveryAddressWidget(userVm: userVm),
                                 VerticalDivider(color: Colors.white, thickness: 2),
                                 SizedBox(width: 8),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        AppTexts.personalLabel,
-                                        style: AppTextsStyle.bold(size: 14, color: Colors.white),
-                                      ),
-                                      SizedBox(height: 8),
-                                      Expanded(
-                                        child: Text(
-                                          userVm?.email ?? '',
-                                          style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                        ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        '${userVm?.dialCode ?? ''} ${userVm?.number ?? ''} ',
-                                        style: AppTextsStyle.medium.copyWith(color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                UserInfoWidget(userVm: userVm),
                               ],
                             ],
                           ),
@@ -153,7 +112,7 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                               await currentUserController.clearUserData();
                               currentUserController.deleteTokens();
                               currentUserController.deleteUsers();
-                              Get.off(()=>GreetingPage());
+                              Get.off(() => GreetingPage());
                             },
                           );
                         },

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/pages/greeting_page/widgets/button_without_password_widget.dart';
+import 'package:presentation/pages/greeting_page/widgets/company_icon_widget.dart';
+import 'package:presentation/pages/greeting_page/widgets/user_terms_widget.dart';
 import 'package:presentation/util/resources/app_colors.dart';
-import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/base/base_button_widget.dart';
-import 'package:presentation/util/widgets/select_checkbox_widget.dart';
 
-import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 
 class GreetingPage extends StatefulWidget {
@@ -29,79 +29,22 @@ class _GreetingPageState extends State<GreetingPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    AppIcons.ebsIcon,
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
-                      child: Text(AppTexts.ebsForWish, style: AppTextsStyle.bold(size: 36), textAlign: TextAlign.center),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            Expanded(child: CompanyIconWidget()),
 
-
-            if(!isChecked)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 50.0, left: 24, right: 24),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  onTap: () {
-                    setState(() {
-                      hasAgreed = !hasAgreed;
-                    });
-                  },
-                  child: SelectCheckboxWidget(
-                    title: AppTexts.agreeUserTerms,
-                    selected:  hasAgreed,
-                    selectedColor: Colors.black,
-                    tristate: false,
-                    onChanged: (value) {
-                      setState(() {
-                        hasAgreed = value ?? false;
-                      });
-                    },
-                    textStyle: AppTextsStyle.medium.copyWith(color: AppColors.greyText, fontSize: 16),
-                  ),
-                ),
+            if (!isChecked)
+              UserTermsWidget(
+                onTap: () {
+                  setState(() {
+                    hasAgreed = !hasAgreed;
+                  });
+                },
+                onChanged: (value) {
+                  setState(() {
+                    hasAgreed = value;
+                  });
+                },
+                hasAgreed: hasAgreed,
               ),
-            /*Visibility(
-              visible: !isChecked,
-              maintainSize: true,
-              maintainAnimation: true,
-              maintainState: true,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 50.0, top: 60, left: 24, right: 24),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  onTap: () {
-                    setState(() {
-                      hasAgreed = !hasAgreed;
-                    });
-                  },
-                  child: SelectCheckboxWidget(
-                    title: AppTexts.agreeUserTerms,
-                    selected:  hasAgreed,
-                    selectedColor: Colors.black,
-                    tristate: false,
-                    onChanged: (value) {
-                      setState(() {
-                        hasAgreed = value ?? false;
-                      });
-                    },
-                    textStyle: AppTextsStyle.medium.copyWith(color: AppColors.greyText, fontSize: 16),
-                  ),
-                ),
-              ),
-            ),*/
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -125,33 +68,15 @@ class _GreetingPageState extends State<GreetingPage> {
                     title: AppTexts.logIn,
                   ),
 
-                  Padding(
-                    padding: EdgeInsets.only(top: 8.0, bottom: 16),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        if (isChecked || hasAgreed) {
-                          currentUserController.hasAgreedTerms.value = true;
-                          currentUserController.setSettings();
-                          await currentUserController.clearUserData();
-                          Get.offAllNamed('/home');
-                        }
-
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppTexts.enterWithoutPassword,
-                          style: AppTextsStyle.medium.copyWith(
-                            color: Colors.transparent,
-                            decoration: TextDecoration.underline,
-                            decorationColor: AppColors.greyText,
-                            shadows: [Shadow(color: AppColors.greyText, offset: Offset(0, -2))],
-                          ),
-                        ),
-                      ),
-                    ),
+                  ButtonWithoutPasswordWidget(
+                    onTap: () async {
+                      if (isChecked || hasAgreed) {
+                        currentUserController.hasAgreedTerms.value = true;
+                        currentUserController.setSettings();
+                        await currentUserController.clearUserData();
+                        Get.offAllNamed('/home');
+                      }
+                    },
                   ),
                 ],
               ),

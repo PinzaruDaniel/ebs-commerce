@@ -5,6 +5,7 @@ import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/loading_overlay_widget.dart';
+
 import '../../util/widgets/product_image_widget.dart';
 
 class OrdersPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class OrdersPage extends StatefulWidget {
 }
 
 class _OrdersPageState extends State<OrdersPage> {
-    OrdersController get ordersController=>Get.find();
+  OrdersController get ordersController => Get.find();
 
   @override
   void initState() {
@@ -35,12 +36,7 @@ class _OrdersPageState extends State<OrdersPage> {
           }
 
           if (ordersController.orders.isEmpty) {
-            return  Center(
-              child: Text(
-                AppTexts.nothingToShow,
-                style: AppTextsStyle.bold(),
-              ),
-            );
+            return Center(child: Text(AppTexts.nothingToShow, style: AppTextsStyle.bold()));
           }
 
           return SingleChildScrollView(
@@ -53,7 +49,7 @@ class _OrdersPageState extends State<OrdersPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
-                      boxShadow: [BoxShadow(blurRadius: 3, spreadRadius: 0.3, color: Colors.black26)],
+                      boxShadow: [BoxShadow(blurRadius: 3, spreadRadius: 0.3, color: Colors.black38)],
                     ),
                     child: ListView.builder(
                       itemCount: ordersController.orders.length,
@@ -75,43 +71,45 @@ class _OrdersPageState extends State<OrdersPage> {
                                   style: AppTextsStyle.bold(size: 16),
                                 ),
                               ),
-                              ...order.products.map((item) => Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-                                child: Row(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(16),
-                                      child: ProductImageWidget(
-                                        height: 80,
-                                        width: 80,
-                                        imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty
-                                            ? item.imageUrl
-                                            : null,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              item.title,
-                                              softWrap: true,
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            const SizedBox(height: 4),
-                                            Text('\$${item.price}'),
-                                            const SizedBox(height: 4),
-                                            Text('${AppTexts.quantity.capitalizeFirst}: ${item.quantity}'),
-                                          ],
+                              ...order.products.map(
+                                (item) => Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(16),
+                                        child: ProductImageWidget(
+                                          height: 80,
+                                          width: 80,
+                                          imageUrl: item.imageUrl != null && item.imageUrl!.isNotEmpty
+                                              ? item.imageUrl
+                                              : null,
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 8.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                item.title,
+                                                softWrap: true,
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              const SizedBox(height: 4),
+                                              Text('\$${item.price}'),
+                                              const SizedBox(height: 4),
+                                              Text('${AppTexts.quantity.capitalizeFirst}: ${item.quantity}'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              )),
+                              ),
                               if (!isLastOrder)
                                 const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16),
