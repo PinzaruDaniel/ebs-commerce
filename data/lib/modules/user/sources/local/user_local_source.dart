@@ -15,50 +15,37 @@ import '../../../payment_method/models/local/payment_method_box.dart';
 abstract class UserLocalSource {
   Future<void> setUser({required UserEntity user});
 
-  Future<void> setDeliveryAddress({
-    required int userId,
-    required DeliveryAddressEntity deliveryAddress,
-  });
+  Future<void> setDeliveryAddress({required int idUser, required DeliveryAddressEntity deliveryAddress});
 
-  Future<void> setPaymentMethod({
-    required int userId,
-    required PaymentMethodEntity paymentMethod,
-  });
+  Future<void> setPaymentMethod({required int idUser, required PaymentMethodEntity paymentMethod});
 
   Stream<UserBox?> getUser(int id);
 
-  Future<PaymentMethodBox?> getPaymentMethod(int userId);
+  Future<PaymentMethodBox?> getPaymentMethod(int idUser);
 
-  Future<DeliveryAddressBox?> getDeliveryAddress(int userId);
+  Future<DeliveryAddressBox?> getDeliveryAddress(int idUser);
+
   Future<void> deleteAllUsers();
 }
-
 
 class UserLocalDataSourceImpl implements UserLocalSource {
   final Box<UserBox> userBox;
   final Box<DeliveryAddressBox> deliveryAddressBox;
   final Box<PaymentMethodBox> paymentMethodBox;
 
-  UserLocalDataSourceImpl({
-    required this.userBox,
-    required this.deliveryAddressBox,
-    required this.paymentMethodBox,
-  });
+  UserLocalDataSourceImpl({required this.userBox, required this.deliveryAddressBox, required this.paymentMethodBox});
 
   @override
   Future<void> setUser({required UserEntity user}) async {
     consoleLog('Saving user: ${user.number ?? ''}');
     final userBoxModel = UserToBoxMapper(user).toBox;
 
-    // Update existing user if ID exists
-    if (user.id != null) {
-      final existingUser = await userBox.getAsync(user.id!);
+    if (user.idUser != null) {
+      final existingUser = await userBox.getAsync(user.idUser!);
       if (existingUser != null) {
-        userBoxModel.id = existingUser.id;
-        userBoxModel.deliveryAddressBox.targetId =
-            existingUser.deliveryAddressBox.targetId;
-        userBoxModel.paymentMethodBox.targetId =
-            existingUser.paymentMethodBox.targetId;
+        userBoxModel.idUser = existingUser.idUser;
+        userBoxModel.deliveryAddressBox.targetId = existingUser.deliveryAddressBox.targetId;
+        userBoxModel.paymentMethodBox.targetId = existingUser.paymentMethodBox.targetId;
       }
     }
 
@@ -66,15 +53,11 @@ class UserLocalDataSourceImpl implements UserLocalSource {
   }
 
   @override
-  Future<void> setDeliveryAddress({
-    required int userId,
-    required DeliveryAddressEntity deliveryAddress,
-  }) async {
-    final user = await userBox.getAsync(userId);
+  Future<void> setDeliveryAddress({required int idUser, required DeliveryAddressEntity deliveryAddress}) async {
+    final user = await userBox.getAsync(idUser);
     if (user == null) return;
 
-    final addressBoxModel =
-        DeliveryAddressToBoxMapper(deliveryAddress).toBox;
+    final addressBoxModel = DeliveryAddressToBoxMapper(deliveryAddress).toBox;
     final addressId = await deliveryAddressBox.putAsync(addressBoxModel);
 
     user.deliveryAddressBox.targetId = addressId;
@@ -82,15 +65,11 @@ class UserLocalDataSourceImpl implements UserLocalSource {
   }
 
   @override
-  Future<void> setPaymentMethod({
-    required int userId,
-    required PaymentMethodEntity paymentMethod,
-  }) async {
-    final user = await userBox.getAsync(userId);
+  Future<void> setPaymentMethod({required int idUser, required PaymentMethodEntity paymentMethod}) async {
+    final user = await userBox.getAsync(idUser);
     if (user == null) return;
 
-    final paymentBoxModel =
-        PaymentMethodToBoxMapper(paymentMethod).toBox;
+    final paymentBoxModel = PaymentMethodToBoxMapper(paymentMethod).toBox;
     final paymentId = await paymentMethodBox.putAsync(paymentBoxModel);
 
     user.paymentMethodBox.targetId = paymentId;
@@ -98,27 +77,24 @@ class UserLocalDataSourceImpl implements UserLocalSource {
   }
 
   @override
-  Stream<UserBox?> getUser(int id) {
-    return userBox
-        .query(UserBox_.id.equals(id))
-        .watch(triggerImmediately: true)
-        .map((query) => query.findFirst());
+  Stream<UserBox?> getUser(int idUser) {
+    return userBox.query(UserBox_.idUser.equals(idUser)).watch(triggerImmediately: true).map((query) => query.findFirst());
   }
 
   @override
-  Future<DeliveryAddressBox?> getDeliveryAddress(int userId) async {
-    final user = await userBox.getAsync(userId);
+  Future<DeliveryAddressBox?> getDeliveryAddress(int idUser) async {
+    final user = await userBox.getAsync(idUser);
     return user?.deliveryAddressBox.target;
   }
 
   @override
-  Future<PaymentMethodBox?> getPaymentMethod(int userId) async {
-    final user = await userBox.getAsync(userId);
+  Future<PaymentMethodBox?> getPaymentMethod(int idUser) async {
+    final user = await userBox.getAsync(idUser);
     return user?.paymentMethodBox.target;
   }
 
   @override
-  Future<void> deleteAllUsers()async {
+  Future<void> deleteAllUsers() async {
     userBox.removeAll();
   }
 }

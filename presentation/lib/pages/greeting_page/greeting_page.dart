@@ -19,8 +19,14 @@ class GreetingPage extends StatefulWidget {
 }
 
 class _GreetingPageState extends State<GreetingPage> {
-  bool isChecked = currentUserController.hasAgreedTerms.value;
+  //bool isChecked = currentUserController.hasAgreedTerms.value;
   var hasAgreed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    hasAgreed = currentUserController.hasAgreedTerms.value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +36,7 @@ class _GreetingPageState extends State<GreetingPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Expanded(child: CompanyIconWidget()),
-
-            if (!isChecked)
+            if (!hasAgreed)
               UserTermsWidget(
                 onTap: () {
                   setState(() {
@@ -53,10 +58,10 @@ class _GreetingPageState extends State<GreetingPage> {
 
                 children: [
                   BaseButtonWidget(
-                    buttonColor: (isChecked || hasAgreed) ? AppColors.primary : Colors.grey.shade300,
-                    textColor: (isChecked || hasAgreed) ? Colors.white : Colors.grey,
+                    buttonColor: (hasAgreed) ? AppColors.primary : Colors.grey.shade300,
+                    textColor: (hasAgreed) ? Colors.white : Colors.grey,
                     onTap: () {
-                      if (isChecked || hasAgreed) {
+                      if (hasAgreed) {
                         AppRouter.openAuthPage();
                         currentUserController.hasAgreedTerms.value = true;
                         currentUserController.setSettings();
@@ -70,7 +75,7 @@ class _GreetingPageState extends State<GreetingPage> {
 
                   ButtonWithoutPasswordWidget(
                     onTap: () async {
-                      if (isChecked || hasAgreed) {
+                      if (hasAgreed) {
                         currentUserController.hasAgreedTerms.value = true;
                         currentUserController.setSettings();
                         await currentUserController.clearUserData();

@@ -120,9 +120,9 @@ class ContactInformationController extends GetxController {
 
     final phoneItem = allItems.firstWhereOrNull((element) => element is PhoneNumberViewModel) as PhoneNumberViewModel?;
     return currentUserController.userVM.value = UserViewModel(
-      id: currentUserController.userVM.value?.id != null
-          ? (currentUserController.userVM.value!.id = currentUserController.userVM.value!.id! + 1)
-          : 0,
+      idUser: currentUserController.userVM.value?.idUser != null
+          ? (currentUserController.userVM.value!.idUser = currentUserController.userVM.value!.idUser! + 1)
+          : null,
       name: getPlaceholderByKeyId('name'),
       surname: getPlaceholderByKeyId('surname'),
       number: phoneItem?.initialValueTextField ?? '',

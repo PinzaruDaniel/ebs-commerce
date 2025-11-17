@@ -16,7 +16,6 @@ class ProductBox {
   int? stock;
   String? description;
 
-  //final product = ToOne<SpecificationBox>();
 
   @Backlink('product')
   final categories=ToMany<CategoryBox>();

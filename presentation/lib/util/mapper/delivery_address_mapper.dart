@@ -19,15 +19,22 @@ extension DeliveryAddressToEntity on DeliveryAddressViewModel {
 
 extension DeliveryAddressToModelMapper on DeliveryAddressEntity {
   DeliveryAddressViewModel get toModel {
-    //TODO: to move this in another place
-    var usaCountry = country!.contains('USA') ? 'United States' : country;
-    var usaRegion= region!.contains('IL')? 'Illinois':region;
+    String? countryToModel;
+    String? regionToModel;
+    if(country!=null){
+      var usaCountry = country!.contains('USA') ? 'United States' : country;
+      countryToModel=usaCountry;
+    }
+    if(region!=null){
+      var usaRegion= region!.contains('IL')? 'Illinois':region;
+      regionToModel=usaRegion;
+    }
     return DeliveryAddressViewModel(
       deliveryType: deliveryType,
       comments: comments,
       pickupLocation: pickupLocation,
-      country: usaCountry,
-      region: usaRegion,
+      country: countryToModel,
+      region: regionToModel,
       city: city,
       postalCode: postalCode,
       address: address,

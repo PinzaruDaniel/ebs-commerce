@@ -37,7 +37,7 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
           child: Column(
             children: [
               Expanded(
-                flex: 2,
+                flex: 0,
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -51,11 +51,7 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                         padding: EdgeInsets.only(top: 24.0, bottom: 16),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: Image.network(
-                            height: 100,
-                            width: 100,
-                            userVm?.imageUrl ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png',
-                          ),
+                          child: Image.network(height: 100, width: 100, userVm?.imageUrl ?? AppIcons.noProfilePicture),
                         ),
                       ),
                       Text(
@@ -70,8 +66,10 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                             children: [
                               SizedBox(width: 4),
                               if (currentUserController.isUserLogged.value) ...[
-                                DeliveryAddressWidget(userVm: userVm),
-                                VerticalDivider(color: Colors.white, thickness: 2),
+                                if (currentUserController.userVM.value?.deliveryAddressViewModel?.country != null) ...[
+                                  DeliveryAddressWidget(userVm: userVm),
+                                  VerticalDivider(color: Colors.white, thickness: 2),
+                                ],
                                 SizedBox(width: 8),
                                 UserInfoWidget(userVm: userVm),
                               ],
@@ -99,24 +97,24 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                       ),
 
                       LanguageDropdown(),
-
-                      ListTile(
-                        leading: const Icon(Icons.exit_to_app_rounded, color: Colors.black),
-                        title: Text(AppTexts.logOut, style: AppTextsStyle.bold()),
-                        onTap: () async {
-                          AppPopUp.showConfirmationDialog(
-                            title: AppTexts.confirmLogOut,
-                            content: AppTexts.deleteDataWarning,
-                            context: context,
-                            onSave: () async {
-                              await currentUserController.clearUserData();
-                              currentUserController.deleteTokens();
-                              currentUserController.deleteUsers();
-                              Get.off(() => GreetingPage());
-                            },
-                          );
-                        },
-                      ),
+                      if (currentUserController.isUserLogged.value)
+                        ListTile(
+                          leading: const Icon(Icons.exit_to_app_rounded, color: Colors.black),
+                          title: Text(AppTexts.logOut, style: AppTextsStyle.bold()),
+                          onTap: () async {
+                            AppPopUp.showConfirmationDialog(
+                              title: AppTexts.confirmLogOut,
+                              content: AppTexts.deleteDataWarning,
+                              context: context,
+                              onSave: () async {
+                                await currentUserController.clearUserData();
+                                currentUserController.deleteTokens();
+                                currentUserController.deleteUsers();
+                                Get.off(() => GreetingPage());
+                              },
+                            );
+                          },
+                        ),
                     ],
                   ),
                 ),

@@ -58,13 +58,23 @@ extension CartProductsToOrdered on CartViewModel {
 
 extension OrderToEntity on OrderViewModel {
   OrderEntity get toEntity {
-    return OrderEntity(id: id, dateTime: dateTime, products: products.map((e) => e.toEntity).toList());
+    return OrderEntity(
+      idUser: idUser,
+      idOrder: idOrder,
+      dateTime: dateTime,
+      products: products.map((e) => e.toEntity).toList(),
+    );
   }
 }
 
 extension OrderToModel on OrderEntity {
   OrderViewModel get toModel {
-    return OrderViewModel(id: id, dateTime: dateTime, products: products.map((e) => e.toModel).toList());
+    return OrderViewModel(
+      idUser: idUser,
+      idOrder: idOrder,
+      dateTime: dateTime,
+      products: products.map((e) => e.toModel).toList(),
+    );
   }
 }
 

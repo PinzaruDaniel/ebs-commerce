@@ -81,7 +81,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           AppRouter. openContactInformationPage(
                             userViewModel: currentUserController.userVM.value,
                             onSave: (UserViewModel? userVM) {
-                              consoleLog('User image: ${userVM?.imageUrl??''}');
+                              consoleLog('User image: ${userVM?.imageUrl}');
                               checkoutController.updateCheckoutInfoItem(
                                 keyId: CheckoutWidgetsType.userContactInfo,
                                 titleKey: '${userVM?.name} ${userVM?.surname}',
@@ -175,7 +175,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               title: AppTexts.orderSuccess,
               btnOkText: AppTexts.ok,
               btnOkOnPress: () {
-                mainAppController.addOrderedProducts(checkoutController.productItems);
+                mainAppController.addOrderedProducts(items: checkoutController.productItems, idUser: currentUserController.userVM.value?.idUser?? 0);
                 mainAppController.cartItems.clear();
               },
               btnOkColor: AppColors.primary,

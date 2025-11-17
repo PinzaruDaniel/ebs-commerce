@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.7.1"
+  animated_text_kit:
+    dependency: transitive
+    description:
+      name: animated_text_kit
+      sha256: "1d41486860885321972dd332179357a535d50d4780fc2ba5e1805bde085c81f2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.3.0"
   animations:
     dependency: transitive
     description:
@@ -256,14 +264,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
-  crystal_navigation_bar:
-    dependency: transitive
-    description:
-      name: crystal_navigation_bar
-      sha256: fceaa04b249a91d855b4bf8ac197374057e8e0013db327474bb4cf6a151d772a
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
   cupertino_icons:
     dependency: transitive
     description:
@@ -350,14 +350,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.2"
-  easy_sidemenu:
-    dependency: transitive
-    description:
-      name: easy_sidemenu
-      sha256: "91f9d8d4466d11de0397a22568ab4e15335635fe86836ef14dbc5dd571fb6963"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.1"
   equatable:
     dependency: transitive
     description:
@@ -581,14 +573,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
-  iconly:
-    dependency: transitive
-    description:
-      name: iconly
-      sha256: "22f16dd28984d232891299ead9d9b75ae5a32b4d9cdf63e8e574f1ceb11dcbd9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   implicitly_animated_reorderable_list_2:
     dependency: transitive
     description:
@@ -657,10 +641,10 @@ packages:
     dependency: transitive
     description:
       name: liquid_glass_renderer
-      sha256: "4a4203d720bc565108bd8c0df7d9b4694bfd5d4444654171d36998093e23584c"
+      sha256: "789be157494b38cdef7607bb9b63e7fe3fab76fae16149e52fa313c2d858cb3f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1-dev.10"
+    version: "0.2.0-dev.4"
   logger:
     dependency: "direct main"
     description:
@@ -717,14 +701,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  nested:
+  motor:
     dependency: transitive
     description:
-      name: nested
-      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      name: motor
+      sha256: d6fd00496a2b934f8f54e660acc0d039d0e4bf8e667b6977b0480be97385779e
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   nm:
     dependency: transitive
     description:
@@ -884,14 +868,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.1"
-  provider:
-    dependency: transitive
-    description:
-      name: provider
-      sha256: "4e82183fa20e5ca25703ead7e05de9e4cceed1fbd1eadc1ac3cb6f565a09f272"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.5+1"
   pub_semver:
     dependency: transitive
     description:

@@ -6,11 +6,13 @@ import '../../../../../util/resources/app_texts.dart';
 
 class DeliveryAddressWidget extends StatelessWidget {
   final UserViewModel? userVm;
+
   const DeliveryAddressWidget({super.key, required this.userVm});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return
+      Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

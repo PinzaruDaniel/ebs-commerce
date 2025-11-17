@@ -52,12 +52,12 @@ class CurrentUserController extends GetxController {
 
   Future<void> streamUser() async {
     _streamSubscription?.cancel();
-    _streamSubscription = streamUserUseCase.call(StreamUserParams(id: userVM.value?.id ?? 1)).distinct().listen((
+    _streamSubscription = streamUserUseCase.call(StreamUserParams(id: userVM.value?.idUser ?? 1)).distinct().listen((
       userEntity,
     ) {
       userVM.value = userEntity?.toModel;
 
-      consoleLog('userEntity photo: ${userEntity?.imageUrl ?? 'no image'}  userId= ${userEntity?.id}');
+      consoleLog('userEntity photo: ${userEntity?.imageUrl ?? 'no image'}  userId= ${userEntity?.idUser}');
     });
   }
 

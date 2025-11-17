@@ -41,14 +41,14 @@ class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWid
 
         widget.items.isNotEmpty
             ? SizedBox(
-                height: 230,
+                height: 250,
                 child: ListView.builder(
                   padding: EdgeInsets.only(top: 12, left: 8),
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.items.length,
                   itemBuilder: (context, index) {
                     final itemProduct = widget.items[index];
-                    return HomeProductsItemWidget(item: itemProduct, width: 160);
+                    return HomeProductsItemWidget(item: itemProduct, width: 170);
                   },
                 ),
               )

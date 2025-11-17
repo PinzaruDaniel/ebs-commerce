@@ -24,29 +24,29 @@ class UserInformationRepositoryImpl implements UserInformationRepository {
   }
 
   @override
-  Future<void> setDeliveryAddress({required int userId, required DeliveryAddressEntity deliveryAddress}) async {
-    await userLocalSource.setDeliveryAddress(userId: userId, deliveryAddress: deliveryAddress);
+  Future<void> setDeliveryAddress({required int idUser, required DeliveryAddressEntity deliveryAddress}) async {
+    await userLocalSource.setDeliveryAddress(idUser: idUser, deliveryAddress: deliveryAddress);
   }
 
   @override
-  Future<void> setPaymentMethod({required int userId, required PaymentMethodEntity paymentMethod}) async {
-    await userLocalSource.setPaymentMethod(userId: userId, paymentMethod: paymentMethod);
+  Future<void> setPaymentMethod({required int idUser, required PaymentMethodEntity paymentMethod}) async {
+    await userLocalSource.setPaymentMethod(idUser: idUser, paymentMethod: paymentMethod);
   }
 
   @override
-  Stream<UserEntity?> getUser(int userId) {
-    return userLocalSource.getUser(userId).map((userBox) => userBox?.toEntity);
+  Stream<UserEntity?> getUser(int idUser) {
+    return userLocalSource.getUser(idUser).map((userBox) => userBox?.toEntity);
   }
 
   @override
-  Future<DeliveryAddressEntity?> getDeliveryAddress(int userId) async {
-    final deliveryAddress = await userLocalSource.getDeliveryAddress(userId);
+  Future<DeliveryAddressEntity?> getDeliveryAddress(int idUser) async {
+    final deliveryAddress = await userLocalSource.getDeliveryAddress(idUser);
     return deliveryAddress?.toEntity;
   }
 
   @override
-  Future<PaymentMethodEntity?> getPaymentMethod(int userId) async {
-    final paymentMethod = await userLocalSource.getPaymentMethod(userId);
+  Future<PaymentMethodEntity?> getPaymentMethod(int idUser) async {
+    final paymentMethod = await userLocalSource.getPaymentMethod(idUser);
     return paymentMethod?.toEntity;
   }
 

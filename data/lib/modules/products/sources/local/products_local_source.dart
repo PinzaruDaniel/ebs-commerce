@@ -9,16 +9,17 @@ import 'package:data/modules/specifications/models/local/specification_box.dart'
 import 'package:domain/modules/products/models/index.dart';
 import 'package:objectbox/objectbox.dart';
 
+import '../../../../objectbox.g.dart';
 import '../../models/local/order_box.dart';
 
 abstract class ProductsLocalDataSource {
   Future<void> setProducts({required List<ProductEntity> products});
 
-  Future<void> setOrders({required List<OrderEntity> orders});
+  Future<void> setOrders({required List<OrderEntity> orders, required int idUser});
 
   Stream<List<ProductBox>> getProducts();
 
-  Stream<List<OrderBox>> getOrders();
+  Stream<List<OrderBox>> getOrders(int idUser);
 }
 
 class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
@@ -46,11 +47,9 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   }
 
   @override
-  Future<void> setOrders({required List<OrderEntity> orders}) async {
+  Future<void> setOrders({required List<OrderEntity> orders, required int idUser}) async {
     for (final orderEntity in orders) {
-      consoleLog('Setting order ${orderEntity.id} with ${orderEntity.products.length} products');
-
-      final existingOrder = orderBox.get(orderEntity.id);
+      final existingOrder = orderBox.get(orderEntity.idOrder);
       if (existingOrder != null) {
         final existingProductIds = existingOrder.products.map((p) => p.idProduct).toSet();
         final newProductIds = orderEntity.products.map((p) => p.idProduct).toSet();
@@ -58,17 +57,14 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
         final sameProducts =
             existingProductIds.length == newProductIds.length && existingProductIds.containsAll(newProductIds);
         if (sameProducts) {
-          consoleLog('Order ${orderEntity.id} already exists with same products. Skipping.');
           continue;
         }
-        consoleLog('Order ${orderEntity.id} exists but has changed products. Updating...');
       }
       final orderedProductBoxes = orderEntity.products.map((p) => p.toBox).toList();
       for (final productBox in orderedProductBoxes) {
-        final savedId = orderedProductBox.put(productBox);
-        consoleLog('Saved OrderedProductBox with id: $savedId, idProduct: ${productBox.idProduct}');
+        orderedProductBox.put(productBox);
       }
-      final newOrderBox = OrderBox(id: orderEntity.id, dateTime: orderEntity.dateTime);
+      final newOrderBox = OrderBox(idOrder: orderEntity.idOrder, dateTime: orderEntity.dateTime, idUser: idUser);
       newOrderBox.products.addAll(orderedProductBoxes);
 
       await orderBox.putAsync(newOrderBox);
@@ -76,9 +72,9 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   }
 
   @override
-  Stream<List<OrderBox>> getOrders() {
+  Stream<List<OrderBox>> getOrders(int idUser) {
     return orderBox
-        .query()
+        .query(OrderBox_.idUser.equals(idUser))
         .watch(triggerImmediately: true)
         .asyncMap((query) async {
       final orders = query.find();
@@ -89,7 +85,7 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
       final outdated = orders.where((o) => o.dateTime.isBefore(threshold)).toList();
 
       for (final o in outdated) {
-        await orderBox.removeAsync(o.id);
+        await orderBox.removeAsync(o.idOrder);
       }
 
       return orders

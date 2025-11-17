@@ -46,11 +46,21 @@ class CheckoutController extends GetxController {
   }
 
   void setDeliveryInfo() async {
-    await setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: deliveryModel.value!.toEntity, userId: currentUserController.userVM.value?.id??1));
+    await setDeliveryAddressUseCase(
+      SetDeliveryAddressParams(
+        deliveryAddressEntity: deliveryModel.value!.toEntity,
+        idUser: currentUserController.userVM.value?.idUser ?? 1,
+      ),
+    );
   }
 
   void setPaymentInfo() async {
-    await setPaymentMethodUseCase(SetPaymentMethodParams(paymentMethodEntity: selectedPaymentMethod.value!.toEntity, userId: currentUserController.userVM.value?.id??1));
+    await setPaymentMethodUseCase(
+      SetPaymentMethodParams(
+        paymentMethodEntity: selectedPaymentMethod.value!.toEntity,
+        idUser: currentUserController.userVM.value?.idUser ?? 1,
+      ),
+    );
   }
 
   void initProductItems(List<CartViewModel> productItems) {
@@ -69,20 +79,20 @@ class CheckoutController extends GetxController {
         (user.email?.isEmpty ?? true);
   }
 
-
   Future<void> getUserInfo() async {
     currentUserController.userVM.value;
     if (currentUserController.userVM.value != null) {
-
       deliveryModel.value = currentUserController.userVM.value?.deliveryAddressViewModel;
 
-      final cachedPaymentMethod = await getPaymentMethodUseCase(GetPaymentMethodParams(userId: currentUserController.userVM.value?.id??1));
+      final cachedPaymentMethod = await getPaymentMethodUseCase(
+        GetPaymentMethodParams(userId: currentUserController.userVM.value?.idUser ?? 1),
+      );
       selectedPaymentMethod.value = cachedPaymentMethod?.toModel;
     }
+    consoleLog('cachedUser ${currentUserController.userVM.value?.name ?? 'null'}  ${currentUserController.userVM.value?.idUser??'no id'}');
     consoleLog(
-      'cachedUser ${currentUserController.userVM.value?.name ?? 'null'}',
+      'cachedDeliveryAddress ${deliveryModel.value?.deliveryType ?? 'null'} ${deliveryModel.value?.country ?? 'null'}',
     );
-    consoleLog('cachedDeliveryAddress ${deliveryModel.value?.deliveryType ?? 'null'} ${deliveryModel.value?.country ?? 'null'}');
     consoleLog('cachedPaymentMethod ${selectedPaymentMethod.value?.titleKey ?? 'null'}');
   }
 
@@ -97,7 +107,8 @@ class CheckoutController extends GetxController {
       HeaderTitleViewModel(title: AppTexts.contactInformation),
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.userContactInfo,
-        titleKey: '${currentUserController.userVM.value?.name ?? ''} ${currentUserController.userVM.value?.surname ?? ''}',
+        titleKey:
+            '${currentUserController.userVM.value?.name ?? ''} ${currentUserController.userVM.value?.surname ?? ''}',
         infoItems: buildUserInfo(currentUserController.userVM.value),
       ),
 
@@ -199,7 +210,6 @@ class CheckoutController extends GetxController {
 
     return info;
   }
-
 
   void updateOrderSummary(double subtotal) {
     orderSummary.subtotal.value = subtotal;

@@ -8,13 +8,13 @@ class SetDeliveryAddressUseCase extends UseCaseNoEither<void, SetDeliveryAddress
   SetDeliveryAddressUseCase({required this.userInformationRepository});
 
   Future<void> call(params) async {
-    return userInformationRepository.setDeliveryAddress(userId: params.userId, deliveryAddress: params.deliveryAddressEntity);
+    return userInformationRepository.setDeliveryAddress(idUser: params.idUser, deliveryAddress: params.deliveryAddressEntity);
   }
 }
 
 class SetDeliveryAddressParams {
   final DeliveryAddressEntity deliveryAddressEntity;
-  final int userId;
+  final int idUser;
 
-  SetDeliveryAddressParams({required this.deliveryAddressEntity, required this.userId});
+  SetDeliveryAddressParams({required this.deliveryAddressEntity, required this.idUser});
 }

@@ -17,7 +17,7 @@ class SyncUserUseCase extends UseCaseNoParams<UserEntity> {
     either.fold((failure) {}, (userApi) async {
       await userInformationRepository.setUser(userApi);
       userInformationRepository.setDeliveryAddress(
-        userId: userApi.id ?? 0,
+        idUser: userApi.idUser ?? 0,
         deliveryAddress: userApi.deliveryAddressEntity ?? DeliveryAddressEntity(deliveryType: 'DHL'),
       );
     });

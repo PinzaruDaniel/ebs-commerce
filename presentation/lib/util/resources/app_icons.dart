@@ -6,6 +6,7 @@ class AppIcons {
   //icons
   static SvgPicture cartIcon = SvgPicture.asset('assets/icons/Cart icon.svg');
   static SvgPicture orderIcon= SvgPicture.asset('assets/icons/icon_order.svg', height: 10, width: 10,);
+  static String noProfilePicture= 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
 
   static SvgPicture countryFlag({required String iso2}) => SvgPicture.asset('assets/flags/$iso2.svg', height: 20);
 

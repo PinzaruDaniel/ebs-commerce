@@ -105,13 +105,18 @@ extension OrderedProductToBoxEntity on OrderedProductEntity {
 
 extension OrderToEntity on OrderBox {
   OrderEntity get toEntity {
-    return OrderEntity(id: id, dateTime: dateTime, products: products.map((p) => p.toEntity).toList());
+    return OrderEntity(
+      idUser: idUser,
+      idOrder: idOrder,
+      dateTime: dateTime,
+      products: products.map((p) => p.toEntity).toList(),
+    );
   }
 }
 
 extension OrderToBox on OrderEntity {
   OrderBox get toBox {
-    final box = OrderBox(id: id, dateTime: dateTime);
+    final box = OrderBox(idUser: idUser, idOrder: idOrder, dateTime: dateTime);
     box.products.addAll(products.map((p) => p.toBox));
     return box;
   }

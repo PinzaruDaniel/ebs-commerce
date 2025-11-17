@@ -95,7 +95,12 @@ class AuthentificationController extends GetxController {
           imageUrl: entity.imageUrl,
           deliveryAddressViewModel: entity.deliveryAddressEntity?.toModel,
         );
-        setDeliveryAddressUseCase(SetDeliveryAddressParams(deliveryAddressEntity: entity.deliveryAddressEntity!, userId: currentUserController.userVM.value?.id??1));
+        setDeliveryAddressUseCase(
+          SetDeliveryAddressParams(
+            deliveryAddressEntity: entity.deliveryAddressEntity!,
+            idUser: currentUserController.userVM.value?.idUser ?? 1,
+          ),
+        );
         consoleLog('User already logged in: ${currentUserController.userVM.value?.email}');
         consoleLog('Successfully auto-logged in ${entity.name}');
       },

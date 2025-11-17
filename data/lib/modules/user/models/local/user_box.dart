@@ -5,7 +5,7 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class UserBox {
   @Id(assignable: true)
-  int id;
+  int? idUser;
   String name;
   String surname;
   String number;
@@ -17,7 +17,7 @@ class UserBox {
   final paymentMethodBox = ToOne<PaymentMethodBox>();
 
   UserBox({
-    this.id = 0,
+    this.idUser = 0,
     required this.name,
     required this.surname,
     required this.number,

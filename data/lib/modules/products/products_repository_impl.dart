@@ -108,12 +108,12 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Stream<List<OrderEntity>> getOrdersLocalCache() {
-    return localDataSource.getOrders().map((boxList) => boxList.map((e) => e.toEntity).toList());
+  Stream<List<OrderEntity>> getOrdersLocalCache(int idUser) {
+    return localDataSource.getOrders(idUser).map((boxList) => boxList.map((e) => e.toEntity).toList());
   }
 
   @override
-  Future<void> setOrderedLocalCache(List<OrderEntity> orders) {
-    return localDataSource.setOrders(orders: orders);
+  Future<void> setOrderedLocalCache(List<OrderEntity> orders, int idUser) {
+    return localDataSource.setOrders(orders: orders, idUser: idUser);
   }
 }

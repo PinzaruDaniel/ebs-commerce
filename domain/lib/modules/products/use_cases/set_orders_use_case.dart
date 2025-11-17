@@ -10,12 +10,13 @@ class SetOrdersUseCase extends UseCaseNoEither<void, SetOrdersParams> {
 
   @override
   Future<void> call(params) async {
-    return productsRepository.setOrderedLocalCache(params.orders);
+    return productsRepository.setOrderedLocalCache(params.orders, params.idUser);
   }
 }
 
 class SetOrdersParams {
   final List<OrderEntity> orders;
+  final int idUser;
 
-  SetOrdersParams({required this.orders});
+  SetOrdersParams({required this.orders, required this.idUser});
 }

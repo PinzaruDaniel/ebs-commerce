@@ -30,18 +30,19 @@ class MainAppController extends GetxController {
     Get.updateLocale(locale);
   }
 
-  void addOrderedProducts(List<CartViewModel> items) {
+  void addOrderedProducts({required List<CartViewModel> items, required int idUser} ) {
     final orderedProducts = items.map((e) => e.toOrderedProducts).toList();
-    final newOrderId = orders.isEmpty ? 1 : orders.last.id + 1;
+    final newOrderId = orders.isEmpty ? 1 : orders.last.idOrder + 1;
 
     final newOrder = OrderViewModel(
-      id: newOrderId,
+      idUser: idUser,
+      idOrder: newOrderId,
       dateTime: DateTime.now(),
       products: orderedProducts,
     );
 
     orders.add(newOrder);
     consoleLog('added newOrder: ${newOrder.dateTime}  ${newOrder.products.length}  ');
-    setOrdersUseCase.call(SetOrdersParams(orders: orders.value.map((e) => e.toEntity).toList()));
+    setOrdersUseCase.call(SetOrdersParams(idUser: idUser, orders: orders.value.map((e) => e.toEntity).toList()));
   }
 }

@@ -4,7 +4,7 @@ import 'package:domain/modules/delivery_address/models/index.dart';
 extension DeliveryAddressToBoxMapper on DeliveryAddressEntity {
   DeliveryAddressBox get toBox {
     return DeliveryAddressBox(
-      id: id??0,
+      id: id ?? 0,
       deliveryType: deliveryType,
       pickupLocation: pickupLocation,
       country: country,

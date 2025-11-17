@@ -8,7 +8,7 @@ import 'package:domain/modules/user_information/models/index.dart';
 extension UserToEntityMapper on UserBox {
   UserEntity get toEntity {
     return UserEntity(
-      id: id,
+      idUser: idUser,
       name: name,
       surname: surname,
       number: number,
@@ -24,7 +24,7 @@ extension UserToEntityMapper on UserBox {
 extension UserToBoxMapper on UserEntity {
   UserBox get toBox {
     final box = UserBox(
-      id: id ?? 0,
+      idUser: idUser,
       name: name,
       surname: surname,
       number: number ?? '',
@@ -46,7 +46,7 @@ extension UserToBoxMapper on UserEntity {
 extension UserFromDtoToEntityMapper on UserApiDto {
   UserEntity get toEntity {
     return UserEntity(
-      id: id,
+      idUser: id,
       name: firstName,
       surname: lastName,
       email: email,
