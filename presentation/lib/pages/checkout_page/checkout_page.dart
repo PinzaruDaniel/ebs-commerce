@@ -78,7 +78,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       item: item,
                       onTap: () {
                         if (item.keyId == CheckoutWidgetsType.userContactInfo) {
-                          AppRouter. openContactInformationPage(
+                          AppRouter.openContactInformationPage(
                             userViewModel: currentUserController.userVM.value,
                             onSave: (UserViewModel? userVM) {
                               consoleLog('User image: ${userVM?.imageUrl}');
@@ -102,9 +102,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               );
                               checkoutController.updateOrderSummary(checkoutController.calculateSubtotal());
                               checkoutController.setDeliveryInfo();
-
                             },
-
                           );
                         } else if (item.keyId == CheckoutWidgetsType.paymentMethod) {
                           AppPopUp.paymentMethod(
@@ -117,7 +115,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               );
                               Get.back();
                               checkoutController.setPaymentInfo();
-
                             },
                           );
                         } else if (item.keyId == CheckoutWidgetsType.voucherCode) {
@@ -158,30 +155,43 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ),
       ),
       bottomNavigationBar: Obx(() {
-        final hasSelectedPayment = checkoutController.selectedPaymentMethod.value !=null;
+        final hasSelectedPayment = checkoutController.selectedPaymentMethod.value != null;
         final hasCompleteInfo = !checkoutController.hasIncompleteUserInfo();
-        final hasDeliveryAddress= checkoutController.deliveryModel.value !=null;
-
+        final hasDeliveryAddress = checkoutController.deliveryModel.value != null;
+        final hasDoneAll = hasSelectedPayment && hasCompleteInfo && hasDeliveryAddress;
         return BottomNavigationBarWidget(
-          buttonColor: hasSelectedPayment && hasCompleteInfo && hasDeliveryAddress ? AppColors.primary: Colors.grey.shade300,
-          textColor: hasSelectedPayment && hasCompleteInfo && hasDeliveryAddress? Colors.white: Colors.black,
+          buttonColor: hasDoneAll ? AppColors.primary : Colors.grey.shade300,
+          textColor: hasDoneAll ? Colors.white : Colors.black,
 
-          title: hasSelectedPayment && hasCompleteInfo && hasDeliveryAddress ? AppTexts.createOrder : AppTexts.enterAllData,
+          title: hasDoneAll ? AppTexts.createOrder : AppTexts.enterAllData,
           onTap: () {
-            AwesomeDialog(
-              context: context,
-              animType: AnimType.scale,
-              dialogType: DialogType.success,
-              title: AppTexts.orderSuccess,
-              btnOkText: AppTexts.ok,
-              btnOkOnPress: () {
-                mainAppController.addOrderedProducts(items: checkoutController.productItems, idUser: currentUserController.userVM.value?.idUser?? 0);
-                mainAppController.cartItems.clear();
-              },
-              btnOkColor: AppColors.primary,
-            ).show();
-
-
+            if (hasDoneAll) {
+              AwesomeDialog(
+                context: context,
+                animType: AnimType.scale,
+                dialogType: DialogType.success,
+                title: AppTexts.orderSuccess,
+                btnOkText: AppTexts.ok,
+                btnOkOnPress: () {
+                  mainAppController.addOrderedProducts(
+                    items: checkoutController.productItems,
+                    idUser: currentUserController.userVM.value?.idUser ?? 0,
+                  );
+                  mainAppController.cartItems.clear();
+                },
+                btnOkColor: AppColors.primary,
+              ).show();
+            } else {
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.error,
+                headerAnimationLoop: false,
+                animType: AnimType.scale,
+                title: AppTexts.oops,
+                desc: AppTexts.enterAllData,
+                btnOkOnPress: () {},
+              ).show();
+            }
           },
           showIcon: false,
         );

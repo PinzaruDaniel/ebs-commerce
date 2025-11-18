@@ -148,7 +148,7 @@ class AppPopUp {
                   onCancel?.call();
                   Navigator.of(context).pop(false);
                 },
-                child: Text(AppTexts.cancel),
+                child: Text(AppTexts.cancel, style: TextStyle(color: AppColors.greyText)),
               ),
               TextButton(
                 onPressed: () {
