@@ -36,6 +36,27 @@ Route<T> createSharedAxisRoute<T>({required Widget page, SharedAxisTransitionTyp
     },
   );
 }
+class SharedAxisCustomTransition extends CustomTransition {
+  @override
+  Widget buildTransition(
+      BuildContext context,
+      Curve? curve,
+      Alignment? alignment,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      Widget child,
+      ) {
+    return SharedAxisTransition(
+      animation: animation,
+      secondaryAnimation: secondaryAnimation,
+      transitionType: SharedAxisTransitionType.horizontal,
+      fillColor: Colors.white,
+      child: child,
+    );
+  }
+}
+
+
 
 class AppRouter {
   static void openHomePage() {

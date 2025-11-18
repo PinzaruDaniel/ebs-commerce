@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/greeting_page/widgets/button_without_password_widget.dart';
 import 'package:presentation/pages/greeting_page/widgets/company_icon_widget.dart';
+import 'package:presentation/pages/home_page/home_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/routing/app_router.dart';
@@ -91,7 +92,7 @@ class _GreetingPageState extends State<GreetingPage> {
                         currentUserController.hasAgreedTerms.value = true;
                         currentUserController.setSettings();
                         await currentUserController.clearUserData();
-                        Get.offAllNamed('/home');
+                        Get.offAllNamed('/home', );
                       }
                     },
                   ),
