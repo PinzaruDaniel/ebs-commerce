@@ -19,7 +19,6 @@ class GreetingPage extends StatefulWidget {
 }
 
 class _GreetingPageState extends State<GreetingPage> {
-  //bool isChecked = currentUserController.hasAgreedTerms.value;
   var hasAgreed = false;
 
   @override

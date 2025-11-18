@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/products_display_page/products_display_controller.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_container.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
+import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
+import 'package:presentation/util/widgets/base/base_page.dart';
 import 'package:presentation/util/widgets/smart_refresher_widget.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -51,52 +53,44 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BasePage(
+      pendingIds: [PendingIds.getProducts],
       appBar: AppBarWidget(
         showBorder: true,
         iconColors: AppColors.blue,
         title: widget.title,
         actions: [AppBarIconShoppingCartWidget()],
       ),
-      body: SafeArea(
-        child: Obx(
-          () => SmartRefresherWidget(
-            controller: _refreshController,
-            onRefresh: () async {
-              await controller.loadProducts(
-                loadMore: false,
-                productType: widget.type,
-                selectedCategoryIds: widget.selectedCategoryIds,
-                priceRange: widget.priceRange,
-              );
-              _refreshController.refreshCompleted();
-            },
-            onLoading: () async {
-              await controller.loadProducts(
-                loadMore: true,
-                selectedCategoryIds: widget.selectedCategoryIds,
-                priceRange: widget.priceRange,
-                productType: widget.type,
-              );
-              _refreshController.loadComplete();
-            },
-            child: controller.isLoading.value
-                ? LoadingOverlayWidget()
-                : SingleChildScrollView(
-                    child: ProductsListContainer(
-                      products: controller.products,
-                      builder: (context, products) {
-                        return ProductsListDisplayWidget(
-                          title: widget.title,
-                          showHeaderTitle: false,
-                          products: controller.products,
-                        );
-                      },
-                    ),
-                  ),
+      builder: (context) {
+        return SmartRefresherWidget(
+          controller: _refreshController,
+          onRefresh: () async {
+            await controller.loadProducts(
+              loadMore: false,
+              productType: widget.type,
+              selectedCategoryIds: widget.selectedCategoryIds,
+              priceRange: widget.priceRange,
+            );
+            _refreshController.refreshCompleted();
+          },
+          onLoading: () async {
+            await controller.loadProducts(
+              loadMore: true,
+              selectedCategoryIds: widget.selectedCategoryIds,
+              priceRange: widget.priceRange,
+              productType: widget.type,
+            );
+            _refreshController.loadComplete();
+          },
+          child: SingleChildScrollView(
+            child: ProductsListDisplayWidget(
+              products: controller.products,
+              showHeaderTitle: false,
+              title: widget.title,
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

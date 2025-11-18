@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
+import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/mapper/cities_response_entity_mapper.dart';
 import 'package:presentation/util/mapper/countries_entity_mapper.dart';
@@ -45,9 +46,6 @@ class DeliveryAddressController extends GetxController {
   Rxn<String> comments = Rxn<String>();
   Rxn<PickupLocationViewModel> pickupLocation = Rxn<PickupLocationViewModel>();
 
-  RxBool isLoadingCountries = RxBool(true);
-  RxBool isLoadingStates = RxBool(true);
-  RxBool isLoadingCities = RxBool(true);
 
   Rx<DeliveryTypeViewModel> deliveryTypeVM = (DeliveryTypeViewModel(
     options: DeliveryType.values
@@ -119,9 +117,11 @@ class DeliveryAddressController extends GetxController {
   }
 
   Future<void> loadCountries() async {
+    mainAppController.addPendingIds([PendingIds.getCountries]);
     final result = await getCountriesUseCase();
     result.fold(
       (failure) {
+        mainAppController.removePendingIds([PendingIds.getCountries]);
         showFailureSnackBar(failure: failure);
       },
       (list) {
@@ -137,7 +137,7 @@ class DeliveryAddressController extends GetxController {
             updateAllItems();
           }
         }
-        isLoadingCountries.value = false;
+        mainAppController.removePendingIds([PendingIds.getCountries]);
       },
     );
   }
@@ -158,7 +158,6 @@ class DeliveryAddressController extends GetxController {
         selectedCity.value = null;
         cities.clear();
         updateAllItems();
-        isLoadingStates.value = false;
       },
     );
   }
@@ -180,7 +179,6 @@ class DeliveryAddressController extends GetxController {
           selectedCity.value = null;
         }
         updateAllItems();
-        isLoadingCities.value = false;
       },
     );
   }
@@ -320,7 +318,6 @@ class DeliveryAddressController extends GetxController {
         comments: comments,
       );
       deliveryAddressVM.value = model;
-      //todo: to think her
       currentUserController.userVM.value?.deliveryAddressViewModel=model;
       return model;
     }

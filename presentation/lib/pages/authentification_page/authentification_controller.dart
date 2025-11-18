@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/delivery_address_mapper.dart';
 import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
@@ -59,6 +60,7 @@ class AuthentificationController extends GetxController {
   }
 
   Future<void> loginUser() async {
+    mainAppController.addPendingIds([PendingIds.logIn]);
     String? getValueByKeyId(String keyId) {
       final item =
           allItems.firstWhere(
@@ -79,13 +81,22 @@ class AuthentificationController extends GetxController {
 
     final params = AuthLoginParams(email: email, password: password);
     final either = await authLoginUseCase(params);
-    either.fold((failure) => showFailureSnackBar(failure: failure), (response) async {
-      Get.offAllNamed('/home');
-    });
+    either.fold(
+      (failure) {
+        showFailureSnackBar(failure: failure);
+        mainAppController.removePendingIds([PendingIds.logIn]);
+
+      },
+      (response) async {
+        mainAppController.removePendingIds([PendingIds.logIn]);
+        Get.offAllNamed('/home');
+      },
+    );
     final result = await syncUserUseCase.call();
     result.fold(
       (failure) {
         consoleLog('User is not logged in');
+        mainAppController.removePendingIds([PendingIds.logIn]);
       },
       (entity) {
         currentUserController.userVM.value = UserViewModel(
@@ -103,6 +114,7 @@ class AuthentificationController extends GetxController {
         );
         consoleLog('User already logged in: ${currentUserController.userVM.value?.email}');
         consoleLog('Successfully auto-logged in ${entity.name}');
+        mainAppController.removePendingIds([PendingIds.logIn]);
       },
     );
   }

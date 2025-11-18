@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
 import 'package:presentation/pages/home_page/widgets/user_menu/user_menu_widget.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
+import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
+import 'package:presentation/util/widgets/base/base_page.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/open_container_animation_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
@@ -43,7 +45,61 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BasePage(
+      pendingIds: [PendingIds.getProducts],
+      extendBody: true,
+      drawer: Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 36), child: UserMenuWidget()),
+      drawerEdgeDragWidth: Get.height * 0.1,
+      keyPage: _key,
+      appBar: AppBarWidget(
+        showBorder: true,
+        leading: IconButton(
+          onPressed: () {
+            _key.currentState?.openDrawer();
+          },
+          icon: const Icon(Icons.menu),
+        ),
+        actions: [
+          OpenContainerAnimation(
+            closedShape: CircleBorder(),
+            closedBuilder: (context, openContainer) {
+              return IconButton(icon: AppIcons.filtersIcon, onPressed: openContainer);
+            },
+            openBuilder: (context, _) => AppRouter.openFilterPage(),
+          ),
+          AppBarIconShoppingCartWidget(),
+        ],
+      ),
+      builder: (context) {
+        return SmartRefresherWidget(
+          controller: _refreshController,
+          onRefresh: () async {
+            await homeController.getProducts();
+            _refreshController.refreshCompleted();
+          },
+          onLoading: () async {
+            await homeController.getProducts(loadMore: true);
+            _refreshController.loadComplete();
+          },
+          child: ListView.builder(
+            itemCount: homeController.items.length,
+            itemBuilder: (context, index) {
+              final item = homeController.items[index];
+              if (item is AdBannerViewModel) {
+                return HomeAdBannerWidget();
+              } else if (item is HorizontalProductListViewModel) {
+                return HorizontalProductsListWidget(items: item.products, type: item.type);
+              } else if (item is AllProductsViewItem) {
+                return ProductsListDisplayWidget(title: item.type.title ?? '', products: item.products);
+              }
+              return EmptyWidget();
+            },
+          ),
+        );
+      },
+    );
+
+    /*Scaffold(
       extendBody: true,
       drawerEdgeDragWidth: Get.height * 0.1,
       key: _key,
@@ -103,6 +159,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       )
-    );
+    );*/
   }
 }

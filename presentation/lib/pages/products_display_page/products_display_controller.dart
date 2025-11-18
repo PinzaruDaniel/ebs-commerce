@@ -6,6 +6,8 @@ import 'package:domain/modules/products/use_cases/stream_products_use_case.dart'
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -14,14 +16,10 @@ import '../../util/widgets/failure_snack_bar_widget.dart';
 import '../../view/product_view_model.dart';
 
 class ProductsDisplayController extends GetxController {
-  final StreamProductsUseCase getProductsUseCase =
-      GetIt.instance<StreamProductsUseCase>();
-  final GetNewProductsUseCase getNewProductsUseCase =
-      GetIt.instance<GetNewProductsUseCase>();
-  final GetSaleProductsUseCase getSaleProductsUseCase =
-      GetIt.instance<GetSaleProductsUseCase>();
-  final GetFilteredProductsUseCase getFilteredProductsUseCase =
-      GetIt.instance<GetFilteredProductsUseCase>();
+  final StreamProductsUseCase getProductsUseCase = GetIt.instance<StreamProductsUseCase>();
+  final GetNewProductsUseCase getNewProductsUseCase = GetIt.instance<GetNewProductsUseCase>();
+  final GetSaleProductsUseCase getSaleProductsUseCase = GetIt.instance<GetSaleProductsUseCase>();
+  final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();
   RxBool isLoading = true.obs;
   List<ProductViewModel> products = RxList([]);
 
@@ -65,73 +63,77 @@ class ProductsDisplayController extends GetxController {
       isLoading.value = false;
       isLoadingMore.value = false;
     }
-
     isLoading.value = false;
     isLoadingMore.value = false;
   }
 
   Future<void> getSaleProducts(bool loadMore) async {
-    await getSaleProductsUseCase
-        .call(GetSaleProductsParams(page: currentPage.value, perPage: perPage))
-        .then((either) {
-          either.fold(
-            (failure) {
-              isLoading.value = false;
-              isLoadingMore.value = false;
-              showFailureSnackBar(failure: failure);
-            },
-            (list) {
-              final newItems = list.map((e) => e.toModel).toList();
-              if (loadMore) {
-                products.addAll(newItems);
-              } else {
-                products.assignAll(newItems);
-              }
-            },
-          );
-        });
+    mainAppController.addPendingIds([PendingIds.getProducts]);
+
+    await getSaleProductsUseCase.call(GetSaleProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
+      either.fold(
+        (failure) {
+          isLoading.value = false;
+          isLoadingMore.value = false;
+          mainAppController.removePendingIds([PendingIds.getProducts]);
+
+          showFailureSnackBar(failure: failure);
+        },
+        (list) {
+          final newItems = list.map((e) => e.toModel).toList();
+          if (loadMore) {
+            products.addAll(newItems);
+          } else {
+            products.assignAll(newItems);
+            mainAppController.removePendingIds([PendingIds.getProducts]);
+          }
+        },
+      );
+    });
   }
 
   Future<void> getNewProducts(bool loadMore) async {
-    await getNewProductsUseCase
-        .call(GetNewProductsParams(page: currentPage.value, perPage: perPage))
-        .then((either) {
-          either.fold(
-            (failure) {
-              isLoading.value = false;
-              isLoadingMore.value = false;
-              showFailureSnackBar(failure: failure);
-            },
-            (list) {
-              final newItems = list.map((e) => e.toModel).toList();
-              if (loadMore) {
-                products.addAll(newItems);
-              } else {
-                products.assignAll(newItems);
-              }
-            },
-          );
-        });
+    mainAppController.addPendingIds([PendingIds.getProducts]);
+
+    await getNewProductsUseCase.call(GetNewProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
+      either.fold(
+        (failure) {
+          isLoading.value = false;
+          isLoadingMore.value = false;
+          mainAppController.removePendingIds([PendingIds.getProducts]);
+
+          showFailureSnackBar(failure: failure);
+        },
+        (list) {
+          final newItems = list.map((e) => e.toModel).toList();
+          if (loadMore) {
+            products.addAll(newItems);
+          } else {
+            products.assignAll(newItems);
+            mainAppController.removePendingIds([PendingIds.getProducts]);
+          }
+        },
+      );
+    });
   }
 
-  Future<void> getFilteredProducts(
-    bool loadMore,
-    List<int>? selectedCategoryIds,
-    SfRangeValues? priceRange,
-  ) async {
+  Future<void> getFilteredProducts(bool loadMore, List<int>? selectedCategoryIds, SfRangeValues? priceRange) async {
     final either = await getFilteredProductsUseCase.call(
       GetFilteredProductsParams(
         page: currentPage.value,
-        priceGte: priceRange?.start??1,
-        priceLte: priceRange?.end??50000,
+        priceGte: priceRange?.start ?? 1,
+        priceLte: priceRange?.end ?? 50000,
         categoriesId: selectedCategoryIds,
       ),
     );
+    mainAppController.addPendingIds([PendingIds.getProducts]);
 
     either.fold(
       (failure) {
         isLoading.value = false;
         isLoadingMore.value = false;
+        mainAppController.removePendingIds([PendingIds.getProducts]);
+
         showFailureSnackBar(failure: failure);
       },
       (responseEntity) {
@@ -140,6 +142,7 @@ class ProductsDisplayController extends GetxController {
           products.addAll(items);
         } else {
           products.assignAll(items);
+          mainAppController.removePendingIds([PendingIds.getProducts]);
         }
       },
     );

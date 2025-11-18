@@ -12,7 +12,7 @@ import '../view/order_view_model.dart';
 
 class MainAppController extends GetxController {
   SetOrdersUseCase setOrdersUseCase = GetIt.instance<SetOrdersUseCase>();
-
+  RxList<String> pendingIds = RxList([]);
   RxList<CartViewModel> cartItems = RxList([]);
   RxList<OrderViewModel> orders = RxList([]);
 
@@ -30,7 +30,7 @@ class MainAppController extends GetxController {
     Get.updateLocale(locale);
   }
 
-  void addOrderedProducts({required List<CartViewModel> items, required int idUser} ) {
+  void addOrderedProducts({required List<CartViewModel> items, required int idUser}) {
     final orderedProducts = items.map((e) => e.toOrderedProducts).toList();
     final newOrderId = orders.isEmpty ? 1 : orders.last.idOrder + 1;
 
@@ -45,4 +45,16 @@ class MainAppController extends GetxController {
     consoleLog('added newOrder: ${newOrder.dateTime}  ${newOrder.products.length}  ');
     setOrdersUseCase.call(SetOrdersParams(idUser: idUser, orders: orders.value.map((e) => e.toEntity).toList()));
   }
+
+  void addPendingIds(List<String> pendingIds) {
+    this.pendingIds.value.addAll(pendingIds);
+    this.pendingIds.refresh();
+    consoleLog('pendingIds ${this.pendingIds.value[0]}');
+  }
+
+  void removePendingIds(List<String> pendingIds) {
+    this.pendingIds.value.removeWhere((item) => pendingIds.contains(item));
+    this.pendingIds.refresh();
+  }
+
 }

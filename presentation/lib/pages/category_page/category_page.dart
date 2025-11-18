@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/category_page/category_controller.dart';
-import 'package:presentation/pages/category_page/widgets/checkbox_category_widget.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
@@ -11,6 +10,7 @@ import 'package:presentation/util/widgets/empty_widget.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_text_styles.dart';
 import '../../util/resources/app_texts.dart';
+import '../../util/widgets/select_checkbox_widget.dart';
 class CategoryPage extends StatefulWidget {
   final Function onSave;
 
@@ -66,7 +66,7 @@ class _CategoryPageState extends State<CategoryPage> {
               collapsedIconColor: hasChildren ? Colors.black : Colors.transparent,
               title: Obx(() {
                 final selected = categoryController.getCategorySelectionState(parent.id);
-                return CheckboxCategoryWidget(
+                return SelectCheckboxWidget(
                   title: parent.name,
                   textStyle: AppTextsStyle.bold(),
                   selected: selected,
@@ -98,7 +98,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                 padding:  EdgeInsets.only(left: 16.0),
                                 child: Obx(() {
                                   final selectedChild = categoryController.getCategorySelectionState(child.id);
-                                  return CheckboxCategoryWidget(
+                                  return SelectCheckboxWidget(
                                     title: child.name,
                                     textStyle: AppTextsStyle.medium,
                                     selected: selectedChild,
@@ -123,7 +123,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                     padding:  EdgeInsets.only(left: 32.0),
                                     child: Obx(() {
                                       final selectedGrand = categoryController.selectedCategoryId.contains(grand.id);
-                                      return CheckboxCategoryWidget(
+                                      return SelectCheckboxWidget(
                                         title: grand.name,
                                         textStyle: AppTextsStyle.medium.copyWith(fontSize: 12),
                                         selected: selectedGrand,
@@ -139,7 +139,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                 padding:  EdgeInsets.only(left: 16.0),
                                 child: Obx(() {
                                   final selectedChild = categoryController.getCategorySelectionState(child.id);
-                                  return CheckboxCategoryWidget(
+                                  return SelectCheckboxWidget(
                                     title: child.name,
                                     textStyle: AppTextsStyle.medium,
                                     selected: selectedChild,
