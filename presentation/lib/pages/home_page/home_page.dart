@@ -1,5 +1,7 @@
+import 'package:common/constants/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
 import 'package:presentation/pages/home_page/widgets/user_menu/user_menu_widget.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
@@ -36,12 +38,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Get.put(HomeController());
+    consoleLog('user at initState ${currentUserController.userVM.value?.email}');
     WidgetsBinding.instance.addPostFrameCallback((_) {
       homeController.initItems();
     });
   }
 
-  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(initialRefresh: false) ;
 
   @override
   Widget build(BuildContext context) {

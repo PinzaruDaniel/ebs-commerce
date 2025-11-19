@@ -355,7 +355,7 @@
     },
     {
       "name": "meta",
-      "version": "1.16.0",
+      "version": "1.17.0",
       "dependencies": []
     },
     {
@@ -417,7 +417,7 @@
     },
     {
       "name": "test_api",
-      "version": "0.7.6",
+      "version": "0.7.7",
       "dependencies": [
         "async",
         "boolean_selector",
@@ -683,7 +683,7 @@
     },
     {
       "name": "test",
-      "version": "1.26.2",
+      "version": "1.26.3",
       "dependencies": [
         "analyzer",
         "async",
@@ -1060,7 +1060,7 @@
     },
     {
       "name": "test_core",
-      "version": "0.6.11",
+      "version": "0.6.12",
       "dependencies": [
         "analyzer",
         "args",

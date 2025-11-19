@@ -250,4 +250,5 @@ class AppTexts {
   static String get myOrders => LocaleKeys.myOrders.tr();
 
   static String get orderPlacedOn => LocaleKeys.orderPlacedOn.tr();
+  static String get appTitle => LocaleKeys.appTitle.tr();
 }

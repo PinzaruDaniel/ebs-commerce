@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:get/get.dart';
-import '../../util/resources/app_colors.dart';
-import '../../util/routing/app_router.dart';
-import '../home_page/home_page.dart';
-import '../welcome_page/welcome_page.dart';
+import 'util/resources/app_colors.dart';
+import 'util/routing/app_router.dart';
+import 'pages/home_page/home_page.dart';
+import 'pages/welcome_page/welcome_page.dart';
 
 class EntryPage extends StatelessWidget {
   const EntryPage({super.key});
@@ -14,7 +15,7 @@ class EntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'E-commerce ebs app',
+      title: AppTexts.appTitle,
       debugShowCheckedModeBanner: false,
 
       locale: context.locale,
@@ -32,7 +33,7 @@ class EntryPage extends StatelessWidget {
         ],
         bottomSheetTheme: BottomSheetThemeData(dragHandleColor: Colors.grey.shade300),
         scaffoldBackgroundColor: Colors.white,
-        fontFamily: 'Nunito-sans',
+        //fontFamily: 'Nunito-sans',
         useMaterial3: true,
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: AppColors.primary,
@@ -40,17 +41,9 @@ class EntryPage extends StatelessWidget {
           selectionHandleColor: AppColors.primary,
         ),
       ),
+      home: currentUserController.isUserLogged.value ? HomePage(): WelcomePage(),
+      navigatorObservers: [],
 
-      initialRoute: currentUserController.isUserLogged.value ? '/home' : '/',
-      getPages: [
-        GetPage(name: '/', page: () => WelcomePage()),
-        GetPage(
-          name: '/home',
-          page: () => HomePage(),
-          customTransition: SharedAxisCustomTransition(),
-          transitionDuration: Duration(milliseconds: 400),
-        ),
-      ],
     );
   }
 }

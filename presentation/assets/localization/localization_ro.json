@@ -101,7 +101,6 @@
   "search": "Caută...",
   "hello": "Salut",
   "human": "omule",
-
   "tapToContinue": "Atinge pentru a continua",
   "EbsForWish": "EBS e-commerce este platforma ta pentru fiecare dorință",
   "agreeUserTerms": "Sunt de acord cu Termenii și condițiile de utilizare ale aplicației EBS și confirm că am luat la cunoștință Politica de confidențialitate TFH",
@@ -121,5 +120,6 @@
   "personalLabel": "Personal:",
   "userLabel": "Utilizator",
   "languageLabel": "Limbă",
-  "orderPlacedOn": "Comandă plasată pe"
+  "orderPlacedOn": "Comandă plasată pe",
+  "appTitle": "Aplicație e-commerce ebs"
 }

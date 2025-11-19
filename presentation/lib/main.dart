@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/localization/localization_loader.dart';
-import 'package:presentation/pages/entry_page/entry_page.dart';
+import 'package:presentation/entry_page.dart';
 
 import 'controllers/bindings/root_bindings_controllers.dart';
 

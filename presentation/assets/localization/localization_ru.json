@@ -120,7 +120,8 @@
   "personalLabel": "Личное:",
   "userLabel": "Пользователь",
   "languageLabel": "Язык",
-  "orderPlacedOn": "Заказ оформлен"
+  "orderPlacedOn": "Заказ оформлен",
+  "appTitle": "Интернет-магазин ebs"
 
 
 }

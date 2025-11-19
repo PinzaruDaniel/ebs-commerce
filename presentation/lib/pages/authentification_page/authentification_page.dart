@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/authentification_page/authentification_controller.dart';
@@ -9,6 +10,8 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/base/base_page.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
+
+import '../home_page/home_page.dart';
 
 class AuthentificationPage extends StatefulWidget {
   const AuthentificationPage({super.key});
@@ -101,7 +104,14 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                     buttonColor: AppColors.primary,
                     textColor: Colors.white,
                     onTap: () async {
-                      await authController.loginUser();
+                      await authController.loginUser(
+                        onSuccess: () {
+                          Navigator.of(Get.context!).pushAndRemoveUntil(
+                            CupertinoPageRoute(builder: (_) => HomePage()),
+                                (Route<dynamic> route) => false,
+                          );
+                        },
+                      );
                       authController.allItems.clear();
                     },
                     title: AppTexts.logIn,

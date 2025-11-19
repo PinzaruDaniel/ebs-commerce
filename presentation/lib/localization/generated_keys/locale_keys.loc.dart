@@ -125,5 +125,6 @@ abstract class  LocaleKeys {
   static const userLabel = 'userLabel';
   static const languageLabel = 'languageLabel';
   static const orderPlacedOn = 'orderPlacedOn';
+  static const appTitle = 'appTitle';
 
 }

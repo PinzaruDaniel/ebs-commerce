@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
@@ -54,8 +55,7 @@ class _GreetingPageState extends State<GreetingPage> {
                         hasAgreed = value!;
                       });
                     },
-                    textStyle: AppTextsStyle.medium.copyWith(
-                        color: AppColors.greyText, fontSize: 16),
+                    textStyle: AppTextsStyle.medium.copyWith(color: AppColors.greyText, fontSize: 16),
                   ),
                 ),
               ),
@@ -66,9 +66,7 @@ class _GreetingPageState extends State<GreetingPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   BaseButtonWidget(
-                    buttonColor: hasAgreed
-                        ? AppColors.primary
-                        : Colors.grey.shade300,
+                    buttonColor: hasAgreed ? AppColors.primary : Colors.grey.shade300,
                     textColor: hasAgreed ? Colors.white : Colors.grey,
                     onTap: () {
                       if (hasAgreed) {
@@ -77,10 +75,7 @@ class _GreetingPageState extends State<GreetingPage> {
 
                         AppRouter.openAuthPage();
                       } else {
-                        AppPopUp.showConfirmationDialog(
-                            context: context,
-                            content: '',
-                            title: AppTexts.pleaseAgree);
+                        AppPopUp.showConfirmationDialog(context: context, content: '', title: AppTexts.pleaseAgree);
                       }
                     },
                     title: AppTexts.logIn,
@@ -90,9 +85,14 @@ class _GreetingPageState extends State<GreetingPage> {
                     onTap: () async {
                       if (hasAgreed) {
                         currentUserController.hasAgreedTerms.value = true;
-                        currentUserController.setSettings();
+                        await currentUserController.setSettings();
                         await currentUserController.clearUserData();
-                        Get.offAllNamed('/home', );
+                        Navigator.of(Get.context!).pushAndRemoveUntil(
+                          CupertinoPageRoute(builder: (_) => HomePage()),
+                              (Route<dynamic> route) => false,
+                        );
+                      } else {
+                        AppPopUp.showConfirmationDialog(context: context, content: '', title: AppTexts.pleaseAgree);
                       }
                     },
                   ),
@@ -105,4 +105,3 @@ class _GreetingPageState extends State<GreetingPage> {
     );
   }
 }
-

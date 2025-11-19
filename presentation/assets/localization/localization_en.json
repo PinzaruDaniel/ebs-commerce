@@ -120,5 +120,6 @@
   "personalLabel": "Personal:",
   "userLabel": "User",
   "languageLabel": "Language",
-  "orderPlacedOn": "Order placed on"
+  "orderPlacedOn": "Order placed on",
+  "appTitle": "E-commerce ebs app"
 }

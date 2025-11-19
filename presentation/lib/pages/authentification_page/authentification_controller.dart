@@ -59,7 +59,8 @@ class AuthentificationController extends GetxController {
     isPasswordVisible.toggle();
   }
 
-  Future<void> loginUser() async {
+  Future<void> loginUser({required Function onSuccess}) async {
+
     mainAppController.addPendingIds([PendingIds.logIn]);
     String? getValueByKeyId(String keyId) {
       final item =
@@ -89,8 +90,7 @@ class AuthentificationController extends GetxController {
 
       },
       (response) async {
-        mainAppController.removePendingIds([PendingIds.logIn]);
-        Get.offAllNamed('/home');
+        onSuccess.call();
       },
     );
     final result = await syncUserUseCase.call();
