@@ -84,13 +84,14 @@ class _GreetingPageState extends State<GreetingPage> {
                   ButtonWithoutPasswordWidget(
                     onTap: () async {
                       if (hasAgreed) {
-                        currentUserController.hasAgreedTerms.value = true;
-                        await currentUserController.setSettings();
-                        await currentUserController.clearUserData();
                         Navigator.of(Get.context!).pushAndRemoveUntil(
                           CupertinoPageRoute(builder: (_) => HomePage()),
                               (Route<dynamic> route) => false,
                         );
+                        currentUserController.hasAgreedTerms.value = true;
+                        await currentUserController.setSettings();
+                        await currentUserController.clearUserData();
+
                       } else {
                         AppPopUp.showConfirmationDialog(context: context, content: '', title: AppTexts.pleaseAgree);
                       }
