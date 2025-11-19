@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:get/get.dart';
 import '../../util/resources/app_colors.dart';
@@ -40,7 +41,7 @@ class EntryPage extends StatelessWidget {
         ),
       ),
 
-      initialRoute: '/',
+      initialRoute: currentUserController.isUserLogged.value ? '/home' : '/',
       getPages: [
         GetPage(name: '/', page: () => WelcomePage()),
         GetPage(
