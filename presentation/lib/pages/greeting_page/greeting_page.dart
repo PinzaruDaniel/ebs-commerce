@@ -84,7 +84,7 @@ class _GreetingPageState extends State<GreetingPage> {
                   ButtonWithoutPasswordWidget(
                     onTap: () async {
                       if (hasAgreed) {
-                        Navigator.of(Get.context!).pushAndRemoveUntil(
+                        Navigator.of(Get.context!, rootNavigator: true).pushAndRemoveUntil(
                           CupertinoPageRoute(builder: (_) => HomePage()),
                               (Route<dynamic> route) => false,
                         );
