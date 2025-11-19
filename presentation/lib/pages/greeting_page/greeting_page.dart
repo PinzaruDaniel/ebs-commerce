@@ -92,8 +92,6 @@ class _GreetingPageState extends State<GreetingPage> {
                         await currentUserController.setSettings();
                         await currentUserController.clearUserData();
 
-                      } else {
-                        AppPopUp.showConfirmationDialog(context: context, content: '', title: AppTexts.pleaseAgree);
                       }
                     },
                   ),
