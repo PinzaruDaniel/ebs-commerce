@@ -1,3 +1,4 @@
+import 'package:presentation/pages/products_display_page/products_display_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +41,7 @@ class HeaderTitleWidget extends StatelessWidget {
             Spacer(),
             if (itemViewModel.showSeeAll)
               OpenContainerAnimation(
-                openBuilder: (context, _) =>
-                    AppRouter.openProductsDisplayPage(type: itemViewModel.type!, title: itemViewModel.title),
+                openBuilder: (context, _) => ProductsDisplayPage(type: itemViewModel.type!, title: itemViewModel.title),
                 closedBuilder: (context, openContainer) => TextButton(
                   onPressed: openContainer,
                   child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 14, color: AppColors.primary)),

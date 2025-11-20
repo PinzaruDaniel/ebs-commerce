@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:presentation/pages/filter_page/widgets/add_to_category_button_widget.dart';
 import 'package:presentation/pages/filter_page/widgets/price_slider_widget.dart';
 import 'package:presentation/pages/filter_page/widgets/selected_category_button_widget.dart';
+import 'package:presentation/pages/products_display_page/products_display_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_router.dart';
@@ -125,7 +126,7 @@ class _FilterPageState extends State<FilterPage> {
         final filteredCount = filterController.filteredCount.value;
         var hasProducts = filteredCount > 0;
         return OpenContainerAnimation(
-          openBuilder: (context, _) => AppRouter.openProductsDisplayPage(
+          openBuilder: (context, _) => ProductsDisplayPage(
             type: ProductListType.filteredProducts,
             title: AppTexts.filteredProducts,
             selectedCategoryIds: filterController.selectedCategoryId.toList(),

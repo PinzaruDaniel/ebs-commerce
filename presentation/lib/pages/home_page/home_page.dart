@@ -20,6 +20,7 @@ import '../../util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import '../../util/widgets/horizontal_products_list_widget.dart';
 import '../../util/widgets/loading_overlay_widget.dart';
 import '../../util/widgets/smart_refresher_widget.dart';
+import '../filter_page/filter_page.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  final RefreshController _refreshController = RefreshController(initialRefresh: false) ;
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +66,8 @@ class _HomePageState extends State<HomePage> {
         actions: [
           OpenContainerAnimation(
             closedShape: CircleBorder(),
-            closedBuilder: (context, openContainer) {
-              return IconButton(icon: AppIcons.filtersIcon, onPressed: openContainer);
-            },
-            openBuilder: (context, _) => AppRouter.openFilterPage(),
+            closedBuilder: (context, openContainer) => IconButton(icon: AppIcons.filtersIcon, onPressed: openContainer),
+            openBuilder: (context, _) => FilterPage(),
           ),
           AppBarIconShoppingCartWidget(),
         ],
