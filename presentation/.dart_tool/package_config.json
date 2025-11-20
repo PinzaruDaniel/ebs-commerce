@@ -50,6 +50,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "awesome_snackbar_content",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/awesome_snackbar_content-0.1.8",
+      "packageUri": "lib/",
+      "languageVersion": "3.9"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/boolean_selector-2.1.2",
       "packageUri": "lib/",
@@ -332,6 +338,12 @@
       "languageVersion": "3.8"
     },
     {
+      "name": "flutter_tts",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/flutter_tts-4.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "flutter_web_plugins",
       "rootUri": "file:///Users/daniel.pinzaru/fluttersdk/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
@@ -366,6 +378,12 @@
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/glob-2.1.3",
       "packageUri": "lib/",
       "languageVersion": "3.3"
+    },
+    {
+      "name": "google_fonts",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/google_fonts-6.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.7"
     },
     {
       "name": "graphs",
@@ -750,6 +768,12 @@
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/smooth_page_indicator-1.2.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "snackify",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/snackify-1.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
     },
     {
       "name": "source_map_stack_trace",

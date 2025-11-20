@@ -1,10 +1,13 @@
 import 'package:common/constants/failure_class.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:presentation/util/widgets/base/base_view_widget.dart';
 import 'package:presentation/util/widgets/option_picker_widget.dart';
 import 'package:presentation/util/widgets/payment_method_selection_widget.dart';
 import 'package:presentation/util/widgets/voucher_code_input_widget.dart';
+import 'package:snackify/enums/snack_enums.dart';
+import 'package:snackify/snackify.dart';
 
 import '../../pages/product_detail_page/widgets/add_to_cart/product_detail_add_to_cart_pop_up_widget.dart';
 import '../../view/payment_method_view_model.dart';
@@ -166,23 +169,23 @@ class AppPopUp {
 }
 
 void showFailureSnackBar({
+  BuildContext? context,
   Failure? failure,
-  String? fallbackMessage,
-  String? title,
+  required String subtitleKey,
+  required String titleKey,
   bool isError = true,
-  SnackPosition? snackPosition,
+  required SnackType snackType,
+  SnackPosition? snackPositionKey,
 }) {
-  final message = failure?.message ?? fallbackMessage;
-  Get.snackbar(
-    title ?? 'Error',
-    message ?? 'f',
-    backgroundColor: isError ? AppColors.red : AppColors.primary,
-    colorText: Colors.white,
-    snackPosition: snackPosition ?? SnackPosition.BOTTOM,
-    duration: const Duration(seconds: 2),
-    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
-    padding: const EdgeInsets.all(16),
-    borderRadius: 20,
-    icon: Icon(isError ? Icons.error : Icons.check_circle, color: Colors.white),
+  Snackify.show(
+    context: context?? Get.context!,
+    type: snackType,
+    backgroundGradient: const LinearGradient(colors: [Colors.redAccent, Colors.deepOrange]),
+    duration: const Duration(seconds: 3),
+    title: Text(titleKey),
+    subtitle: Text(subtitleKey),
+    animationDuration: const Duration(milliseconds: 1000),
+    position: snackPositionKey ?? SnackPosition.bottom,
   );
 }
+

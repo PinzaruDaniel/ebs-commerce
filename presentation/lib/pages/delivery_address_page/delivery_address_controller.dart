@@ -24,6 +24,7 @@ import 'package:presentation/view/city_view_model.dart';
 import 'package:presentation/view/country_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/state_view_model.dart';
+import 'package:snackify/enums/snack_enums.dart';
 
 import '../../util/enum/enums.dart';
 import '../../util/routing/app_pop_up.dart';
@@ -122,7 +123,8 @@ class DeliveryAddressController extends GetxController {
     result.fold(
       (failure) {
         mainAppController.removePendingIds([PendingIds.getCountries]);
-        showFailureSnackBar(failure: failure);
+        showFailureSnackBar(
+            subtitleKey: '', titleKey: '', snackType: SnackType.error);
       },
       (list) {
         countries.value = list.map((c) => c.toViewModel).toList();
@@ -150,7 +152,8 @@ class DeliveryAddressController extends GetxController {
 
     result.fold(
       (failure) {
-        showFailureSnackBar(failure: failure);
+        showFailureSnackBar(
+            subtitleKey: '', titleKey: '', snackType: SnackType.error);
       },
       (list) {
         states.value = list.map((e) => e.toViewModel).toList();
@@ -169,7 +172,9 @@ class DeliveryAddressController extends GetxController {
 
     result.fold(
       (failure) {
-        showFailureSnackBar(failure: failure);
+        showFailureSnackBar(
+
+            subtitleKey: '', titleKey: '', snackType: SnackType.error);
       },
       (entity) {
         cities.value = entity.toViewModelList;

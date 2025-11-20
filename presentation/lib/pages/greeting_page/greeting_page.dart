@@ -1,14 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/greeting_page/widgets/button_without_password_widget.dart';
 import 'package:presentation/pages/greeting_page/widgets/company_icon_widget.dart';
-import 'package:presentation/pages/home_page/home_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/base/base_button_widget.dart';
+import 'package:snackify/enums/snack_enums.dart';
 
 import '../../util/resources/app_text_styles.dart';
 import '../../util/resources/app_texts.dart';
@@ -83,18 +81,16 @@ class _GreetingPageState extends State<GreetingPage> {
 
                   ButtonWithoutPasswordWidget(
                     onTap: () async {
-                      if (hasAgreed) {/*
-                        Navigator.of(Get.context!).pushAndRemoveUntil(
-                          CupertinoPageRoute(builder: (_) => HomePage()),
-                              (Route<dynamic> route) => false,
-                        );
-                        currentUserController.hasAgreedTerms.value = true;
-
-                        await currentUserController.setSettings();
-                        await currentUserController.clearUserData();*/
-                        showFailureSnackBar();
+                      if (hasAgreed) {
+                        AppRouter.openHomePage(removeUntil: true);
+                      }
+                      else{
+                        showFailureSnackBar(
+                            context:context,
+                            subtitleKey: 'subtitleKey', titleKey: 'titleKey', snackType: SnackType.warning);
 
                       }
+
                     },
                   ),
                 ],

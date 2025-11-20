@@ -4,11 +4,13 @@ import 'package:domain/modules/products/use_cases/get_filtered_products_use_case
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
+import 'package:snackify/enums/snack_enums.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../util/enum/enums.dart';
@@ -77,7 +79,7 @@ class ProductsDisplayController extends GetxController {
           isLoadingMore.value = false;
           mainAppController.removePendingIds([PendingIds.getProducts]);
 
-          showFailureSnackBar(failure: failure);
+          showFailureSnackBar( subtitleKey: '', titleKey: '', snackType: SnackType.error);
         },
         (list) {
           final newItems = list.map((e) => e.toModel).toList();
@@ -102,7 +104,7 @@ class ProductsDisplayController extends GetxController {
           isLoadingMore.value = false;
           mainAppController.removePendingIds([PendingIds.getProducts]);
 
-          showFailureSnackBar(failure: failure);
+          showFailureSnackBar( subtitleKey: '', titleKey: '', snackType: SnackType.error);
         },
         (list) {
           final newItems = list.map((e) => e.toModel).toList();
@@ -134,7 +136,7 @@ class ProductsDisplayController extends GetxController {
         isLoadingMore.value = false;
         mainAppController.removePendingIds([PendingIds.getProducts]);
 
-        showFailureSnackBar(failure: failure);
+        showFailureSnackBar(subtitleKey: '', titleKey: '', snackType: SnackType.error);
       },
       (responseEntity) {
         final items = responseEntity.response.map((e) => e.toModel).toList();

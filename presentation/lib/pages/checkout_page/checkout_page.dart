@@ -12,6 +12,7 @@ import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
+import 'package:snackify/enums/snack_enums.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
@@ -132,9 +133,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               }
                               Future.delayed(Duration(milliseconds: 200), () {
                                 showFailureSnackBar(
-                                  title: isValid ? AppTexts.success : AppTexts.invalidCode,
-                                  fallbackMessage: isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
-                                  isError: !isValid,
+                                  titleKey: isValid ? AppTexts.success : AppTexts.invalidCode,
+                                  subtitleKey: isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
+                                  snackType: isValid? SnackType.success : SnackType.error,
                                 );
                               });
                             },

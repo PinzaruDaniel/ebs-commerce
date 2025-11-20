@@ -12,6 +12,7 @@ import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/delivery_address_mapper.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
+import 'package:snackify/enums/snack_enums.dart';
 
 import '../../util/resources/app_texts.dart';
 import '../../util/routing/app_pop_up.dart';
@@ -77,7 +78,7 @@ class AuthentificationController extends GetxController {
     var password = getValueByKeyId('password') ?? '';
 
     if (email.isEmpty || password.isEmpty) {
-      showFailureSnackBar(failure: Failure.error(AppTexts.emailOrPasswordEmpty));
+      showFailureSnackBar(subtitleKey: '', titleKey: '', snackType: SnackType.error);
       mainAppController.removePendingIds([PendingIds.logIn]);
       return;
     }
