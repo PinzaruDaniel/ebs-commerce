@@ -20,6 +20,7 @@
         "domain",
         "dropdown_button2",
         "easy_localization",
+        "elegant_notification",
         "flutter",
         "flutter_animate",
         "flutter_hooks",
@@ -68,6 +69,13 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "elegant_notification",
+      "version": "2.5.1",
+      "dependencies": [
+        "flutter"
       ]
     },
     {

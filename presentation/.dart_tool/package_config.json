@@ -212,6 +212,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "elegant_notification",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/elegant_notification-2.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "equatable",
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/equatable-2.0.7",
       "packageUri": "lib/",
