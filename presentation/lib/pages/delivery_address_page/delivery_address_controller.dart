@@ -26,7 +26,7 @@ import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/state_view_model.dart';
 
 import '../../util/enum/enums.dart';
-import '../../util/widgets/failure_snack_bar_widget.dart';
+import '../../util/routing/app_pop_up.dart';
 import '../../view/pickup_location_view_model.dart';
 
 class DeliveryAddressController extends GetxController {

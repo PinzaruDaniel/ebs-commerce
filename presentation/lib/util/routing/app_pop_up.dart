@@ -1,3 +1,4 @@
+import 'package:common/constants/failure_class.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/util/widgets/base/base_view_widget.dart';
@@ -162,4 +163,26 @@ class AppPopUp {
         ) ??
         false;
   }
+}
+
+void showFailureSnackBar({
+  Failure? failure,
+  String? fallbackMessage,
+  String? title,
+  bool isError = true,
+  SnackPosition? snackPosition,
+}) {
+  final message = failure?.message ?? fallbackMessage;
+  Get.snackbar(
+    title ?? 'Error',
+    message ?? 'f',
+    backgroundColor: isError ? AppColors.red : AppColors.primary,
+    colorText: Colors.white,
+    snackPosition: snackPosition ?? SnackPosition.BOTTOM,
+    duration: const Duration(seconds: 2),
+    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
+    padding: const EdgeInsets.all(16),
+    borderRadius: 20,
+    icon: Icon(isError ? Icons.error : Icons.check_circle, color: Colors.white),
+  );
 }

@@ -10,11 +10,11 @@ import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/delivery_address_mapper.dart';
-import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
 import '../../util/resources/app_texts.dart';
+import '../../util/routing/app_pop_up.dart';
 import '../../view/user_view_model.dart';
 
 class AuthentificationController extends GetxController {
@@ -47,7 +47,9 @@ class AuthentificationController extends GetxController {
         initialValue: '',
         textInputType: TextInputType.visiblePassword,
         customValidator: (text) {
-          if (text == null || text.isEmpty) return AppTexts.emailIsRequired;
+          if (text == null || text.isEmpty) {
+            return AppTexts.emailIsRequired;
+          }
           return null;
         },
       ),
@@ -59,8 +61,7 @@ class AuthentificationController extends GetxController {
     isPasswordVisible.toggle();
   }
 
-  Future<void> loginUser({required Function onSuccess}) async {
-
+  Future<void> loginUser({required Function onSuccess, required Function onError}) async {
     mainAppController.addPendingIds([PendingIds.logIn]);
     String? getValueByKeyId(String keyId) {
       final item =
@@ -80,43 +81,44 @@ class AuthentificationController extends GetxController {
       mainAppController.removePendingIds([PendingIds.logIn]);
       return;
     }
-
-    final params = AuthLoginParams(email: email, password: password);
-    final either = await authLoginUseCase(params);
-    either.fold(
-      (failure) {
-        showFailureSnackBar(failure: failure);
-        mainAppController.removePendingIds([PendingIds.logIn]);
-
-      },
-      (response) async {
-        onSuccess.call();
-      },
-    );
-    final result = await syncUserUseCase.call();
-    result.fold(
-      (failure) {
-        consoleLog('User is not logged in');
-        mainAppController.removePendingIds([PendingIds.logIn]);
-      },
-      (entity) {
-        currentUserController.userVM.value = UserViewModel(
-          name: entity.name,
-          surname: entity.surname,
-          email: entity.email,
-          imageUrl: entity.imageUrl,
-          deliveryAddressViewModel: entity.deliveryAddressEntity?.toModel,
-        );
-        setDeliveryAddressUseCase(
-          SetDeliveryAddressParams(
-            deliveryAddressEntity: entity.deliveryAddressEntity!,
-            idUser: currentUserController.userVM.value?.idUser ?? 1,
-          ),
-        );
-        consoleLog('User already logged in: ${currentUserController.userVM.value?.email}');
-        consoleLog('Successfully auto-logged in ${entity.name}');
-        mainAppController.removePendingIds([PendingIds.logIn]);
-      },
-    );
+    await authLoginUseCase(AuthLoginParams(email: email, password: password)).then((either) {
+      either.fold(
+        (failure) {
+          allItems.refresh();
+          mainAppController.removePendingIds([PendingIds.logIn]);
+          consoleLog('User is not logged in, error');
+          onError.call();
+        },
+        (response) async {
+          onSuccess.call();
+        },
+      );
+    });
+    await syncUserUseCase.call().then((result) {
+      result.fold(
+        (failure) {
+          consoleLog('User is not logged in');
+          mainAppController.removePendingIds([PendingIds.logIn]);
+        },
+        (entity) {
+          currentUserController.userVM.value = UserViewModel(
+            name: entity.name,
+            surname: entity.surname,
+            email: entity.email,
+            imageUrl: entity.imageUrl,
+            deliveryAddressViewModel: entity.deliveryAddressEntity?.toModel,
+          );
+          setDeliveryAddressUseCase(
+            SetDeliveryAddressParams(
+              deliveryAddressEntity: entity.deliveryAddressEntity!,
+              idUser: currentUserController.userVM.value?.idUser ?? 1,
+            ),
+          );
+          consoleLog('User already logged in: ${currentUserController.userVM.value?.email}');
+          consoleLog('Successfully auto-logged in ${entity.name}');
+          mainAppController.removePendingIds([PendingIds.logIn]);
+        },
+      );
+    });
   }
 }

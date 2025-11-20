@@ -38,7 +38,6 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
       pendingIds: [PendingIds.logIn],
       appBar: AppBarWidget(showBorder: false),
       resizeToAvoidBottomInset: false,
-
       builder: (context) {
         return Form(
           child: Padding(
@@ -90,7 +89,7 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                         }
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: TextFieldWidget(itemViewModel: item),
+                          child:  TextFieldWidget(itemViewModel: item),
                         );
                       }
                       return SizedBox.shrink();
@@ -111,8 +110,27 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                                 (Route<dynamic> route) => false,
                           );
                         },
+                        onError: (){
+                          ScaffoldMessenger.of(Get.context!).showSnackBar(
+                            SnackBar(
+                              duration: Duration(seconds: 3),
+                              content: const Text('This is a floating SnackBar!'),
+                              behavior: SnackBarBehavior.floating,
+                              margin: const EdgeInsets.all(20),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 6,
+                              action: SnackBarAction(
+                                label: 'Dismiss',
+                                onPressed: () {
+                                },
+                              ),
+                            ),
+                          );
+
+                        }
                       );
-                      authController.allItems.clear();
                     },
                     title: AppTexts.logIn,
                   ),

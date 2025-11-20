@@ -17,7 +17,6 @@ class EntryPage extends StatelessWidget {
     return GetMaterialApp(
       title: AppTexts.appTitle,
       debugShowCheckedModeBanner: false,
-
       locale: context.locale,
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
@@ -33,7 +32,6 @@ class EntryPage extends StatelessWidget {
         ],
         bottomSheetTheme: BottomSheetThemeData(dragHandleColor: Colors.grey.shade300),
         scaffoldBackgroundColor: Colors.white,
-        //fontFamily: 'Nunito-sans',
         useMaterial3: true,
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: AppColors.primary,
@@ -41,9 +39,9 @@ class EntryPage extends StatelessWidget {
           selectionHandleColor: AppColors.primary,
         ),
       ),
-      home: currentUserController.isUserLogged.value ? HomePage(): WelcomePage(),
-      navigatorObservers: [],
+      home:
 
+      currentUserController.userVM.value != null ? HomePage() : WelcomePage(),
     );
   }
 }

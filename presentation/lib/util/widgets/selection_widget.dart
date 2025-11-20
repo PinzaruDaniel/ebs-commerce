@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_texts.dart';
-import 'package:presentation/util/widgets/failure_snack_bar_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 
 import '../resources/app_icons.dart';

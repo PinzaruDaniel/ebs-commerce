@@ -1,6 +1,8 @@
 import 'package:di/di.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/localization/localization_loader.dart';
 import 'package:presentation/entry_page.dart';
@@ -27,4 +29,3 @@ void main() async {
     ),
   );
 }
-

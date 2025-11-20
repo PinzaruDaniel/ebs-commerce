@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/authentification_page/authentification_page.dart';
@@ -36,16 +37,17 @@ Route<T> createSharedAxisRoute<T>({required Widget page, SharedAxisTransitionTyp
     },
   );
 }
+
 class SharedAxisCustomTransition extends CustomTransition {
   @override
   Widget buildTransition(
-      BuildContext context,
-      Curve? curve,
-      Alignment? alignment,
-      Animation<double> animation,
-      Animation<double> secondaryAnimation,
-      Widget child,
-      ) {
+    BuildContext context,
+    Curve? curve,
+    Alignment? alignment,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return SharedAxisTransition(
       animation: animation,
       secondaryAnimation: secondaryAnimation,
@@ -56,26 +58,32 @@ class SharedAxisCustomTransition extends CustomTransition {
   }
 }
 
-
-
 class AppRouter {
-  static void openHomePage() {
+  static void _route({required Widget page, bool removeUntil = false, bool withAnimation = false}) {
     if (Get.context != null) {
-      Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => HomePage()));
+      if (removeUntil) {
+        Navigator.of(
+          Get.context!,
+          rootNavigator: true,
+        ).pushAndRemoveUntil(CupertinoPageRoute(builder: (_) => page), (Route<dynamic> route) => false);
+      } else if (withAnimation) {
+        Navigator.of(Get.context!).push(createSharedAxisRoute(page: page));
+      } else {
+        Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => page));
+      }
     }
   }
 
-  static Widget detailsPage({required ProductViewModel item}) {
-    return ProductDetailPage(item: item);
+  static void openHomePage({bool removeUntil = false}) {
+    _route(page: HomePage(), removeUntil: removeUntil);
   }
 
-
+//Todo: to change all
   static void openOrdersPage() {
     if (Get.context != null) {
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => OrdersPage()));
     }
   }
-
 
   static void openShoppingCartPage() {
     if (Get.context != null) {
@@ -101,23 +109,6 @@ class AppRouter {
     }
   }
 
-  static Widget openFilterPage() {
-    return FilterPage();
-  }
-
-  static Widget openProductsDisplayPage({
-    required ProductListType type,
-    required String title,
-    List<int>? selectedCategoryIds,
-    SfRangeValues? priceRange,
-  }) {
-    return ProductsDisplayPage(
-      title: title,
-      type: type,
-      selectedCategoryIds: selectedCategoryIds,
-      priceRange: priceRange,
-    );
-  }
 
   static void openCheckoutPage({required List<CartViewModel> items}) {
     if (Get.context != null) {
