@@ -40,8 +40,10 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  Future<void> syncProducts() async {
-    mainAppController.addPendingIds([PendingIds.getProducts]);
+  Future<void> syncProducts({bool loadMore=false}) async {
+    if(loadMore){
+      mainAppController.addPendingIds([PendingIds.getProducts]);
+    }
     isLoading.value = true;
     final either = await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
     either.fold(
@@ -64,7 +66,7 @@ class HomeController extends GetxController {
 
   Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
-      await syncProducts();
+      await syncProducts(loadMore: loadMore);
     }
     _streamSubscription?.cancel();
     _streamSubscription = streamProductsUseCase

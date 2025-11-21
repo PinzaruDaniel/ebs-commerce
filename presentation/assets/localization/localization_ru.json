@@ -121,7 +121,13 @@
   "userLabel": "Пользователь",
   "languageLabel": "Язык",
   "orderPlacedOn": "Заказ оформлен",
-  "appTitle": "Интернет-магазин ebs"
+  "appTitle": "Интернет-магазин ebs",
+  "noInternetConnection": "Нет подключения к интернету",
+  "backOnline": "Вы снова в сети!",
+  "error": "Ошибка",
+  "invalidCredentials": "Электронная почта или пароль указаны неверно"
+
+
 
 
 }

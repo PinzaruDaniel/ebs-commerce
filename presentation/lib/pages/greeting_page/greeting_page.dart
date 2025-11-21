@@ -84,13 +84,6 @@ class _GreetingPageState extends State<GreetingPage> {
                       if (hasAgreed) {
                         AppRouter.openHomePage(removeUntil: true);
                       }
-                      else{
-                        showFailureSnackBar(
-                            context:context,
-                            subtitleKey: 'subtitleKey', titleKey: 'titleKey', snackType: SnackType.warning);
-
-                      }
-
                     },
                   ),
                 ],

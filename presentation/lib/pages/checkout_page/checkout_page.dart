@@ -9,6 +9,7 @@ import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.da
 import 'package:presentation/util/enum/enums.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
+import 'package:presentation/util/widgets/open_container_animation_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
@@ -52,7 +53,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         title: AppTexts.checkout,
         showBorder: false,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Get.back(),
           icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
       ),
@@ -131,13 +132,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 checkoutController.updateOrderSummary(checkoutController.calculateSubtotal());
                                 Get.back();
                               }
-                              Future.delayed(Duration(milliseconds: 200), () {
-                                showFailureSnackBar(
-                                  titleKey: isValid ? AppTexts.success : AppTexts.invalidCode,
-                                  subtitleKey: isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
-                                  snackType: isValid? SnackType.success : SnackType.error,
-                                );
-                              });
+                              AppPopUp.showFailureSnackBar(
+                                title: isValid ? AppTexts.success : AppTexts.invalidCode,
+                                fallbackMessage: isValid ? AppTexts.promoValid : AppTexts.promoNotValid,
+                                isError: !isValid,
+                              );
                             },
                           );
                         }

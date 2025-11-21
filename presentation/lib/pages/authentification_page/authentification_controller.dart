@@ -78,7 +78,7 @@ class AuthentificationController extends GetxController {
     var password = getValueByKeyId('password') ?? '';
 
     if (email.isEmpty || password.isEmpty) {
-      showFailureSnackBar(subtitleKey: '', titleKey: '', snackType: SnackType.error);
+      AppPopUp.showFailureSnackBar(fallbackMessage: AppTexts.emailOrPasswordEmpty);
       mainAppController.removePendingIds([PendingIds.logIn]);
       return;
     }

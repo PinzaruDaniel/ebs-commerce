@@ -95,7 +95,7 @@ class OptionPickerWidgetState<T> extends State<OptionPickerWidget<T>> {
       widget.selectionViewModel.selectedItem = filteredOptions[selectedIndex];
       widget.onSelect();
     }
-    Navigator.pop(context);
+    Get.back();
   }
 
   @override

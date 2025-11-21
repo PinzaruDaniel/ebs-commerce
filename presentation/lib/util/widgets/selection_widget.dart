@@ -79,8 +79,8 @@ class _SelectionWidgetState<T> extends State<SelectionWidget<T>> {
                 },
               );
             } else {
-              showFailureSnackBar(
-                  subtitleKey: AppTexts.selectPreviousField, titleKey: '', snackType: SnackType.error);
+              AppPopUp.showFailureSnackBar(
+                  fallbackMessage: AppTexts.selectPreviousField, title: '');
 
             }
           },

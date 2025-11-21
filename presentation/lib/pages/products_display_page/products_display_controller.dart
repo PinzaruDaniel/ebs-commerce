@@ -79,7 +79,7 @@ class ProductsDisplayController extends GetxController {
           isLoadingMore.value = false;
           mainAppController.removePendingIds([PendingIds.getProducts]);
 
-          showFailureSnackBar( subtitleKey: '', titleKey: '', snackType: SnackType.error);
+          AppPopUp.showFailureSnackBar(failure: failure);
         },
         (list) {
           final newItems = list.map((e) => e.toModel).toList();
@@ -104,7 +104,7 @@ class ProductsDisplayController extends GetxController {
           isLoadingMore.value = false;
           mainAppController.removePendingIds([PendingIds.getProducts]);
 
-          showFailureSnackBar( subtitleKey: '', titleKey: '', snackType: SnackType.error);
+          AppPopUp.showFailureSnackBar(failure: failure);
         },
         (list) {
           final newItems = list.map((e) => e.toModel).toList();
@@ -120,6 +120,7 @@ class ProductsDisplayController extends GetxController {
   }
 
   Future<void> getFilteredProducts(bool loadMore, List<int>? selectedCategoryIds, SfRangeValues? priceRange) async {
+    mainAppController.addPendingIds([PendingIds.getProducts]);
     final either = await getFilteredProductsUseCase.call(
       GetFilteredProductsParams(
         page: currentPage.value,
@@ -128,7 +129,6 @@ class ProductsDisplayController extends GetxController {
         categoriesId: selectedCategoryIds,
       ),
     );
-    mainAppController.addPendingIds([PendingIds.getProducts]);
 
     either.fold(
       (failure) {
@@ -136,7 +136,7 @@ class ProductsDisplayController extends GetxController {
         isLoadingMore.value = false;
         mainAppController.removePendingIds([PendingIds.getProducts]);
 
-        showFailureSnackBar(subtitleKey: '', titleKey: '', snackType: SnackType.error);
+        AppPopUp.showFailureSnackBar(failure: failure);
       },
       (responseEntity) {
         final items = responseEntity.response.map((e) => e.toModel).toList();

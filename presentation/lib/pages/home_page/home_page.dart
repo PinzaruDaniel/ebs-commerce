@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Get.put(HomeController());
-    consoleLog('user at initState ${currentUserController.userVM.value?.email}');
     WidgetsBinding.instance.addPostFrameCallback((_) {
       homeController.initItems();
     });

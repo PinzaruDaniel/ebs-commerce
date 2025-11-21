@@ -47,7 +47,6 @@ class DeliveryAddressController extends GetxController {
   Rxn<String> comments = Rxn<String>();
   Rxn<PickupLocationViewModel> pickupLocation = Rxn<PickupLocationViewModel>();
 
-
   Rx<DeliveryTypeViewModel> deliveryTypeVM = (DeliveryTypeViewModel(
     options: DeliveryType.values
         .map(
@@ -123,8 +122,7 @@ class DeliveryAddressController extends GetxController {
     result.fold(
       (failure) {
         mainAppController.removePendingIds([PendingIds.getCountries]);
-        showFailureSnackBar(
-            subtitleKey: '', titleKey: '', snackType: SnackType.error);
+        AppPopUp.showFailureSnackBar(failure: failure);
       },
       (list) {
         countries.value = list.map((c) => c.toViewModel).toList();
@@ -152,8 +150,7 @@ class DeliveryAddressController extends GetxController {
 
     result.fold(
       (failure) {
-        showFailureSnackBar(
-            subtitleKey: '', titleKey: '', snackType: SnackType.error);
+        AppPopUp.showFailureSnackBar(failure: failure);
       },
       (list) {
         states.value = list.map((e) => e.toViewModel).toList();
@@ -172,9 +169,7 @@ class DeliveryAddressController extends GetxController {
 
     result.fold(
       (failure) {
-        showFailureSnackBar(
-
-            subtitleKey: '', titleKey: '', snackType: SnackType.error);
+        AppPopUp.showFailureSnackBar(failure: failure);
       },
       (entity) {
         cities.value = entity.toViewModelList;
@@ -323,7 +318,7 @@ class DeliveryAddressController extends GetxController {
         comments: comments,
       );
       deliveryAddressVM.value = model;
-      currentUserController.userVM.value?.deliveryAddressViewModel=model;
+      currentUserController.userVM.value?.deliveryAddressViewModel = model;
       return model;
     }
   }

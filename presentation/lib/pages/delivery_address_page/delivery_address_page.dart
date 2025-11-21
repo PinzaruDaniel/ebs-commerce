@@ -50,7 +50,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
         title: AppTexts.deliveryAddress.capitalizeFirst,
         showBorder: false,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Get.back(),
           icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
       ),

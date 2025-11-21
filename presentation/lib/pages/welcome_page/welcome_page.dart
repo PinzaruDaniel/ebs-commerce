@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
+import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 

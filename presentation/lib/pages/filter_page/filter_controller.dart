@@ -1,5 +1,4 @@
-// ignore_for_file: invalid_use_of_protected_member
-
+import 'package:common/constants/logger.dart';
 import 'package:domain/modules/products/use_cases/get_filtered_products_count_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:get/get.dart';
@@ -21,25 +20,15 @@ class FilterController extends GetxController {
   final RxDouble maxPrice = 50000.0.obs;
   final Rx<SfRangeValues> priceRange = SfRangeValues(1.0, 50000.0).obs;
   final RxInt filteredCount = 0.obs;
+  int i = 0;
 
   void initItems() {
     getFilteredProductsCount(page: 1);
-    debounce<SfRangeValues>(
-      priceRange,
-      (_) => getFilteredProductsCount(page: 1),
-      time: Duration(seconds: 1),
-    );
-    debounce<Set<int>>(
-      selectedCategoryId,
-      (_) => getFilteredProductsCount(page: 1),
-      time: Duration(milliseconds: 2),
-    );
+    debounce<SfRangeValues>(priceRange, (_) => getFilteredProductsCount(page: 1), time: Duration(seconds: 1));
+    debounce<Set<int>>(selectedCategoryId, (_) => getFilteredProductsCount(page: 1), time: Duration(milliseconds: 300));
   }
 
-  void setCategoryData({
-    required Set<int> selectedIds,
-    required List<CategoryViewModel> allCategories,
-  }) {
+  void setCategoryData({required Set<int> selectedIds, required List<CategoryViewModel> allCategories}) {
     selectedCategoryId.value = Set.from(selectedIds);
     categories.value = List.from(allCategories);
   }
@@ -56,32 +45,34 @@ class FilterController extends GetxController {
     );
   }
 
-  Future<void> getFilteredProductsCount({required int page}) async {
-    isLoading.value = true;
-
+  Future<void> getFilteredProductsCount({required int page, GetFilteredProductsCountParams? params}) async {
+    consoleLog('sent request for count: $i');
     final min = priceRange.value.start.toDouble();
     final max = priceRange.value.end.toDouble();
     final categories = selectedCategoryId.toList();
 
     final result = await getFilteredProductsCountUseCase.call(
-      GetFilteredProductsCountParams(
-        page: page,
-        priceGte: min,
-        priceLte: max,
-        categoriesId: categories.isNotEmpty ? categories : null,
-      ),
+      params ??
+          GetFilteredProductsCountParams(
+            page: page,
+            priceGte: min,
+            priceLte: max,
+            categoriesId: categories.isNotEmpty ? categories : null,
+          ),
     );
 
     result.fold(
       (failure) {
         filteredCount.value = 0;
+        isLoading.value = false;
+        isLoading.refresh();
       },
       (responseEntity) {
         filteredCount.value = responseEntity;
+        isLoading.value = false;
+        isLoading.refresh();
       },
     );
-
-    isLoading.value = false;
   }
 
   void onRangeChanged(SfRangeValues v) => priceRange.value = v;
@@ -96,11 +87,8 @@ class FilterController extends GetxController {
     }
   }
 
-  void resetFilters({bool exitPage = false}) {
+  void resetFilters() {
     selectedCategoryId.clear();
-    priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
-    if(!exitPage) {
-      getFilteredProductsCount(page: 1);
-    }
+    priceRange.value=SfRangeValues(minPrice.value, maxPrice.value);
   }
 }

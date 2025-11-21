@@ -121,5 +121,10 @@
   "userLabel": "User",
   "languageLabel": "Language",
   "orderPlacedOn": "Order placed on",
-  "appTitle": "E-commerce ebs app"
+  "appTitle": "E-commerce ebs app",
+  "noInternetConnection": "No internet connection",
+  "backOnline": "You are back online!",
+  "error": "Error",
+  "invalidCredentials": "Email or password is incorrect"
+
 }

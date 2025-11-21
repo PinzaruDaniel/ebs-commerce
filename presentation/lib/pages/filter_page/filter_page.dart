@@ -1,3 +1,4 @@
+import 'package:common/constants/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/pages/filter_page/widgets/add_to_category_button_widget.dart';
 import 'package:presentation/pages/filter_page/widgets/price_slider_widget.dart';
@@ -10,6 +11,7 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import '../../util/enum/enums.dart';
+import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_text_styles.dart';
 import 'package:get/get.dart';
 
@@ -26,13 +28,6 @@ class FilterPage extends StatefulWidget {
 
 class _FilterPageState extends State<FilterPage> {
   FilterController get filterController => Get.find();
-
-  @override
-  void dispose() {
-    filterController.resetFilters(exitPage: true);
-    super.dispose();
-  }
-
   @override
   void initState() {
     super.initState();
@@ -40,6 +35,7 @@ class _FilterPageState extends State<FilterPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       filterController.initItems();
     });
+    consoleLog('filter is loading value ${filterController.isLoading.value}');
   }
 
   @override
@@ -50,6 +46,10 @@ class _FilterPageState extends State<FilterPage> {
         title: AppTexts.filters,
         showBorder: true,
         iconColors: AppColors.primary,
+        leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
+        ),
         actions: [
           TextButton(
             style: TextButton.styleFrom(foregroundColor: Colors.black),

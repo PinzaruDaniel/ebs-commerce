@@ -6,6 +6,7 @@ import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';
+import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/base/base_page.dart';
@@ -111,23 +112,7 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                           );
                         },
                         onError: (){
-                          ScaffoldMessenger.of(Get.context!).showSnackBar(
-                            SnackBar(
-                              duration: Duration(seconds: 3),
-                              content: const Text('This is a floating SnackBar!'),
-                              behavior: SnackBarBehavior.floating,
-                              margin: const EdgeInsets.all(20),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 6,
-                              action: SnackBarAction(
-                                label: 'Dismiss',
-                                onPressed: () {
-                                },
-                              ),
-                            ),
-                          );
+                          AppPopUp.showFailureSnackBar(fallbackMessage: AppTexts.invalidCredentials);
 
                         }
                       );

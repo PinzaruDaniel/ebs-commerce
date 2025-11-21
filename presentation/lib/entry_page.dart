@@ -39,9 +39,10 @@ class EntryPage extends StatelessWidget {
           selectionHandleColor: AppColors.primary,
         ),
       ),
-      home:
-
-      currentUserController.userVM.value != null ? HomePage() : WelcomePage(),
+      builder: (context, child) {
+        return Overlay(initialEntries: [OverlayEntry(builder: (context) => child ?? Container())]);
+      },
+      home: currentUserController.userVM.value != null ? HomePage() : WelcomePage(),
     );
   }
 }

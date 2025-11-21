@@ -121,5 +121,11 @@
   "userLabel": "Utilizator",
   "languageLabel": "Limbă",
   "orderPlacedOn": "Comandă plasată pe",
-  "appTitle": "Aplicație e-commerce ebs"
+  "appTitle": "Aplicație e-commerce ebs",
+  "noInternetConnection": "Nu există conexiune la internet",
+  "backOnline": "Ești din nou online!",
+  "error": "Eroare",
+  "invalidCredentials": "Email sau parola este incorectă"
+
+
 }

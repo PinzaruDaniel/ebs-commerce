@@ -69,7 +69,7 @@ class ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailAd
     );
   }
 
-  void onSave() {
+  void onSave()  {
     Get.back();
     widget.onAdd.call(quantity);
   }

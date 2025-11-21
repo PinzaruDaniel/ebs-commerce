@@ -24,7 +24,8 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  late ScrollController scrollController;
+  ScrollController get scrollController => ScrollController();
+
   bool isCollapsed = false;
 
   AddToCartController get addCartController => Get.find();
@@ -34,7 +35,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     super.initState();
     Get.put(AddToCartController());
     addCartController.initCartItem(widget.item!);
-    scrollController = ScrollController();
     scrollController.addListener(_scrollListener);
   }
 
@@ -76,9 +76,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
             leading: IconButton(
               icon: AppIcons.backIcon(color: AppColors.blue, size: 20),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Get.back(),
             ),
-            actions: [AppBarIconShoppingCartWidget(showLiquid: true,)],
+            actions: [AppBarIconShoppingCartWidget(showLiquid: true)],
             flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),
           ),
           SliverToBoxAdapter(
@@ -91,9 +91,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
-        buttonColor: isItemValid? AppColors.primary: Colors.grey.shade300,
-        textColor: isItemValid? Colors.white: Colors.black,
-        title:isItemValid ? AppTexts.addToCart : AppTexts.cantAddToCart,
+        buttonColor: isItemValid ? AppColors.primary : Colors.grey.shade300,
+        textColor: isItemValid ? Colors.white : Colors.black,
+        title: isItemValid ? AppTexts.addToCart : AppTexts.cantAddToCart,
         showIcon: isItemValid,
         onTap: () {
           AppPopUp.showCartInfoPopUp(

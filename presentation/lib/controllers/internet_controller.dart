@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:developer' as developer;
-
 import 'package:common/constants/logger.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/util/resources/app_colors.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 
 class InternetController extends GetxController {
@@ -32,25 +30,16 @@ class InternetController extends GetxController {
   Future<void> _updateConnectionStatus(List<ConnectivityResult> result) async {
     connectionStatus.assignAll(result);
     if (result.contains(ConnectivityResult.none)) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        SnackBar(
-          backgroundColor: AppColors.primary,
-          duration: Duration(seconds: 2),
-          content: const Text('This is a floating SnackBar!'),
-          behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 6,
-          persist: false,
-        ),
+      AppPopUp.showFailureSnackBar(fallbackMessage: AppTexts.noInternetConnection, snackPosition: SnackPosition.TOP);
+    }
+
+    else if (result.contains(ConnectivityResult.mobile) || result.contains(ConnectivityResult.wifi)) {
+      AppPopUp.showFailureSnackBar(
+        title: AppTexts.success,
+        fallbackMessage: AppTexts.backOnline,
+        isError: false,
+        snackPosition: SnackPosition.TOP,
       );
-
-
-      //TODO:del decomentat
-      consoleLog('no internet found');
     }
   }
 }

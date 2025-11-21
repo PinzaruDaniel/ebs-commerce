@@ -41,7 +41,7 @@ class _ContactInformationPageState extends State<ContactInformationPage> {
         title: AppTexts.contactInfo,
         showBorder: false,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Get.back(),
           icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
       ),
