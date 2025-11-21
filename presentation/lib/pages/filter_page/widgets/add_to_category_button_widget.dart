@@ -6,8 +6,9 @@ import '../../../util/routing/app_router.dart';
 
 class AddToCategoryButtonWidget extends StatelessWidget {
   final Function onSave;
+  final Set<int> selectedIds;
 
-  const AddToCategoryButtonWidget({super.key, required this.onSave});
+  const AddToCategoryButtonWidget({super.key, required this.onSave, required this.selectedIds});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class AddToCategoryButtonWidget extends StatelessWidget {
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       onTap: () async {
-        AppRouter.openCategoryPickerPage(onSave: onSave);
+        AppRouter.openCategoryPickerPage(onSave: onSave, selectedIds: selectedIds);
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
@@ -29,10 +30,7 @@ class AddToCategoryButtonWidget extends StatelessWidget {
           children: [
             Text(
               AppTexts.addCategory,
-              style: AppTextsStyle.medium.copyWith(
-                color: Color(0xff6b6d81),
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextsStyle.medium.copyWith(color: Color(0xff6b6d81), fontWeight: FontWeight.bold),
             ),
             SizedBox(width: 4),
             Icon(Icons.add, size: 20, color: Color(0xff6b6d81)),

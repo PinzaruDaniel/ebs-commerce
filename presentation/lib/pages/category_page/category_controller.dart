@@ -9,7 +9,7 @@ class CategoryController extends GetxController {
   final GetAllCategoriesUseCase getAllCategoriesUseCase = GetIt.instance<GetAllCategoriesUseCase>();
   RxList<CategoryViewModel> categories = RxList([]);
   RxMap<int?, List<CategoryViewModel>> groupedCategories = <int?, List<CategoryViewModel>>{}.obs;
-  final RxSet<int> selectedCategoryId = <int>{}.obs;
+  RxSet<int> selectedCategoryId = <int>{}.obs;
 
   RxBool isLoading = RxBool(true);
 

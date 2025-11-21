@@ -73,8 +73,8 @@ class AppRouter {
     _route(page: AuthentificationPage(), withAnimation: true);
   }
 
-  static void openCategoryPickerPage({required Function onSave}) {
-    _route(page: CategoryPage(onSave: onSave), withAnimation: true);
+  static void openCategoryPickerPage({required Function onSave, required Set<int> selectedIds}) {
+    _route(page: CategoryPage(onSave: onSave, selectedIds: selectedIds,), withAnimation: true);
   }
 
   static void openCheckoutPage({required List<CartViewModel> items}) {

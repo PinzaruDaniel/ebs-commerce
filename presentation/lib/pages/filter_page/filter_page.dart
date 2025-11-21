@@ -28,6 +28,13 @@ class FilterPage extends StatefulWidget {
 
 class _FilterPageState extends State<FilterPage> {
   FilterController get filterController => Get.find();
+
+  @override
+  void dispose() {
+    filterController.everWorkers.dispose();
+    filterController.resetFilters();
+    super.dispose();
+  }
   @override
   void initState() {
     super.initState();
@@ -104,6 +111,7 @@ class _FilterPageState extends State<FilterPage> {
                             onRemove: () => filterController.toggleCategory(id, false),
                           ),
                         AddToCategoryButtonWidget(
+                          selectedIds: filterController.selectedCategoryId,
                           onSave: (List<CategoryViewModel> allCategories, Set<int> selectedIds) {
                             filterController.setCategoryData(
                               selectedIds: selectedIds.toSet(),

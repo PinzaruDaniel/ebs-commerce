@@ -32,14 +32,5 @@ class InternetController extends GetxController {
     if (result.contains(ConnectivityResult.none)) {
       AppPopUp.showFailureSnackBar(fallbackMessage: AppTexts.noInternetConnection, snackPosition: SnackPosition.TOP);
     }
-
-    else if (result.contains(ConnectivityResult.mobile) || result.contains(ConnectivityResult.wifi)) {
-      AppPopUp.showFailureSnackBar(
-        title: AppTexts.success,
-        fallbackMessage: AppTexts.backOnline,
-        isError: false,
-        snackPosition: SnackPosition.TOP,
-      );
-    }
   }
 }

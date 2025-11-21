@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:common/constants/logger.dart';
 import 'package:domain/modules/products/use_cases/get_filtered_products_count_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
@@ -21,16 +24,22 @@ class FilterController extends GetxController {
   final Rx<SfRangeValues> priceRange = SfRangeValues(1.0, 50000.0).obs;
   final RxInt filteredCount = 0.obs;
   int i = 0;
+  final Debouncer _debouncer = Debouncer(milliseconds: 500);
+  late Worker everWorkers;
 
   void initItems() {
+    everWorkers= everAll([selectedCategoryId, priceRange], (_) {
+      _debouncer.run(() {
+        getFilteredProductsCount(page: 1);
+      });
+    });
+
     getFilteredProductsCount(page: 1);
-    debounce<SfRangeValues>(priceRange, (_) => getFilteredProductsCount(page: 1), time: Duration(seconds: 1));
-    debounce<Set<int>>(selectedCategoryId, (_) => getFilteredProductsCount(page: 1), time: Duration(milliseconds: 300));
   }
 
   void setCategoryData({required Set<int> selectedIds, required List<CategoryViewModel> allCategories}) {
-    selectedCategoryId.value = Set.from(selectedIds);
-    categories.value = List.from(allCategories);
+    selectedCategoryId.value = selectedIds;
+    categories.value = allCategories;
   }
 
   GetFilteredProductsParams getFilteredProductsParams() {
@@ -46,6 +55,7 @@ class FilterController extends GetxController {
   }
 
   Future<void> getFilteredProductsCount({required int page, GetFilteredProductsCountParams? params}) async {
+    i++;
     consoleLog('sent request for count: $i');
     final min = priceRange.value.start.toDouble();
     final max = priceRange.value.end.toDouble();
@@ -89,6 +99,24 @@ class FilterController extends GetxController {
 
   void resetFilters() {
     selectedCategoryId.clear();
-    priceRange.value=SfRangeValues(minPrice.value, maxPrice.value);
+    priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
+  }
+
+}
+
+class Debouncer {
+  final int milliseconds;
+  VoidCallback? action;
+  Timer? _timer;
+
+  Debouncer({required this.milliseconds});
+
+  void run(VoidCallback action) {
+    _timer?.cancel();
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
+  }
+
+  void dispose() {
+    _timer?.cancel();
   }
 }
