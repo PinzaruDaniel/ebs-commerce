@@ -1,5 +1,7 @@
+import 'package:common/constants/logger.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/add_to_cart_controller.dart';
+import 'package:presentation/pages/product_detail_page/widgets/product_detail_back_icon_glass_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_collapsed_app_bar_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_expanded_app_bar.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_page_body_widget.dart';
@@ -74,10 +76,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             backgroundColor: isCollapsed ? Colors.white : Colors.transparent,
             surfaceTintColor: Colors.white,
 
-            leading: IconButton(
-              icon: AppIcons.backIcon(color: AppColors.blue, size: 20),
-              onPressed: () => Get.back(),
-            ),
+            leading: ProductDetailBackIconGlassWidget(),
             actions: [AppBarIconShoppingCartWidget(showLiquid: true)],
             flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),
           ),
@@ -101,6 +100,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             onAdd: (int quantity) {
               addCartController.cartItem.value?.quantity = quantity;
               final item = addCartController.cartItem.value;
+              consoleLog('item: $item');
               mainAppController.addToCart(item!);
               AppRouter.openShoppingCartPage();
             },

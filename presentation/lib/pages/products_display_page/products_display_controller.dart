@@ -22,13 +22,11 @@ class ProductsDisplayController extends GetxController {
   final GetNewProductsUseCase getNewProductsUseCase = GetIt.instance<GetNewProductsUseCase>();
   final GetSaleProductsUseCase getSaleProductsUseCase = GetIt.instance<GetSaleProductsUseCase>();
   final GetFilteredProductsUseCase getFilteredProductsUseCase = GetIt.instance<GetFilteredProductsUseCase>();
-  RxBool isLoading = true.obs;
   List<ProductViewModel> products = RxList([]);
 
   Rxn<Failure> failure = Rxn<Failure>();
   RxInt currentPage = 1.obs;
   int perPage = 20;
-  RxBool isLoadingMore = false.obs;
 
   Future<void> loadProducts({
     bool loadMore = false,
@@ -38,9 +36,7 @@ class ProductsDisplayController extends GetxController {
   }) async {
     if (loadMore) {
       currentPage.value++;
-      if (isLoadingMore.value) return;
     } else {
-      isLoading.value = true;
       currentPage.value = 1;
       products.clear();
     }
@@ -62,11 +58,7 @@ class ProductsDisplayController extends GetxController {
           return;
       }
     } finally {
-      isLoading.value = false;
-      isLoadingMore.value = false;
     }
-    isLoading.value = false;
-    isLoadingMore.value = false;
   }
 
   Future<void> getSaleProducts(bool loadMore) async {
@@ -75,8 +67,6 @@ class ProductsDisplayController extends GetxController {
     await getSaleProductsUseCase.call(GetSaleProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
       either.fold(
         (failure) {
-          isLoading.value = false;
-          isLoadingMore.value = false;
           mainAppController.removePendingIds([PendingIds.getProducts]);
 
           AppPopUp.showFailureSnackBar(failure: failure);
@@ -100,8 +90,6 @@ class ProductsDisplayController extends GetxController {
     await getNewProductsUseCase.call(GetNewProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
       either.fold(
         (failure) {
-          isLoading.value = false;
-          isLoadingMore.value = false;
           mainAppController.removePendingIds([PendingIds.getProducts]);
 
           AppPopUp.showFailureSnackBar(failure: failure);
@@ -132,8 +120,6 @@ class ProductsDisplayController extends GetxController {
 
     either.fold(
       (failure) {
-        isLoading.value = false;
-        isLoadingMore.value = false;
         mainAppController.removePendingIds([PendingIds.getProducts]);
 
         AppPopUp.showFailureSnackBar(failure: failure);

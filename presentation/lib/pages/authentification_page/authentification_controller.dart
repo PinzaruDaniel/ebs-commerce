@@ -95,6 +95,10 @@ class AuthentificationController extends GetxController {
         },
       );
     });
+    await syncUser();
+  }
+
+  Future<void> syncUser() async {
     await syncUserUseCase.call().then((result) {
       result.fold(
         (failure) {

@@ -42,7 +42,6 @@ class _FilterPageState extends State<FilterPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       filterController.initItems();
     });
-    consoleLog('filter is loading value ${filterController.isLoading.value}');
   }
 
   @override

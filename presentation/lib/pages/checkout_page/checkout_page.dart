@@ -9,11 +9,9 @@ import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.da
 import 'package:presentation/util/enum/enums.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
-import 'package:presentation/util/widgets/open_container_animation_widget.dart';
 import 'package:presentation/view/cart_products_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
-import 'package:snackify/enums/snack_enums.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';

@@ -3,4 +3,5 @@ class PendingIds{
   static String getProducts='getProducts';
   static String orderPage='orderPage';
   static String getCountries='getCountries';
+  static String getCategories='getCategories';
 }

@@ -1,6 +1,8 @@
 import 'package:domain/modules/categories/use_cases/get_all_categories_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/category_mapper.dart';
 
 import '../../../view/category_view_model.dart';
@@ -11,17 +13,19 @@ class CategoryController extends GetxController {
   RxMap<int?, List<CategoryViewModel>> groupedCategories = <int?, List<CategoryViewModel>>{}.obs;
   RxSet<int> selectedCategoryId = <int>{}.obs;
 
-  RxBool isLoading = RxBool(true);
-
   void getCategories() async {
+    if (categories.isEmpty) {
+      mainAppController.addPendingIds([PendingIds.getCategories]);
+    }
     await getAllCategoriesUseCase.call().then((either) async {
       either.fold((failure) {}, (categories) async {
         final models = categories.map((e) => e.toModel).toList();
         this.categories.value = models;
         groupedCategories.value = groupByParent(models);
+          mainAppController.removePendingIds([PendingIds.getCategories]);
+
       });
     });
-    isLoading.value = false;
   }
 
   Map<int?, List<CategoryViewModel>> groupByParent(List<CategoryViewModel> categories) {

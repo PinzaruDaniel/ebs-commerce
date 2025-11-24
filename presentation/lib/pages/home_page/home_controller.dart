@@ -16,7 +16,6 @@ class HomeController extends GetxController {
   final SyncProductsUseCase syncProductsUseCase = GetIt.instance<SyncProductsUseCase>();
   RxList<BaseViewModel> items = RxList<BaseViewModel>([]);
   RxList<ProductViewModel> products = RxList([]);
-  RxBool isLoading = true.obs;
   RxList<ProductViewModel> newProducts = RxList([]);
   RxList<ProductViewModel> saleProducts = RxList([]);
   Rxn<Failure> failure = Rxn<Failure>();
@@ -24,14 +23,14 @@ class HomeController extends GetxController {
   int perPage = 20;
   StreamSubscription? _streamSubscription;
 
-  void initItems() async {
+  void initItems() {
     items.value = [
       AdBannerViewModel(),
       HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
       HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
       AllProductsViewItem(products: products),
     ];
-    getProducts(loadMore: true);
+    getProducts(loadMore: true, firstLoad: true);
   }
 
   @override
@@ -40,15 +39,13 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  Future<void> syncProducts({bool loadMore=false}) async {
-    if(loadMore){
+  Future<void> syncProducts({bool firstLoad = false}) async {
+    if (firstLoad) {
       mainAppController.addPendingIds([PendingIds.getProducts]);
     }
-    isLoading.value = true;
     final either = await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
     either.fold(
       (failure) {
-        isLoading.value = false;
         mainAppController.removePendingIds([PendingIds.getProducts]);
       },
       (list) {
@@ -57,16 +54,15 @@ class HomeController extends GetxController {
         newProducts.value = products.where((e) => e.marks?.contains("new") ?? false).take(5).toList();
         saleProducts.value = products.where((e) => e.marks?.contains("sale") ?? false).take(5).toList();
         items.refresh();
-        isLoading.value = false;
         currentPage.value++;
         mainAppController.removePendingIds([PendingIds.getProducts]);
       },
     );
   }
 
-  Future<void> getProducts({bool loadMore = false}) async {
+  Future<void> getProducts({bool loadMore = false, bool firstLoad=false}) async {
     if (loadMore) {
-      await syncProducts(loadMore: loadMore);
+      await syncProducts(firstLoad: firstLoad);
     }
     _streamSubscription?.cancel();
     _streamSubscription = streamProductsUseCase

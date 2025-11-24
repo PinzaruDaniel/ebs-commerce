@@ -37,7 +37,7 @@ class ProductsListDisplayWidget extends StatelessWidget {
                 itemCount: products.length,
                 itemBuilder: (context, index) {
                   var itemProducts = products[index];
-                  return HomeProductsItemWidget(item: itemProducts, height: 160);
+                  return HomeProductsItemWidget(item: itemProducts, height: 160, width: 160,);
                 },
               ),
             ),

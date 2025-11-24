@@ -30,6 +30,8 @@ class AppBarIconShoppingCartWidget extends StatelessWidget {
                 lightAngle: 10 * 3.14,
                 chromaticAberration: 0.5,
                 ambientStrength: 2,
+                  thickness: 30
+
               ),
               child: LiquidGlass(
                 glassContainsChild: false,

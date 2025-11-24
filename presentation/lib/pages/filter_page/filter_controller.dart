@@ -28,13 +28,12 @@ class FilterController extends GetxController {
   late Worker everWorkers;
 
   void initItems() {
-    everWorkers= everAll([selectedCategoryId, priceRange], (_) {
+    everWorkers = everAll([selectedCategoryId, priceRange], (_) {
       _debouncer.run(() {
         getFilteredProductsCount(page: 1);
       });
     });
-
-    getFilteredProductsCount(page: 1);
+      getFilteredProductsCount(page: 1);
   }
 
   void setCategoryData({required Set<int> selectedIds, required List<CategoryViewModel> allCategories}) {
@@ -55,8 +54,8 @@ class FilterController extends GetxController {
   }
 
   Future<void> getFilteredProductsCount({required int page, GetFilteredProductsCountParams? params}) async {
+    isLoading.value = true;
     i++;
-    consoleLog('sent request for count: $i');
     final min = priceRange.value.start.toDouble();
     final max = priceRange.value.end.toDouble();
     final categories = selectedCategoryId.toList();
@@ -101,7 +100,6 @@ class FilterController extends GetxController {
     selectedCategoryId.clear();
     priceRange.value = SfRangeValues(minPrice.value, maxPrice.value);
   }
-
 }
 
 class Debouncer {

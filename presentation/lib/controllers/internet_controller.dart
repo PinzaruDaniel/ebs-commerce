@@ -10,6 +10,7 @@ class InternetController extends GetxController {
   final RxList<ConnectivityResult> connectionStatus = <ConnectivityResult>[ConnectivityResult.none].obs;
   StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
   final Connectivity _connectivity = Connectivity();
+  RxBool isConnected = RxBool(true);
 
   @override
   void onInit() {
@@ -31,6 +32,11 @@ class InternetController extends GetxController {
     connectionStatus.assignAll(result);
     if (result.contains(ConnectivityResult.none)) {
       AppPopUp.showFailureSnackBar(fallbackMessage: AppTexts.noInternetConnection, snackPosition: SnackPosition.TOP);
+      isConnected.value = false;
+      isConnected.refresh();
+    } else if (result.contains(ConnectivityResult.wifi) || result.contains(ConnectivityResult.mobile)) {
+      isConnected.value = true;
+      isConnected.refresh();
     }
   }
 }

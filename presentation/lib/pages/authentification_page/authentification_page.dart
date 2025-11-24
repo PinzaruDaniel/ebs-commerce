@@ -7,6 +7,7 @@ import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
+import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/base/base_page.dart';
@@ -90,7 +91,7 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                         }
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child:  TextFieldWidget(itemViewModel: item),
+                          child: TextFieldWidget(itemViewModel: item),
                         );
                       }
                       return SizedBox.shrink();
@@ -106,15 +107,12 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                     onTap: () async {
                       await authController.loginUser(
                         onSuccess: () {
-                          Navigator.of(Get.context!).pushAndRemoveUntil(
-                            CupertinoPageRoute(builder: (_) => HomePage()),
-                                (Route<dynamic> route) => false,
-                          );
+                          AppRouter.openHomePage(removeUntil: true);
+                          authController.allItems.clear();
                         },
-                        onError: (){
+                        onError: () {
                           AppPopUp.showFailureSnackBar(fallbackMessage: AppTexts.invalidCredentials);
-
-                        }
+                        },
                       );
                     },
                     title: AppTexts.logIn,
