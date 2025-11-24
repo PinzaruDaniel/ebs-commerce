@@ -19,15 +19,16 @@ class MainAppController extends GetxController {
   void addToCart(CartViewModel item) {
     final index = cartItems.indexWhere((i) => i.title == item.title);
     if (index != -1) {
-      cartItems[index].quantity++;
+      if (cartItems[index].quantity == item.stock) {
+        return;
+      } else {
+        cartItems[index].quantity++;
+      }
       consoleLog('addToCart quantity: ${cartItems[index].quantity} ');
-
     } else {
       cartItems.add(item);
       //consoleLog('addToCart add quantity: ${cartItems[index].quantity} ');
-
     }
-
   }
 
   void changeLanguage(Locale locale, BuildContext context) {
@@ -61,5 +62,4 @@ class MainAppController extends GetxController {
     this.pendingIds.value.removeWhere((item) => pendingIds.contains(item));
     this.pendingIds.refresh();
   }
-
 }
