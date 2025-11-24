@@ -100,7 +100,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             onAdd: (int quantity) {
               addCartController.cartItem.value?.quantity = quantity;
               final item = addCartController.cartItem.value;
-              consoleLog('item: $item');
+              consoleLog('item quantity: ${item?.quantity}');
               mainAppController.addToCart(item!);
               AppRouter.openShoppingCartPage();
             },

@@ -20,9 +20,14 @@ class MainAppController extends GetxController {
     final index = cartItems.indexWhere((i) => i.title == item.title);
     if (index != -1) {
       cartItems[index].quantity++;
+      consoleLog('addToCart quantity: ${cartItems[index].quantity} ');
+
     } else {
       cartItems.add(item);
+      //consoleLog('addToCart add quantity: ${cartItems[index].quantity} ');
+
     }
+
   }
 
   void changeLanguage(Locale locale, BuildContext context) {
