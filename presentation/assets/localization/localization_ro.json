@@ -125,7 +125,8 @@
   "noInternetConnection": "Nu există conexiune la internet",
   "backOnline": "Ești din nou online!",
   "error": "Eroare",
-  "invalidCredentials": "Email sau parola este incorectă"
+  "invalidCredentials": "Email sau parola este incorectă",
+  "goToCart": "Mergi la coș"
 
 
 }

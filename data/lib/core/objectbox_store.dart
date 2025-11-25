@@ -4,6 +4,7 @@ import 'package:data/modules/products/models/local/ordered_product_box.dart';
 import 'package:data/modules/products/models/local/product_box.dart';
 import 'package:data/modules/delivery_address/models/local/delivery_address_box.dart';
 import 'package:data/modules/payment_method/models/local/payment_method_box.dart';
+import 'package:data/modules/products/models/local/product_response_box.dart';
 import 'package:data/modules/settings/models/local/settings_box.dart';
 import 'package:data/modules/user/models/local/user_box.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,8 +38,6 @@ class ObjectBoxStore {
     paymentMethodBox = Box<PaymentMethodBox>(_store);
     deliveryAddressBox = Box<DeliveryAddressBox>(_store);
     settingsBox = Box<SettingsBox>(_store);
-
-
   }
 
   static Future<ObjectBoxStore> create() async {

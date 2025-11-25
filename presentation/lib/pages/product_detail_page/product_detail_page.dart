@@ -5,6 +5,7 @@ import 'package:presentation/pages/product_detail_page/widgets/product_detail_ba
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_collapsed_app_bar_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_expanded_app_bar.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_page_body_widget.dart';
+import 'package:presentation/pages/shopping_cart_page/shopping_cart_page.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
@@ -12,7 +13,6 @@ import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
 import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
-import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
 import '../../util/routing/app_router.dart';
 
@@ -27,17 +27,23 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   ScrollController get scrollController => ScrollController();
-
   bool isCollapsed = false;
 
   AddToCartController get addCartController => Get.find();
+  bool isItemInCart = false;
 
   @override
   void initState() {
     super.initState();
     Get.put(AddToCartController());
+    _initData();
+  }
+
+  void _initData() {
     addCartController.initCartItem(widget.item!);
+    isItemInCart = mainAppController.isItemInCart(addCartController.cartItem.value!);
     scrollController.addListener(_scrollListener);
+    setState(() {});
   }
 
   void _scrollListener() {
@@ -90,22 +96,41 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
-        buttonColor: isItemValid ? AppColors.primary : Colors.grey.shade300,
-        textColor: isItemValid ? Colors.white : Colors.black,
-        title: isItemValid ? AppTexts.addToCart : AppTexts.cantAddToCart,
-        showIcon: isItemValid,
+        buttonColor: isItemInCart
+            ? AppColors.greyText
+            : isItemValid
+            ? AppColors.primary
+            : Colors.grey.shade300,
+        textColor: isItemInCart
+            ? Colors.white
+            : isItemValid
+            ? Colors.white
+            : Colors.black,
+        title: isItemInCart
+            ? AppTexts.goToCart
+            : isItemValid
+            ? AppTexts.addToCart
+            : AppTexts.cantAddToCart,
+        showIcon: !isItemInCart && isItemValid,
         onTap: () {
-          AppPopUp.showCartInfoPopUp(
-            item: widget.item!,
-            onAdd: (int quantity) {
-              addCartController.cartItem.value?.quantity = quantity;
-              final item = addCartController.cartItem.value;
-              consoleLog('item quantity: ${item?.quantity}');
-              mainAppController.addToCart(item!);
-              AppRouter.openShoppingCartPage();
-            },
-            maxValue: widget.item!.stock,
-          );
+          if (isItemInCart) {
+            AppRouter.openShoppingCartPage();
+          } else {
+            AppPopUp.showCartInfoPopUp(
+              item: widget.item!,
+              onAdd: (int quantity) {
+                addCartController.cartItem.value?.quantity = quantity;
+                final item = addCartController.cartItem.value;
+                mainAppController.addToCart(item!);
+                AppRouter.openShoppingCartPage(
+                  onGoBack: () {
+                    _initData();
+                  },
+                );
+              },
+              maxValue: widget.item!.stock,
+            );
+          }
         },
       ),
     );

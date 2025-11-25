@@ -33,7 +33,6 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
   CountryFlagDialCodeViewModel selectedFlagDial = CountryFlagDialCodeViewModel(
     name: '',
     iso2: '',
-    //flag: '🏳️',
     dialCode: '',
     phoneMaskMobileInternational: '',
     exampleNumberMobileInternational: '',
@@ -46,7 +45,6 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
   void initState() {
     super.initState();
     selectedFlagDial = widget.itemViewModel.selectedFlagDial;
-
     selectedCountryLibPhone =
         nomenclatureController.countries.firstWhereOrNull(
           (c) => c.countryCode.toUpperCase() == selectedFlagDial.iso2.toUpperCase(),

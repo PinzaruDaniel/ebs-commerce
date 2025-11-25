@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:common/constants/logger.dart';
+import 'package:domain/modules/delivery_address/models/index.dart';
 import 'package:domain/modules/delivery_address/use_cases/cities/get_cities_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/countries/get_countries_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/states/get_states_use_case.dart';
@@ -164,7 +165,7 @@ class DeliveryAddressController extends GetxController {
 
   Future<void> loadCities(CountryViewModel country, StateViewModel state, {String? selectedCityName}) async {
     if (country.name.isEmpty || state.code.isEmpty) return;
-    final params = GetCitiesUseCaseParams(country: country.name, state: state.name);
+    final params = GetCitiesUseCaseParams(country: country.iso2, state: state.code);
     final result = await getCitiesUseCase(params);
 
     result.fold(
@@ -172,7 +173,7 @@ class DeliveryAddressController extends GetxController {
         AppPopUp.showFailureSnackBar(failure: failure);
       },
       (entity) {
-        cities.value = entity.toViewModelList;
+        cities.value = entity.map((e) => e.toModel).toList();
         if (selectedCityName != null) {
           selectedCity.value = cities.firstWhereOrNull((c) => c.name == selectedCityName);
         } else {

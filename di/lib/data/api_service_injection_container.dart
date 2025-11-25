@@ -18,6 +18,7 @@ Future<void> init() async {
   );
   var apiAddressesOption = BaseOptions(
     baseUrl: ApiConstants.deliveryUrl,
+    headers: ApiConstants.deliveryToken,
     followRedirects: true,
     receiveTimeout: Duration(seconds: 60),
     connectTimeout: Duration(seconds: 20),

@@ -7,6 +7,7 @@ extension ProductResponseMapper on ProductResponseEntity {
     return ProductResponseViewModel(
       count: count,
       totalPages: totalPages,
+      currentPage: currentPage,
       perPage: perPage,
       response: response.map((e) => e.toModel).toList(),
     );

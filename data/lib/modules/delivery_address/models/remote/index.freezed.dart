@@ -13,296 +13,9 @@ part of 'index.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$StatesResponseApiDto {
-
- bool get error; String get msg; StatesDataApiDto get data;
-/// Create a copy of StatesResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$StatesResponseApiDtoCopyWith<StatesResponseApiDto> get copyWith => _$StatesResponseApiDtoCopyWithImpl<StatesResponseApiDto>(this as StatesResponseApiDto, _$identity);
-
-  /// Serializes this StatesResponseApiDto to a JSON map.
-  Map<String, dynamic> toJson();
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatesResponseApiDto&&(identical(other.error, error) || other.error == error)&&(identical(other.msg, msg) || other.msg == msg)&&(identical(other.data, data) || other.data == data));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,error,msg,data);
-
-@override
-String toString() {
-  return 'StatesResponseApiDto(error: $error, msg: $msg, data: $data)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $StatesResponseApiDtoCopyWith<$Res>  {
-  factory $StatesResponseApiDtoCopyWith(StatesResponseApiDto value, $Res Function(StatesResponseApiDto) _then) = _$StatesResponseApiDtoCopyWithImpl;
-@useResult
-$Res call({
- bool error, String msg, StatesDataApiDto data
-});
-
-
-$StatesDataApiDtoCopyWith<$Res> get data;
-
-}
-/// @nodoc
-class _$StatesResponseApiDtoCopyWithImpl<$Res>
-    implements $StatesResponseApiDtoCopyWith<$Res> {
-  _$StatesResponseApiDtoCopyWithImpl(this._self, this._then);
-
-  final StatesResponseApiDto _self;
-  final $Res Function(StatesResponseApiDto) _then;
-
-/// Create a copy of StatesResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? error = null,Object? msg = null,Object? data = null,}) {
-  return _then(_self.copyWith(
-error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as bool,msg: null == msg ? _self.msg : msg // ignore: cast_nullable_to_non_nullable
-as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as StatesDataApiDto,
-  ));
-}
-/// Create a copy of StatesResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$StatesDataApiDtoCopyWith<$Res> get data {
-  
-  return $StatesDataApiDtoCopyWith<$Res>(_self.data, (value) {
-    return _then(_self.copyWith(data: value));
-  });
-}
-}
-
-
-/// Adds pattern-matching-related methods to [StatesResponseApiDto].
-extension StatesResponseApiDtoPatterns on StatesResponseApiDto {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _StatesResponseApiDto value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _StatesResponseApiDto() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _StatesResponseApiDto value)  $default,){
-final _that = this;
-switch (_that) {
-case _StatesResponseApiDto():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _StatesResponseApiDto value)?  $default,){
-final _that = this;
-switch (_that) {
-case _StatesResponseApiDto() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool error,  String msg,  StatesDataApiDto data)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _StatesResponseApiDto() when $default != null:
-return $default(_that.error,_that.msg,_that.data);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool error,  String msg,  StatesDataApiDto data)  $default,) {final _that = this;
-switch (_that) {
-case _StatesResponseApiDto():
-return $default(_that.error,_that.msg,_that.data);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool error,  String msg,  StatesDataApiDto data)?  $default,) {final _that = this;
-switch (_that) {
-case _StatesResponseApiDto() when $default != null:
-return $default(_that.error,_that.msg,_that.data);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _StatesResponseApiDto implements StatesResponseApiDto {
-  const _StatesResponseApiDto({required this.error, required this.msg, required this.data});
-  factory _StatesResponseApiDto.fromJson(Map<String, dynamic> json) => _$StatesResponseApiDtoFromJson(json);
-
-@override final  bool error;
-@override final  String msg;
-@override final  StatesDataApiDto data;
-
-/// Create a copy of StatesResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$StatesResponseApiDtoCopyWith<_StatesResponseApiDto> get copyWith => __$StatesResponseApiDtoCopyWithImpl<_StatesResponseApiDto>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$StatesResponseApiDtoToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatesResponseApiDto&&(identical(other.error, error) || other.error == error)&&(identical(other.msg, msg) || other.msg == msg)&&(identical(other.data, data) || other.data == data));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,error,msg,data);
-
-@override
-String toString() {
-  return 'StatesResponseApiDto(error: $error, msg: $msg, data: $data)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$StatesResponseApiDtoCopyWith<$Res> implements $StatesResponseApiDtoCopyWith<$Res> {
-  factory _$StatesResponseApiDtoCopyWith(_StatesResponseApiDto value, $Res Function(_StatesResponseApiDto) _then) = __$StatesResponseApiDtoCopyWithImpl;
-@override @useResult
-$Res call({
- bool error, String msg, StatesDataApiDto data
-});
-
-
-@override $StatesDataApiDtoCopyWith<$Res> get data;
-
-}
-/// @nodoc
-class __$StatesResponseApiDtoCopyWithImpl<$Res>
-    implements _$StatesResponseApiDtoCopyWith<$Res> {
-  __$StatesResponseApiDtoCopyWithImpl(this._self, this._then);
-
-  final _StatesResponseApiDto _self;
-  final $Res Function(_StatesResponseApiDto) _then;
-
-/// Create a copy of StatesResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? error = null,Object? msg = null,Object? data = null,}) {
-  return _then(_StatesResponseApiDto(
-error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as bool,msg: null == msg ? _self.msg : msg // ignore: cast_nullable_to_non_nullable
-as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as StatesDataApiDto,
-  ));
-}
-
-/// Create a copy of StatesResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$StatesDataApiDtoCopyWith<$Res> get data {
-  
-  return $StatesDataApiDtoCopyWith<$Res>(_self.data, (value) {
-    return _then(_self.copyWith(data: value));
-  });
-}
-}
-
-
-/// @nodoc
 mixin _$StatesApiDto {
 
- String get name;@JsonKey(name: 'state_code') String? get code;
+ int get id; String get name;@JsonKey(name: 'iso2') String? get code;
 /// Create a copy of StatesApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -315,16 +28,16 @@ $StatesApiDtoCopyWith<StatesApiDto> get copyWith => _$StatesApiDtoCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatesApiDto&&(identical(other.name, name) || other.name == name)&&(identical(other.code, code) || other.code == code));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatesApiDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.code, code) || other.code == code));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,code);
+int get hashCode => Object.hash(runtimeType,id,name,code);
 
 @override
 String toString() {
-  return 'StatesApiDto(name: $name, code: $code)';
+  return 'StatesApiDto(id: $id, name: $name, code: $code)';
 }
 
 
@@ -335,7 +48,7 @@ abstract mixin class $StatesApiDtoCopyWith<$Res>  {
   factory $StatesApiDtoCopyWith(StatesApiDto value, $Res Function(StatesApiDto) _then) = _$StatesApiDtoCopyWithImpl;
 @useResult
 $Res call({
- String name,@JsonKey(name: 'state_code') String? code
+ int id, String name,@JsonKey(name: 'iso2') String? code
 });
 
 
@@ -352,9 +65,10 @@ class _$StatesApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of StatesApiDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? code = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? code = freezed,}) {
   return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,code: freezed == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -441,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name, @JsonKey(name: 'state_code')  String? code)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name, @JsonKey(name: 'iso2')  String? code)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StatesApiDto() when $default != null:
-return $default(_that.name,_that.code);case _:
+return $default(_that.id,_that.name,_that.code);case _:
   return orElse();
 
 }
@@ -462,10 +176,10 @@ return $default(_that.name,_that.code);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name, @JsonKey(name: 'state_code')  String? code)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name, @JsonKey(name: 'iso2')  String? code)  $default,) {final _that = this;
 switch (_that) {
 case _StatesApiDto():
-return $default(_that.name,_that.code);case _:
+return $default(_that.id,_that.name,_that.code);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -482,10 +196,10 @@ return $default(_that.name,_that.code);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name, @JsonKey(name: 'state_code')  String? code)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name, @JsonKey(name: 'iso2')  String? code)?  $default,) {final _that = this;
 switch (_that) {
 case _StatesApiDto() when $default != null:
-return $default(_that.name,_that.code);case _:
+return $default(_that.id,_that.name,_that.code);case _:
   return null;
 
 }
@@ -497,11 +211,12 @@ return $default(_that.name,_that.code);case _:
 @JsonSerializable()
 
 class _StatesApiDto implements StatesApiDto {
-  const _StatesApiDto({required this.name, @JsonKey(name: 'state_code') this.code});
+  const _StatesApiDto({required this.id, required this.name, @JsonKey(name: 'iso2') this.code});
   factory _StatesApiDto.fromJson(Map<String, dynamic> json) => _$StatesApiDtoFromJson(json);
 
+@override final  int id;
 @override final  String name;
-@override@JsonKey(name: 'state_code') final  String? code;
+@override@JsonKey(name: 'iso2') final  String? code;
 
 /// Create a copy of StatesApiDto
 /// with the given fields replaced by the non-null parameter values.
@@ -516,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatesApiDto&&(identical(other.name, name) || other.name == name)&&(identical(other.code, code) || other.code == code));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatesApiDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.code, code) || other.code == code));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,code);
+int get hashCode => Object.hash(runtimeType,id,name,code);
 
 @override
 String toString() {
-  return 'StatesApiDto(name: $name, code: $code)';
+  return 'StatesApiDto(id: $id, name: $name, code: $code)';
 }
 
 
@@ -536,7 +251,7 @@ abstract mixin class _$StatesApiDtoCopyWith<$Res> implements $StatesApiDtoCopyWi
   factory _$StatesApiDtoCopyWith(_StatesApiDto value, $Res Function(_StatesApiDto) _then) = __$StatesApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String name,@JsonKey(name: 'state_code') String? code
+ int id, String name,@JsonKey(name: 'iso2') String? code
 });
 
 
@@ -553,9 +268,10 @@ class __$StatesApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of StatesApiDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? code = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? code = freezed,}) {
   return _then(_StatesApiDto(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,code: freezed == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -566,281 +282,9 @@ as String?,
 
 
 /// @nodoc
-mixin _$StatesDataApiDto {
-
- String get name; List<StatesApiDto> get states;
-/// Create a copy of StatesDataApiDto
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$StatesDataApiDtoCopyWith<StatesDataApiDto> get copyWith => _$StatesDataApiDtoCopyWithImpl<StatesDataApiDto>(this as StatesDataApiDto, _$identity);
-
-  /// Serializes this StatesDataApiDto to a JSON map.
-  Map<String, dynamic> toJson();
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatesDataApiDto&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.states, states));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,name,const DeepCollectionEquality().hash(states));
-
-@override
-String toString() {
-  return 'StatesDataApiDto(name: $name, states: $states)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $StatesDataApiDtoCopyWith<$Res>  {
-  factory $StatesDataApiDtoCopyWith(StatesDataApiDto value, $Res Function(StatesDataApiDto) _then) = _$StatesDataApiDtoCopyWithImpl;
-@useResult
-$Res call({
- String name, List<StatesApiDto> states
-});
-
-
-
-
-}
-/// @nodoc
-class _$StatesDataApiDtoCopyWithImpl<$Res>
-    implements $StatesDataApiDtoCopyWith<$Res> {
-  _$StatesDataApiDtoCopyWithImpl(this._self, this._then);
-
-  final StatesDataApiDto _self;
-  final $Res Function(StatesDataApiDto) _then;
-
-/// Create a copy of StatesDataApiDto
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? states = null,}) {
-  return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,states: null == states ? _self.states : states // ignore: cast_nullable_to_non_nullable
-as List<StatesApiDto>,
-  ));
-}
-
-}
-
-
-/// Adds pattern-matching-related methods to [StatesDataApiDto].
-extension StatesDataApiDtoPatterns on StatesDataApiDto {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _StatesDataApiDto value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _StatesDataApiDto() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _StatesDataApiDto value)  $default,){
-final _that = this;
-switch (_that) {
-case _StatesDataApiDto():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _StatesDataApiDto value)?  $default,){
-final _that = this;
-switch (_that) {
-case _StatesDataApiDto() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  List<StatesApiDto> states)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _StatesDataApiDto() when $default != null:
-return $default(_that.name,_that.states);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  List<StatesApiDto> states)  $default,) {final _that = this;
-switch (_that) {
-case _StatesDataApiDto():
-return $default(_that.name,_that.states);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  List<StatesApiDto> states)?  $default,) {final _that = this;
-switch (_that) {
-case _StatesDataApiDto() when $default != null:
-return $default(_that.name,_that.states);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _StatesDataApiDto implements StatesDataApiDto {
-  const _StatesDataApiDto({required this.name, required final  List<StatesApiDto> states}): _states = states;
-  factory _StatesDataApiDto.fromJson(Map<String, dynamic> json) => _$StatesDataApiDtoFromJson(json);
-
-@override final  String name;
- final  List<StatesApiDto> _states;
-@override List<StatesApiDto> get states {
-  if (_states is EqualUnmodifiableListView) return _states;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_states);
-}
-
-
-/// Create a copy of StatesDataApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$StatesDataApiDtoCopyWith<_StatesDataApiDto> get copyWith => __$StatesDataApiDtoCopyWithImpl<_StatesDataApiDto>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$StatesDataApiDtoToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatesDataApiDto&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._states, _states));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,name,const DeepCollectionEquality().hash(_states));
-
-@override
-String toString() {
-  return 'StatesDataApiDto(name: $name, states: $states)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$StatesDataApiDtoCopyWith<$Res> implements $StatesDataApiDtoCopyWith<$Res> {
-  factory _$StatesDataApiDtoCopyWith(_StatesDataApiDto value, $Res Function(_StatesDataApiDto) _then) = __$StatesDataApiDtoCopyWithImpl;
-@override @useResult
-$Res call({
- String name, List<StatesApiDto> states
-});
-
-
-
-
-}
-/// @nodoc
-class __$StatesDataApiDtoCopyWithImpl<$Res>
-    implements _$StatesDataApiDtoCopyWith<$Res> {
-  __$StatesDataApiDtoCopyWithImpl(this._self, this._then);
-
-  final _StatesDataApiDto _self;
-  final $Res Function(_StatesDataApiDto) _then;
-
-/// Create a copy of StatesDataApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? states = null,}) {
-  return _then(_StatesDataApiDto(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,states: null == states ? _self._states : states // ignore: cast_nullable_to_non_nullable
-as List<StatesApiDto>,
-  ));
-}
-
-
-}
-
-
-/// @nodoc
 mixin _$CitiesResponseApiDto {
 
- bool get error; String get msg; List<String> get data;
+ int get id; String get name;
 /// Create a copy of CitiesResponseApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -853,16 +297,16 @@ $CitiesResponseApiDtoCopyWith<CitiesResponseApiDto> get copyWith => _$CitiesResp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CitiesResponseApiDto&&(identical(other.error, error) || other.error == error)&&(identical(other.msg, msg) || other.msg == msg)&&const DeepCollectionEquality().equals(other.data, data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CitiesResponseApiDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,error,msg,const DeepCollectionEquality().hash(data));
+int get hashCode => Object.hash(runtimeType,id,name);
 
 @override
 String toString() {
-  return 'CitiesResponseApiDto(error: $error, msg: $msg, data: $data)';
+  return 'CitiesResponseApiDto(id: $id, name: $name)';
 }
 
 
@@ -873,7 +317,7 @@ abstract mixin class $CitiesResponseApiDtoCopyWith<$Res>  {
   factory $CitiesResponseApiDtoCopyWith(CitiesResponseApiDto value, $Res Function(CitiesResponseApiDto) _then) = _$CitiesResponseApiDtoCopyWithImpl;
 @useResult
 $Res call({
- bool error, String msg, List<String> data
+ int id, String name
 });
 
 
@@ -890,12 +334,11 @@ class _$CitiesResponseApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of CitiesResponseApiDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? error = null,Object? msg = null,Object? data = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,}) {
   return _then(_self.copyWith(
-error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as bool,msg: null == msg ? _self.msg : msg // ignore: cast_nullable_to_non_nullable
-as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as List<String>,
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -980,10 +423,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool error,  String msg,  List<String> data)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CitiesResponseApiDto() when $default != null:
-return $default(_that.error,_that.msg,_that.data);case _:
+return $default(_that.id,_that.name);case _:
   return orElse();
 
 }
@@ -1001,10 +444,10 @@ return $default(_that.error,_that.msg,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool error,  String msg,  List<String> data)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name)  $default,) {final _that = this;
 switch (_that) {
 case _CitiesResponseApiDto():
-return $default(_that.error,_that.msg,_that.data);case _:
+return $default(_that.id,_that.name);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1021,10 +464,10 @@ return $default(_that.error,_that.msg,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool error,  String msg,  List<String> data)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name)?  $default,) {final _that = this;
 switch (_that) {
 case _CitiesResponseApiDto() when $default != null:
-return $default(_that.error,_that.msg,_that.data);case _:
+return $default(_that.id,_that.name);case _:
   return null;
 
 }
@@ -1036,18 +479,11 @@ return $default(_that.error,_that.msg,_that.data);case _:
 @JsonSerializable()
 
 class _CitiesResponseApiDto implements CitiesResponseApiDto {
-  const _CitiesResponseApiDto({required this.error, required this.msg, required final  List<String> data}): _data = data;
+  const _CitiesResponseApiDto({required this.id, required this.name});
   factory _CitiesResponseApiDto.fromJson(Map<String, dynamic> json) => _$CitiesResponseApiDtoFromJson(json);
 
-@override final  bool error;
-@override final  String msg;
- final  List<String> _data;
-@override List<String> get data {
-  if (_data is EqualUnmodifiableListView) return _data;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_data);
-}
-
+@override final  int id;
+@override final  String name;
 
 /// Create a copy of CitiesResponseApiDto
 /// with the given fields replaced by the non-null parameter values.
@@ -1062,16 +498,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CitiesResponseApiDto&&(identical(other.error, error) || other.error == error)&&(identical(other.msg, msg) || other.msg == msg)&&const DeepCollectionEquality().equals(other._data, _data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CitiesResponseApiDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,error,msg,const DeepCollectionEquality().hash(_data));
+int get hashCode => Object.hash(runtimeType,id,name);
 
 @override
 String toString() {
-  return 'CitiesResponseApiDto(error: $error, msg: $msg, data: $data)';
+  return 'CitiesResponseApiDto(id: $id, name: $name)';
 }
 
 
@@ -1082,7 +518,7 @@ abstract mixin class _$CitiesResponseApiDtoCopyWith<$Res> implements $CitiesResp
   factory _$CitiesResponseApiDtoCopyWith(_CitiesResponseApiDto value, $Res Function(_CitiesResponseApiDto) _then) = __$CitiesResponseApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- bool error, String msg, List<String> data
+ int id, String name
 });
 
 
@@ -1099,287 +535,11 @@ class __$CitiesResponseApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of CitiesResponseApiDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? error = null,Object? msg = null,Object? data = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,}) {
   return _then(_CitiesResponseApiDto(
-error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as bool,msg: null == msg ? _self.msg : msg // ignore: cast_nullable_to_non_nullable
-as String,data: null == data ? _self._data : data // ignore: cast_nullable_to_non_nullable
-as List<String>,
-  ));
-}
-
-
-}
-
-
-/// @nodoc
-mixin _$CountriesResponseApiDto {
-
- bool get error; String get msg; List<CountriesApiDto> get data;
-/// Create a copy of CountriesResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CountriesResponseApiDtoCopyWith<CountriesResponseApiDto> get copyWith => _$CountriesResponseApiDtoCopyWithImpl<CountriesResponseApiDto>(this as CountriesResponseApiDto, _$identity);
-
-  /// Serializes this CountriesResponseApiDto to a JSON map.
-  Map<String, dynamic> toJson();
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CountriesResponseApiDto&&(identical(other.error, error) || other.error == error)&&(identical(other.msg, msg) || other.msg == msg)&&const DeepCollectionEquality().equals(other.data, data));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,error,msg,const DeepCollectionEquality().hash(data));
-
-@override
-String toString() {
-  return 'CountriesResponseApiDto(error: $error, msg: $msg, data: $data)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $CountriesResponseApiDtoCopyWith<$Res>  {
-  factory $CountriesResponseApiDtoCopyWith(CountriesResponseApiDto value, $Res Function(CountriesResponseApiDto) _then) = _$CountriesResponseApiDtoCopyWithImpl;
-@useResult
-$Res call({
- bool error, String msg, List<CountriesApiDto> data
-});
-
-
-
-
-}
-/// @nodoc
-class _$CountriesResponseApiDtoCopyWithImpl<$Res>
-    implements $CountriesResponseApiDtoCopyWith<$Res> {
-  _$CountriesResponseApiDtoCopyWithImpl(this._self, this._then);
-
-  final CountriesResponseApiDto _self;
-  final $Res Function(CountriesResponseApiDto) _then;
-
-/// Create a copy of CountriesResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? error = null,Object? msg = null,Object? data = null,}) {
-  return _then(_self.copyWith(
-error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as bool,msg: null == msg ? _self.msg : msg // ignore: cast_nullable_to_non_nullable
-as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as List<CountriesApiDto>,
-  ));
-}
-
-}
-
-
-/// Adds pattern-matching-related methods to [CountriesResponseApiDto].
-extension CountriesResponseApiDtoPatterns on CountriesResponseApiDto {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CountriesResponseApiDto value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _CountriesResponseApiDto() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CountriesResponseApiDto value)  $default,){
-final _that = this;
-switch (_that) {
-case _CountriesResponseApiDto():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CountriesResponseApiDto value)?  $default,){
-final _that = this;
-switch (_that) {
-case _CountriesResponseApiDto() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool error,  String msg,  List<CountriesApiDto> data)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _CountriesResponseApiDto() when $default != null:
-return $default(_that.error,_that.msg,_that.data);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool error,  String msg,  List<CountriesApiDto> data)  $default,) {final _that = this;
-switch (_that) {
-case _CountriesResponseApiDto():
-return $default(_that.error,_that.msg,_that.data);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool error,  String msg,  List<CountriesApiDto> data)?  $default,) {final _that = this;
-switch (_that) {
-case _CountriesResponseApiDto() when $default != null:
-return $default(_that.error,_that.msg,_that.data);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _CountriesResponseApiDto implements CountriesResponseApiDto {
-  const _CountriesResponseApiDto({required this.error, required this.msg, required final  List<CountriesApiDto> data}): _data = data;
-  factory _CountriesResponseApiDto.fromJson(Map<String, dynamic> json) => _$CountriesResponseApiDtoFromJson(json);
-
-@override final  bool error;
-@override final  String msg;
- final  List<CountriesApiDto> _data;
-@override List<CountriesApiDto> get data {
-  if (_data is EqualUnmodifiableListView) return _data;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_data);
-}
-
-
-/// Create a copy of CountriesResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$CountriesResponseApiDtoCopyWith<_CountriesResponseApiDto> get copyWith => __$CountriesResponseApiDtoCopyWithImpl<_CountriesResponseApiDto>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$CountriesResponseApiDtoToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CountriesResponseApiDto&&(identical(other.error, error) || other.error == error)&&(identical(other.msg, msg) || other.msg == msg)&&const DeepCollectionEquality().equals(other._data, _data));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,error,msg,const DeepCollectionEquality().hash(_data));
-
-@override
-String toString() {
-  return 'CountriesResponseApiDto(error: $error, msg: $msg, data: $data)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$CountriesResponseApiDtoCopyWith<$Res> implements $CountriesResponseApiDtoCopyWith<$Res> {
-  factory _$CountriesResponseApiDtoCopyWith(_CountriesResponseApiDto value, $Res Function(_CountriesResponseApiDto) _then) = __$CountriesResponseApiDtoCopyWithImpl;
-@override @useResult
-$Res call({
- bool error, String msg, List<CountriesApiDto> data
-});
-
-
-
-
-}
-/// @nodoc
-class __$CountriesResponseApiDtoCopyWithImpl<$Res>
-    implements _$CountriesResponseApiDtoCopyWith<$Res> {
-  __$CountriesResponseApiDtoCopyWithImpl(this._self, this._then);
-
-  final _CountriesResponseApiDto _self;
-  final $Res Function(_CountriesResponseApiDto) _then;
-
-/// Create a copy of CountriesResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? error = null,Object? msg = null,Object? data = null,}) {
-  return _then(_CountriesResponseApiDto(
-error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as bool,msg: null == msg ? _self.msg : msg // ignore: cast_nullable_to_non_nullable
-as String,data: null == data ? _self._data : data // ignore: cast_nullable_to_non_nullable
-as List<CountriesApiDto>,
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -1390,7 +550,7 @@ as List<CountriesApiDto>,
 /// @nodoc
 mixin _$CountriesApiDto {
 
- String get country; String get iso2;
+ int get id; String get name; String get iso2;@JsonKey(name: 'phonecode') String get dialCode;
 /// Create a copy of CountriesApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1403,16 +563,16 @@ $CountriesApiDtoCopyWith<CountriesApiDto> get copyWith => _$CountriesApiDtoCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CountriesApiDto&&(identical(other.country, country) || other.country == country)&&(identical(other.iso2, iso2) || other.iso2 == iso2));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CountriesApiDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,country,iso2);
+int get hashCode => Object.hash(runtimeType,id,name,iso2,dialCode);
 
 @override
 String toString() {
-  return 'CountriesApiDto(country: $country, iso2: $iso2)';
+  return 'CountriesApiDto(id: $id, name: $name, iso2: $iso2, dialCode: $dialCode)';
 }
 
 
@@ -1423,7 +583,7 @@ abstract mixin class $CountriesApiDtoCopyWith<$Res>  {
   factory $CountriesApiDtoCopyWith(CountriesApiDto value, $Res Function(CountriesApiDto) _then) = _$CountriesApiDtoCopyWithImpl;
 @useResult
 $Res call({
- String country, String iso2
+ int id, String name, String iso2,@JsonKey(name: 'phonecode') String dialCode
 });
 
 
@@ -1440,10 +600,12 @@ class _$CountriesApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of CountriesApiDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? country = null,Object? iso2 = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? iso2 = null,Object? dialCode = null,}) {
   return _then(_self.copyWith(
-country: null == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
+as String,dialCode: null == dialCode ? _self.dialCode : dialCode // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -1529,10 +691,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String country,  String iso2)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String iso2, @JsonKey(name: 'phonecode')  String dialCode)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CountriesApiDto() when $default != null:
-return $default(_that.country,_that.iso2);case _:
+return $default(_that.id,_that.name,_that.iso2,_that.dialCode);case _:
   return orElse();
 
 }
@@ -1550,10 +712,10 @@ return $default(_that.country,_that.iso2);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String country,  String iso2)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String iso2, @JsonKey(name: 'phonecode')  String dialCode)  $default,) {final _that = this;
 switch (_that) {
 case _CountriesApiDto():
-return $default(_that.country,_that.iso2);case _:
+return $default(_that.id,_that.name,_that.iso2,_that.dialCode);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1570,10 +732,10 @@ return $default(_that.country,_that.iso2);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String country,  String iso2)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String iso2, @JsonKey(name: 'phonecode')  String dialCode)?  $default,) {final _that = this;
 switch (_that) {
 case _CountriesApiDto() when $default != null:
-return $default(_that.country,_that.iso2);case _:
+return $default(_that.id,_that.name,_that.iso2,_that.dialCode);case _:
   return null;
 
 }
@@ -1585,11 +747,13 @@ return $default(_that.country,_that.iso2);case _:
 @JsonSerializable()
 
 class _CountriesApiDto implements CountriesApiDto {
-  const _CountriesApiDto({required this.country, required this.iso2});
+  const _CountriesApiDto({required this.id, required this.name, required this.iso2, @JsonKey(name: 'phonecode') required this.dialCode});
   factory _CountriesApiDto.fromJson(Map<String, dynamic> json) => _$CountriesApiDtoFromJson(json);
 
-@override final  String country;
+@override final  int id;
+@override final  String name;
 @override final  String iso2;
+@override@JsonKey(name: 'phonecode') final  String dialCode;
 
 /// Create a copy of CountriesApiDto
 /// with the given fields replaced by the non-null parameter values.
@@ -1604,16 +768,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CountriesApiDto&&(identical(other.country, country) || other.country == country)&&(identical(other.iso2, iso2) || other.iso2 == iso2));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CountriesApiDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,country,iso2);
+int get hashCode => Object.hash(runtimeType,id,name,iso2,dialCode);
 
 @override
 String toString() {
-  return 'CountriesApiDto(country: $country, iso2: $iso2)';
+  return 'CountriesApiDto(id: $id, name: $name, iso2: $iso2, dialCode: $dialCode)';
 }
 
 
@@ -1624,7 +788,7 @@ abstract mixin class _$CountriesApiDtoCopyWith<$Res> implements $CountriesApiDto
   factory _$CountriesApiDtoCopyWith(_CountriesApiDto value, $Res Function(_CountriesApiDto) _then) = __$CountriesApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String country, String iso2
+ int id, String name, String iso2,@JsonKey(name: 'phonecode') String dialCode
 });
 
 
@@ -1641,10 +805,12 @@ class __$CountriesApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of CountriesApiDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? country = null,Object? iso2 = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? iso2 = null,Object? dialCode = null,}) {
   return _then(_CountriesApiDto(
-country: null == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
+as String,dialCode: null == dialCode ? _self.dialCode : dialCode // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -2184,544 +1350,6 @@ class __$DialCodesResponseApiDtoCopyWithImpl<$Res>
   return _then(_DialCodesResponseApiDto(
 data: null == data ? _self._data : data // ignore: cast_nullable_to_non_nullable
 as List<DialCodesDto>,
-  ));
-}
-
-
-}
-
-
-/// @nodoc
-mixin _$FlagResponseApiDto {
-
- List<FlagApiDto> get data;
-/// Create a copy of FlagResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$FlagResponseApiDtoCopyWith<FlagResponseApiDto> get copyWith => _$FlagResponseApiDtoCopyWithImpl<FlagResponseApiDto>(this as FlagResponseApiDto, _$identity);
-
-  /// Serializes this FlagResponseApiDto to a JSON map.
-  Map<String, dynamic> toJson();
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FlagResponseApiDto&&const DeepCollectionEquality().equals(other.data, data));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(data));
-
-@override
-String toString() {
-  return 'FlagResponseApiDto(data: $data)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $FlagResponseApiDtoCopyWith<$Res>  {
-  factory $FlagResponseApiDtoCopyWith(FlagResponseApiDto value, $Res Function(FlagResponseApiDto) _then) = _$FlagResponseApiDtoCopyWithImpl;
-@useResult
-$Res call({
- List<FlagApiDto> data
-});
-
-
-
-
-}
-/// @nodoc
-class _$FlagResponseApiDtoCopyWithImpl<$Res>
-    implements $FlagResponseApiDtoCopyWith<$Res> {
-  _$FlagResponseApiDtoCopyWithImpl(this._self, this._then);
-
-  final FlagResponseApiDto _self;
-  final $Res Function(FlagResponseApiDto) _then;
-
-/// Create a copy of FlagResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? data = null,}) {
-  return _then(_self.copyWith(
-data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as List<FlagApiDto>,
-  ));
-}
-
-}
-
-
-/// Adds pattern-matching-related methods to [FlagResponseApiDto].
-extension FlagResponseApiDtoPatterns on FlagResponseApiDto {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FlagResponseApiDto value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _FlagResponseApiDto() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FlagResponseApiDto value)  $default,){
-final _that = this;
-switch (_that) {
-case _FlagResponseApiDto():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FlagResponseApiDto value)?  $default,){
-final _that = this;
-switch (_that) {
-case _FlagResponseApiDto() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<FlagApiDto> data)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _FlagResponseApiDto() when $default != null:
-return $default(_that.data);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<FlagApiDto> data)  $default,) {final _that = this;
-switch (_that) {
-case _FlagResponseApiDto():
-return $default(_that.data);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<FlagApiDto> data)?  $default,) {final _that = this;
-switch (_that) {
-case _FlagResponseApiDto() when $default != null:
-return $default(_that.data);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _FlagResponseApiDto implements FlagResponseApiDto {
-  const _FlagResponseApiDto({required final  List<FlagApiDto> data}): _data = data;
-  factory _FlagResponseApiDto.fromJson(Map<String, dynamic> json) => _$FlagResponseApiDtoFromJson(json);
-
- final  List<FlagApiDto> _data;
-@override List<FlagApiDto> get data {
-  if (_data is EqualUnmodifiableListView) return _data;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_data);
-}
-
-
-/// Create a copy of FlagResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$FlagResponseApiDtoCopyWith<_FlagResponseApiDto> get copyWith => __$FlagResponseApiDtoCopyWithImpl<_FlagResponseApiDto>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$FlagResponseApiDtoToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FlagResponseApiDto&&const DeepCollectionEquality().equals(other._data, _data));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_data));
-
-@override
-String toString() {
-  return 'FlagResponseApiDto(data: $data)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$FlagResponseApiDtoCopyWith<$Res> implements $FlagResponseApiDtoCopyWith<$Res> {
-  factory _$FlagResponseApiDtoCopyWith(_FlagResponseApiDto value, $Res Function(_FlagResponseApiDto) _then) = __$FlagResponseApiDtoCopyWithImpl;
-@override @useResult
-$Res call({
- List<FlagApiDto> data
-});
-
-
-
-
-}
-/// @nodoc
-class __$FlagResponseApiDtoCopyWithImpl<$Res>
-    implements _$FlagResponseApiDtoCopyWith<$Res> {
-  __$FlagResponseApiDtoCopyWithImpl(this._self, this._then);
-
-  final _FlagResponseApiDto _self;
-  final $Res Function(_FlagResponseApiDto) _then;
-
-/// Create a copy of FlagResponseApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? data = null,}) {
-  return _then(_FlagResponseApiDto(
-data: null == data ? _self._data : data // ignore: cast_nullable_to_non_nullable
-as List<FlagApiDto>,
-  ));
-}
-
-
-}
-
-
-/// @nodoc
-mixin _$FlagApiDto {
-
- String get name; String get iso2; String get unicodeFlag;
-/// Create a copy of FlagApiDto
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$FlagApiDtoCopyWith<FlagApiDto> get copyWith => _$FlagApiDtoCopyWithImpl<FlagApiDto>(this as FlagApiDto, _$identity);
-
-  /// Serializes this FlagApiDto to a JSON map.
-  Map<String, dynamic> toJson();
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FlagApiDto&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,name,iso2,unicodeFlag);
-
-@override
-String toString() {
-  return 'FlagApiDto(name: $name, iso2: $iso2, unicodeFlag: $unicodeFlag)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $FlagApiDtoCopyWith<$Res>  {
-  factory $FlagApiDtoCopyWith(FlagApiDto value, $Res Function(FlagApiDto) _then) = _$FlagApiDtoCopyWithImpl;
-@useResult
-$Res call({
- String name, String iso2, String unicodeFlag
-});
-
-
-
-
-}
-/// @nodoc
-class _$FlagApiDtoCopyWithImpl<$Res>
-    implements $FlagApiDtoCopyWith<$Res> {
-  _$FlagApiDtoCopyWithImpl(this._self, this._then);
-
-  final FlagApiDto _self;
-  final $Res Function(FlagApiDto) _then;
-
-/// Create a copy of FlagApiDto
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? iso2 = null,Object? unicodeFlag = null,}) {
-  return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
-as String,unicodeFlag: null == unicodeFlag ? _self.unicodeFlag : unicodeFlag // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-}
-
-
-/// Adds pattern-matching-related methods to [FlagApiDto].
-extension FlagApiDtoPatterns on FlagApiDto {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FlagApiDto value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _FlagApiDto() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FlagApiDto value)  $default,){
-final _that = this;
-switch (_that) {
-case _FlagApiDto():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FlagApiDto value)?  $default,){
-final _that = this;
-switch (_that) {
-case _FlagApiDto() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String iso2,  String unicodeFlag)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _FlagApiDto() when $default != null:
-return $default(_that.name,_that.iso2,_that.unicodeFlag);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String iso2,  String unicodeFlag)  $default,) {final _that = this;
-switch (_that) {
-case _FlagApiDto():
-return $default(_that.name,_that.iso2,_that.unicodeFlag);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String iso2,  String unicodeFlag)?  $default,) {final _that = this;
-switch (_that) {
-case _FlagApiDto() when $default != null:
-return $default(_that.name,_that.iso2,_that.unicodeFlag);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _FlagApiDto implements FlagApiDto {
-  const _FlagApiDto({required this.name, required this.iso2, required this.unicodeFlag});
-  factory _FlagApiDto.fromJson(Map<String, dynamic> json) => _$FlagApiDtoFromJson(json);
-
-@override final  String name;
-@override final  String iso2;
-@override final  String unicodeFlag;
-
-/// Create a copy of FlagApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$FlagApiDtoCopyWith<_FlagApiDto> get copyWith => __$FlagApiDtoCopyWithImpl<_FlagApiDto>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$FlagApiDtoToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FlagApiDto&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.unicodeFlag, unicodeFlag) || other.unicodeFlag == unicodeFlag));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,name,iso2,unicodeFlag);
-
-@override
-String toString() {
-  return 'FlagApiDto(name: $name, iso2: $iso2, unicodeFlag: $unicodeFlag)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$FlagApiDtoCopyWith<$Res> implements $FlagApiDtoCopyWith<$Res> {
-  factory _$FlagApiDtoCopyWith(_FlagApiDto value, $Res Function(_FlagApiDto) _then) = __$FlagApiDtoCopyWithImpl;
-@override @useResult
-$Res call({
- String name, String iso2, String unicodeFlag
-});
-
-
-
-
-}
-/// @nodoc
-class __$FlagApiDtoCopyWithImpl<$Res>
-    implements _$FlagApiDtoCopyWith<$Res> {
-  __$FlagApiDtoCopyWithImpl(this._self, this._then);
-
-  final _FlagApiDto _self;
-  final $Res Function(_FlagApiDto) _then;
-
-/// Create a copy of FlagApiDto
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? iso2 = null,Object? unicodeFlag = null,}) {
-  return _then(_FlagApiDto(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
-as String,unicodeFlag: null == unicodeFlag ? _self.unicodeFlag : unicodeFlag // ignore: cast_nullable_to_non_nullable
-as String,
   ));
 }
 

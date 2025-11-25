@@ -29,4 +29,5 @@ abstract class ProductsRepository {
 
   Stream<List<OrderEntity>> getOrdersLocalCache(int idUser);
   Future<void> setOrderedLocalCache(List<OrderEntity> orders, int idUser);
+
 }

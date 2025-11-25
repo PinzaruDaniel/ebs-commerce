@@ -37,7 +37,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         title: AppTexts.shoppingCart,
         showBorder: false,
         leading: IconButton(
-          onPressed: () => Get.back(),
+          onPressed: () => Navigator.pop(context, true),
           icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
         ),
       ),

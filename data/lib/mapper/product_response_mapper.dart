@@ -1,4 +1,5 @@
 import 'package:data/mapper/product_mapper.dart';
+import 'package:data/modules/products/models/local/product_response_box.dart';
 import 'package:domain/modules/products/models/index.dart';
 
 import '../modules/products/models/remote/index.dart';
@@ -14,3 +15,4 @@ extension ProductResponseEntityMapper on ProductResponseApiDto {
     );
   }
 }
+

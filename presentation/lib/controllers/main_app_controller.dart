@@ -16,18 +16,21 @@ class MainAppController extends GetxController {
   RxList<CartViewModel> cartItems = RxList([]);
   RxList<OrderViewModel> orders = RxList([]);
 
+  bool isItemInCart(CartViewModel item) {
+    bool isItemInCart = false;
+    cartItems.firstWhereOrNull((element) {
+      isItemInCart = element.id == item.id;
+      return element.id == item.id;
+    });
+    return isItemInCart;
+  }
+
   void addToCart(CartViewModel item) {
-    final index = cartItems.indexWhere((i) => i.title == item.title);
+    final index = cartItems.indexWhere((i) => i.id == item.id);
     if (index != -1) {
-      if (cartItems[index].quantity == item.stock) {
-        return;
-      } else {
-        cartItems[index].quantity++;
-      }
-      consoleLog('addToCart quantity: ${cartItems[index].quantity} ');
+      return;
     } else {
       cartItems.add(item);
-      //consoleLog('addToCart add quantity: ${cartItems[index].quantity} ');
     }
   }
 

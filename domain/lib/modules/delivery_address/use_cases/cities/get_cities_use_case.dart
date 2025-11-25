@@ -4,13 +4,13 @@ import 'package:domain/core/usecase.dart';
 import '../../delivery_address_repository.dart';
 import '../../models/index.dart';
 
-class GetCitiesUseCase extends UseCase<CitiesResponseEntity, GetCitiesUseCaseParams>{
+class GetCitiesUseCase extends UseCase<List<CitiesResponseEntity>, GetCitiesUseCaseParams>{
 
   final DeliveryAddressRepository citiesRepository;
   GetCitiesUseCase({required this.citiesRepository});
 
   @override
-  Future<Either<Failure, CitiesResponseEntity>> call(params) async{
+  Future<Either<Failure, List<CitiesResponseEntity>>> call(params) async{
     return citiesRepository.getCities(
       params.country,
       params.state,

@@ -5,6 +5,7 @@ import 'package:data/mapper/specification_mapper.dart';
 import 'package:data/modules/categories/models/local/category_box.dart';
 import 'package:data/modules/products/models/local/ordered_product_box.dart';
 import 'package:data/modules/products/models/local/product_box.dart';
+import 'package:data/modules/products/models/local/product_response_box.dart';
 import 'package:data/modules/specifications/models/local/specification_box.dart';
 import 'package:domain/modules/products/models/index.dart';
 import 'package:objectbox/objectbox.dart';
@@ -20,6 +21,7 @@ abstract class ProductsLocalDataSource {
   Stream<List<ProductBox>> getProducts();
 
   Stream<List<OrderBox>> getOrders(int idUser);
+
 }
 
 class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
@@ -108,4 +110,5 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   Stream<List<ProductBox>> getProducts() {
     return productBox.query().watch(triggerImmediately: true).map((query) => query.find().reversed.toList());
   }
+
 }

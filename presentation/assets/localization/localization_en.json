@@ -125,6 +125,7 @@
   "noInternetConnection": "No internet connection",
   "backOnline": "You are back online!",
   "error": "Error",
-  "invalidCredentials": "Email or password is incorrect"
+  "invalidCredentials": "Email or password is incorrect",
+  "goToCart": "Go to cart"
 
 }

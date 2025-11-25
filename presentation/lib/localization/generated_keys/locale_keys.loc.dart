@@ -130,5 +130,6 @@ abstract class  LocaleKeys {
   static const backOnline = 'backOnline';
   static const error = 'error';
   static const invalidCredentials = 'invalidCredentials';
+  static const goToCart = 'goToCart';
 
 }

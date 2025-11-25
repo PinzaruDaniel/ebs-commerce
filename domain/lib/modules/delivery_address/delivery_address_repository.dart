@@ -8,12 +8,9 @@ abstract class DeliveryAddressRepository {
 
   Future<Either<Failure, List<StatesEntity>>> getStates(String country);
 
-  Future<Either<Failure, CitiesResponseEntity>> getCities(
+  Future<Either<Failure, List<CitiesResponseEntity>>> getCities(
     String country,
     String state,
   );
-  Future<Either<Failure, List<DialCodesEntity>>> getDialCodes();
-
-  Future<Either<Failure, List<FlagEntity>>> getFlags();
 
 }

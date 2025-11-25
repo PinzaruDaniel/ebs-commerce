@@ -6,25 +6,14 @@ part 'delivery_address_api_service.g.dart';
 
 @RestApi(baseUrl: '')
 abstract class DeliveryAddressApiService {
-  factory DeliveryAddressApiService(Dio dio, {String baseUrl}) =
-      _DeliveryAddressApiService;
+  factory DeliveryAddressApiService(Dio dio, {String baseUrl}) = _DeliveryAddressApiService;
 
   @GET('countries')
-  Future<CountriesResponseApiDto> getCountries();
+  Future<List<CountriesApiDto>> getCountries();
 
-  @GET('countries/states/q')
-  Future<StatesResponseApiDto> getStates(@Query('iso2') String country);
+  @GET('countries/{iso2}/states')
+  Future<List<StatesApiDto>> getStates(@Path('iso2') String countryIso2);
 
-  @GET('countries/state/cities/q')
-  Future<CitiesResponseApiDto> getCities(
-      @Query('country')String country,
-      @Query('state') String state,
-      );
-
-  @GET('countries/codes')
-  Future<DialCodesResponseApiDto> getDialCodes();
-
-  @GET('countries/flag/unicode')
-  Future<FlagResponseApiDto> getFlags();
-
+  @GET('countries/{countryIso2}/states/{stateIso2}/cities')
+  Future<List<CitiesResponseApiDto>> getCities(@Path('countryIso2') String countryIso2, @Path('stateIso2') String stateIso2);
 }

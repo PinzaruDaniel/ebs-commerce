@@ -13,8 +13,10 @@ import 'package:presentation/view/user_view_model.dart';
 
 import '../../pages/category_page/category_page.dart';
 import '../../pages/contact_information_page/contact_information_page.dart';
+import '../../pages/product_detail_page/product_detail_page.dart';
 import '../../pages/shopping_cart_page/shopping_cart_page.dart';
 import '../../view/cart_products_view_model.dart';
+import '../../view/product_view_model.dart';
 
 Route<T> createSharedAxisRoute<T>({required Widget page, SharedAxisTransitionType? transitionType}) {
   return PageRouteBuilder<T>(
@@ -31,11 +33,13 @@ Route<T> createSharedAxisRoute<T>({required Widget page, SharedAxisTransitionTyp
     },
   );
 }
+
 class AppRouter {
   static void _route({
     required Widget page,
     bool removeUntil = false,
     bool withAnimation = false,
+    Function()? onGoBack,
     SharedAxisTransitionType transitionType = SharedAxisTransitionType.horizontal,
   }) {
     if (Get.context != null) {
@@ -45,9 +49,13 @@ class AppRouter {
           rootNavigator: true,
         ).pushAndRemoveUntil(CupertinoPageRoute(builder: (_) => page), (Route<dynamic> route) => false);
       } else if (withAnimation) {
-        Navigator.of(Get.context!).push(createSharedAxisRoute(page: page, transitionType: transitionType));
+        Navigator.of(Get.context!).push(createSharedAxisRoute(page: page, transitionType: transitionType)).then((_) {
+          if (onGoBack != null) {
+            onGoBack.call();
+          }
+        });
       } else {
-        Navigator.push(Get.context!, MaterialPageRoute(builder: (context) => page));
+        Navigator.push(Get.context!, CupertinoPageRoute(builder: (context) => page));
       }
     }
   }
@@ -56,13 +64,16 @@ class AppRouter {
     _route(page: HomePage(), removeUntil: removeUntil);
   }
 
-  //Todo: to change all
+  static void openProductsDetailPage(ProductViewModel item) {
+    _route(page: ProductDetailPage(item: item), withAnimation: true);
+  }
+
   static void openOrdersPage() {
     _route(page: OrdersPage());
   }
 
-  static void openShoppingCartPage() {
-    _route(page: ShoppingCartPage(), withAnimation: true);
+  static void openShoppingCartPage({Function()? onGoBack}) {
+    _route(page: ShoppingCartPage(), withAnimation: true, onGoBack: onGoBack);
   }
 
   static void openGreetingPage() {
@@ -74,7 +85,10 @@ class AppRouter {
   }
 
   static void openCategoryPickerPage({required Function onSave, required Set<int> selectedIds}) {
-    _route(page: CategoryPage(onSave: onSave, selectedIds: selectedIds,), withAnimation: true);
+    _route(
+      page: CategoryPage(onSave: onSave, selectedIds: selectedIds),
+      withAnimation: true,
+    );
   }
 
   static void openCheckoutPage({required List<CartViewModel> items}) {

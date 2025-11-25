@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:common/constants/failure_class.dart';
+import 'package:common/constants/logger.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/sync_products_use_case.dart';
 import 'package:get/get.dart';
@@ -23,14 +24,15 @@ class HomeController extends GetxController {
   int perPage = 20;
   StreamSubscription? _streamSubscription;
 
-  void initItems() {
+  Future<void> initItems() async {
     items.value = [
       AdBannerViewModel(),
       HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
       HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
       AllProductsViewItem(products: products),
     ];
-    getProducts(loadMore: true, firstLoad: true);
+    await getProducts(loadMore: true, firstLoad: true);
+
   }
 
   @override
@@ -38,6 +40,14 @@ class HomeController extends GetxController {
     _streamSubscription?.cancel();
     super.onClose();
   }
+  void restorePageFromCache() {
+    if (products.isNotEmpty) {
+      currentPage.value = (products.length / perPage).ceil() + 1;
+      consoleLog('current page value: ${currentPage.value}');
+
+    }
+  }
+
 
   Future<void> syncProducts({bool firstLoad = false}) async {
     if (firstLoad) {
@@ -60,7 +70,7 @@ class HomeController extends GetxController {
     );
   }
 
-  Future<void> getProducts({bool loadMore = false, bool firstLoad=false}) async {
+  Future<void> getProducts({bool loadMore = false, bool firstLoad = false}) async {
     if (loadMore) {
       await syncProducts(firstLoad: firstLoad);
     }
@@ -71,6 +81,8 @@ class HomeController extends GetxController {
         .listen((list) {
           final mappedProducts = list.map((e) => e.toModel).toList();
           products.assignAll(mappedProducts);
+
+          restorePageFromCache();
         });
   }
 }

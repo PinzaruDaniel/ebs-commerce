@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CitiesResponseEntity {
 
- bool get error; String get msg; List<String> get data;
+ int get id; String get name;
 /// Create a copy of CitiesResponseEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $CitiesResponseEntityCopyWith<CitiesResponseEntity> get copyWith => _$CitiesResp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CitiesResponseEntity&&(identical(other.error, error) || other.error == error)&&(identical(other.msg, msg) || other.msg == msg)&&const DeepCollectionEquality().equals(other.data, data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CitiesResponseEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,error,msg,const DeepCollectionEquality().hash(data));
+int get hashCode => Object.hash(runtimeType,id,name);
 
 @override
 String toString() {
-  return 'CitiesResponseEntity(error: $error, msg: $msg, data: $data)';
+  return 'CitiesResponseEntity(id: $id, name: $name)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $CitiesResponseEntityCopyWith<$Res>  {
   factory $CitiesResponseEntityCopyWith(CitiesResponseEntity value, $Res Function(CitiesResponseEntity) _then) = _$CitiesResponseEntityCopyWithImpl;
 @useResult
 $Res call({
- bool error, String msg, List<String> data
+ int id, String name
 });
 
 
@@ -62,12 +62,11 @@ class _$CitiesResponseEntityCopyWithImpl<$Res>
 
 /// Create a copy of CitiesResponseEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? error = null,Object? msg = null,Object? data = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,}) {
   return _then(_self.copyWith(
-error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as bool,msg: null == msg ? _self.msg : msg // ignore: cast_nullable_to_non_nullable
-as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as List<String>,
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -152,10 +151,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool error,  String msg,  List<String> data)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CitiesResponseEntity() when $default != null:
-return $default(_that.error,_that.msg,_that.data);case _:
+return $default(_that.id,_that.name);case _:
   return orElse();
 
 }
@@ -173,10 +172,10 @@ return $default(_that.error,_that.msg,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool error,  String msg,  List<String> data)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name)  $default,) {final _that = this;
 switch (_that) {
 case _CitiesResponseEntity():
-return $default(_that.error,_that.msg,_that.data);case _:
+return $default(_that.id,_that.name);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +192,10 @@ return $default(_that.error,_that.msg,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool error,  String msg,  List<String> data)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name)?  $default,) {final _that = this;
 switch (_that) {
 case _CitiesResponseEntity() when $default != null:
-return $default(_that.error,_that.msg,_that.data);case _:
+return $default(_that.id,_that.name);case _:
   return null;
 
 }
@@ -208,18 +207,11 @@ return $default(_that.error,_that.msg,_that.data);case _:
 
 
 class _CitiesResponseEntity implements CitiesResponseEntity {
-  const _CitiesResponseEntity({required this.error, required this.msg, required final  List<String> data}): _data = data;
+  const _CitiesResponseEntity({required this.id, required this.name});
   
 
-@override final  bool error;
-@override final  String msg;
- final  List<String> _data;
-@override List<String> get data {
-  if (_data is EqualUnmodifiableListView) return _data;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_data);
-}
-
+@override final  int id;
+@override final  String name;
 
 /// Create a copy of CitiesResponseEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +223,16 @@ _$CitiesResponseEntityCopyWith<_CitiesResponseEntity> get copyWith => __$CitiesR
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CitiesResponseEntity&&(identical(other.error, error) || other.error == error)&&(identical(other.msg, msg) || other.msg == msg)&&const DeepCollectionEquality().equals(other._data, _data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CitiesResponseEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,error,msg,const DeepCollectionEquality().hash(_data));
+int get hashCode => Object.hash(runtimeType,id,name);
 
 @override
 String toString() {
-  return 'CitiesResponseEntity(error: $error, msg: $msg, data: $data)';
+  return 'CitiesResponseEntity(id: $id, name: $name)';
 }
 
 
@@ -251,7 +243,7 @@ abstract mixin class _$CitiesResponseEntityCopyWith<$Res> implements $CitiesResp
   factory _$CitiesResponseEntityCopyWith(_CitiesResponseEntity value, $Res Function(_CitiesResponseEntity) _then) = __$CitiesResponseEntityCopyWithImpl;
 @override @useResult
 $Res call({
- bool error, String msg, List<String> data
+ int id, String name
 });
 
 
@@ -268,12 +260,11 @@ class __$CitiesResponseEntityCopyWithImpl<$Res>
 
 /// Create a copy of CitiesResponseEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? error = null,Object? msg = null,Object? data = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,}) {
   return _then(_CitiesResponseEntity(
-error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as bool,msg: null == msg ? _self.msg : msg // ignore: cast_nullable_to_non_nullable
-as String,data: null == data ? _self._data : data // ignore: cast_nullable_to_non_nullable
-as List<String>,
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -283,7 +274,7 @@ as List<String>,
 /// @nodoc
 mixin _$CountriesEntity {
 
- String get name; String get iso2;
+ int get id; String get name; String get iso2; String get dialCode;
 /// Create a copy of CountriesEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -294,16 +285,16 @@ $CountriesEntityCopyWith<CountriesEntity> get copyWith => _$CountriesEntityCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CountriesEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CountriesEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,iso2);
+int get hashCode => Object.hash(runtimeType,id,name,iso2,dialCode);
 
 @override
 String toString() {
-  return 'CountriesEntity(name: $name, iso2: $iso2)';
+  return 'CountriesEntity(id: $id, name: $name, iso2: $iso2, dialCode: $dialCode)';
 }
 
 
@@ -314,7 +305,7 @@ abstract mixin class $CountriesEntityCopyWith<$Res>  {
   factory $CountriesEntityCopyWith(CountriesEntity value, $Res Function(CountriesEntity) _then) = _$CountriesEntityCopyWithImpl;
 @useResult
 $Res call({
- String name, String iso2
+ int id, String name, String iso2, String dialCode
 });
 
 
@@ -331,10 +322,12 @@ class _$CountriesEntityCopyWithImpl<$Res>
 
 /// Create a copy of CountriesEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? iso2 = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? iso2 = null,Object? dialCode = null,}) {
   return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
+as String,dialCode: null == dialCode ? _self.dialCode : dialCode // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -420,10 +413,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String iso2)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String iso2,  String dialCode)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CountriesEntity() when $default != null:
-return $default(_that.name,_that.iso2);case _:
+return $default(_that.id,_that.name,_that.iso2,_that.dialCode);case _:
   return orElse();
 
 }
@@ -441,10 +434,10 @@ return $default(_that.name,_that.iso2);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String iso2)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String iso2,  String dialCode)  $default,) {final _that = this;
 switch (_that) {
 case _CountriesEntity():
-return $default(_that.name,_that.iso2);case _:
+return $default(_that.id,_that.name,_that.iso2,_that.dialCode);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -461,10 +454,10 @@ return $default(_that.name,_that.iso2);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String iso2)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String iso2,  String dialCode)?  $default,) {final _that = this;
 switch (_that) {
 case _CountriesEntity() when $default != null:
-return $default(_that.name,_that.iso2);case _:
+return $default(_that.id,_that.name,_that.iso2,_that.dialCode);case _:
   return null;
 
 }
@@ -476,11 +469,13 @@ return $default(_that.name,_that.iso2);case _:
 
 
 class _CountriesEntity implements CountriesEntity {
-  const _CountriesEntity({required this.name, required this.iso2});
+  const _CountriesEntity({required this.id, required this.name, required this.iso2, required this.dialCode});
   
 
+@override final  int id;
 @override final  String name;
 @override final  String iso2;
+@override final  String dialCode;
 
 /// Create a copy of CountriesEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -492,16 +487,16 @@ _$CountriesEntityCopyWith<_CountriesEntity> get copyWith => __$CountriesEntityCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CountriesEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CountriesEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.iso2, iso2) || other.iso2 == iso2)&&(identical(other.dialCode, dialCode) || other.dialCode == dialCode));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,iso2);
+int get hashCode => Object.hash(runtimeType,id,name,iso2,dialCode);
 
 @override
 String toString() {
-  return 'CountriesEntity(name: $name, iso2: $iso2)';
+  return 'CountriesEntity(id: $id, name: $name, iso2: $iso2, dialCode: $dialCode)';
 }
 
 
@@ -512,7 +507,7 @@ abstract mixin class _$CountriesEntityCopyWith<$Res> implements $CountriesEntity
   factory _$CountriesEntityCopyWith(_CountriesEntity value, $Res Function(_CountriesEntity) _then) = __$CountriesEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String iso2
+ int id, String name, String iso2, String dialCode
 });
 
 
@@ -529,10 +524,12 @@ class __$CountriesEntityCopyWithImpl<$Res>
 
 /// Create a copy of CountriesEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? iso2 = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? iso2 = null,Object? dialCode = null,}) {
   return _then(_CountriesEntity(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,iso2: null == iso2 ? _self.iso2 : iso2 // ignore: cast_nullable_to_non_nullable
+as String,dialCode: null == dialCode ? _self.dialCode : dialCode // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -543,7 +540,7 @@ as String,
 /// @nodoc
 mixin _$StatesEntity {
 
- String get name; String get code;
+ int get id; String get name; String get code;
 /// Create a copy of StatesEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -554,16 +551,16 @@ $StatesEntityCopyWith<StatesEntity> get copyWith => _$StatesEntityCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatesEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.code, code) || other.code == code));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatesEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.code, code) || other.code == code));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,code);
+int get hashCode => Object.hash(runtimeType,id,name,code);
 
 @override
 String toString() {
-  return 'StatesEntity(name: $name, code: $code)';
+  return 'StatesEntity(id: $id, name: $name, code: $code)';
 }
 
 
@@ -574,7 +571,7 @@ abstract mixin class $StatesEntityCopyWith<$Res>  {
   factory $StatesEntityCopyWith(StatesEntity value, $Res Function(StatesEntity) _then) = _$StatesEntityCopyWithImpl;
 @useResult
 $Res call({
- String name, String code
+ int id, String name, String code
 });
 
 
@@ -591,9 +588,10 @@ class _$StatesEntityCopyWithImpl<$Res>
 
 /// Create a copy of StatesEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? code = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? code = null,}) {
   return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -680,10 +678,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String code)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String code)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StatesEntity() when $default != null:
-return $default(_that.name,_that.code);case _:
+return $default(_that.id,_that.name,_that.code);case _:
   return orElse();
 
 }
@@ -701,10 +699,10 @@ return $default(_that.name,_that.code);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String code)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String code)  $default,) {final _that = this;
 switch (_that) {
 case _StatesEntity():
-return $default(_that.name,_that.code);case _:
+return $default(_that.id,_that.name,_that.code);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -721,10 +719,10 @@ return $default(_that.name,_that.code);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String code)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String code)?  $default,) {final _that = this;
 switch (_that) {
 case _StatesEntity() when $default != null:
-return $default(_that.name,_that.code);case _:
+return $default(_that.id,_that.name,_that.code);case _:
   return null;
 
 }
@@ -736,9 +734,10 @@ return $default(_that.name,_that.code);case _:
 
 
 class _StatesEntity implements StatesEntity {
-  const _StatesEntity({required this.name, required this.code});
+  const _StatesEntity({required this.id, required this.name, required this.code});
   
 
+@override final  int id;
 @override final  String name;
 @override final  String code;
 
@@ -752,16 +751,16 @@ _$StatesEntityCopyWith<_StatesEntity> get copyWith => __$StatesEntityCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatesEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.code, code) || other.code == code));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatesEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.code, code) || other.code == code));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,code);
+int get hashCode => Object.hash(runtimeType,id,name,code);
 
 @override
 String toString() {
-  return 'StatesEntity(name: $name, code: $code)';
+  return 'StatesEntity(id: $id, name: $name, code: $code)';
 }
 
 
@@ -772,7 +771,7 @@ abstract mixin class _$StatesEntityCopyWith<$Res> implements $StatesEntityCopyWi
   factory _$StatesEntityCopyWith(_StatesEntity value, $Res Function(_StatesEntity) _then) = __$StatesEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String code
+ int id, String name, String code
 });
 
 
@@ -789,9 +788,10 @@ class __$StatesEntityCopyWithImpl<$Res>
 
 /// Create a copy of StatesEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? code = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? code = null,}) {
   return _then(_StatesEntity(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,
   ));

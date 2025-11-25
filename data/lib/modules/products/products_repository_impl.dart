@@ -116,4 +116,5 @@ class ProductsRepositoryImpl implements ProductsRepository {
   Future<void> setOrderedLocalCache(List<OrderEntity> orders, int idUser) {
     return localDataSource.setOrders(orders: orders, idUser: idUser);
   }
+
 }

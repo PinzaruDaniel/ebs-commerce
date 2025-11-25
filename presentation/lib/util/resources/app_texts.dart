@@ -53,7 +53,6 @@ class AppTexts {
 
   static String get seeAll => LocaleKeys.seeAll.tr();
 
-
   static String get promoValid => LocaleKeys.promoValid.tr();
 
   static String get oops => LocaleKeys.oops.tr();
@@ -255,8 +254,12 @@ class AppTexts {
   static String get error => LocaleKeys.error.tr();
 
   static String get noInternetConnection => LocaleKeys.noInternetConnection.tr();
+
   static String get success => LocaleKeys.success.tr();
 
   static String get backOnline => LocaleKeys.backOnline.tr();
+
   static String get invalidCredentials => LocaleKeys.invalidCredentials.tr();
+
+  static String get goToCart => LocaleKeys.goToCart.tr();
 }

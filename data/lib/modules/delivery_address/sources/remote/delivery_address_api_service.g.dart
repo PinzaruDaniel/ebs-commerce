@@ -18,12 +18,12 @@ class _DeliveryAddressApiService implements DeliveryAddressApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<CountriesResponseApiDto> getCountries() async {
+  Future<List<CountriesApiDto>> getCountries() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<CountriesResponseApiDto>(
+    final _options = _setStreamType<List<CountriesApiDto>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -33,37 +33,14 @@ class _DeliveryAddressApiService implements DeliveryAddressApiService {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CountriesResponseApiDto _value;
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<CountriesApiDto> _value;
     try {
-      _value = CountriesResponseApiDto.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
-
-  @override
-  Future<StatesResponseApiDto> getStates(String country) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'iso2': country};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<StatesResponseApiDto>(
-      Options(method: 'GET', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            'countries/states/q',
-            queryParameters: queryParameters,
-            data: _data,
+      _value = _result.data!
+          .map(
+            (dynamic i) => CountriesApiDto.fromJson(i as Map<String, dynamic>),
           )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late StatesResponseApiDto _value;
-    try {
-      _value = StatesResponseApiDto.fromJson(_result.data!);
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -72,55 +49,27 @@ class _DeliveryAddressApiService implements DeliveryAddressApiService {
   }
 
   @override
-  Future<CitiesResponseApiDto> getCities(String country, String state) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'country': country,
-      r'state': state,
-    };
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<CitiesResponseApiDto>(
-      Options(method: 'GET', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            'countries/state/cities/q',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CitiesResponseApiDto _value;
-    try {
-      _value = CitiesResponseApiDto.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
-
-  @override
-  Future<DialCodesResponseApiDto> getDialCodes() async {
+  Future<List<StatesApiDto>> getStates(String countryIso2) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<DialCodesResponseApiDto>(
+    final _options = _setStreamType<List<StatesApiDto>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'countries/codes',
+            'countries/${countryIso2}/states',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DialCodesResponseApiDto _value;
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<StatesApiDto> _value;
     try {
-      _value = DialCodesResponseApiDto.fromJson(_result.data!);
+      _value = _result.data!
+          .map((dynamic i) => StatesApiDto.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -129,25 +78,33 @@ class _DeliveryAddressApiService implements DeliveryAddressApiService {
   }
 
   @override
-  Future<FlagResponseApiDto> getFlags() async {
+  Future<List<CitiesResponseApiDto>> getCities(
+    String countryIso2,
+    String stateIso2,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<FlagResponseApiDto>(
+    final _options = _setStreamType<List<CitiesResponseApiDto>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'countries/flag/unicode',
+            'countries/${countryIso2}/states/${stateIso2}/cities',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late FlagResponseApiDto _value;
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<CitiesResponseApiDto> _value;
     try {
-      _value = FlagResponseApiDto.fromJson(_result.data!);
+      _value = _result.data!
+          .map(
+            (dynamic i) =>
+                CitiesResponseApiDto.fromJson(i as Map<String, dynamic>),
+          )
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

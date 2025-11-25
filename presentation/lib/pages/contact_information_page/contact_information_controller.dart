@@ -1,9 +1,7 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-import 'package:domain/modules/delivery_address/use_cases/dial_codes/get_dial_codes_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
 import 'package:presentation/pages/contact_information_page/widgets/phone_number_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/dial_codes_view_model.dart';
@@ -16,7 +14,6 @@ import '../../util/widgets/text_field_widget.dart';
 import '../../view/country_flag_dial_code_view_model.dart';
 
 class ContactInformationController extends GetxController {
-  final GetDialCodesUseCase getDialCodesUseCase = GetIt.instance<GetDialCodesUseCase>();
   RxList<BaseViewModel> allItems = RxList([]);
   RxList<DialCodesViewModel> dialCodes = RxList([]);
   RxList<FlagViewModel> flags = RxList([]);
