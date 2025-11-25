@@ -40,7 +40,7 @@ class HomeController extends GetxController {
     _streamSubscription?.cancel();
     super.onClose();
   }
-  void restorePageFromCache() {
+  void pageFromCache() {
     if (products.isNotEmpty) {
       currentPage.value = (products.length / perPage).ceil() + 1;
       consoleLog('current page value: ${currentPage.value}');
@@ -82,7 +82,7 @@ class HomeController extends GetxController {
           final mappedProducts = list.map((e) => e.toModel).toList();
           products.assignAll(mappedProducts);
 
-          restorePageFromCache();
+          pageFromCache();
         });
   }
 }
