@@ -44,7 +44,6 @@ class HomeController extends GetxController {
     if (products.isNotEmpty) {
       currentPage.value = (products.length / perPage).ceil() + 1;
       consoleLog('current page value: ${currentPage.value}');
-
     }
   }
 
