@@ -45,7 +45,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     isItemInCart = mainAppController.isItemInCart(addCartController.cartItem.value!);
     scrollController.addListener(_scrollListener);
     itemIndex = mainAppController.cartItems.indexWhere((element) => element.id == widget.item!.id);
-    consoleLog('itemindex=$itemIndex   and ${widget.item!.id}');
     setState(() {});
   }
 
@@ -117,7 +116,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         showIcon: !isItemInCart && isItemValid,
         onTap: () {
           if (isItemInCart) {
-            AppRouter.openShoppingCartPage();
+            AppRouter.openShoppingCartPage(
+              onGoBack: () {
+                _initData();
+              },
+            );
           } else {
             AppPopUp.showCartInfoPopUp(
               item: widget.item!,
