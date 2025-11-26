@@ -31,8 +31,9 @@ class HomeController extends GetxController {
       HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
       AllProductsViewItem(products: products),
     ];
-    await getProducts(loadMore: true, firstLoad: true);
-
+    if (products.isEmpty) {
+      await getProducts(loadMore: true);
+    }
   }
 
   @override
@@ -40,6 +41,7 @@ class HomeController extends GetxController {
     _streamSubscription?.cancel();
     super.onClose();
   }
+
   void pageFromCache() {
     if (products.isNotEmpty) {
       currentPage.value = (products.length / perPage).ceil() + 1;
@@ -47,11 +49,11 @@ class HomeController extends GetxController {
     }
   }
 
-
-  Future<void> syncProducts({bool firstLoad = false}) async {
-    if (firstLoad) {
+  Future<void> syncProducts() async {
+    if(products.isEmpty) {
       mainAppController.addPendingIds([PendingIds.getProducts]);
     }
+
     final either = await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
     either.fold(
       (failure) {
@@ -69,9 +71,9 @@ class HomeController extends GetxController {
     );
   }
 
-  Future<void> getProducts({bool loadMore = false, bool firstLoad = false}) async {
+  Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
-      await syncProducts(firstLoad: firstLoad);
+      await syncProducts();
     }
     _streamSubscription?.cancel();
     _streamSubscription = streamProductsUseCase
