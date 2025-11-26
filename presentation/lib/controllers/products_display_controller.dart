@@ -13,9 +13,9 @@ import 'package:presentation/util/mapper/product_mapper.dart';
 import 'package:snackify/enums/snack_enums.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-import '../../util/enum/enums.dart';
-import '../../util/routing/app_pop_up.dart';
-import '../../view/product_view_model.dart';
+import '../util/enum/enums.dart';
+import '../util/routing/app_pop_up.dart';
+import '../view/product_view_model.dart';
 
 class ProductsDisplayController extends GetxController {
   final StreamProductsUseCase getProductsUseCase = GetIt.instance<StreamProductsUseCase>();

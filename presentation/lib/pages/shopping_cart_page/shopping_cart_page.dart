@@ -6,6 +6,7 @@ import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/product_image_widget.dart';
 import 'package:presentation/util/widgets/select_checkbox_widget.dart';
+import '../../controllers/controller_imports.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_icons.dart';
 import '../../util/resources/app_texts.dart';
@@ -22,13 +23,7 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
-  CartController get cartController => Get.find();
 
-  @override
-  void initState() {
-    super.initState();
-    Get.put(CartController());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +37,14 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         ),
       ),
       body: Obx(() {
-        if (cartController.cartItems.isEmpty) {
+        if (mainAppController.cartItems.isEmpty) {
           return EmptyWidget();
         } else {
           return ListView.builder(
             physics: NeverScrollableScrollPhysics(),
-            itemCount: cartController.cartItems.length,
+            itemCount: mainAppController.cartItems.length,
             itemBuilder: (context, index) {
-              final item = cartController.cartItems[index];
+              final item = mainAppController.cartItems[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                 child: Row(
@@ -79,10 +74,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                         Obx(
                           () => ProductInputQuantityWidget(
                             key: ValueKey(
-                              '${cartController.cartItems[index].id}_${cartController.cartItems[index].quantity}',
+                              '${mainAppController.cartItems[index].id}_${mainAppController.cartItems[index].quantity}',
                             ),
                             minValue: 1,
-                            initialValue: cartController.cartItems[index].quantity,
+                            initialValue: mainAppController.cartItems[index].quantity,
                             onChanged: (val) {
                               if (val == 0) {
                                 AppPopUp.showConfirmationDialog(
@@ -90,17 +85,17 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                                   title: AppTexts.removeItem,
                                   content: AppTexts.removeItemQuestion,
                                   onSave: () {
-                                    cartController.removeItem(index);
+                                    mainAppController.removeCartItem(index);
                                   },
                                   onCancel: () {
-                                    cartController.cartItems.refresh();
+                                    mainAppController.cartItems.refresh();
                                   },
                                 );
                               } else {
-                                cartController.updateQuantity(index, val, context);
+                                mainAppController.updateCartItemQuantity(index, val, context);
                               }
                             },
-                            maxValue: cartController.cartItems[index].stock,
+                            maxValue: mainAppController.cartItems[index].stock,
                           ),
                         ),
                       ],
@@ -115,14 +110,14 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
 
       bottomNavigationBar: Obx(
         () => BottomNavigationBarWidget(
-          title: cartController.cartItems.isEmpty || cartController.selectedItems.isEmpty
+          title: mainAppController.cartItems.isEmpty || mainAppController.selectedCartItems.isEmpty
               ? AppTexts.continueShopping
               : AppTexts.checkout,
-          showIcon: cartController.cartItems.isEmpty,
+          showIcon: mainAppController.cartItems.isEmpty,
           onTap: () {
-            cartController.cartItems.isEmpty || cartController.selectedItems.isEmpty
+            mainAppController.cartItems.isEmpty || mainAppController.selectedCartItems.isEmpty
                 ? AppRouter.openHomePage()
-                : AppRouter.openCheckoutPage(items: cartController.selectedItems);
+                : AppRouter.openCheckoutPage(items: mainAppController.selectedCartItems);
           },
         ),
       ),

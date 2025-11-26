@@ -31,6 +31,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   AddToCartController get addCartController => Get.find();
   bool isItemInCart = false;
+  int itemIndex = 0;
 
   @override
   void initState() {
@@ -43,6 +44,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     addCartController.initCartItem(widget.item!);
     isItemInCart = mainAppController.isItemInCart(addCartController.cartItem.value!);
     scrollController.addListener(_scrollListener);
+    itemIndex = mainAppController.cartItems.indexWhere((element) => element.id == widget.item!.id);
+    consoleLog('itemindex=$itemIndex   and ${widget.item!.id}');
     setState(() {});
   }
 
@@ -97,7 +100,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       ),
       bottomNavigationBar: BottomNavigationBarWidget(
         buttonColor: isItemInCart
-            ? AppColors.greyText
+            ? AppColors.primary
             : isItemValid
             ? AppColors.primary
             : Colors.grey.shade300,
@@ -107,7 +110,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ? Colors.white
             : Colors.black,
         title: isItemInCart
-            ? AppTexts.goToCart
+            ? '${AppTexts.goToCart} (${mainAppController.cartItems.value[itemIndex].quantity}) '
             : isItemValid
             ? AppTexts.addToCart
             : AppTexts.cantAddToCart,

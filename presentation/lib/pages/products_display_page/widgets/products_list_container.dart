@@ -1,20 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 
-class ProductsListContainer extends StatelessWidget {
-  final Widget Function(BuildContext context, List<dynamic> products) builder;
-  final List<ProductViewModel> products;
+import '../../../util/enum/enums.dart';
 
-  const ProductsListContainer({super.key, required this.builder, required this.products});
+class ProductsListContainer extends StatelessWidget {
+  final BuildContext context;
+  final String title;
+  final ProductListType productType;
+
+  const ProductsListContainer({
+    super.key,
+    required this.title,
+    required this.context,
+    this.productType = ProductListType.allProducts,
+  });
 
   @override
   Widget build(BuildContext context) {
-      if (products.isEmpty) {
-        return EmptyWidget();
-      }
-
-      return builder(context, products);
+    /*List<ProductViewModel> products = [];
+    if (productType case ProductListType.newProducts) {
+      products = productsDisplayController.products;
+    } else if (productType case ProductListType.saleProducts) {
+      products = productsDisplayController.products;
+    } else if (productType case ProductListType.filteredProducts) {
+      products = productsDisplayController.products;
+    } else if (productType case ProductListType.allProducts) {
+      products = productsDisplayController.products;
+    }*/
+    return Builder(
+      builder: (context) {
+        return ProductsListDisplayWidget(
+          products: productsDisplayController.products,
+          title: title,
+          showHeaderTitle: false,
+        );
+      },
+    );
   }
 }
-//

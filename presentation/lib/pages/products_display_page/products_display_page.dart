@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/products_display_page/products_display_controller.dart';
+import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/controllers/products_display_controller.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_container.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
@@ -34,14 +35,12 @@ class ProductsDisplayPage extends StatefulWidget {
 }
 
 class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
-  ProductsDisplayController get controller => Get.find();
-
   @override
   void initState() {
     super.initState();
     Get.put(ProductsDisplayController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.loadProducts(
+      productsDisplayController.loadProducts(
         productType: widget.type,
         selectedCategoryIds: widget.selectedCategoryIds,
         priceRange: widget.priceRange,
@@ -65,7 +64,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
         return SmartRefresherWidget(
           controller: _refreshController,
           onRefresh: () async {
-            await controller.loadProducts(
+            await productsDisplayController.loadProducts(
               loadMore: false,
               productType: widget.type,
               selectedCategoryIds: widget.selectedCategoryIds,
@@ -74,7 +73,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
             _refreshController.refreshCompleted();
           },
           onLoading: () async {
-            await controller.loadProducts(
+            await productsDisplayController.loadProducts(
               loadMore: true,
               selectedCategoryIds: widget.selectedCategoryIds,
               priceRange: widget.priceRange,
@@ -83,11 +82,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
             _refreshController.loadComplete();
           },
           child: SingleChildScrollView(
-            child: ProductsListDisplayWidget(
-              products: controller.products,
-              showHeaderTitle: false,
-              title: widget.title,
-            ),
+            child: ProductsListContainer(title: widget.title, context: context, productType: widget.type),
           ),
         );
       },

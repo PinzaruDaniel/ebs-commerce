@@ -18,18 +18,16 @@ class ProductInputQuantityWidget extends StatefulWidget {
   final Function(int) onChanged;
 
   @override
-  State<ProductInputQuantityWidget> createState() =>
-      _ProductInputQuantityWidgetState();
+  State<ProductInputQuantityWidget> createState() => _ProductInputQuantityWidgetState();
 }
 
 class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget> {
-   int currentValue=0;
+  int currentValue = 0;
 
   @override
   void initState() {
     super.initState();
-    currentValue =
-        widget.initialValue.clamp(widget.minValue, widget.maxValue ?? double.maxFinite.toInt());
+    currentValue = widget.initialValue.clamp(widget.minValue, widget.maxValue ?? double.maxFinite.toInt());
   }
 
   @override
@@ -37,17 +35,21 @@ class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget>
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _buildButton(Icons.remove_rounded, onPressed: () {
-          setState(() {
-            final value = currentValue - 1;
-            if (value < widget.minValue) {
-              widget.onChanged(0);
-            } else {
-              currentValue = value;
-              widget.onChanged(value);
-            }
-          });
-        }),
+        _buildButton(
+          Icons.remove_rounded,
+          color: currentValue == widget.minValue ? Colors.grey : AppColors.primary,
+          onPressed: () {
+            setState(() {
+              final value = currentValue - 1;
+              if (value < widget.minValue) {
+                widget.onChanged(0);
+              } else {
+                currentValue = value;
+                widget.onChanged(value);
+              }
+            });
+          },
+        ),
         SizedBox(
           width: Get.height * 0.05,
           child: TextField(
@@ -55,26 +57,28 @@ class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget>
             controller: TextEditingController(text: currentValue.toString()),
             textAlign: TextAlign.center,
             style: AppTextsStyle.bold(size: 16),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.zero,
-            ),
+            decoration: const InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.zero),
           ),
         ),
-        _buildButton(Icons.add_rounded, onPressed: () {
-          setState(() {
-            final value = currentValue + 1;
-            if (value <= (widget.maxValue ?? double.maxFinite.toInt())) {
-              currentValue = value;
-              widget.onChanged(value);
-            }
-          });
-        }),
+        _buildButton(
+          Icons.add_rounded,
+
+          color: currentValue == widget.maxValue ? Colors.grey : AppColors.primary,
+          onPressed: () {
+            setState(() {
+              final value = currentValue + 1;
+              if (value <= (widget.maxValue ?? double.maxFinite.toInt())) {
+                currentValue = value;
+                widget.onChanged(value);
+              }
+            });
+          },
+        ),
       ],
     );
   }
 
-  Widget _buildButton(IconData icon, {VoidCallback? onPressed}) {
+  Widget _buildButton(IconData icon, {VoidCallback? onPressed, required Color color}) {
     return Container(
       height: 26,
       width: 26,
@@ -86,7 +90,7 @@ class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget>
         padding: EdgeInsets.zero,
         highlightColor: Colors.transparent,
         onPressed: onPressed,
-        icon: Icon(icon, size: 24, color: AppColors.primary),
+        icon: Icon(icon, size: 24, color: color),
       ),
     );
   }

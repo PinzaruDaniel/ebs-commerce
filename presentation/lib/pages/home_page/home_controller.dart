@@ -80,7 +80,6 @@ class HomeController extends GetxController {
         .listen((list) {
           final mappedProducts = list.map((e) => e.toModel).toList();
           products.assignAll(mappedProducts);
-
           pageFromCache();
         });
   }
