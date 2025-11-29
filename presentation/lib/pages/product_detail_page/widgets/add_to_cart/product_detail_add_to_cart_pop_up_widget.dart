@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_image_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/widgets/add_to_cart_pop_up_title_widget.dart';
 import 'package:presentation/util/resources/app_texts.dart';
-import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/product_input_quantity_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +20,10 @@ class ProductDetailAddToCartBottomSheetWidget extends StatefulWidget {
   final int? maxValue;
 
   @override
-  State<ProductDetailAddToCartBottomSheetWidget> createState() => _ProductDetailAddToCartBottomSheetWidgetState();
+  State<ProductDetailAddToCartBottomSheetWidget> createState() => ProductDetailAddToCartBottomSheetWidgetState();
 }
 
-class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailAddToCartBottomSheetWidget> {
+class ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailAddToCartBottomSheetWidget> {
   int quantity = 1;
 
   @override
@@ -45,7 +44,7 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               AddToCartPopUpImageWidget(item: widget.item),
-              AddToCartPopUpTitleWidget(item: widget.item),
+              Expanded(child: AddToCartPopUpTitleWidget(item: widget.item)),
             ],
           ),
         ),
@@ -66,18 +65,12 @@ class _ProductDetailAddToCartBottomSheetWidgetState extends State<ProductDetailA
             ],
           ),
         ),
-        BottomNavigationBarWidget(
-          title: AppTexts.addToCart,
-          addToCart: true,
-          onTap: () {
-            Get.back();
-
-            widget.onAdd.call(quantity);
-
-          },
-          showIcon: true,
-        ),
       ],
     );
+  }
+
+  void onSave() {
+    Get.back();
+    widget.onAdd.call(quantity);
   }
 }

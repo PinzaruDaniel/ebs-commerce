@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import '../resources/app_colors.dart';
 
-class ProductInputQuantityWidget extends StatelessWidget {
+class ProductInputQuantityWidget extends StatefulWidget {
   const ProductInputQuantityWidget({
     super.key,
     required this.initialValue,
@@ -18,90 +18,75 @@ class ProductInputQuantityWidget extends StatelessWidget {
   final Function(int) onChanged;
 
   @override
+  State<ProductInputQuantityWidget> createState() =>
+      _ProductInputQuantityWidgetState();
+}
+
+class _ProductInputQuantityWidgetState extends State<ProductInputQuantityWidget> {
+   int currentValue=0;
+
+  @override
+  void initState() {
+    super.initState();
+    currentValue =
+        widget.initialValue.clamp(widget.minValue, widget.maxValue ?? double.maxFinite.toInt());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final RxInt currentValue = initialValue.clamp(minValue, maxValue ?? double.maxFinite.toInt()).obs;
-    final controller = TextEditingController(text: currentValue.value.toString());
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildButton(Icons.remove_rounded, onPressed: () {
+          setState(() {
+            final value = currentValue - 1;
+            if (value < widget.minValue) {
+              widget.onChanged(0);
+            } else {
+              currentValue = value;
+              widget.onChanged(value);
+            }
+          });
+        }),
+        SizedBox(
+          width: Get.height * 0.05,
+          child: TextField(
+            readOnly: true,
+            controller: TextEditingController(text: currentValue.toString()),
+            textAlign: TextAlign.center,
+            style: AppTextsStyle.bold(size: 16),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.zero,
+            ),
+          ),
+        ),
+        _buildButton(Icons.add_rounded, onPressed: () {
+          setState(() {
+            final value = currentValue + 1;
+            if (value <= (widget.maxValue ?? double.maxFinite.toInt())) {
+              currentValue = value;
+              widget.onChanged(value);
+            }
+          });
+        }),
+      ],
+    );
+  }
 
-    ever(currentValue, (value) {
-      controller.text = value.toString();
-    });
-
-    return Obx(
-      () => Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 26,
-            width: 26,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: Colors.grey.shade300),
-            ),
-            child: IconButton(
-              highlightColor: Colors.transparent,
-              padding: EdgeInsets.zero,
-              onPressed: currentValue.value <= minValue
-                  ? () {
-                      if (minValue == 1) {
-                        onChanged(0);
-                      }
-                    }
-                  : () {
-                      final value = currentValue.value - 1;
-                      if (value < minValue) {
-                        onChanged(0);
-                      } else {
-                        currentValue.value = value;
-                        onChanged(value);
-                      }
-                    },
-              icon: Icon(Icons.remove_rounded, size: 24, color: AppColors.primary),
-            ),
-          ),
-          SizedBox(
-            width: Get.height * 0.05,
-            child: TextField(
-              readOnly: true,
-              controller: controller,
-              textAlign: TextAlign.center,
-              style: AppTextsStyle.bold(size: 16),
-              decoration: const InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.zero),
-              onChanged: (value) {
-                final intValue = int.tryParse(value) ?? currentValue.value;
-                final clampedValue = intValue.clamp(minValue, maxValue ?? double.maxFinite.toInt());
-                if (intValue != clampedValue) {
-                  controller.text = clampedValue.toString();
-                }
-                currentValue.value = clampedValue;
-                onChanged(clampedValue);
-              },
-            ),
-          ),
-          Container(
-            height: 26,
-            width: 26,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: Colors.grey.shade300),
-            ),
-            child: IconButton(
-              highlightColor: Colors.transparent,
-              padding: EdgeInsets.zero,
-              onPressed: currentValue.value >= (maxValue ?? double.maxFinite.toInt())
-                  ? null
-                  : () {
-                      final value = currentValue.value + 1;
-                      currentValue.value = value;
-                      onChanged(value);
-                    },
-              icon: Icon(
-                Icons.add_rounded,
-                size: 24,
-                color: currentValue.value >= (maxValue ?? double.maxFinite.toInt()) ? Colors.grey : AppColors.primary,
-              ),
-            ),
-          ),
-        ],
+  Widget _buildButton(IconData icon, {VoidCallback? onPressed}) {
+    return Container(
+      height: 26,
+      width: 26,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        highlightColor: Colors.transparent,
+        onPressed: onPressed,
+        icon: Icon(icon, size: 24, color: AppColors.primary),
       ),
     );
   }

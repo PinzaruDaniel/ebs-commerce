@@ -1,24 +1,25 @@
-import 'package:presentation/util/resources/app_texts.dart';
 
-List<String> promoCodes = ['SAVE10', 'WELCOME5', 'FREESHIP', 'DANIELLOH6869'];
-List<String> paymentMethods = ['PayPal', AppTexts.cashPaymentMethod];
-List<String> pickupLocations = [
-  'Posta moldovei, Armeneasca 2',
-  'Undeva departe',
-  'Piata Unirii',
-  'Muzeul National de Arta',
-  'Gara de Nord',
-  'Parcul Herastrau',
-  'Universitatea Bucuresti',
-  'Bulevardul Magheru 10',
-  'Centrul Comercial AFI Cotroceni',
-  'Stadionul National',
-  'Aeroport Otopeni Terminal 1',
-  'Cismigiu Gardens',
-  'Teatrul National',
-  'Gradina Botanica',
-  'Mall Vitan',
-  'Strada Lipscani 25',
-  'Podul Basarab',
-  'Statia de Metrou Piata Victoriei',
+List<String> promoCodes = [
+  'SAVE10',
+  'WELCOME5',
+  'FREESHIP',
+  'DANIELLOH6869',
+  'autumn2025',
+  'FreeShipNow',
+  'hello5',
+  'DealZone15',
+  'bonus2025',
+  'vipAccess',
+  'thankYou20',
+  'limitedOffer',
+  'shopmore10',
+  'crazyDeal99',
+  'earlybird',
+  'flashSale25',
+  'getitnow',
+  'megaSaver2025',
+  'discountX',
+  'loyaltyPLUS',
 ];
+
+

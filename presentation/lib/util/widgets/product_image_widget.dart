@@ -16,7 +16,6 @@ class ProductImageWidget extends StatelessWidget {
     if (imageUrl == null || imageUrl!.isEmpty) {
       return AppIcons.noImage(height: height, width: width);
     }
-
     return CachedNetworkImage(
       imageUrl: imageUrl!,
       progressIndicatorBuilder: (context, url, downloadProgress) =>

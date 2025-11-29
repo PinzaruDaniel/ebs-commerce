@@ -6,5 +6,6 @@ import '../../categories/models/index.dart';
 part 'product_response_entity.dart';
 
 part 'product_entity.dart';
-
+part 'ordered_product_entity.dart';
+part 'order_entity.dart';
 part 'index.freezed.dart';

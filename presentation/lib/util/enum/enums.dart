@@ -1,5 +1,6 @@
 enum DeliveryType { pickup, fanCourier, dhl }
 
+
 enum DeliveryTypes {
   fanCourier('fan_courier');
 

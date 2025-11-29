@@ -1,26 +1,67 @@
 // ignore_for_file: invalid_use_of_protected_member
-
-import 'package:common/constants/constant_lists_string.dart';
+import 'package:common/constants/logger.dart';
+import 'package:domain/modules/delivery_address/use_cases/get_delivery_address_cache_use_case.dart';
+import 'package:domain/modules/delivery_address/use_cases/set_delivery_address_use_case.dart';
+import 'package:domain/modules/payment_method/use_cases/get_payment_method_use_case.dart';
+import 'package:domain/modules/payment_method/use_cases/set_payment_method_use_case.dart';
+import 'package:domain/modules/user_information/use_cases/set_user_use_case.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/checkout_page/widgets/order_summary_widget.dart';
 import 'package:presentation/util/enum/map_enums.dart';
+import 'package:presentation/util/mapper/delivery_address_mapper.dart';
+import 'package:presentation/util/mapper/payment_method_mapper.dart';
+import 'package:presentation/util/mapper/user_mapper.dart';
 import 'package:presentation/util/widgets/checkout_info_container_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/user_view_model.dart';
+
 import '../../util/enum/enums.dart';
 import '../../util/resources/app_texts.dart';
 import '../../view/cart_products_view_model.dart';
+import '../../view/payment_method_view_model.dart';
+import '../../view/pickup_location_view_model.dart';
 
 class CheckoutController extends GetxController {
+  final SetUserUseCase setUserUseCase = GetIt.instance<SetUserUseCase>();
+
+  final SetDeliveryAddressUseCase setDeliveryAddressUseCase = GetIt.instance<SetDeliveryAddressUseCase>();
+  final GetDeliveryAddressUseCase getDeliveryAddressUseCase = GetIt.instance<GetDeliveryAddressUseCase>();
+
+  final SetPaymentMethodUseCase setPaymentMethodUseCase = GetIt.instance<SetPaymentMethodUseCase>();
+  final GetPaymentMethodUseCase getPaymentMethodUseCase = GetIt.instance<GetPaymentMethodUseCase>();
+
   RxList<BaseViewModel> allItems = RxList([]);
-  Rxn<UserViewModel> userModel = Rxn<UserViewModel>();
   Rxn<DeliveryAddressViewModel> deliveryModel = Rxn<DeliveryAddressViewModel>();
-  RxString selectedPaymentMethod = ''.obs;
+  Rxn<PaymentMethodViewModel> selectedPaymentMethod = Rxn<PaymentMethodViewModel>();
   RxString voucherCode = RxString('');
   RxList<CartViewModel> productItems = RxList([]);
   final OrderSummaryViewModel orderSummary = OrderSummaryViewModel();
+
+  void setUserInfo() async {
+    await setUserUseCase(SetUserParams(user: currentUserController.userVM.value!.toEntity));
+  }
+
+  void setDeliveryInfo() async {
+    await setDeliveryAddressUseCase(
+      SetDeliveryAddressParams(
+        deliveryAddressEntity: deliveryModel.value!.toEntity,
+        idUser: currentUserController.userVM.value?.idUser ?? 1,
+      ),
+    );
+  }
+
+  void setPaymentInfo() async {
+    await setPaymentMethodUseCase(
+      SetPaymentMethodParams(
+        paymentMethodEntity: selectedPaymentMethod.value!.toEntity,
+        idUser: currentUserController.userVM.value?.idUser ?? 1,
+      ),
+    );
+  }
 
   void initProductItems(List<CartViewModel> productItems) {
     this.productItems.value = productItems;
@@ -29,13 +70,35 @@ class CheckoutController extends GetxController {
   }
 
   bool hasIncompleteUserInfo() {
-    final user = userModel.value;
+    final user = currentUserController.userVM.value;
     if (user == null) return true;
-    return user.surname.isEmpty || user.number.isEmpty || user.name.isEmpty || user.email.isEmpty;
+
+    return (user.surname?.isEmpty ?? true) ||
+        (user.number?.isEmpty ?? true) ||
+        (user.name?.isEmpty ?? true) ||
+        (user.email?.isEmpty ?? true);
   }
 
-  void initAllItems() {
+  Future<void> getUserInfo() async {
+    currentUserController.userVM.value;
+    if (currentUserController.userVM.value != null) {
+      deliveryModel.value = currentUserController.userVM.value?.deliveryAddressViewModel;
+
+      final cachedPaymentMethod = await getPaymentMethodUseCase(
+        GetPaymentMethodParams(userId: currentUserController.userVM.value?.idUser ?? 1),
+      );
+      selectedPaymentMethod.value = cachedPaymentMethod?.toModel;
+    }
+    consoleLog('cachedUser ${currentUserController.userVM.value?.name ?? 'null'}  ${currentUserController.userVM.value?.idUser??'no id'}');
+    consoleLog(
+      'cachedDeliveryAddress ${deliveryModel.value?.deliveryType ?? 'null'} ${deliveryModel.value?.country ?? 'null'}',
+    );
+    consoleLog('cachedPaymentMethod ${selectedPaymentMethod.value?.titleKey ?? 'null'}');
+  }
+
+  Future<void> initAllItems() async {
     updateOrderSummary(calculateSubtotal());
+    await getUserInfo();
 
     allItems.value = [
       HeaderTitleViewModel(title: AppTexts.orderSummary),
@@ -44,8 +107,9 @@ class CheckoutController extends GetxController {
       HeaderTitleViewModel(title: AppTexts.contactInformation),
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.userContactInfo,
-        titleKey: '${userModel.value?.name ?? ''} ${userModel.value?.surname ?? ''}',
-        infoItems: buildUserInfo(userModel.value),
+        titleKey:
+            '${currentUserController.userVM.value?.name ?? ''} ${currentUserController.userVM.value?.surname ?? ''}',
+        infoItems: buildUserInfo(currentUserController.userVM.value),
       ),
 
       HeaderTitleViewModel(title: AppTexts.deliveryAddress),
@@ -60,7 +124,7 @@ class CheckoutController extends GetxController {
       CheckoutInfoContainerViewModel(
         keyId: CheckoutWidgetsType.paymentMethod,
         placeholder: AppTexts.choosePaymentMethod,
-        titleKey: selectedPaymentMethod.value,
+        titleKey: selectedPaymentMethod.value?.titleKey,
         infoItems: {},
       ),
 
@@ -110,14 +174,14 @@ class CheckoutController extends GetxController {
   Map<String, String>? buildDeliveryInfo(DeliveryAddressViewModel? model) {
     var isPickUpType = model?.deliveryType == DeliveryType.pickup.label;
     if (isPickUpType) {
-      return {'Pickup Location: ${model?.pickupLocation ?? pickupLocations.first}': ''};
+      return {'${AppTexts.pickupLocation}: ${model?.pickupLocation ?? pickupLocations.first.address}': ''};
     } else if (!isPickUpType && model?.deliveryType != null) {
       return {
-        'Country: ${model?.country ?? ''}': '',
-        'Region: ${model?.region ?? ''}': '',
-        'City: ${model?.city ?? ''}': '',
-        'Postal Code: ${model?.postalCode ?? ''}': '',
-        'Street: ${model?.address ?? ''}': '',
+        '${AppTexts.country}: ${model?.country ?? ''}': '',
+        '${AppTexts.region}: ${model?.region ?? ''}': '',
+        '${AppTexts.city}: ${model?.city ?? ''}': '',
+        '${AppTexts.postalCode}: ${model?.postalCode ?? ''}': '',
+        '${AppTexts.street}: ${model?.address ?? ''}': '',
       };
     }
     return null;
@@ -125,8 +189,25 @@ class CheckoutController extends GetxController {
 
   Map<String, String> buildUserInfo(UserViewModel? model) {
     final info = <String, String>{};
-    if (model?.number.isNotEmpty ?? false) info[model!.number] = '';
-    if (model?.email.isNotEmpty ?? false) info[model!.email] = '';
+
+    if (model != null) {
+      final number = model.number;
+      final dialCode = model.dialCode;
+      final email = model.email;
+
+      if (number != null && number.isNotEmpty) {
+        if (dialCode != null && dialCode.isNotEmpty) {
+          info['$dialCode $number'] = '';
+        } else {
+          info[number] = '';
+        }
+      }
+
+      if (email != null && email.isNotEmpty) {
+        info[email] = '';
+      }
+    }
+
     return info;
   }
 

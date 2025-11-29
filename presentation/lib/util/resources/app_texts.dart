@@ -2,97 +2,253 @@ import 'package:easy_localization/easy_localization.dart';
 
 import '../../localization/generated_keys/locale_keys.loc.dart';
 
-
 class AppTexts {
   static String get shoppingCart => LocaleKeys.shoppingCart.tr();
+
   static String get categories => LocaleKeys.categories.tr();
+
   static String get categoriesSelected => LocaleKeys.categoriesSelected.tr();
+
   static String get apply => LocaleKeys.apply.tr();
+
   static String get showResults => LocaleKeys.showResults.tr();
+
   static String get reset => LocaleKeys.reset.tr();
+
   static String get price => LocaleKeys.price.tr();
+
   static String get filters => LocaleKeys.filters.tr();
+
   static String get addToCart => LocaleKeys.addToCart.tr();
+
   static String get cantAddToCart => LocaleKeys.cantAddToCart.tr();
+
   static String get bestDiscounts => LocaleKeys.bestDiscounts.tr();
+
   static String get checkNewProducts => LocaleKeys.checkNewProducts.tr();
+
   static String get allProducts => LocaleKeys.allProducts.tr();
+
   static String get newProducts => LocaleKeys.newProducts.tr();
+
   static String get saleProducts => LocaleKeys.saleProducts.tr();
+
   static String get filteredProducts => LocaleKeys.filteredProducts.tr();
+
   static String get productsSpecifications => LocaleKeys.productsSpecifications.tr();
+
   static String get productDescription => LocaleKeys.productDescription.tr();
+
   static String get noDescription => LocaleKeys.noDescription.tr();
+
   static String get readMore => LocaleKeys.readMore.tr();
+
   static String get showLess => LocaleKeys.showLess.tr();
+
   static String get brand => LocaleKeys.brand.tr();
+
   static String get marks => LocaleKeys.marks.tr();
+
   static String get quantity => LocaleKeys.quantity.tr();
+
   static String get seeAll => LocaleKeys.seeAll.tr();
+
   static String get success => LocaleKeys.success.tr();
+
   static String get promoValid => LocaleKeys.promoValid.tr();
+
   static String get oops => LocaleKeys.oops.tr();
+
   static String get invalidCode => LocaleKeys.invalidCode.tr();
+
   static String get promoNotValid => LocaleKeys.promoNotValid.tr();
+
   static String get ok => LocaleKeys.ok.tr();
+
   static String get noProductsToShow => LocaleKeys.noProductsToShow.tr();
+
   static String get checkout => LocaleKeys.checkout.tr();
+
   static String get orderSummary => LocaleKeys.orderSummary.tr();
+
   static String get contactInformation => LocaleKeys.contactInformation.tr();
+
   static String get deliveryAddress => LocaleKeys.deliveryAddress.tr();
+
   static String get paymentMethod => LocaleKeys.paymentMethod.tr();
 
   static String get contactInfo => LocaleKeys.contactInfo.tr();
+
   static String get save => LocaleKeys.save.tr();
+
   static String get choosePaymentMethod => LocaleKeys.choosePaymentMethod.tr();
+
   static String get enterYourVoucher => LocaleKeys.enterYourVoucher.tr();
+
   static String get enterVoucher => LocaleKeys.enterVoucher.tr();
+
   static String get enterAllData => LocaleKeys.enterAllData.tr();
+
   static String get continueShopping => LocaleKeys.continueShopping.tr();
+
   static String get loadingMore => LocaleKeys.loadingMore.tr();
+
   static String get loading => LocaleKeys.loading.tr();
+
   static String get canLoading => LocaleKeys.canLoading.tr();
+
   static String get idleText => LocaleKeys.idleText.tr();
+
   static String get noDataText => LocaleKeys.noDataText.tr();
+
   static String get goHome => LocaleKeys.goHome.tr();
+
   static String get createOrder => LocaleKeys.createOrder.tr();
+
   static String get orderSuccess => LocaleKeys.orderSuccess.tr();
+
   static String get requiredField => LocaleKeys.requiredField.tr();
+
   static String get numberIsRequired => LocaleKeys.numberIsRequired.tr();
+
   static String get invalidNumberPhone => LocaleKeys.invalidNumberPhone.tr();
+
   static String get emailIsRequired => LocaleKeys.emailIsRequired.tr();
+
   static String get invalidEmail => LocaleKeys.invalidEmail.tr();
+
   static String get areYouSure => LocaleKeys.areYouSure.tr();
+
   static String get confirm => LocaleKeys.confirm.tr();
+
   static String get removeItem => LocaleKeys.removeItem.tr();
+
   static String get removeItemQuestion => LocaleKeys.removeItemQuestion.tr();
+
   static String get chooseDeliveryAddress => LocaleKeys.chooseDeliveryAddress.tr();
+
   static String get cancel => LocaleKeys.cancel.tr();
-  static String get nothingToShow=> AppTexts.nothingToShow.tr();
-  static String get name=>LocaleKeys.name.tr();
-  static String get surname=>LocaleKeys.surname.tr();
-  static String get phone=>LocaleKeys.phone.tr();
-  static String get email=>LocaleKeys.email.tr();
-  static String get enterYourData=>LocaleKeys.enterYourData.tr();
-  static String get office=>LocaleKeys.office.tr();
-  static String get country=>LocaleKeys.country.tr();
-  static String get selectCountry=>LocaleKeys.selectCountry.tr();
-  static String get region=>LocaleKeys.region.tr();
-  static String get selectRegion=>LocaleKeys.selectRegion.tr();
-  static String get city=>LocaleKeys.city.tr();
-  static String get selectCity=>LocaleKeys.selectCity.tr();
-  static String get postalCode=>LocaleKeys.postalCode.tr();
-  static String get address=>LocaleKeys.address.tr();
-  static String get otherComments=>LocaleKeys.otherComments.tr();
-  static String get ridicareLaSediu=>LocaleKeys.ridicareLaSediu.tr();
-  static String get dhl=>'DHL';
-  static String get fanCourier=>'Fan Courier';
-  static String get addCategory=>LocaleKeys.addCategory.tr();
-  static String get cashPaymentMethod=>LocaleKeys.cashPaymentMethod.tr();
+
+  static String get nothingToShow => LocaleKeys.nothingToShow.tr();
+
+  static String get name => LocaleKeys.name.tr();
+
+  static String get surname => LocaleKeys.surname.tr();
+
+  static String get phone => LocaleKeys.phone.tr();
+
+  static String get email => LocaleKeys.email.tr();
+
+  static String get enterYourData => LocaleKeys.enterYourData.tr();
+
+  static String get office => LocaleKeys.office.tr();
+
+  static String get country => LocaleKeys.country.tr();
+
+  static String get selectCountry => LocaleKeys.selectCountry.tr();
+
+  static String get region => LocaleKeys.region.tr();
+
+  static String get selectRegion => LocaleKeys.selectRegion.tr();
+
+  static String get city => LocaleKeys.city.tr();
+
+  static String get selectCity => LocaleKeys.selectCity.tr();
+
+  static String get postalCode => LocaleKeys.postalCode.tr();
+
+  static String get address => LocaleKeys.address.tr();
+
+  static String get otherComments => LocaleKeys.otherComments.tr();
+
+  static String get ridicareLaSediu => LocaleKeys.ridicareLaSediu.tr();
+
+  static String get dhl => 'DHL';
+
+  static String get fanCourier => 'Fan Courier';
+
+  static String get addCategory => LocaleKeys.addCategory.tr();
+
+  static String get cashPaymentMethod => LocaleKeys.cashPaymentMethod.tr();
+
   static String get subtotal => LocaleKeys.subtotal.tr();
+
   static String get shippingFee => LocaleKeys.shippingFee.tr();
+
   static String get adminFee => LocaleKeys.adminFee.tr();
+
   static String get voucherCode => LocaleKeys.voucherCode.tr();
+
   static String get total => LocaleKeys.total.tr();
-  static String get deliveryType=>LocaleKeys.deliveryType.tr();
+
+  static String get deliveryType => LocaleKeys.deliveryType.tr();
+
+  static String get selectPreviousField => LocaleKeys.selectPreviousField.tr();
+
+  static String get requiredNumberDigits => LocaleKeys.requiredNumberDigits.tr();
+
+  static String get requiredLettersBetween => LocaleKeys.requiredLettersBetween.tr();
+
+  static String get letters => LocaleKeys.letters.tr();
+
+  static String get digits => LocaleKeys.digits.tr();
+
+  static String get choose => LocaleKeys.choose.tr();
+
+  static String get nameMustContainOnlyLetters => LocaleKeys.nameMustContainOnlyLetters.tr();
+
+  static String get surnameMustContainOnlyLetters => LocaleKeys.surnameMustContainOnlyLetters.tr();
+
+  static String get pickupLocation => LocaleKeys.pickupLocation.tr();
+
+  static String get street => LocaleKeys.street.tr();
+
+  static String get done => LocaleKeys.done.tr();
+
+  static String get search => LocaleKeys.search.tr();
+
+  static String get hello => LocaleKeys.hello.tr();
+
+  static String get human => LocaleKeys.human.tr();
+
+  static String get tapToContinue => LocaleKeys.tapToContinue.tr();
+
+  static String get ebsForWish => LocaleKeys.EbsForWish.tr();
+
+  static String get agreeUserTerms => LocaleKeys.agreeUserTerms.tr();
+
+  static String get itIsInProgress => LocaleKeys.itIsInProgress.tr();
+
+  static String get signUp => LocaleKeys.signUp.tr();
+
+  static String get pleaseAgree => LocaleKeys.pleaseAgree.tr();
+
+  static String get logIn => LocaleKeys.logIn.tr();
+
+  static String get welcomeBack => LocaleKeys.welcomeBack.tr();
+
+  static String get emailOrPasswordEmpty => LocaleKeys.emailOrPasswordEmpty.tr();
+
+  static String get password => LocaleKeys.password.tr();
+
+  static String get enterWithoutPassword => LocaleKeys.enterWithoutPassword.tr();
+
+  static String get yourSecretPassword => LocaleKeys.yourSecretPassword.tr();
+
+  static String get logOut => LocaleKeys.logOut.tr();
+
+  static String get confirmLogOut => LocaleKeys.confirmLogOut.tr();
+
+  static String get deleteDataWarning => LocaleKeys.deleteDataWarning.tr();
+
+  static String get personalLabel => LocaleKeys.personalLabel.tr();
+
+  static String get userLabel => LocaleKeys.userLabel.tr();
+
+  static String get languageLabel => LocaleKeys.languageLabel.tr();
+
+  static String get myOrders => LocaleKeys.myOrders.tr();
+
+  static String get orderPlacedOn => LocaleKeys.orderPlacedOn.tr();
+  static String get appTitle => LocaleKeys.appTitle.tr();
 }

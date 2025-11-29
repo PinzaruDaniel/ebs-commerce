@@ -6,3 +6,8 @@ extension CategoryViewModelMapper on CategoryEntity {
    return CategoryViewModel(id: id, name: name, level: level, parent: parent);
   }
 }
+extension CategoryToEntityMapper on CategoryViewModel{
+  CategoryEntity get toEntity{
+    return CategoryEntity(id: id, name: name, level: level, parent: parent);
+  }
+}

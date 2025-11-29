@@ -54,6 +54,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isItemValid = widget.item?.price != null && widget.item?.stock != null;
     return Scaffold(
       body: CustomScrollView(
         controller: scrollController,
@@ -77,7 +78,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               icon: AppIcons.backIcon(color: AppColors.blue, size: 20),
               onPressed: () => Navigator.pop(context),
             ),
-            actions: [AppBarIconShoppingCartWidget()],
+            actions: [AppBarIconShoppingCartWidget(showLiquid: true,)],
             flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),
           ),
           SliverToBoxAdapter(
@@ -89,13 +90,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ),
         ],
       ),
-
       bottomNavigationBar: BottomNavigationBarWidget(
-        addToCart: widget.item?.price != null && widget.item?.stock != null,
-        title: widget.item?.price != null && widget.item?.stock != null ? AppTexts.addToCart : AppTexts.cantAddToCart,
-        showIcon: widget.item?.price != null && widget.item?.stock != null,
-        titleDialog: AppTexts.oops,
-        contentDialog: AppTexts.cantAddToCart,
+        buttonColor: isItemValid? AppColors.primary: Colors.grey.shade300,
+        textColor: isItemValid? Colors.white: Colors.black,
+        title:isItemValid ? AppTexts.addToCart : AppTexts.cantAddToCart,
+        showIcon: isItemValid,
         onTap: () {
           AppPopUp.showCartInfoPopUp(
             item: widget.item!,

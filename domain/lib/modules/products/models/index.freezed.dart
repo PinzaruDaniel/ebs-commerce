@@ -616,4 +616,545 @@ as List<CategoryEntity>?,
 
 }
 
+/// @nodoc
+mixin _$OrderedProductEntity {
+
+ int get idProduct; String get title; String? get imageUrl; String? get price; int get quantity;
+/// Create a copy of OrderedProductEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$OrderedProductEntityCopyWith<OrderedProductEntity> get copyWith => _$OrderedProductEntityCopyWithImpl<OrderedProductEntity>(this as OrderedProductEntity, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderedProductEntity&&(identical(other.idProduct, idProduct) || other.idProduct == idProduct)&&(identical(other.title, title) || other.title == title)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.price, price) || other.price == price)&&(identical(other.quantity, quantity) || other.quantity == quantity));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,idProduct,title,imageUrl,price,quantity);
+
+@override
+String toString() {
+  return 'OrderedProductEntity(idProduct: $idProduct, title: $title, imageUrl: $imageUrl, price: $price, quantity: $quantity)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $OrderedProductEntityCopyWith<$Res>  {
+  factory $OrderedProductEntityCopyWith(OrderedProductEntity value, $Res Function(OrderedProductEntity) _then) = _$OrderedProductEntityCopyWithImpl;
+@useResult
+$Res call({
+ int idProduct, String title, String? imageUrl, String? price, int quantity
+});
+
+
+
+
+}
+/// @nodoc
+class _$OrderedProductEntityCopyWithImpl<$Res>
+    implements $OrderedProductEntityCopyWith<$Res> {
+  _$OrderedProductEntityCopyWithImpl(this._self, this._then);
+
+  final OrderedProductEntity _self;
+  final $Res Function(OrderedProductEntity) _then;
+
+/// Create a copy of OrderedProductEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? idProduct = null,Object? title = null,Object? imageUrl = freezed,Object? price = freezed,Object? quantity = null,}) {
+  return _then(_self.copyWith(
+idProduct: null == idProduct ? _self.idProduct : idProduct // ignore: cast_nullable_to_non_nullable
+as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,price: freezed == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
+as String?,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [OrderedProductEntity].
+extension OrderedProductEntityPatterns on OrderedProductEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _OrderedProductEntity value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _OrderedProductEntity() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _OrderedProductEntity value)  $default,){
+final _that = this;
+switch (_that) {
+case _OrderedProductEntity():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _OrderedProductEntity value)?  $default,){
+final _that = this;
+switch (_that) {
+case _OrderedProductEntity() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int idProduct,  String title,  String? imageUrl,  String? price,  int quantity)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _OrderedProductEntity() when $default != null:
+return $default(_that.idProduct,_that.title,_that.imageUrl,_that.price,_that.quantity);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int idProduct,  String title,  String? imageUrl,  String? price,  int quantity)  $default,) {final _that = this;
+switch (_that) {
+case _OrderedProductEntity():
+return $default(_that.idProduct,_that.title,_that.imageUrl,_that.price,_that.quantity);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int idProduct,  String title,  String? imageUrl,  String? price,  int quantity)?  $default,) {final _that = this;
+switch (_that) {
+case _OrderedProductEntity() when $default != null:
+return $default(_that.idProduct,_that.title,_that.imageUrl,_that.price,_that.quantity);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _OrderedProductEntity implements OrderedProductEntity {
+  const _OrderedProductEntity({required this.idProduct, required this.title, required this.imageUrl, required this.price, required this.quantity});
+  
+
+@override final  int idProduct;
+@override final  String title;
+@override final  String? imageUrl;
+@override final  String? price;
+@override final  int quantity;
+
+/// Create a copy of OrderedProductEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$OrderedProductEntityCopyWith<_OrderedProductEntity> get copyWith => __$OrderedProductEntityCopyWithImpl<_OrderedProductEntity>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderedProductEntity&&(identical(other.idProduct, idProduct) || other.idProduct == idProduct)&&(identical(other.title, title) || other.title == title)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.price, price) || other.price == price)&&(identical(other.quantity, quantity) || other.quantity == quantity));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,idProduct,title,imageUrl,price,quantity);
+
+@override
+String toString() {
+  return 'OrderedProductEntity(idProduct: $idProduct, title: $title, imageUrl: $imageUrl, price: $price, quantity: $quantity)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$OrderedProductEntityCopyWith<$Res> implements $OrderedProductEntityCopyWith<$Res> {
+  factory _$OrderedProductEntityCopyWith(_OrderedProductEntity value, $Res Function(_OrderedProductEntity) _then) = __$OrderedProductEntityCopyWithImpl;
+@override @useResult
+$Res call({
+ int idProduct, String title, String? imageUrl, String? price, int quantity
+});
+
+
+
+
+}
+/// @nodoc
+class __$OrderedProductEntityCopyWithImpl<$Res>
+    implements _$OrderedProductEntityCopyWith<$Res> {
+  __$OrderedProductEntityCopyWithImpl(this._self, this._then);
+
+  final _OrderedProductEntity _self;
+  final $Res Function(_OrderedProductEntity) _then;
+
+/// Create a copy of OrderedProductEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? idProduct = null,Object? title = null,Object? imageUrl = freezed,Object? price = freezed,Object? quantity = null,}) {
+  return _then(_OrderedProductEntity(
+idProduct: null == idProduct ? _self.idProduct : idProduct // ignore: cast_nullable_to_non_nullable
+as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,price: freezed == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
+as String?,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+mixin _$OrderEntity {
+
+ int get idOrder; int get idUser; DateTime get dateTime; List<OrderedProductEntity> get products;
+/// Create a copy of OrderEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$OrderEntityCopyWith<OrderEntity> get copyWith => _$OrderEntityCopyWithImpl<OrderEntity>(this as OrderEntity, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrderEntity&&(identical(other.idOrder, idOrder) || other.idOrder == idOrder)&&(identical(other.idUser, idUser) || other.idUser == idUser)&&(identical(other.dateTime, dateTime) || other.dateTime == dateTime)&&const DeepCollectionEquality().equals(other.products, products));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,idOrder,idUser,dateTime,const DeepCollectionEquality().hash(products));
+
+@override
+String toString() {
+  return 'OrderEntity(idOrder: $idOrder, idUser: $idUser, dateTime: $dateTime, products: $products)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $OrderEntityCopyWith<$Res>  {
+  factory $OrderEntityCopyWith(OrderEntity value, $Res Function(OrderEntity) _then) = _$OrderEntityCopyWithImpl;
+@useResult
+$Res call({
+ int idOrder, int idUser, DateTime dateTime, List<OrderedProductEntity> products
+});
+
+
+
+
+}
+/// @nodoc
+class _$OrderEntityCopyWithImpl<$Res>
+    implements $OrderEntityCopyWith<$Res> {
+  _$OrderEntityCopyWithImpl(this._self, this._then);
+
+  final OrderEntity _self;
+  final $Res Function(OrderEntity) _then;
+
+/// Create a copy of OrderEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? idOrder = null,Object? idUser = null,Object? dateTime = null,Object? products = null,}) {
+  return _then(_self.copyWith(
+idOrder: null == idOrder ? _self.idOrder : idOrder // ignore: cast_nullable_to_non_nullable
+as int,idUser: null == idUser ? _self.idUser : idUser // ignore: cast_nullable_to_non_nullable
+as int,dateTime: null == dateTime ? _self.dateTime : dateTime // ignore: cast_nullable_to_non_nullable
+as DateTime,products: null == products ? _self.products : products // ignore: cast_nullable_to_non_nullable
+as List<OrderedProductEntity>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [OrderEntity].
+extension OrderEntityPatterns on OrderEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _OrderEntity value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _OrderEntity() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _OrderEntity value)  $default,){
+final _that = this;
+switch (_that) {
+case _OrderEntity():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _OrderEntity value)?  $default,){
+final _that = this;
+switch (_that) {
+case _OrderEntity() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int idOrder,  int idUser,  DateTime dateTime,  List<OrderedProductEntity> products)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _OrderEntity() when $default != null:
+return $default(_that.idOrder,_that.idUser,_that.dateTime,_that.products);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int idOrder,  int idUser,  DateTime dateTime,  List<OrderedProductEntity> products)  $default,) {final _that = this;
+switch (_that) {
+case _OrderEntity():
+return $default(_that.idOrder,_that.idUser,_that.dateTime,_that.products);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int idOrder,  int idUser,  DateTime dateTime,  List<OrderedProductEntity> products)?  $default,) {final _that = this;
+switch (_that) {
+case _OrderEntity() when $default != null:
+return $default(_that.idOrder,_that.idUser,_that.dateTime,_that.products);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _OrderEntity implements OrderEntity {
+  const _OrderEntity({required this.idOrder, required this.idUser, required this.dateTime, required final  List<OrderedProductEntity> products}): _products = products;
+  
+
+@override final  int idOrder;
+@override final  int idUser;
+@override final  DateTime dateTime;
+ final  List<OrderedProductEntity> _products;
+@override List<OrderedProductEntity> get products {
+  if (_products is EqualUnmodifiableListView) return _products;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_products);
+}
+
+
+/// Create a copy of OrderEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$OrderEntityCopyWith<_OrderEntity> get copyWith => __$OrderEntityCopyWithImpl<_OrderEntity>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrderEntity&&(identical(other.idOrder, idOrder) || other.idOrder == idOrder)&&(identical(other.idUser, idUser) || other.idUser == idUser)&&(identical(other.dateTime, dateTime) || other.dateTime == dateTime)&&const DeepCollectionEquality().equals(other._products, _products));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,idOrder,idUser,dateTime,const DeepCollectionEquality().hash(_products));
+
+@override
+String toString() {
+  return 'OrderEntity(idOrder: $idOrder, idUser: $idUser, dateTime: $dateTime, products: $products)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$OrderEntityCopyWith<$Res> implements $OrderEntityCopyWith<$Res> {
+  factory _$OrderEntityCopyWith(_OrderEntity value, $Res Function(_OrderEntity) _then) = __$OrderEntityCopyWithImpl;
+@override @useResult
+$Res call({
+ int idOrder, int idUser, DateTime dateTime, List<OrderedProductEntity> products
+});
+
+
+
+
+}
+/// @nodoc
+class __$OrderEntityCopyWithImpl<$Res>
+    implements _$OrderEntityCopyWith<$Res> {
+  __$OrderEntityCopyWithImpl(this._self, this._then);
+
+  final _OrderEntity _self;
+  final $Res Function(_OrderEntity) _then;
+
+/// Create a copy of OrderEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? idOrder = null,Object? idUser = null,Object? dateTime = null,Object? products = null,}) {
+  return _then(_OrderEntity(
+idOrder: null == idOrder ? _self.idOrder : idOrder // ignore: cast_nullable_to_non_nullable
+as int,idUser: null == idUser ? _self.idUser : idUser // ignore: cast_nullable_to_non_nullable
+as int,dateTime: null == dateTime ? _self.dateTime : dateTime // ignore: cast_nullable_to_non_nullable
+as DateTime,products: null == products ? _self._products : products // ignore: cast_nullable_to_non_nullable
+as List<OrderedProductEntity>,
+  ));
+}
+
+
+}
+
 // dart format on

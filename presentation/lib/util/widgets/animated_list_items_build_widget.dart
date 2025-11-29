@@ -36,7 +36,7 @@ class AnimatedListItemWrapper extends StatelessWidget {
         animation: animation,
         child: child
             .animate()
-            .fadeIn(duration: 300.ms, delay: (100 + 200 * index).ms)
+            .fadeIn(duration: 350.ms, delay: (100 + 200 * index).ms)
             .slideY(begin: 1, end: 0, duration: 400.ms, delay: (150 * index).ms, curve: Curves.easeInOut)
             .scaleXY(begin: 0.95, end: 1, duration: 400.ms, delay: (200 * index).ms),
       );

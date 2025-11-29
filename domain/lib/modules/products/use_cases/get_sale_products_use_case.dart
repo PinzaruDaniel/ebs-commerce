@@ -1,4 +1,4 @@
-/*
+
 import 'package:common/constants/failure_class.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/core/usecase.dart';
@@ -22,4 +22,4 @@ class  GetSaleProductsParams{
   int page;
   int perPage;
   GetSaleProductsParams({required this.page, required this.perPage});
-}*/
+}

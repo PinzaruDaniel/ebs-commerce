@@ -7,7 +7,6 @@ import '../../../view/category_view_model.dart';
 
 class CategoryController extends GetxController {
   final GetAllCategoriesUseCase getAllCategoriesUseCase = GetIt.instance<GetAllCategoriesUseCase>();
-
   RxList<CategoryViewModel> categories = RxList([]);
   RxMap<int?, List<CategoryViewModel>> groupedCategories = <int?, List<CategoryViewModel>>{}.obs;
   final RxSet<int> selectedCategoryId = <int>{}.obs;

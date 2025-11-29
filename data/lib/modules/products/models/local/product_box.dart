@@ -1,19 +1,37 @@
-part of 'index.dart';
+import 'package:data/modules/specifications/models/local/specification_box.dart';
+import 'package:objectbox/objectbox.dart';
+
+import '../../../categories/models/local/category_box.dart';
 
 @Entity()
-@freezed
-abstract class ProductBox with _$ProductBox{
-  const factory ProductBox({
-    @Id(assignable: true) required int id,
-    required String name,
-    required String? price,
-    required String? discount,
-    required String? discountedPrice,
-    required List<String>? imageUrl,
-    required List<String>? marks,
-    required int? stock,
-    required String? description,
-  }) = _ProductBox;
+class ProductBox {
+  @Id(assignable: true)
+  int idProduct;
+  String name;
+  String? price;
+  String? discount;
+  String? discountedPrice;
+  String? imageUrl;
+  String? marks;
+  int? stock;
+  String? description;
 
-  factory ProductBox.fromJson(Map<String, dynamic> json) => _$ProductBoxFromJson(json);
+
+  @Backlink('product')
+  final categories=ToMany<CategoryBox>();
+
+  @Backlink('product')
+  final specifications = ToMany<SpecificationBox>();
+
+  ProductBox( {
+    this.idProduct = 0,
+    required this.name,
+    this.price,
+    this.discount,
+    this.discountedPrice,
+    this.imageUrl,
+    this.marks,
+    this.stock,
+    this.description,
+  });
 }

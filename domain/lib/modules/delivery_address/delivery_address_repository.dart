@@ -12,4 +12,8 @@ abstract class DeliveryAddressRepository {
     String country,
     String state,
   );
+  Future<Either<Failure, List<DialCodesEntity>>> getDialCodes();
+
+  Future<Either<Failure, List<FlagEntity>>> getFlags();
+
 }
