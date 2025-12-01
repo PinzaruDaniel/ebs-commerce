@@ -24,7 +24,8 @@ class ProductsListContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<ProductViewModel> products = [];
-    if (productType case ProductListType.newProducts) {
+    products = productsDisplayController.products;
+    /*if (productType case ProductListType.newProducts) {
       products = productsDisplayController.products;
     } else if (productType case ProductListType.saleProducts) {
       products = productsDisplayController.products;
@@ -32,7 +33,7 @@ class ProductsListContainer extends StatelessWidget {
       products = productsDisplayController.products;
     } else if (productType case ProductListType.allProducts) {
       products = productsDisplayController.products;
-    }
+    }*/
     return ProductsListDisplayWidget(title: title, products: products, showHeaderTitle: false);
   }
 }

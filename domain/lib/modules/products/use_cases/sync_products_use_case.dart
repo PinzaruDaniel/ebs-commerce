@@ -5,18 +5,18 @@ import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/products/models/index.dart';
 import 'package:domain/modules/products/products_repository.dart';
 
-class SyncProductsUseCase extends UseCase<List<ProductEntity>, SyncProductsParams> {
+class SyncProductsUseCase extends UseCaseNoEither<void, SyncProductsParams> {
   final ProductsRepository productsRepository;
 
   SyncProductsUseCase({required this.productsRepository});
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> call(params) async {
-    final either = await productsRepository.getProducts(params.page, params.perPage, params.marks);
-    either.fold((failure) {}, (productsApi) {
-      productsRepository.setProductsLocalCache(productsApi);
-    });
-    return either;
+  Future<void> call(params) async {
+    await productsRepository.getProducts(params.page, params.perPage, params.marks).then(
+            (either) {
+          either.fold((failure) {}, (productsApi) => productsRepository.setProductsLocalCache(productsApi));
+        }
+    );
   }
 }
 

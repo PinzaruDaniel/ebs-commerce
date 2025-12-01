@@ -25,15 +25,16 @@ class HomeController extends GetxController {
   StreamSubscription? _streamSubscription;
 
   Future<void> initItems() async {
+    //if (products.isEmpty) {
+       getProducts(loadMore: true);
+    //}
+
     items.value = [
       AdBannerViewModel(),
       HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
       HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
       AllProductsViewItem(products: products),
     ];
-    if (products.isEmpty) {
-      await getProducts(loadMore: true);
-    }
   }
 
   @override
@@ -42,47 +43,41 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  void pageFromCache() {
+  void getPageFromCache() {
     if (products.isNotEmpty) {
       currentPage.value = (products.length / perPage).ceil() + 1;
-      consoleLog('current page value: ${currentPage.value}');
     }
   }
 
   Future<void> syncProducts() async {
-    if(products.isEmpty) {
+    if (products.isEmpty) {
       mainAppController.addPendingIds([PendingIds.getProducts]);
     }
-
-    final either = await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
-    either.fold(
-      (failure) {
-        mainAppController.removePendingIds([PendingIds.getProducts]);
-      },
-      (list) {
-        final newItems = list.map((e) => e.toModel).toList();
-        products.addAll(newItems);
-        newProducts.value = products.where((e) => e.marks?.contains("new") ?? false).take(5).toList();
-        saleProducts.value = products.where((e) => e.marks?.contains("sale") ?? false).take(5).toList();
-        items.refresh();
-        currentPage.value++;
-        mainAppController.removePendingIds([PendingIds.getProducts]);
-      },
-    );
+    await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
+    mainAppController.removePendingIds([PendingIds.getProducts]);
   }
 
-  Future<void> getProducts({bool loadMore = false}) async {
-    if (loadMore) {
+  Future<void> getProducts({bool loadMore = false, bool reloadItems = false}) async {
+    if (loadMore || reloadItems) {
       await syncProducts();
     }
     _streamSubscription?.cancel();
     _streamSubscription = streamProductsUseCase
         .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
         .distinct()
-        .listen((list) {
+        .listen((list) async {
           final mappedProducts = list.map((e) => e.toModel).toList();
           products.assignAll(mappedProducts);
-          pageFromCache();
+          await addNewSaleProduct();
+          if (!reloadItems) {
+            getPageFromCache();
+          }
         });
+  }
+
+  Future<void> addNewSaleProduct() async {
+    newProducts.value = products.where((e) => e.marks?.contains("new") ?? false).take(5).toList();
+    saleProducts.value = products.where((e) => e.marks?.contains("sale") ?? false).take(5).toList();
+    items.refresh();
   }
 }
