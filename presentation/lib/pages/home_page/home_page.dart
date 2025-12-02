@@ -24,7 +24,7 @@ import '../../util/widgets/smart_refresher_widget.dart';
 import '../filter_page/filter_page.dart';
 import 'home_controller.dart';
 
-class HomePage extends StatefulWidget  {
+class HomePage extends StatefulWidget {
   final bool isSessionExpired;
 
   const HomePage({super.key, this.isSessionExpired = false});
@@ -33,7 +33,7 @@ class HomePage extends StatefulWidget  {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with LoginFunctions{
+class _HomePageState extends State<HomePage> with LoginFunctions {
   HomeController get homeController => Get.find();
   final _key = GlobalKey<ScaffoldState>();
 
@@ -44,12 +44,10 @@ class _HomePageState extends State<HomePage> with LoginFunctions{
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       homeController.initItems();
-      consoleLog('consoleLog isSessionExpired: ${widget.isSessionExpired}');
-      if(widget.isSessionExpired) {
+      if (widget.isSessionExpired) {
         logOut(isSessionExpired: widget.isSessionExpired);
       }
     });
-
   }
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
@@ -83,7 +81,7 @@ class _HomePageState extends State<HomePage> with LoginFunctions{
         return SmartRefresherWidget(
           controller: _refreshController,
           onRefresh: () async {
-            await homeController.getProducts(refresh: true);
+            await homeController.syncProducts(refresh: true);
             _refreshController.refreshCompleted();
           },
           onLoading: () async {

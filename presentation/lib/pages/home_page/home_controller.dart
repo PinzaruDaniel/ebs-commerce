@@ -60,7 +60,7 @@ class HomeController extends GetxController {
 
   }
 
-  Future<void> getProducts({bool loadMore = false, bool refresh=false}) async {
+  Future<void> getProducts({bool loadMore = false}) async {
     _streamSubscription?.cancel();
     _streamSubscription = streamProductsUseCase
         .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
@@ -69,14 +69,12 @@ class HomeController extends GetxController {
           final mappedProducts = list.map((e) => e.toModel).toList();
           products.assignAll(mappedProducts);
           await addNewSaleProduct();
-          if(!refresh) {
             getPageFromCache();
-          }
         });
     consoleLog('products are empty get Products: ${products.isEmpty}');
 
    if ( loadMore) {
-      await syncProducts(refresh: refresh);
+      await syncProducts();
     }
   }
 
