@@ -75,9 +75,9 @@ class HomeController extends GetxController {
         });
     consoleLog('products are empty get Products: ${products.isEmpty}');
 
-   /* if (products.isEmpty || loadMore) {
+   if ( loadMore) {
       await syncProducts(refresh: refresh);
-    }*/
+    }
   }
 
   Future<void> addNewSaleProduct() async {
