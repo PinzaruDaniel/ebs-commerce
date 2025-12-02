@@ -18,7 +18,6 @@ class EntryPage extends StatelessWidget with LoginFunctions{
 
   @override
   Widget build(BuildContext context) {
-    consoleLog('isSessionExpired in EntryPage $isSessionExpired');
     return GetMaterialApp(
       title: AppTexts.appTitle,
       debugShowCheckedModeBanner: false,
