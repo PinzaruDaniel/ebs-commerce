@@ -1,17 +1,12 @@
-import 'package:common/constants/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/home_page/widgets/home_ad_banner_widget.dart';
 import 'package:presentation/pages/home_page/widgets/user_menu/user_menu_widget.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/resources/app_icons.dart';
-import 'package:presentation/util/routing/app_pop_up.dart';
-import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
-import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/base/base_page.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/open_container_animation_widget.dart';
@@ -63,8 +58,8 @@ class _HomePageState extends State<HomePage> with LoginFunctions {
       appBar: AppBarWidget(
         showBorder: true,
         leading: IconButton(
-          onPressed: () {
-            _key.currentState?.openDrawer();
+          onPressed: ()  {
+             _key.currentState?.openDrawer();
           },
           icon: const Icon(Icons.menu),
         ),

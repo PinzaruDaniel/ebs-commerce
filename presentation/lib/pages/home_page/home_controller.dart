@@ -57,7 +57,6 @@ class HomeController extends GetxController {
     }
     await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
     mainAppController.removePendingIds([PendingIds.getProducts]);
-
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
@@ -69,11 +68,11 @@ class HomeController extends GetxController {
           final mappedProducts = list.map((e) => e.toModel).toList();
           products.assignAll(mappedProducts);
           await addNewSaleProduct();
-            getPageFromCache();
+          getPageFromCache();
         });
     consoleLog('products are empty get Products: ${products.isEmpty}');
 
-   if ( loadMore) {
+    if (loadMore) {
       await syncProducts();
     }
   }
