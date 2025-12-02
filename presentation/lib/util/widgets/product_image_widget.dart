@@ -4,7 +4,7 @@ import 'package:presentation/util/resources/app_icons.dart';
 
 import 'circular_progress_indicator_widget.dart';
 
-class ProductImageWidget extends StatelessWidget {
+class ProductImageWidget extends StatelessWidget with CircularProgressIndicatorMixin {
   final double height;
   final String? imageUrl;
   final double? width;
@@ -19,11 +19,12 @@ class ProductImageWidget extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageUrl!,
       progressIndicatorBuilder: (context, url, downloadProgress) =>
-          CircularProgressIndicatorWidget(
+          circularProgressIndicatorWidget(
             boxConstraints: BoxConstraints(minWidth: 40, minHeight: 40),
             value: downloadProgress.progress,
           ),
       errorWidget: (context, url, error) => AppIcons.noImage(height: height, width: width),
+      fadeInDuration: const Duration(milliseconds: 500),
       height: height,
       width: width,
       fit: BoxFit.cover,

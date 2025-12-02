@@ -25,7 +25,7 @@ class HomeController extends GetxController {
   StreamSubscription? _streamSubscription;
 
   Future<void> initItems() async {
-    getProducts();
+    getProducts(loadMore: true);
 
     items.value = [
       AdBannerViewModel(),
@@ -51,14 +51,16 @@ class HomeController extends GetxController {
     if (refresh) {
       currentPage.value = 1;
     }
+    consoleLog('products are empty: ${products.isEmpty}');
     if (products.isEmpty) {
       mainAppController.addPendingIds([PendingIds.getProducts]);
     }
     await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
     mainAppController.removePendingIds([PendingIds.getProducts]);
+
   }
 
-  Future<void> getProducts({bool loadMore=false}) async {
+  Future<void> getProducts({bool loadMore = false, bool refresh=false}) async {
     _streamSubscription?.cancel();
     _streamSubscription = streamProductsUseCase
         .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
@@ -67,11 +69,15 @@ class HomeController extends GetxController {
           final mappedProducts = list.map((e) => e.toModel).toList();
           products.assignAll(mappedProducts);
           await addNewSaleProduct();
-          getPageFromCache();
+          if(!refresh) {
+            getPageFromCache();
+          }
         });
-    if (products.isEmpty || loadMore) {
-      await syncProducts();
-    }
+    consoleLog('products are empty get Products: ${products.isEmpty}');
+
+   /* if (products.isEmpty || loadMore) {
+      await syncProducts(refresh: refresh);
+    }*/
   }
 
   Future<void> addNewSaleProduct() async {

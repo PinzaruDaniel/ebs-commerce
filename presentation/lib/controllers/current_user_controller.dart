@@ -21,12 +21,12 @@ class CurrentUserController extends GetxController {
   SyncUserUseCase syncUserUseCase = GetIt.instance<SyncUserUseCase>();
   DeleteUsersUseCase deleteUsersUseCase = GetIt.instance<DeleteUsersUseCase>();
   SetDeliveryAddressUseCase setDeliveryAddressUseCase = GetIt.instance<SetDeliveryAddressUseCase>();
-  DeleteTokensUseCase deleteTokensUseCase=GetIt.instance<DeleteTokensUseCase>();
+  DeleteTokensUseCase deleteTokensUseCase = GetIt.instance<DeleteTokensUseCase>();
 
   Rxn<UserViewModel> userVM = Rxn<UserViewModel>();
   RxBool hasAgreedTerms = RxBool(false);
   bool isUserFromApi = false;
-
+  RxBool isSessionExpired = RxBool(false);
   StreamSubscription? _streamSubscription;
 
   RxBool get isUserLogged => RxBool(userVM.value != null);
@@ -37,6 +37,8 @@ class CurrentUserController extends GetxController {
     getSettings();
     streamUser();
   }
+
+
 
   Future<void> getSettings() async {
     await getSettingsUseCase.call().then((either) {
@@ -67,14 +69,15 @@ class CurrentUserController extends GetxController {
     userVM.value = null;
   }
 
-  void syncUser() async {
+  Future<void> syncUser() async {
     await syncUserUseCase.call();
   }
 
-  void deleteTokens() async{
+  void deleteTokens() async {
     await deleteTokensUseCase.call();
   }
-  void deleteUsers() async{
+
+  void deleteUsers() async {
     await deleteUsersUseCase.call();
   }
 }

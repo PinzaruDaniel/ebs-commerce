@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:common/constants/session_expired_callback.dart';
 import 'package:data/modules/auth/models/remote/index.dart';
 import 'package:data/modules/auth/sources/local/auth_local_source.dart';
 import 'package:dio/dio.dart';
@@ -7,12 +8,16 @@ import 'package:data/modules/auth/sources/remote/auth_api_service.dart';
 import 'package:async_locks/async_locks.dart';
 
 class RefreshInterceptor {
+  final SessionExpiredCallback onSessionExpired;
   final AuthApiService authApiService;
   final AuthLocalSource authLocalSource;
   final lock = Lock();
   bool successRegenerate = false;
 
-  RefreshInterceptor({required this.authApiService, required this.authLocalSource});
+  RefreshInterceptor({
+    required this.onSessionExpired,
+
+    required this.authApiService, required this.authLocalSource});
 
   Future<void> regenerateAccessToken() async {
     if (!lock.locked) {
@@ -28,9 +33,10 @@ class RefreshInterceptor {
     consoleLog('Starting token regeneration');
     lock.acquire();
     bool success = false;
-
     try {
-      String? refreshToken = await authLocalSource.getRefreshToken();
+      //TODO: to uncomment this
+      //String? refreshToken = await authLocalSource.getRefreshToken();
+      String? refreshToken = '';
       consoleLog('refreshToken: $refreshToken');
       if (refreshToken != null) {
         final response = await authApiService.refresh({'refreshToken': refreshToken});
@@ -133,6 +139,9 @@ class AuthInterceptor extends InterceptorsWrapper {
             ),
           );
         } else {
+
+          consoleLog('handler.reject Expire2');
+          refreshInterceptor.onSessionExpired.call();
           return handler.reject(DioException(requestOptions: err.requestOptions, error: {'reason': 'all_logged_out2'}));
         }
       }

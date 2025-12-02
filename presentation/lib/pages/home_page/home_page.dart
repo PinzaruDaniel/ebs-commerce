@@ -8,40 +8,48 @@ import 'package:presentation/pages/products_display_page/widgets/products_list_d
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/util/resources/app_icons.dart';
+import 'package:presentation/util/routing/app_pop_up.dart';
+import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
+import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/base/base_page.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/open_container_animation_widget.dart';
 import 'package:presentation/view/base_view_model.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-
-import '../../util/routing/app_router.dart';
+import '../../util/mixins/user_mixins.dart';
 import '../../util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import '../../util/widgets/horizontal_products_list_widget.dart';
-import '../../util/widgets/loading_overlay_widget.dart';
 import '../../util/widgets/smart_refresher_widget.dart';
 import '../filter_page/filter_page.dart';
 import 'home_controller.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget  {
+  final bool isSessionExpired;
+
+  const HomePage({super.key, this.isSessionExpired = false});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with LoginFunctions{
   HomeController get homeController => Get.find();
   final _key = GlobalKey<ScaffoldState>();
-  int selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     Get.put(HomeController());
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       homeController.initItems();
+      consoleLog('consoleLog isSessionExpired: ${widget.isSessionExpired}');
+      if(widget.isSessionExpired) {
+        logOut(isSessionExpired: widget.isSessionExpired);
+      }
     });
+
   }
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
@@ -75,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         return SmartRefresherWidget(
           controller: _refreshController,
           onRefresh: () async {
-            await homeController.syncProducts(refresh: true);
+            await homeController.getProducts(refresh: true);
             _refreshController.refreshCompleted();
           },
           onLoading: () async {
@@ -86,6 +94,7 @@ class _HomePageState extends State<HomePage> {
             itemCount: homeController.items.length,
             itemBuilder: (context, index) {
               final item = homeController.items[index];
+
               if (item is AdBannerViewModel) {
                 return HomeAdBannerWidget();
               } else if (item is HorizontalProductListViewModel) {
@@ -93,6 +102,7 @@ class _HomePageState extends State<HomePage> {
               } else if (item is AllProductsViewItem) {
                 return ProductsListDisplayWidget(title: item.type.title ?? '', products: item.products);
               }
+
               return EmptyWidget();
             },
           ),

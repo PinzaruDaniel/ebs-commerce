@@ -50,12 +50,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "awesome_snackbar_content",
-      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/awesome_snackbar_content-0.1.8",
-      "packageUri": "lib/",
-      "languageVersion": "3.9"
-    },
-    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/boolean_selector-2.1.2",
       "packageUri": "lib/",
@@ -210,12 +204,6 @@
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/easy_logger-0.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "elegant_notification",
-      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/elegant_notification-2.5.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
     },
     {
       "name": "equatable",

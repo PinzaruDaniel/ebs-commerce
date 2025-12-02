@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/greeting_page/greeting_page.dart';
 import 'package:presentation/pages/home_page/widgets/user_menu/widgets/delivery_address_widget.dart';
 import 'package:presentation/pages/home_page/widgets/user_menu/widgets/user_info_widget.dart';
+import 'package:presentation/util/mixins/user_mixins.dart';
 import 'package:presentation/util/resources/app_icons.dart';
 import 'package:presentation/util/widgets/language_dropdown_widget.dart';
 import 'package:presentation/view/user_view_model.dart';
@@ -22,7 +23,7 @@ class UserMenuWidget extends StatefulWidget {
   State<UserMenuWidget> createState() => _UserMenuWidgetState();
 }
 
-class _UserMenuWidgetState extends State<UserMenuWidget> {
+class _UserMenuWidgetState extends State<UserMenuWidget> with LoginFunctions {
   UserViewModel? get userVm => currentUserController.userVM.value;
 
   @override
@@ -102,17 +103,7 @@ class _UserMenuWidgetState extends State<UserMenuWidget> {
                           leading: const Icon(Icons.exit_to_app_rounded, color: Colors.black),
                           title: Text(AppTexts.logOut, style: AppTextsStyle.bold()),
                           onTap: () async {
-                            AppPopUp.showConfirmationDialog(
-                              title: AppTexts.confirmLogOut,
-                              content: AppTexts.deleteDataWarning,
-                              context: context,
-                              onSave: () async {
-                                await currentUserController.clearUserData();
-                                currentUserController.deleteTokens();
-                                currentUserController.deleteUsers();
-                                Get.off(() => GreetingPage());
-                              },
-                            );
+                            logOut();
                           },
                         ),
                     ],

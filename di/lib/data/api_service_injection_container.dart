@@ -1,4 +1,5 @@
 import 'package:common/constants/api_constants.dart';
+import 'package:common/constants/session_expired_callback.dart';
 import 'package:data/core/auth_interceptor.dart';
 import 'package:data/modules/auth/sources/local/auth_local_source.dart';
 import 'package:data/modules/auth/sources/remote/auth_api_service.dart';
@@ -9,7 +10,7 @@ import 'package:data/modules/user/sources/remote/current_user_api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-Future<void> init() async {
+Future<void> init({required Function() onSessionExpired}) async {
   var apiClientOption = BaseOptions(
     baseUrl: ApiConstants.baseUrl,
     headers: ApiConstants.saasAppToken,
@@ -54,6 +55,7 @@ Future<void> init() async {
   var refreshInterceptor = RefreshInterceptor(
     authApiService: GetIt.instance<AuthApiService>(),
     authLocalSource: GetIt.instance<AuthLocalSource>(),
+    onSessionExpired: SessionExpiredCallback(onSessionExpired: onSessionExpired),
   );
   authClient.interceptors.add(AuthInterceptor(dio: tokenClient, refreshInterceptor: refreshInterceptor));
 

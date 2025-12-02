@@ -9,6 +9,7 @@ import 'package:presentation/view/base_view_model.dart';
 
 import '../enum/enums.dart';
 
+
 class HeaderTitleViewModel extends BaseViewModel {
   final String title;
   final bool showDivider;

@@ -132,6 +132,7 @@ class AppPopUp {
 
   static Future<bool> showConfirmationDialog({
     required BuildContext context,
+    bool showCancelButton = true,
     String? title,
     String? content,
     String? confirmText,
@@ -145,13 +146,15 @@ class AppPopUp {
             title: Text(title ?? AppTexts.confirm),
             content: Text(content ?? AppTexts.areYouSure),
             actions: [
-              TextButton(
-                onPressed: () {
-                  onCancel?.call();
-                  Navigator.of(context).pop(false);
-                },
-                child: Text(AppTexts.cancel, style: TextStyle(color: AppColors.greyText)),
-              ),
+              showCancelButton
+                  ? TextButton(
+                      onPressed: () {
+                        onCancel?.call();
+                        Navigator.of(context).pop(false);
+                      },
+                      child: Text(AppTexts.cancel, style: TextStyle(color: AppColors.greyText)),
+                    )
+                  : SizedBox.shrink(),
               TextButton(
                 onPressed: () {
                   onSave?.call();
@@ -164,6 +167,7 @@ class AppPopUp {
         ) ??
         false;
   }
+
   static void showFailureSnackBar({
     Failure? failure,
     String? fallbackMessage,
@@ -172,21 +176,19 @@ class AppPopUp {
     SnackPosition? snackPosition,
   }) {
     final message = failure?.message ?? fallbackMessage;
-    if(Get.context!=null) {
+    if (Get.context != null) {
       Get.snackbar(
-      title ?? AppTexts.error,
-      message!,
-      backgroundColor: isError ? AppColors.red : AppColors.primary,
-      colorText: Colors.white,
-      snackPosition: snackPosition ?? SnackPosition.BOTTOM,
-      duration: const Duration(seconds: 2),
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 70),
-      padding: const EdgeInsets.all(16),
-      borderRadius: 20,
-      icon: Icon(isError ? Icons.error : Icons.check_circle, color: Colors.white),
-    );
+        title ?? AppTexts.error,
+        message!,
+        backgroundColor: isError ? AppColors.red : AppColors.primary,
+        colorText: Colors.white,
+        snackPosition: snackPosition ?? SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 70),
+        padding: const EdgeInsets.all(16),
+        borderRadius: 20,
+        icon: Icon(isError ? Icons.error : Icons.check_circle, color: Colors.white),
+      );
     }
   }
 }
-
-

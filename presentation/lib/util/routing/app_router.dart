@@ -76,8 +76,8 @@ class AppRouter {
     _route(page: ShoppingCartPage(), withAnimation: true, onGoBack: onGoBack);
   }
 
-  static void openGreetingPage() {
-    _route(page: GreetingPage(), withAnimation: true);
+  static void openGreetingPage({bool removeUntil = false, bool withAnimation = true}) {
+    _route(page: GreetingPage(), withAnimation: withAnimation, removeUntil: removeUntil);
   }
 
   static void openAuthPage() {

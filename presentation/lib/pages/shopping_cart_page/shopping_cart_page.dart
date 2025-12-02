@@ -116,7 +116,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
           showIcon: mainAppController.cartItems.isEmpty,
           onTap: () {
             mainAppController.cartItems.isEmpty || mainAppController.selectedCartItems.isEmpty
-                ? AppRouter.openHomePage()
+                ? Get.back()
                 : AppRouter.openCheckoutPage(items: mainAppController.selectedCartItems);
           },
         ),

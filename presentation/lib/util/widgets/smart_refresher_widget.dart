@@ -5,7 +5,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../resources/app_colors.dart';
 import 'circular_progress_indicator_widget.dart';
 
-class SmartRefresherWidget extends StatefulWidget {
+class SmartRefresherWidget extends StatefulWidget  {
   final Function()? onRefresh;
   final Function()? onLoading;
   final Widget child;
@@ -17,7 +17,7 @@ class SmartRefresherWidget extends StatefulWidget {
 }
 
 
-class _SmartRefresherWidgetState extends State<SmartRefresherWidget> {
+class _SmartRefresherWidgetState extends State<SmartRefresherWidget> with CircularProgressIndicatorMixin{
   @override
   Widget build(BuildContext context) {
     return SmartRefresher(
@@ -25,7 +25,7 @@ class _SmartRefresherWidgetState extends State<SmartRefresherWidget> {
       enablePullUp: true,
       footer: ClassicFooter(
         loadingText: AppTexts.loadingMore,
-        loadingIcon: CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 20, minWidth: 20)),
+        loadingIcon: circularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 20, minWidth: 20)),
         canLoadingText: AppTexts.canLoading,
         idleText: AppTexts.idleText,
         noDataText: AppTexts.noDataText,

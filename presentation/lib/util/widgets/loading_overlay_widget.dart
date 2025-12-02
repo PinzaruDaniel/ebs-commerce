@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'circular_progress_indicator_widget.dart';
 
-class LoadingOverlayWidget extends StatelessWidget {
+class LoadingOverlayWidget extends StatelessWidget with CircularProgressIndicatorMixin {
 
   const LoadingOverlayWidget({super.key});
 
@@ -11,7 +11,7 @@ class LoadingOverlayWidget extends StatelessWidget {
       children: [
         Positioned.fill(
           child: Center(
-            child: CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75)),
+            child: circularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 75, minWidth: 75)),
           ),
         ),
       ],
