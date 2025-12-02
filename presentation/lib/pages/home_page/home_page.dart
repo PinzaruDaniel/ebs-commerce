@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
         return SmartRefresherWidget(
           controller: _refreshController,
           onRefresh: () async {
-            await homeController.getProducts(reloadItems: true);
+            await homeController.syncProducts(refresh: true);
             _refreshController.refreshCompleted();
           },
           onLoading: () async {
