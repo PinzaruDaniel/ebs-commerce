@@ -82,7 +82,9 @@ class _GreetingPageState extends State<GreetingPage> {
                   ButtonWithoutPasswordWidget(
                     onTap: () async {
                       if (hasAgreed) {
+                        currentUserController.hasAgreedTerms.value = true;
                         AppRouter.openHomePage(removeUntil: true);
+                        currentUserController.setSettings();
                       }
                     },
                   ),

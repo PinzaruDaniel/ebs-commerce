@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 import 'package:common/constants/failure_class.dart';
+import 'package:common/constants/logger.dart';
 import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
@@ -10,7 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
-import 'package:snackify/enums/snack_enums.dart';
+import 'package:presentation/util/resources/app_texts.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../util/enum/enums.dart';
@@ -57,19 +58,21 @@ class ProductsDisplayController extends GetxController {
         default:
           return;
       }
-    } finally {
-    }
+    } finally {}
   }
 
   Future<void> getSaleProducts(bool loadMore) async {
-    mainAppController.addPendingIds([PendingIds.getProducts]);
+    if (!loadMore) {
+      mainAppController.addPendingIds([PendingIds.getProducts]);
+    }
 
     await getSaleProductsUseCase.call(GetSaleProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
       either.fold(
         (failure) {
           mainAppController.removePendingIds([PendingIds.getProducts]);
-
-          AppPopUp.showFailureSnackBar(failure: failure);
+          if (failure.code == '404') {
+            AppPopUp.showFailureSnackBar(title: AppTexts.oops, fallbackMessage: AppTexts.noProductsToShow);
+          }
         },
         (list) {
           final newItems = list.map((e) => e.toModel).toList();
@@ -85,14 +88,17 @@ class ProductsDisplayController extends GetxController {
   }
 
   Future<void> getNewProducts(bool loadMore) async {
-    mainAppController.addPendingIds([PendingIds.getProducts]);
+    if (!loadMore) {
+      mainAppController.addPendingIds([PendingIds.getProducts]);
+    }
 
     await getNewProductsUseCase.call(GetNewProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
       either.fold(
         (failure) {
           mainAppController.removePendingIds([PendingIds.getProducts]);
-
-          AppPopUp.showFailureSnackBar(failure: failure);
+          if (failure.code == '404') {
+            AppPopUp.showFailureSnackBar(title: AppTexts.oops, fallbackMessage: AppTexts.noProductsToShow);
+          }
         },
         (list) {
           final newItems = list.map((e) => e.toModel).toList();
@@ -108,7 +114,9 @@ class ProductsDisplayController extends GetxController {
   }
 
   Future<void> getFilteredProducts(bool loadMore, List<int>? selectedCategoryIds, SfRangeValues? priceRange) async {
-    mainAppController.addPendingIds([PendingIds.getProducts]);
+    if (!loadMore) {
+      mainAppController.addPendingIds([PendingIds.getProducts]);
+    }
     final either = await getFilteredProductsUseCase.call(
       GetFilteredProductsParams(
         page: currentPage.value,
@@ -121,8 +129,9 @@ class ProductsDisplayController extends GetxController {
     either.fold(
       (failure) {
         mainAppController.removePendingIds([PendingIds.getProducts]);
-
-        AppPopUp.showFailureSnackBar(failure: failure);
+        if (failure.code == '404') {
+          AppPopUp.showFailureSnackBar(title: AppTexts.oops, fallbackMessage: AppTexts.noProductsToShow);
+        }
       },
       (responseEntity) {
         final items = responseEntity.response.map((e) => e.toModel).toList();

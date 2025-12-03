@@ -24,7 +24,7 @@ class ProductImageWidget extends StatelessWidget with CircularProgressIndicatorM
             value: downloadProgress.progress,
           ),
       errorWidget: (context, url, error) => AppIcons.noImage(height: height, width: width),
-      fadeInDuration: const Duration(milliseconds: 500),
+      fadeInDuration: const Duration(milliseconds: 1000),
       height: height,
       width: width,
       fit: BoxFit.cover,

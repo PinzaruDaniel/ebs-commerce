@@ -132,7 +132,9 @@ class AppPopUp {
 
   static Future<bool> showConfirmationDialog({
     required BuildContext context,
+    bool barrierDismissible = true,
     bool showCancelButton = true,
+
     String? title,
     String? content,
     String? confirmText,
@@ -140,29 +142,33 @@ class AppPopUp {
     Function? onCancel,
   }) async {
     return await showDialog<bool>(
+          barrierDismissible: barrierDismissible,
           context: context,
-          builder: (context) => AlertDialog(
-            backgroundColor: Colors.white,
-            title: Text(title ?? AppTexts.confirm),
-            content: Text(content ?? AppTexts.areYouSure),
-            actions: [
-              showCancelButton
-                  ? TextButton(
-                      onPressed: () {
-                        onCancel?.call();
-                        Navigator.of(context).pop(false);
-                      },
-                      child: Text(AppTexts.cancel, style: TextStyle(color: AppColors.greyText)),
-                    )
-                  : SizedBox.shrink(),
-              TextButton(
-                onPressed: () {
-                  onSave?.call();
-                  Navigator.of(context).pop(true);
-                },
-                child: Text(confirmText ?? AppTexts.ok, style: TextStyle(color: AppColors.primary)),
-              ),
-            ],
+          builder: (context) => PopScope(
+            canPop: barrierDismissible,
+            child: AlertDialog(
+              backgroundColor: Colors.white,
+              title: Text(title ?? AppTexts.confirm),
+              content: Text(content ?? AppTexts.areYouSure),
+              actions: [
+                showCancelButton
+                    ? TextButton(
+                        onPressed: () {
+                          onCancel?.call();
+                          Navigator.of(context).pop(false);
+                        },
+                        child: Text(AppTexts.cancel, style: TextStyle(color: AppColors.greyText)),
+                      )
+                    : SizedBox.shrink(),
+                TextButton(
+                  onPressed: () {
+                    onSave?.call();
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text(confirmText ?? AppTexts.ok, style: TextStyle(color: AppColors.primary)),
+                ),
+              ],
+            ),
           ),
         ) ??
         false;

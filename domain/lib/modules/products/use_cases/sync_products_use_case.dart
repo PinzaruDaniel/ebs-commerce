@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:common/constants/failure_class.dart';
+import 'package:common/constants/logger.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/products/models/index.dart';
@@ -14,7 +15,9 @@ class SyncProductsUseCase extends UseCaseNoEither<void, SyncProductsParams> {
   Future<void> call(params) async {
     await productsRepository.getProducts(params.page, params.perPage, params.marks).then(
             (either) {
-          either.fold((failure) {}, (productsApi) => productsRepository.setProductsLocalCache(productsApi));
+          either.fold((failure) {}, (productsApi)  async {
+            consoleLog('productsAPi.length: ${productsApi.length}');
+            await productsRepository.setProductsLocalCache(productsApi);});
         }
     );
   }

@@ -21,6 +21,7 @@ class _SmartRefresherWidgetState extends State<SmartRefresherWidget> with Circul
   @override
   Widget build(BuildContext context) {
     return SmartRefresher(
+      primary: true,
       enablePullDown: true,
       enablePullUp: true,
       footer: ClassicFooter(

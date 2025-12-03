@@ -12,13 +12,15 @@ import 'package:presentation/util/mixins/user_mixins.dart';
 
 import 'controllers/bindings/root_bindings_controllers.dart';
 
-void main() async  {
-  bool isSessionExpired=false;
+void main() async {
+  bool isSessionExpired = false;
   WidgetsFlutterBinding.ensureInitialized();
-  await initDi(onSessionExpired: () {
-    isSessionExpired=true;
-    consoleLog('in main changed session bool= $isSessionExpired');
-  });
+  await initDi(
+    onSessionExpired: () {
+      isSessionExpired = true;
+      consoleLog('in main changed session bool= $isSessionExpired');
+    },
+  );
   await RootBinding().dependencies();
   await EasyLocalization.ensureInitialized();
   nomenclatureController.initCountries();
@@ -32,7 +34,7 @@ void main() async  {
       fallbackLocale: Locale('ro'),
       startLocale: Locale('ro'),
       assetLoader: LocalizationLoader(),
-      child: EntryPage(isSessionExpired: isSessionExpired,),
+      child: EntryPage(isSessionExpired: isSessionExpired),
     ),
   );
 }

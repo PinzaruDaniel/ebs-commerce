@@ -25,14 +25,14 @@ class HomeController extends GetxController {
   StreamSubscription? _streamSubscription;
 
   Future<void> initItems() async {
-    getProducts(loadMore: true);
-
-    items.value = [
+    await syncProducts(refresh: true);
+    getProducts();
+    items.addAll([
       AdBannerViewModel(),
       HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
       HorizontalProductListViewModel(products: saleProducts, type: ProductListType.saleProducts),
       AllProductsViewItem(products: products),
-    ];
+    ]);
   }
 
   @override
@@ -57,6 +57,7 @@ class HomeController extends GetxController {
     }
     await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
     mainAppController.removePendingIds([PendingIds.getProducts]);
+    consoleLog('curentPage Value: ${currentPage.value}  \n ${products.length}');
   }
 
   Future<void> getProducts({bool loadMore = false}) async {

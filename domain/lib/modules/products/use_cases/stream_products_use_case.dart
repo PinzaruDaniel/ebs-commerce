@@ -9,7 +9,7 @@ class StreamProductsUseCase extends UseCaseStream<List<ProductEntity>, StreamPro
   StreamProductsUseCase({required this.productsRepository});
 
   Stream<List<ProductEntity>> call(params) {
-    return productsRepository.getProductsLocalCache().distinct();
+    return productsRepository.getProductsLocalCache();
   }
 }
 

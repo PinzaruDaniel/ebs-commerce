@@ -21,7 +21,6 @@ abstract class ProductsLocalDataSource {
   Stream<List<ProductBox>> getProducts();
 
   Stream<List<OrderBox>> getOrders(int idUser);
-
 }
 
 class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
@@ -41,11 +40,28 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
 
   @override
   Future<void> setProducts({required List<ProductEntity> products}) async {
-    await productBox.putManyAsync(
-      products.map((e) {
-        return e.toBox;
-      }).toList(),
-    );
+    consoleLog('products length setProducts: ${products.length}');
+
+    final existingProducts = productBox.getAll();
+    final Set<int> seenProductsId = existingProducts.map((p) => p.idProduct).toSet();
+
+    final List<ProductEntity> finalProducts = [];
+
+    for (var p in products) {
+      if (p.id != 0 && seenProductsId.contains(p.id)) {
+        consoleLog('Duplicated product detected: ${p.name} with id ${p.id}, set to 0');
+        finalProducts.add(p.copyWith(id: 0));
+      } else {
+        seenProductsId.add(p.id);
+        finalProducts.add(p);
+      }
+    }
+
+
+    await productBox.putManyAsync(finalProducts.map((e) => e.toBox).toList());
+
+    var allProducts = productBox.getAll();
+    consoleLog('products getAll length: ${allProducts.length}');
   }
 
   @override
@@ -75,10 +91,7 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
 
   @override
   Stream<List<OrderBox>> getOrders(int idUser) {
-    return orderBox
-        .query(OrderBox_.idUser.equals(idUser))
-        .watch(triggerImmediately: true)
-        .asyncMap((query) async {
+    return orderBox.query(OrderBox_.idUser.equals(idUser)).watch(triggerImmediately: true).asyncMap((query) async {
       final orders = query.find();
 
       final now = DateTime.now();
@@ -90,11 +103,7 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
         await orderBox.removeAsync(o.idOrder);
       }
 
-      return orders
-          .where((o) => !outdated.contains(o))
-          .toList()
-          .reversed
-          .toList();
+      return orders.where((o) => !outdated.contains(o)).toList().reversed.toList();
     });
   }
 
@@ -110,5 +119,4 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   Stream<List<ProductBox>> getProducts() {
     return productBox.query().watch(triggerImmediately: true).map((query) => query.find().reversed.toList());
   }
-
 }

@@ -2,6 +2,7 @@ import 'package:common/constants/session_expired_callback.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:presentation/pages/welcome_page/welcome_page.dart';
 
 import '../../controllers/controller_imports.dart';
 import '../../pages/greeting_page/greeting_page.dart';
@@ -12,12 +13,17 @@ import '../routing/app_router.dart';
 
 mixin LoginFunctions {
   Widget sessionExpired({required bool isSessionExpired}) {
-    return isSessionExpired ? HomePage(isSessionExpired: isSessionExpired) : HomePage();
+    return isSessionExpired
+        ? HomePage(isSessionExpired: isSessionExpired)
+        : currentUserController.hasAgreedTerms.value
+        ? HomePage()
+        : WelcomePage();
   }
 
   void logOut({bool isSessionExpired = false}) {
     isSessionExpired
         ? AppPopUp.showConfirmationDialog(
+            barrierDismissible: false,
             context: Get.context!,
             title: 'Session expired',
             content: 'Please login again',
