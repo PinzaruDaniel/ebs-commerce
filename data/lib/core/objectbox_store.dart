@@ -17,6 +17,7 @@ import '../objectbox.g.dart';
 class ObjectBoxStore {
   late final Store _store;
   late final Box<AuthTokenBox> authTokenBox;
+  late final Box<ProductResponseBox> productResponseBox;
   late final Box<ProductBox> productBox;
   late final Box<CategoryBox> categoryBox;
   late final Box<SpecificationBox> specificationBox;
@@ -31,7 +32,8 @@ class ObjectBoxStore {
     orderedProductBox=Box<OrderedProductBox>(_store);
     orderBox=Box<OrderBox>(_store);
     authTokenBox = Box<AuthTokenBox>(_store);
-    productBox = Box<ProductBox>(_store);
+    productResponseBox = Box<ProductResponseBox>(_store);
+    productBox=Box<ProductBox>(_store);
     categoryBox = Box<CategoryBox>(_store);
     specificationBox = Box<SpecificationBox>(_store);
     userBox = Box<UserBox>(_store);

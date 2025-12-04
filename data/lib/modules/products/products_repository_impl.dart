@@ -24,7 +24,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
         'price_lte': priceLte,
         if (categoriesId != null) 'categories': categoriesId,
       });
-      final entities = response.map((dto) => dto.toEntity());
+      final entities = response.map((dto) => dto.toEntity);
       return Right(entities);
     } catch (e, stackTrace) {
       if (e is DioException) {
@@ -53,11 +53,11 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getProducts(page, perPage, marks) async {
+  Future<Either<Failure, ProductResponseEntity>> getProducts(page, perPage, marks) async {
     try {
       final Map<String, dynamic> queries = {'page': page, 'per_page': perPage, if (marks != null) 'marks': marks};
       final response = await apiService.getProducts(queries);
-      final entities = response.results.map((dto) => dto.toEntity()).toList();
+      final entities = response.toEntity;
       return Right(entities);
     } catch (e, stackTrace) {
       if (e is DioException) {
@@ -68,7 +68,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<void> setProductsLocalCache(List<ProductEntity> products) {
+  Future<void> setProductsLocalCache(ProductResponseEntity products) {
     return localDataSource.setProducts(products: products);
   }
 
@@ -103,8 +103,8 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Stream<List<ProductEntity>> getProductsLocalCache() {
-    return localDataSource.getProducts().map((boxList) => boxList.map((e) => e.toEntity).toList());
+  Stream<List<ProductEntity>> getProductsLocalCache(int currentPage) {
+    return localDataSource.getProducts(currentPage: currentPage).map((e)=>e.map((e)=>e.toEntity).toList());
   }
 
   @override
@@ -116,5 +116,4 @@ class ProductsRepositoryImpl implements ProductsRepository {
   Future<void> setOrderedLocalCache(List<OrderEntity> orders, int idUser) {
     return localDataSource.setOrders(orders: orders, idUser: idUser);
   }
-
 }

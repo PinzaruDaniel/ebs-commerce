@@ -55,7 +55,7 @@ _ProductResponseApiDto _$ProductResponseApiDtoFromJson(
   count: (json['count'] as num).toInt(),
   totalPages: (json['total_pages'] as num?)?.toInt(),
   perPage: (json['per_page'] as num?)?.toInt(),
-  currentPage: (json['current_page'] as num?)?.toInt(),
+  currentPage: (json['current_page'] as num).toInt(),
   results: (json['results'] as List<dynamic>)
       .map((e) => ProductApiDto.fromJson(e as Map<String, dynamic>))
       .toList(),

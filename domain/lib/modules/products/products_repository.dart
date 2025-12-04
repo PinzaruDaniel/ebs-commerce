@@ -18,14 +18,14 @@ abstract class ProductsRepository {
     List<int>? categoriesId,
   );
 
-  Future<Either<Failure, List<ProductEntity>>> getProducts(int page, int perPage, String? marks);
+  Future<Either<Failure, ProductResponseEntity>> getProducts(int page, int perPage, String? marks);
 
-  Future<void> setProductsLocalCache(List<ProductEntity> products);
+  Future<void> setProductsLocalCache(ProductResponseEntity products);
 
   Future<Either<Failure, List<ProductEntity>>> getSaleProducts(int page, int perPage);
   Future<Either<Failure, List<ProductEntity>>> getNewProducts(int page, int perPage);
 
-  Stream<List<ProductEntity>> getProductsLocalCache();
+  Stream<List<ProductEntity>> getProductsLocalCache(int currentPage);
 
   Stream<List<OrderEntity>> getOrdersLocalCache(int idUser);
   Future<void> setOrderedLocalCache(List<OrderEntity> orders, int idUser);

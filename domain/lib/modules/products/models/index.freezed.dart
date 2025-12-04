@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProductResponseEntity {
 
- int get count; int? get totalPages; int? get perPage; int? get currentPage; List<ProductEntity> get response;
+ int get count; int? get totalPages; int? get perPage; int get currentPage; List<ProductEntity> get response;
 /// Create a copy of ProductResponseEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $ProductResponseEntityCopyWith<$Res>  {
   factory $ProductResponseEntityCopyWith(ProductResponseEntity value, $Res Function(ProductResponseEntity) _then) = _$ProductResponseEntityCopyWithImpl;
 @useResult
 $Res call({
- int count, int? totalPages, int? perPage, int? currentPage, List<ProductEntity> response
+ int count, int? totalPages, int? perPage, int currentPage, List<ProductEntity> response
 });
 
 
@@ -62,13 +62,13 @@ class _$ProductResponseEntityCopyWithImpl<$Res>
 
 /// Create a copy of ProductResponseEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? count = null,Object? totalPages = freezed,Object? perPage = freezed,Object? currentPage = freezed,Object? response = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? count = null,Object? totalPages = freezed,Object? perPage = freezed,Object? currentPage = null,Object? response = null,}) {
   return _then(_self.copyWith(
 count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
 as int,totalPages: freezed == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
 as int?,perPage: freezed == perPage ? _self.perPage : perPage // ignore: cast_nullable_to_non_nullable
-as int?,currentPage: freezed == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int?,response: null == response ? _self.response : response // ignore: cast_nullable_to_non_nullable
+as int?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,response: null == response ? _self.response : response // ignore: cast_nullable_to_non_nullable
 as List<ProductEntity>,
   ));
 }
@@ -154,7 +154,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int count,  int? totalPages,  int? perPage,  int? currentPage,  List<ProductEntity> response)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int count,  int? totalPages,  int? perPage,  int currentPage,  List<ProductEntity> response)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductResponseEntity() when $default != null:
 return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.response);case _:
@@ -175,7 +175,7 @@ return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int count,  int? totalPages,  int? perPage,  int? currentPage,  List<ProductEntity> response)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int count,  int? totalPages,  int? perPage,  int currentPage,  List<ProductEntity> response)  $default,) {final _that = this;
 switch (_that) {
 case _ProductResponseEntity():
 return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.response);case _:
@@ -195,7 +195,7 @@ return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int count,  int? totalPages,  int? perPage,  int? currentPage,  List<ProductEntity> response)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int count,  int? totalPages,  int? perPage,  int currentPage,  List<ProductEntity> response)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductResponseEntity() when $default != null:
 return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.response);case _:
@@ -216,7 +216,7 @@ class _ProductResponseEntity implements ProductResponseEntity {
 @override final  int count;
 @override final  int? totalPages;
 @override final  int? perPage;
-@override final  int? currentPage;
+@override final  int currentPage;
  final  List<ProductEntity> _response;
 @override List<ProductEntity> get response {
   if (_response is EqualUnmodifiableListView) return _response;
@@ -255,7 +255,7 @@ abstract mixin class _$ProductResponseEntityCopyWith<$Res> implements $ProductRe
   factory _$ProductResponseEntityCopyWith(_ProductResponseEntity value, $Res Function(_ProductResponseEntity) _then) = __$ProductResponseEntityCopyWithImpl;
 @override @useResult
 $Res call({
- int count, int? totalPages, int? perPage, int? currentPage, List<ProductEntity> response
+ int count, int? totalPages, int? perPage, int currentPage, List<ProductEntity> response
 });
 
 
@@ -272,13 +272,13 @@ class __$ProductResponseEntityCopyWithImpl<$Res>
 
 /// Create a copy of ProductResponseEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? count = null,Object? totalPages = freezed,Object? perPage = freezed,Object? currentPage = freezed,Object? response = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? count = null,Object? totalPages = freezed,Object? perPage = freezed,Object? currentPage = null,Object? response = null,}) {
   return _then(_ProductResponseEntity(
 count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
 as int,totalPages: freezed == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
 as int?,perPage: freezed == perPage ? _self.perPage : perPage // ignore: cast_nullable_to_non_nullable
-as int?,currentPage: freezed == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int?,response: null == response ? _self._response : response // ignore: cast_nullable_to_non_nullable
+as int?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,response: null == response ? _self._response : response // ignore: cast_nullable_to_non_nullable
 as List<ProductEntity>,
   ));
 }

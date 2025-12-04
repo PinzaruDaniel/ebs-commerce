@@ -349,7 +349,7 @@ as List<List<CategoryApiDto>>?,
 /// @nodoc
 mixin _$ProductResponseApiDto {
 
- int get count;@JsonKey(name: 'total_pages') int? get totalPages;@JsonKey(name: 'per_page') int? get perPage;@JsonKey(name: 'current_page') int? get currentPage; List<ProductApiDto> get results;
+ int get count;@JsonKey(name: 'total_pages') int? get totalPages;@JsonKey(name: 'per_page') int? get perPage;@JsonKey(name: 'current_page') int get currentPage; List<ProductApiDto> get results;
 /// Create a copy of ProductResponseApiDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -382,7 +382,7 @@ abstract mixin class $ProductResponseApiDtoCopyWith<$Res>  {
   factory $ProductResponseApiDtoCopyWith(ProductResponseApiDto value, $Res Function(ProductResponseApiDto) _then) = _$ProductResponseApiDtoCopyWithImpl;
 @useResult
 $Res call({
- int count,@JsonKey(name: 'total_pages') int? totalPages,@JsonKey(name: 'per_page') int? perPage,@JsonKey(name: 'current_page') int? currentPage, List<ProductApiDto> results
+ int count,@JsonKey(name: 'total_pages') int? totalPages,@JsonKey(name: 'per_page') int? perPage,@JsonKey(name: 'current_page') int currentPage, List<ProductApiDto> results
 });
 
 
@@ -399,13 +399,13 @@ class _$ProductResponseApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of ProductResponseApiDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? count = null,Object? totalPages = freezed,Object? perPage = freezed,Object? currentPage = freezed,Object? results = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? count = null,Object? totalPages = freezed,Object? perPage = freezed,Object? currentPage = null,Object? results = null,}) {
   return _then(_self.copyWith(
 count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
 as int,totalPages: freezed == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
 as int?,perPage: freezed == perPage ? _self.perPage : perPage // ignore: cast_nullable_to_non_nullable
-as int?,currentPage: freezed == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int?,results: null == results ? _self.results : results // ignore: cast_nullable_to_non_nullable
+as int?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,results: null == results ? _self.results : results // ignore: cast_nullable_to_non_nullable
 as List<ProductApiDto>,
   ));
 }
@@ -491,7 +491,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'per_page')  int? perPage, @JsonKey(name: 'current_page')  int? currentPage,  List<ProductApiDto> results)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'per_page')  int? perPage, @JsonKey(name: 'current_page')  int currentPage,  List<ProductApiDto> results)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductResponseApiDto() when $default != null:
 return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.results);case _:
@@ -512,7 +512,7 @@ return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'per_page')  int? perPage, @JsonKey(name: 'current_page')  int? currentPage,  List<ProductApiDto> results)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'per_page')  int? perPage, @JsonKey(name: 'current_page')  int currentPage,  List<ProductApiDto> results)  $default,) {final _that = this;
 switch (_that) {
 case _ProductResponseApiDto():
 return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.results);case _:
@@ -532,7 +532,7 @@ return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'per_page')  int? perPage, @JsonKey(name: 'current_page')  int? currentPage,  List<ProductApiDto> results)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int count, @JsonKey(name: 'total_pages')  int? totalPages, @JsonKey(name: 'per_page')  int? perPage, @JsonKey(name: 'current_page')  int currentPage,  List<ProductApiDto> results)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductResponseApiDto() when $default != null:
 return $default(_that.count,_that.totalPages,_that.perPage,_that.currentPage,_that.results);case _:
@@ -553,7 +553,7 @@ class _ProductResponseApiDto implements ProductResponseApiDto {
 @override final  int count;
 @override@JsonKey(name: 'total_pages') final  int? totalPages;
 @override@JsonKey(name: 'per_page') final  int? perPage;
-@override@JsonKey(name: 'current_page') final  int? currentPage;
+@override@JsonKey(name: 'current_page') final  int currentPage;
  final  List<ProductApiDto> _results;
 @override List<ProductApiDto> get results {
   if (_results is EqualUnmodifiableListView) return _results;
@@ -595,7 +595,7 @@ abstract mixin class _$ProductResponseApiDtoCopyWith<$Res> implements $ProductRe
   factory _$ProductResponseApiDtoCopyWith(_ProductResponseApiDto value, $Res Function(_ProductResponseApiDto) _then) = __$ProductResponseApiDtoCopyWithImpl;
 @override @useResult
 $Res call({
- int count,@JsonKey(name: 'total_pages') int? totalPages,@JsonKey(name: 'per_page') int? perPage,@JsonKey(name: 'current_page') int? currentPage, List<ProductApiDto> results
+ int count,@JsonKey(name: 'total_pages') int? totalPages,@JsonKey(name: 'per_page') int? perPage,@JsonKey(name: 'current_page') int currentPage, List<ProductApiDto> results
 });
 
 
@@ -612,13 +612,13 @@ class __$ProductResponseApiDtoCopyWithImpl<$Res>
 
 /// Create a copy of ProductResponseApiDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? count = null,Object? totalPages = freezed,Object? perPage = freezed,Object? currentPage = freezed,Object? results = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? count = null,Object? totalPages = freezed,Object? perPage = freezed,Object? currentPage = null,Object? results = null,}) {
   return _then(_ProductResponseApiDto(
 count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
 as int,totalPages: freezed == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
 as int?,perPage: freezed == perPage ? _self.perPage : perPage // ignore: cast_nullable_to_non_nullable
-as int?,currentPage: freezed == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
-as int?,results: null == results ? _self._results : results // ignore: cast_nullable_to_non_nullable
+as int?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,results: null == results ? _self._results : results // ignore: cast_nullable_to_non_nullable
 as List<ProductApiDto>,
   ));
 }

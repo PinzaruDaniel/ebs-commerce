@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:common/constants/failure_class.dart';
 import 'package:common/constants/logger.dart';
+import 'package:domain/modules/products/models/index.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/sync_products_use_case.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
+import 'package:presentation/util/mapper/product_response_mapper.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../../util/enum/enums.dart';
 import '../../view/base_view_model.dart';
@@ -26,7 +28,6 @@ class HomeController extends GetxController {
 
   Future<void> initItems() async {
     await syncProducts(refresh: true);
-    getProducts();
     items.addAll([
       AdBannerViewModel(),
       HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
@@ -66,15 +67,16 @@ class HomeController extends GetxController {
         .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
         .distinct()
         .listen((list) async {
-          final mappedProducts = list.map((e) => e.toModel).toList();
+          final mappedProducts = list.map((e) => e.toModel);
           products.assignAll(mappedProducts);
           await addNewSaleProduct();
-          getPageFromCache();
+          // getPageFromCache();
         });
     consoleLog('products are empty get Products: ${products.isEmpty}');
 
     if (loadMore) {
       await syncProducts();
+      currentPage.value++;
     }
   }
 

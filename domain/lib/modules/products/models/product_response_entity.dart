@@ -6,7 +6,7 @@ abstract class ProductResponseEntity with _$ProductResponseEntity {
     required int count,
     required int? totalPages,
     required int? perPage,
-    required int? currentPage,
+    required int currentPage,
     required List<ProductEntity> response,
   }) = _ProductResponseEntity;
 }
