@@ -3,7 +3,7 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class ProductResponseBox {
-  @Id()
+  @Id(assignable: true)
   int? idProductResponse;
   int count;
   int totalPages;

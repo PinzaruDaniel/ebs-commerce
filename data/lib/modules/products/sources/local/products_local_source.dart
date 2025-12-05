@@ -6,8 +6,10 @@ import 'package:data/modules/products/models/local/product_response_box.dart';
 import 'package:data/modules/specifications/models/local/specification_box.dart';
 import 'package:domain/modules/products/models/index.dart';
 import 'package:objectbox/objectbox.dart';
-
+import 'package:collection/collection.dart';
+import '../../../../mapper/category_mapper.dart';
 import '../../../../mapper/product_response_mapper.dart';
+import '../../../../mapper/specification_mapper.dart';
 import '../../../../objectbox.g.dart';
 import '../../../categories/models/local/category_box.dart';
 import '../../models/local/order_box.dart';
@@ -20,6 +22,7 @@ abstract class ProductsLocalDataSource {
   Stream<List<ProductBox>> getProducts({required int currentPage});
 
   Stream<List<OrderBox>> getOrders(int idUser);
+  Future<ProductResponseBox?> getProductsResponseFromCache({required int currentPage});
 }
 
 class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
@@ -39,42 +42,23 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   Box<OrderBox> orderBox;
   Box<OrderedProductBox> orderedProductBox;
 
-  /*  @override
-  Future<void> setProducts({required List<ProductEntity> products}) async {
-    consoleLog('products length setProducts: ${products.length}');
-
-    final existingProducts = productBox.getAll();
-    final Set<int> seenProductsId = existingProducts.map((p) => p.idProduct).toSet();
-
-    final List<ProductEntity> finalProducts = [];
-
-    for (var p in products) {
-      if (p.id != 0 && seenProductsId.contains(p.id)) {
-        consoleLog('Duplicated product detected: ${p.name} with id ${p.id}, set to 0');
-        finalProducts.add(p.copyWith(id: 0));
-      } else {
-        seenProductsId.add(p.id);
-        finalProducts.add(p);
-      }
-    }
-
-
-    await productBox.putManyAsync(finalProducts.map((e) {
-      consoleLog('product id: ${e.id} ${e.name}');
-      return e.toBox;
-    }).toList());
-
-    var allProducts = productBox.getAll();
-    consoleLog('products getAll length: ${allProducts.length}');
-  }*/
-
   @override
   Future<void> setProducts({required ProductResponseEntity products}) async {
+    //map in a local var products box
+    var productsB = products.response.map((e) => e.toBox).toList();
+    await productBox.putManyAsync(productsB);
     final productResponseBoxMapped = products.toBox;
     consoleLog('productResponseBox pageId: ${productResponseBoxMapped.pageId}');
     consoleLog('productsResponseBox id: ${productResponseBoxMapped.idProductResponse} ');
-    consoleLog('productbox id: ${productResponseBoxMapped.products[0].idProduct}');
+    //consoleLog('productbox id: ${productResponseBoxMapped.products[0].idProduct}');
+    productResponseBoxMapped.products.addAll(productsB);
     await productResponseBox.putAsync(productResponseBoxMapped, mode: PutMode.put);
+
+    var res = await productResponseBox.getAllAsync();
+
+    consoleLog(
+      'currentPage is first where ${products.currentPage} | ${res.firstWhereOrNull((e) => e.pageId == products.currentPage)?.products.length} ',
+    );
   }
 
   @override
@@ -121,38 +105,41 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   }
 
   Future<void> setProductsSpecs({required List<ProductEntity> products}) async {
-    /*
     for (final product in products) {
       specBox.putManyAsync(product.specification?.map((e) => e.toBox).toList() ?? []);
       categoryBox.putManyAsync(product.category?.map((e) => e.toBox).toList() ?? []);
     }
-    await productBox.putManyAsync(products.map((e) => e.toBox).toList());*/
+    await productBox.putManyAsync(products.map((e) => e.toBox).toList());
   }
 
   @override
-  Stream<List<ProductBox>> getProducts({required int currentPage}) {
+  Stream<List<ProductBox>> getProducts({required int currentPage}) async* {
     consoleLog('current page in getProducts: $currentPage');
-    var productsLength = productResponseBox.getAll();
+    var productsLength = await productResponseBox.getAllAsync();
     consoleLog('current nr of products in getProducts: ${productsLength.length}');
-
-    var products = productResponseBox.get(currentPage);
-    for (var p in products!.products) {
-      consoleLog('product id and name: ${p.idProduct} ${p.name}');
-    }
-    consoleLog('product length: ${products.products.length}');
 
     var productsFromCache = productResponseBox
         .query(ProductResponseBox_.pageId.equals(currentPage))
         .watch(triggerImmediately: true)
         .map((query) {
           final responseBoxList = query.find();
-          final productList = responseBoxList.expand((response) => response.products).toList();
-          final productsMapped=productsLength.expand((e)=>e.products).toList();
-          productsMapped.addAll(productList);
-          consoleLog('productsMapped Length: ${productsMapped.length}');
-          consoleLog('productsList Length: ${productList.length}');
-          return productsMapped;
+          final productsBoxList = responseBoxList.expand((e) => e.products).toList();
+          final allProductsMapped = productsLength.expand((e) => e.products).toList();
+          allProductsMapped.addAll(productsBoxList);
+          return allProductsMapped;
         });
-    return productsFromCache;
+    yield* productsFromCache;
   }
+  @override
+  Future<ProductResponseBox?> getProductsResponseFromCache({required int currentPage}) async {
+    var response = await productResponseBox.getAsync(currentPage);
+    return response;
+  }
+  /*  @override
+  Stream<List<ProductBox>> getProducts({required int currentPage}) async* {
+    yield* productResponseBox.query().watch(triggerImmediately: true).map((query) {
+      final allPages = productResponseBox.getAll();
+      return allPages.expand((page) => page.products).toList();
+    });
+  }*/
 }

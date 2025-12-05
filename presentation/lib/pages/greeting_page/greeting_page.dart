@@ -78,15 +78,20 @@ class _GreetingPageState extends State<GreetingPage> {
                     },
                     title: AppTexts.logIn,
                   ),
-
-                  ButtonWithoutPasswordWidget(
-                    onTap: () async {
-                      if (hasAgreed) {
-                        currentUserController.hasAgreedTerms.value = true;
-                        AppRouter.openHomePage(removeUntil: true);
-                        currentUserController.setSettings();
-                      }
-                    },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: BaseButtonWidget(
+                      buttonColor: Colors.transparent,
+                      textColor: hasAgreed ? AppColors.greyText : Colors.grey,
+                      onTap: () async {
+                        if (hasAgreed) {
+                          currentUserController.hasAgreedTerms.value = true;
+                          AppRouter.openHomePage(removeUntil: true);
+                          currentUserController.setSettings();
+                        }
+                      },
+                      title: AppTexts.enterWithoutPassword,
+                    ),
                   ),
                 ],
               ),

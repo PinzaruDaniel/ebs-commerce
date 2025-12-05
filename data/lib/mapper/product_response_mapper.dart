@@ -24,13 +24,13 @@ extension ProductResponseEntityToBoxMapper on ProductResponseEntity {
       totalPages: totalPages ?? 0,
       perPage: perPage,
     );
-    productResponseBox.products.addAll(
+   /* productResponseBox.products.addAll(
       response.map((e) {
         final productBox = e.toBox;
         productBox.productsResponse.target = productResponseBox;
         return productBox;
       }),
-    );
+    );*/
     return productResponseBox;
   }
 }

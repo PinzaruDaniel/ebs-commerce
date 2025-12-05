@@ -508,7 +508,7 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(1, 8052069509509478070),
         name: 'idProductResponse',
         type: 6,
-        flags: 1,
+        flags: 129,
       ),
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 4401574830184159231),

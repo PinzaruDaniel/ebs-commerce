@@ -91,14 +91,13 @@ class AuthentificationController extends GetxController {
           onError.call();
         },
         (response) async {
-          onSuccess.call();
+          await syncUser(onSuccess: onSuccess);
         },
       );
     });
-    await syncUser();
   }
 
-  Future<void> syncUser() async {
+  Future<void> syncUser({Function? onSuccess}) async {
     await syncUserUseCase.call().then((result) {
       result.fold(
         (failure) {
@@ -122,6 +121,7 @@ class AuthentificationController extends GetxController {
           consoleLog('User already logged in: ${currentUserController.userVM.value?.email}');
           consoleLog('Successfully auto-logged in ${entity.name}');
           mainAppController.removePendingIds([PendingIds.logIn]);
+          onSuccess?.call();
         },
       );
     });

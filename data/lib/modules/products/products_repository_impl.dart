@@ -103,8 +103,8 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Stream<List<ProductEntity>> getProductsLocalCache(int currentPage) {
-    return localDataSource.getProducts(currentPage: currentPage).map((e)=>e.map((e)=>e.toEntity).toList());
+  Stream<List<ProductEntity>> getProductsLocalCache(int currentPage) async* {
+    yield* localDataSource.getProducts(currentPage: currentPage).map((e)=>e.map((e)=>e.toEntity).toList());
   }
 
   @override

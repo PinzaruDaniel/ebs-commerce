@@ -8,8 +8,14 @@ class StreamProductsUseCase extends UseCaseStream<List<ProductEntity>, StreamPro
 
   StreamProductsUseCase({required this.productsRepository});
 
-  Stream<List<ProductEntity>> call(params) {
-    return productsRepository.getProductsLocalCache(params.page);
+  Stream<List<ProductEntity>> call(params) async* {
+    var streamController = StreamController<List<ProductEntity>>();
+    productsRepository.getProductsLocalCache(params.page).distinct().listen((event) {
+      streamController.sink.add(event);
+    });
+
+    yield* streamController.stream;
+
   }
 }
 

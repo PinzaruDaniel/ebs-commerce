@@ -70,9 +70,6 @@ class AuthInterceptor extends InterceptorsWrapper {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     String? accessToken = await refreshInterceptor.authLocalSource.getAccessToken();
     accessToken.toString();
-    accessToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImFsaWNlLnNtaXRoQGV4YW1wbGUuY29tIiwiZnVsbF'
-        '9uYW1lIjoiQWxpY2UgU21pdGgiLCJpYXQiOjE3NjQ3NjI5NjcsImV4cCI6MTc2NDc2MzI2NywiaXNzIjoiaHR0cHM6Ly9naXRodWIuY29tL2'
-        'pvbmFzcm91c3NlbC9kYXJ0X2pzb253ZWJ0b2tlbiJ9.1DxfDkttmhzWg2SLLQsY9V1M4QLk9PTAX4gJx3UBrWw';
     String? refreshToken = await refreshInterceptor.authLocalSource.getRefreshToken();
     consoleLog('onRequest interceptor: access=$accessToken, refresh=$refreshToken');
 
