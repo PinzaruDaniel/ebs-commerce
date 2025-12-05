@@ -104,7 +104,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Stream<List<ProductEntity>> getProductsLocalCache(int currentPage) async* {
-    yield* localDataSource.getProducts(currentPage: currentPage).map((e)=>e.map((e)=>e.toEntity).toList());
+    yield* localDataSource.getProducts(currentPage: currentPage).map((e) => e.map((e) => e.toEntity).toList());
   }
 
   @override
@@ -115,5 +115,11 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<void> setOrderedLocalCache(List<OrderEntity> orders, int idUser) {
     return localDataSource.setOrders(orders: orders, idUser: idUser);
+  }
+
+  @override
+  Future<ProductResponseEntity?> getProductsResponseFromCache(int currentPage) {
+    var productResponse = localDataSource.getProductsResponseFromCache(currentPage: currentPage);
+    return productResponse.then((productBox) => productBox?.toEntity);
   }
 }
