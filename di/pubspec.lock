@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.1.1"
+  animated_text_kit:
+    dependency: transitive
+    description:
+      name: animated_text_kit
+      sha256: "1d41486860885321972dd332179357a535d50d4780fc2ba5e1805bde085c81f2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.3.0"
   animations:
     dependency: transitive
     description:
@@ -256,14 +264,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
-  crystal_navigation_bar:
-    dependency: transitive
-    description:
-      name: crystal_navigation_bar
-      sha256: fceaa04b249a91d855b4bf8ac197374057e8e0013db327474bb4cf6a151d772a
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
   cupertino_icons:
     dependency: transitive
     description:
@@ -350,14 +350,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.2"
-  easy_sidemenu:
-    dependency: transitive
-    description:
-      name: easy_sidemenu
-      sha256: "91f9d8d4466d11de0397a22568ab4e15335635fe86836ef14dbc5dd571fb6963"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.1"
   equatable:
     dependency: transitive
     description:
@@ -496,6 +488,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
+  flutter_tts:
+    dependency: transitive
+    description:
+      name: flutter_tts
+      sha256: bdf2fc4483e74450dc9fc6fe6a9b6a5663e108d4d0dad3324a22c8e26bf48af4
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.3"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -541,6 +541,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.3"
+  google_fonts:
+    dependency: transitive
+    description:
+      name: google_fonts
+      sha256: ba03d03bcaa2f6cb7bd920e3b5027181db75ab524f8891c8bc3aa603885b8055
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.3.3"
   graphs:
     dependency: transitive
     description:
@@ -573,14 +581,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
-  iconly:
-    dependency: transitive
-    description:
-      name: iconly
-      sha256: "22f16dd28984d232891299ead9d9b75ae5a32b4d9cdf63e8e574f1ceb11dcbd9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   implicitly_animated_reorderable_list_2:
     dependency: transitive
     description:
@@ -649,10 +649,10 @@ packages:
     dependency: transitive
     description:
       name: liquid_glass_renderer
-      sha256: "4a4203d720bc565108bd8c0df7d9b4694bfd5d4444654171d36998093e23584c"
+      sha256: "789be157494b38cdef7607bb9b63e7fe3fab76fae16149e52fa313c2d858cb3f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1-dev.10"
+    version: "0.2.0-dev.4"
   logger:
     dependency: transitive
     description:
@@ -689,10 +689,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: e3641ec5d63ebf0d9b41bd43201a66e3fc79a65db5f61fc181f04cd27aab950c
+      sha256: "23f08335362185a5ea2ad3a4e597f1375e78bce8a040df5c600c8d3552ef2394"
       url: "https://pub.dev"
     source: hosted
-    version: "1.16.0"
+    version: "1.17.0"
   mime:
     dependency: transitive
     description:
@@ -709,14 +709,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  nested:
+  motor:
     dependency: transitive
     description:
-      name: nested
-      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      name: motor
+      sha256: cbd49f21b00e568c2b1a55f134ed803614a107782f4fea7769693bca32940c58
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.1.0"
   nm:
     dependency: transitive
     description:
@@ -884,14 +884,6 @@ packages:
       relative: true
     source: path
     version: "1.0.0+1"
-  provider:
-    dependency: transitive
-    description:
-      name: provider
-      sha256: "4e82183fa20e5ca25703ead7e05de9e4cceed1fbd1eadc1ac3cb6f565a09f272"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.5+1"
   pub_semver:
     dependency: transitive
     description:
@@ -1073,6 +1065,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  snackify:
+    dependency: transitive
+    description:
+      name: snackify
+      sha256: "9e6c48a91b2407dfd155bdc9c6a02edcc7ee8d36d79a9477e9338c30f021cb42"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.4"
   source_gen:
     dependency: transitive
     description:
@@ -1371,4 +1371,4 @@ packages:
     version: "3.1.3"
 sdks:
   dart: ">=3.9.0 <4.0.0"
-  flutter: ">=3.32.4"
+  flutter: ">=3.35.0"

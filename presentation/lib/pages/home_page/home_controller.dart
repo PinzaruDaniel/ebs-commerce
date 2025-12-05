@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:common/constants/failure_class.dart';
 import 'package:common/constants/logger.dart';
 import 'package:domain/modules/products/models/index.dart';
+import 'package:domain/modules/products/use_cases/get_products_response_use_case.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/sync_products_use_case.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,7 @@ import '../../view/base_view_model.dart';
 class HomeController extends GetxController {
   final StreamProductsUseCase streamProductsUseCase = GetIt.instance<StreamProductsUseCase>();
   final SyncProductsUseCase syncProductsUseCase = GetIt.instance<SyncProductsUseCase>();
+  final GetProductsResponseUseCase getProductsResponseUseCase = GetIt.instance<GetProductsResponseUseCase>();
   RxList<BaseViewModel> items = RxList<BaseViewModel>([]);
   RxList<ProductViewModel> products = RxList([]);
   RxList<ProductViewModel> newProducts = RxList([]);
@@ -27,7 +29,9 @@ class HomeController extends GetxController {
   StreamSubscription? _streamSubscription;
 
   Future<void> initItems() async {
-    getProducts(loadMore: true);
+    getPageFromCache();
+
+    getProducts();
     items.addAll([
       AdBannerViewModel(),
       HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
@@ -43,12 +47,17 @@ class HomeController extends GetxController {
   }
 
   void getPageFromCache() {
-    if (products.isNotEmpty) {
-      currentPage.value = (products.length / perPage).ceil() + 1;
-    }
+    getProductsResponseUseCase.call(GetProductsResponseParams(currentPage: currentPage.value)).then((response) {
+      if (response != null) {
+        currentPage.value = response.currentPage;
+      } else {
+        currentPage.value = 1;
+        syncProducts();
+      }
+    });
   }
 
-  Future<void> syncProducts({bool refresh = false}) async {
+  Future<void> syncProducts() async {
     consoleLog('products are empty: ${products.isEmpty}');
     if (products.isEmpty) {
       mainAppController.addPendingIds([PendingIds.getProducts]);
@@ -72,7 +81,6 @@ class HomeController extends GetxController {
           await addNewSaleProduct();
         });
     if (loadMore) {
-      getPageFromCache();
       await syncProducts();
       currentPage.value++;
     }

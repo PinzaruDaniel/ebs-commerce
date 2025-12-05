@@ -3,6 +3,7 @@ import 'package:domain/modules/products/use_cases/get_filtered_products_count_us
 import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_orders_use_case.dart';
+import 'package:domain/modules/products/use_cases/get_products_response_use_case.dart';
 import 'package:domain/modules/products/use_cases/set_orders_use_case.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_sale_products_use_case.dart';
@@ -32,9 +33,12 @@ Future<void> init() async {
   );
 
   dataDi.registerLazySingleton<SetOrdersUseCase>(
-      ()=>SetOrdersUseCase(productsRepository: dataDi<ProductsRepository>()),
+    () => SetOrdersUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
   dataDi.registerLazySingleton<GetOrdersUseCase>(
-      ()=>GetOrdersUseCase(productsRepository: dataDi<ProductsRepository>()),
+    () => GetOrdersUseCase(productsRepository: dataDi<ProductsRepository>()),
+  );
+  dataDi.registerLazySingleton<GetProductsResponseUseCase>(
+    () => GetProductsResponseUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
 }
