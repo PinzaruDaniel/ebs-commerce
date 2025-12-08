@@ -28,8 +28,6 @@ class HomeController extends GetxController {
 
   Future<void> initItems() async {
     syncProducts();
-    getPageFromCache();
-
     getProducts();
     items.addAll([
       AdBannerViewModel(),
@@ -78,6 +76,9 @@ class HomeController extends GetxController {
           products.addAll(mappedProducts);
           products.refresh();
           await addNewSaleProduct();
+          if(!internetController.isConnected.value){
+            getPageFromCache();
+          }
         });
 
     consoleLog('products are empty get Products: ${products.isEmpty}');

@@ -16,7 +16,6 @@ class SyncProductsUseCase extends UseCaseNoEither<void, SyncProductsParams> {
     await productsRepository.getProducts(params.page, params.perPage, params.marks).then((either) {
       either.fold(
         (failure) {
-          throw failure;
         },
         (productsApi) async {
           consoleLog('productsAPi.length: ${productsApi.response.length}');
