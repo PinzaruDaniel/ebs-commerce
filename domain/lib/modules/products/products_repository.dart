@@ -32,5 +32,5 @@ abstract class ProductsRepository {
 
   Future<void> setOrderedLocalCache(List<OrderEntity> orders, int idUser);
 
-  Future<ProductResponseEntity?> getProductsResponseFromCache(int currentPage);
+  Future<List<ProductResponseEntity>?> getProductsResponseFromCache(int currentPage);
 }

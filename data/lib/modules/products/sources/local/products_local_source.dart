@@ -24,7 +24,7 @@ abstract class ProductsLocalDataSource {
 
   Stream<List<OrderBox>> getOrders(int idUser);
 
-  Future<ProductResponseBox?> getProductsResponseFromCache({required int currentPage});
+  Future<List<ProductResponseBox>?> getProductsResponseFromCache({required int currentPage});
 }
 
 class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
@@ -134,8 +134,8 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   }
 
   @override
-  Future<ProductResponseBox?> getProductsResponseFromCache({required int currentPage}) async {
-    var response = await productResponseBox.getAsync(currentPage);
+  Future<List<ProductResponseBox>?> getProductsResponseFromCache({required int currentPage}) async {
+    var response = await productResponseBox.getAllAsync();
     return response;
   }
 

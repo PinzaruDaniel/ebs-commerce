@@ -118,8 +118,8 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<ProductResponseEntity?> getProductsResponseFromCache(int currentPage) {
+  Future<List<ProductResponseEntity>?> getProductsResponseFromCache(int currentPage) {
     var productResponse = localDataSource.getProductsResponseFromCache(currentPage: currentPage);
-    return productResponse.then((productBox) => productBox?.toEntity);
+    return productResponse.then((productBox) => productBox?.map((e) => e.toEntity).toList());
   }
 }

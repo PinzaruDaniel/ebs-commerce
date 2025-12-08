@@ -48,7 +48,8 @@ class HomeController extends GetxController {
   void getPageFromCache() {
     getProductsResponseUseCase.call(GetProductsResponseParams(currentPage: currentPage.value)).then((response) {
       if (response != null) {
-        currentPage.value = response.currentPage;
+        currentPage.value = response.last.currentPage;
+        print('current page value getPageFromCache: ${currentPage.value}');
       } else {}
     });
   }
@@ -58,17 +59,13 @@ class HomeController extends GetxController {
       mainAppController.addPendingIds([PendingIds.getProducts]);
     }
 
-    try {
-      await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
-      currentPage.value++;
-    } catch (failure) {
-      consoleLog('Failed to sync products: ${failure.runtimeType}');
-    }
+    await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
     mainAppController.removePendingIds([PendingIds.getProducts]);
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
+      currentPage.value++;
       await syncProducts();
     }
     _streamSubscription?.cancel();
@@ -82,6 +79,8 @@ class HomeController extends GetxController {
           products.refresh();
           await addNewSaleProduct();
         });
+
+    consoleLog('products are empty get Products: ${products.isEmpty}');
   }
 
   Future<void> addNewSaleProduct() async {
