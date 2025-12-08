@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:common/constants/failure_class.dart';
 import 'package:common/constants/logger.dart';
-import 'package:domain/modules/products/models/index.dart';
 import 'package:domain/modules/products/use_cases/get_products_response_use_case.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/sync_products_use_case.dart';
@@ -10,7 +9,6 @@ import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
-import 'package:presentation/util/mapper/product_response_mapper.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../../util/enum/enums.dart';
 import '../../view/base_view_model.dart';
@@ -29,6 +27,7 @@ class HomeController extends GetxController {
   StreamSubscription? _streamSubscription;
 
   Future<void> initItems() async {
+    syncProducts();
     getPageFromCache();
 
     getProducts();
@@ -50,25 +49,28 @@ class HomeController extends GetxController {
     getProductsResponseUseCase.call(GetProductsResponseParams(currentPage: currentPage.value)).then((response) {
       if (response != null) {
         currentPage.value = response.currentPage;
-      } else {
-        currentPage.value = 1;
-        syncProducts();
-      }
+      } else {}
     });
   }
 
   Future<void> syncProducts() async {
-    consoleLog('products are empty: ${products.isEmpty}');
     if (products.isEmpty) {
       mainAppController.addPendingIds([PendingIds.getProducts]);
     }
 
-    await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
+    try {
+      await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
+      currentPage.value++;
+    } catch (failure) {
+      consoleLog('Failed to sync products: ${failure.runtimeType}');
+    }
     mainAppController.removePendingIds([PendingIds.getProducts]);
-    consoleLog('curentPage Value: ${currentPage.value}  \n ${products.length}');
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
+    if (loadMore) {
+      await syncProducts();
+    }
     _streamSubscription?.cancel();
 
     _streamSubscription = streamProductsUseCase
@@ -76,15 +78,10 @@ class HomeController extends GetxController {
         .distinct()
         .listen((list) async {
           final mappedProducts = list.map((e) => e.toModel).toList();
-          products.value = mappedProducts;
+          products.addAll(mappedProducts);
           products.refresh();
           await addNewSaleProduct();
         });
-    if (loadMore) {
-      await syncProducts();
-      currentPage.value++;
-    }
-    consoleLog('products are empty get Products: ${products.isEmpty}');
   }
 
   Future<void> addNewSaleProduct() async {
