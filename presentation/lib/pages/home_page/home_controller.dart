@@ -47,7 +47,6 @@ class HomeController extends GetxController {
     getProductsResponseUseCase.call(GetProductsResponseParams(currentPage: currentPage.value)).then((response) {
       if (response != null) {
         currentPage.value = response.last.currentPage;
-        print('current page value getPageFromCache: ${currentPage.value}');
       } else {}
     });
   }

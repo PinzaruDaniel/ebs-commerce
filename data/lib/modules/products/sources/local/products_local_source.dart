@@ -13,7 +13,6 @@ import '../../../../mapper/specification_mapper.dart';
 import '../../../../objectbox.g.dart';
 import '../../../categories/models/local/category_box.dart';
 import '../../models/local/order_box.dart';
-import 'package:flutter/foundation.dart';
 
 abstract class ProductsLocalDataSource {
   Future<void> setProducts({required ProductResponseEntity products});
@@ -48,20 +47,20 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   Future<void> setProducts({required ProductResponseEntity products}) async {
     var allProductsResponse = await productResponseBox.getAllAsync();
     if (allProductsResponse.any((p) => p.pageId == products.currentPage)) {
-      return ;
+      return;
+    } else {
+      var productsB = products.response.map((e) => e.toBox).toList();
+      await productBox.putManyAsync(productsB);
+      final productResponseBoxMapped = products.toBox;
+      consoleLog('productResponseBox pageId: ${productResponseBoxMapped.pageId}');
+      consoleLog('productsResponseBox id: ${productResponseBoxMapped.idProductResponse} ');
+      productResponseBoxMapped.products.addAll(productsB);
+      await productResponseBox.putAsync(productResponseBoxMapped);
+      var res = await productResponseBox.getAllAsync();
+      consoleLog(
+        'currentPage is first where ${products.currentPage} | ${res.firstWhereOrNull((e) => e.pageId == products.currentPage)?.products.length} ',
+      );
     }
-    else{var productsB = products.response.map((e) => e.toBox).toList();
-    await productBox.putManyAsync(productsB);
-    final productResponseBoxMapped = products.toBox;
-    consoleLog('productResponseBox pageId: ${productResponseBoxMapped.pageId}');
-    consoleLog('productsResponseBox id: ${productResponseBoxMapped.idProductResponse} ');
-    productResponseBoxMapped.products.addAll(productsB);
-    await productResponseBox.putAsync(productResponseBoxMapped);
-    var res = await productResponseBox.getAllAsync();
-    consoleLog(
-      'currentPage is first where ${products.currentPage} | ${res.firstWhereOrNull((e) => e.pageId == products.currentPage)?.products.length} ',
-    );}
-
   }
 
   @override
@@ -118,10 +117,6 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   @override
   Stream<List<ProductBox>> getProducts({required int currentPage}) async* {
     consoleLog('current page in getProducts: $currentPage');
-
-    final productsLength = await productResponseBox.getAllAsync();
-    consoleLog('current nr of products in getProducts: ${productsLength.length}');
-
     final productsFromCache = productResponseBox
         .query(ProductResponseBox_.pageId.equals(currentPage))
         .watch(triggerImmediately: true)
