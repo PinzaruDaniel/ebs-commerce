@@ -23,7 +23,7 @@ abstract class ProductsLocalDataSource {
 
   Stream<List<OrderBox>> getOrders(int idUser);
 
-  Future<List<ProductResponseBox>?> getProductsResponseFromCache({required int currentPage});
+  Future<int?> getProductsResponsePageFromCache({required int currentPage});
 }
 
 class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
@@ -45,22 +45,17 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
 
   @override
   Future<void> setProducts({required ProductResponseEntity products}) async {
-    var allProductsResponse = await productResponseBox.getAllAsync();
-    if (allProductsResponse.any((p) => p.pageId == products.currentPage)) {
-      return;
-    } else {
+
       var productsB = products.response.map((e) => e.toBox).toList();
       await productBox.putManyAsync(productsB);
       final productResponseBoxMapped = products.toBox;
-      consoleLog('productResponseBox pageId: ${productResponseBoxMapped.pageId}');
-      consoleLog('productsResponseBox id: ${productResponseBoxMapped.idProductResponse} ');
       productResponseBoxMapped.products.addAll(productsB);
       await productResponseBox.putAsync(productResponseBoxMapped);
       var res = await productResponseBox.getAllAsync();
       consoleLog(
         'currentPage is first where ${products.currentPage} | ${res.firstWhereOrNull((e) => e.pageId == products.currentPage)?.products.length} ',
       );
-    }
+
   }
 
   @override
@@ -129,9 +124,10 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   }
 
   @override
-  Future<List<ProductResponseBox>?> getProductsResponseFromCache({required int currentPage}) async {
+  Future<int> getProductsResponsePageFromCache({required int currentPage}) async {
     var response = await productResponseBox.getAllAsync();
-    return response;
+    var lastPage=response.last.pageId;
+    return lastPage;
   }
 
   /*  @override

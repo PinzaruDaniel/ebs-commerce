@@ -4,11 +4,15 @@ import 'package:common/constants/logger.dart';
 import 'package:domain/modules/products/use_cases/get_products_response_use_case.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/sync_products_use_case.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
+import 'package:presentation/util/resources/app_texts.dart';
+import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../../util/enum/enums.dart';
 import '../../view/base_view_model.dart';
@@ -23,6 +27,7 @@ class HomeController extends GetxController {
   RxList<ProductViewModel> saleProducts = RxList([]);
   Rxn<Failure> failure = Rxn<Failure>();
   RxInt currentPage = 1.obs;
+  RxInt maxPage = 100.obs;
   int perPage = 20;
   StreamSubscription? _streamSubscription;
 
@@ -46,7 +51,7 @@ class HomeController extends GetxController {
   void getPageFromCache() {
     getProductsResponseUseCase.call(GetProductsResponseParams(currentPage: currentPage.value)).then((response) {
       if (response != null) {
-        currentPage.value = response.last.currentPage;
+        maxPage.value = response;
       } else {}
     });
   }
@@ -62,24 +67,31 @@ class HomeController extends GetxController {
 
   Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
-      currentPage.value++;
+      if (currentPage.value == maxPage.value) {
+        currentPage.value = maxPage.value;
+      } else {
+        currentPage.value++;
+      }
       await syncProducts();
     }
     _streamSubscription?.cancel();
-
-    _streamSubscription = streamProductsUseCase
-        .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
-        .distinct()
-        .listen((list) async {
-          final mappedProducts = list.map((e) => e.toModel).toList();
-          products.addAll(mappedProducts);
-          products.refresh();
-          await addNewSaleProduct();
-          if(!internetController.isConnected.value){
-            getPageFromCache();
-          }
-        });
-
+    if (!(currentPage.value == maxPage.value)) {
+      _streamSubscription = streamProductsUseCase
+          .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
+          .distinct()
+          .listen((list) async {
+            final mappedProducts = list.map((e) => e.toModel).toList();
+            products.addAll(mappedProducts);
+            products.refresh();
+            await addNewSaleProduct();
+            consoleLog('is connected value: ${!internetController.isConnected.value}');
+            if (!internetController.isConnected.value) {
+              getPageFromCache();
+            }
+          });
+    } else {
+      AppPopUp.showFailureSnackBar(fallbackMessage: '');
+    }
     consoleLog('products are empty get Products: ${products.isEmpty}');
   }
 
