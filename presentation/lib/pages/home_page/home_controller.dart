@@ -84,7 +84,7 @@ class HomeController extends GetxController {
             products.addAll(mappedProducts);
             products.refresh();
             await addNewSaleProduct();
-            consoleLog('is connected value: ${!internetController.isConnected.value}');
+            consoleLog('is connected value log: ${!internetController.isConnected.value}');
             if (!internetController.isConnected.value) {
               getPageFromCache();
             }

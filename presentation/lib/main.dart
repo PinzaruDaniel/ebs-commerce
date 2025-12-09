@@ -9,6 +9,7 @@ import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/localization/localization_loader.dart';
 import 'package:presentation/entry_page.dart';
 import 'package:presentation/util/mixins/user_mixins.dart';
+import 'package:presentation/util/widgets/concentric_page_view.dart';
 
 import 'controllers/bindings/root_bindings_controllers.dart';
 
@@ -36,5 +37,6 @@ void main() async {
       assetLoader: LocalizationLoader(),
       child: EntryPage(isSessionExpired: isSessionExpired),
     ),
+
   );
 }

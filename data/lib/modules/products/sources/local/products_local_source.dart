@@ -45,17 +45,36 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
 
   @override
   Future<void> setProducts({required ProductResponseEntity products}) async {
+    var productsB = products.response.map((e) => e.toBox).toList();
+    await productBox.putManyAsync(productsB);
+    final productResponseBoxMapped = products.toBox;
+    productResponseBoxMapped.products.addAll(productsB);
+    await productResponseBox.putAsync(productResponseBoxMapped);
+    var res = await productResponseBox.getAllAsync();
+    consoleLog(
+      'currentPage is first where ${products.currentPage} | ${res.firstWhereOrNull((e) => e.pageId == products.currentPage)?.products.length} ',
+    );
+  }
 
-      var productsB = products.response.map((e) => e.toBox).toList();
-      await productBox.putManyAsync(productsB);
-      final productResponseBoxMapped = products.toBox;
-      productResponseBoxMapped.products.addAll(productsB);
-      await productResponseBox.putAsync(productResponseBoxMapped);
-      var res = await productResponseBox.getAllAsync();
-      consoleLog(
-        'currentPage is first where ${products.currentPage} | ${res.firstWhereOrNull((e) => e.pageId == products.currentPage)?.products.length} ',
-      );
+  @override
+  Stream<List<ProductBox>> getProducts({required int currentPage}) async* {
+    consoleLog('current page in getProducts: $currentPage');
+    final productsFromCache = productResponseBox
+        .query(ProductResponseBox_.pageId.equals(currentPage))
+        .watch(triggerImmediately: true)
+        .map((query) {
+          final responseBoxList = query.find();
+          return responseBoxList.expand((e) => e.products).toList();
+        });
 
+    yield* productsFromCache;
+  }
+
+  @override
+  Future<int> getProductsResponsePageFromCache({required int currentPage}) async {
+    var response = await productResponseBox.getAllAsync();
+    var lastPage = response.last.pageId;
+    return lastPage;
   }
 
   @override
@@ -107,27 +126,6 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
       categoryBox.putManyAsync(product.category?.map((e) => e.toBox).toList() ?? []);
     }
     await productBox.putManyAsync(products.map((e) => e.toBox).toList());
-  }
-
-  @override
-  Stream<List<ProductBox>> getProducts({required int currentPage}) async* {
-    consoleLog('current page in getProducts: $currentPage');
-    final productsFromCache = productResponseBox
-        .query(ProductResponseBox_.pageId.equals(currentPage))
-        .watch(triggerImmediately: true)
-        .map((query) {
-          final responseBoxList = query.find();
-          return responseBoxList.expand((e) => e.products).toList();
-        });
-
-    yield* productsFromCache;
-  }
-
-  @override
-  Future<int> getProductsResponsePageFromCache({required int currentPage}) async {
-    var response = await productResponseBox.getAllAsync();
-    var lastPage=response.last.pageId;
-    return lastPage;
   }
 
   /*  @override

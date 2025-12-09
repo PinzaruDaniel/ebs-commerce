@@ -13,6 +13,7 @@
         "cached_network_image",
         "carousel_slider",
         "common",
+        "concentric_transition",
         "connectivity_plus",
         "cupertino_icons",
         "di",
@@ -68,6 +69,13 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "concentric_transition",
+      "version": "1.0.3",
+      "dependencies": [
+        "flutter"
       ]
     },
     {

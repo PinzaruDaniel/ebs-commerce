@@ -110,6 +110,12 @@
       "languageVersion": "3.8"
     },
     {
+      "name": "concentric_transition",
+      "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/concentric_transition-1.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "connectivity_plus",
       "rootUri": "file:///Users/daniel.pinzaru/.pub-cache/hosted/pub.dev/connectivity_plus-7.0.0",
       "packageUri": "lib/",

@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:concentric_transition/page_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -79,6 +80,16 @@ class AppRouter {
   static void openGreetingPage({bool removeUntil = false, bool withAnimation = true}) {
     _route(page: GreetingPage(), withAnimation: withAnimation, removeUntil: removeUntil);
   }
+  /*static void openGreetingPage({bool removeUntil = false, bool withAnimation = true}) {
+    Navigator.push(
+      Get.context!,
+      ConcentricPageRoute(
+        builder: (ctx) {
+          return const GreetingPage();
+        },
+      ),
+    );
+  }*/
 
   static void openAuthPage() {
     _route(page: AuthentificationPage(), withAnimation: true);
