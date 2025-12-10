@@ -52,6 +52,7 @@ class HomeController extends GetxController {
     getProductsResponseUseCase.call(GetProductsResponseParams(currentPage: currentPage.value)).then((response) {
       if (response != null) {
         maxPage.value = response;
+        maxPage.refresh();
       } else {}
     });
   }
@@ -61,18 +62,28 @@ class HomeController extends GetxController {
       mainAppController.addPendingIds([PendingIds.getProducts]);
     }
 
-    await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage));
+    await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage)); /*.then((either) {
+      either.fold(
+        (failure) {
+          mainAppController.removePendingIds([PendingIds.getProducts]);
+        },
+        (response) {
+          mainAppController.removePendingIds([PendingIds.getProducts]);
+          */ /*if (currentPage.value == maxPage.value) {
+            currentPage.value = maxPage.value;
+          } else {}*/ /*
+          //currentPage.value++;
+        },
+      );
+    });*/
     mainAppController.removePendingIds([PendingIds.getProducts]);
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
-      if (currentPage.value == maxPage.value) {
-        currentPage.value = maxPage.value;
-      } else {
-        currentPage.value++;
-      }
+      currentPage.value++;
       await syncProducts();
+      consoleLog('current page value after sync products: ${currentPage.value}');
     }
     _streamSubscription?.cancel();
     if (!(currentPage.value == maxPage.value)) {
@@ -87,12 +98,16 @@ class HomeController extends GetxController {
             consoleLog('is connected value log: ${!internetController.isConnected.value}');
             if (!internetController.isConnected.value) {
               getPageFromCache();
+              if (currentPage.value == maxPage.value) {
+                currentPage.value = maxPage.value;
+              }
             }
           });
+      consoleLog('products length controller: ${products.length}');
     } else {
       AppPopUp.showFailureSnackBar(fallbackMessage: '');
     }
-    consoleLog('products are empty get Products: ${products.isEmpty}');
+    consoleLog('current page value after sync products the end of getproducts: ${currentPage.value}');
   }
 
   Future<void> addNewSaleProduct() async {

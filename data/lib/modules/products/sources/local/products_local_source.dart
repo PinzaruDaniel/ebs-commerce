@@ -45,15 +45,21 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
 
   @override
   Future<void> setProducts({required ProductResponseEntity products}) async {
-    var productsB = products.response.map((e) => e.toBox).toList();
-    await productBox.putManyAsync(productsB);
-    final productResponseBoxMapped = products.toBox;
-    productResponseBoxMapped.products.addAll(productsB);
-    await productResponseBox.putAsync(productResponseBoxMapped);
-    var res = await productResponseBox.getAllAsync();
-    consoleLog(
-      'currentPage is first where ${products.currentPage} | ${res.firstWhereOrNull((e) => e.pageId == products.currentPage)?.products.length} ',
-    );
+    final allProductsResponse = await productResponseBox.getAllAsync();
+    if (allProductsResponse.any((e) => e.pageId == products.currentPage)) {
+      return;
+    }
+    else {
+      var productsB = products.response.map((e) => e.toBox).toList();
+      await productBox.putManyAsync(productsB);
+      final productResponseBoxMapped = products.toBox;
+      productResponseBoxMapped.products.addAll(productsB);
+      await productResponseBox.putAsync(productResponseBoxMapped);
+      var res = await productResponseBox.getAllAsync();
+      consoleLog(
+        'currentPage is first where ${products.currentPage} | ${res.firstWhereOrNull((e) => e.pageId == products.currentPage)?.products.length} ',
+      );
+    }
   }
 
   @override
@@ -64,7 +70,8 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
         .watch(triggerImmediately: true)
         .map((query) {
           final responseBoxList = query.find();
-          return responseBoxList.expand((e) => e.products).toList();
+          final productsBoxList = responseBoxList.expand((e) => e.products).toList();
+          return productsBoxList;
         });
 
     yield* productsFromCache;

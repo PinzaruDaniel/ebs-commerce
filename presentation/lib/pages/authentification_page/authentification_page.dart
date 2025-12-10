@@ -35,6 +35,12 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
   }
 
   @override
+  void dispose() {
+    Get.delete<AuthentificationController>();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BasePage(
       pendingIds: [PendingIds.logIn],
@@ -108,7 +114,6 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                       await authController.loginUser(
                         onSuccess: () {
                           AppRouter.openHomePage(removeUntil: true);
-                          authController.allItems.clear();
                         },
                         onError: () {
                           AppPopUp.showFailureSnackBar(fallbackMessage: AppTexts.invalidCredentials);

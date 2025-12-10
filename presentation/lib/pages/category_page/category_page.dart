@@ -34,7 +34,7 @@ class _CategoryPageState extends State<CategoryPage> {
     Get.put(CategoryController());
     categoryController.selectedCategoryId = widget.selectedIds.obs;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(categoryController.categories.isEmpty) {
+      if (categoryController.categories.isEmpty) {
         categoryController.getCategories();
       }
     });

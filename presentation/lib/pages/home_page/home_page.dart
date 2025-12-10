@@ -45,6 +45,12 @@ class _HomePageState extends State<HomePage> with LoginFunctions {
     });
   }
 
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
+  }
+
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override

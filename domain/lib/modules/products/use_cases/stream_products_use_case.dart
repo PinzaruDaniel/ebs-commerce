@@ -13,9 +13,7 @@ class StreamProductsUseCase extends UseCaseStream<List<ProductEntity>, StreamPro
     productsRepository.getProductsLocalCache(params.page).distinct().listen((event) {
       streamController.sink.add(event);
     });
-
     yield* streamController.stream;
-
   }
 }
 

@@ -1,5 +1,4 @@
 import 'package:concentric_transition/concentric_transition.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/pages/greeting_page/greeting_page.dart';
 import 'package:presentation/pages/welcome_page/welcome_page.dart';

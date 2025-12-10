@@ -14,15 +14,11 @@ class SyncProductsUseCase extends UseCaseNoEither<void, SyncProductsParams> {
   @override
   Future<void> call(params) async {
     await productsRepository.getProducts(params.page, params.perPage, params.marks).then((either) {
-      either.fold(
-        (failure) {
-        },
-        (productsApi) async {
-          consoleLog('productsAPi.length: ${productsApi.response.length}');
-          consoleLog('productsResponse page: ${productsApi.currentPage}');
-          await productsRepository.setProductsLocalCache(productsApi);
-        },
-      );
+      either.fold((failure) {}, (productsApi) async {
+        consoleLog('productsAPi.length: ${productsApi.response.length}');
+        consoleLog('productsResponse page: ${productsApi.currentPage}');
+        await productsRepository.setProductsLocalCache(productsApi);
+      });
     });
   }
 }
