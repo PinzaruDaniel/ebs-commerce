@@ -11,9 +11,7 @@ class ErrorParser {
         failure.type == 'dio_unknown') {
       return AppTexts.serverError;
     }
-
     final details = failure.details;
-
     return details?['response']['error'];
   }
 }
