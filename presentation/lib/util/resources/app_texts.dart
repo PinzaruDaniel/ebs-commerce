@@ -262,4 +262,6 @@ class AppTexts {
   static String get invalidCredentials => LocaleKeys.invalidCredentials.tr();
 
   static String get goToCart => LocaleKeys.goToCart.tr();
+
+  static String get serverError => LocaleKeys.serverError.tr();
 }

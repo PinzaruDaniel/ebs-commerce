@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> with LoginFunctions {
   void initState() {
     super.initState();
     Get.put(HomeController());
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       homeController.initItems();
       if (widget.isSessionExpired) {
@@ -58,14 +57,22 @@ class _HomePageState extends State<HomePage> with LoginFunctions {
     return BasePage(
       pendingIds: [PendingIds.getProducts],
       extendBody: true,
-      drawer: Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 36), child: UserMenuWidget()),
+      drawer: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 36),
+        child: UserMenuWidget(
+          onAuth: () async {
+            await homeController.clearProducts();
+            Get.delete<HomeController>();
+          },
+        ),
+      ),
       drawerEdgeDragWidth: Get.height * 0.1,
       keyPage: _key,
       appBar: AppBarWidget(
         showBorder: true,
         leading: IconButton(
-          onPressed: ()  {
-             _key.currentState?.openDrawer();
+          onPressed: () {
+            _key.currentState?.openDrawer();
           },
           icon: const Icon(Icons.menu),
         ),

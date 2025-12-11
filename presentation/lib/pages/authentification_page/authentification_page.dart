@@ -16,7 +16,9 @@ import 'package:presentation/util/widgets/text_field_widget.dart';
 import '../home_page/home_page.dart';
 
 class AuthentificationPage extends StatefulWidget {
-  const AuthentificationPage({super.key});
+  final bool goBackToPage;
+
+  const AuthentificationPage({super.key, this.goBackToPage = true});
 
   @override
   State<AuthentificationPage> createState() => _AuthentificationPageState();
@@ -44,7 +46,7 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
   Widget build(BuildContext context) {
     return BasePage(
       pendingIds: [PendingIds.logIn],
-      appBar: AppBarWidget(showBorder: false),
+      appBar: AppBarWidget(showBorder: false, leading: widget.goBackToPage ? null : Container()),
       resizeToAvoidBottomInset: false,
       builder: (context) {
         return Form(
@@ -115,12 +117,8 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                         onSuccess: () {
                           AppRouter.openHomePage(removeUntil: true);
                         },
-                        onError: (bool networkError) {
-                          if (networkError) {
-                            AppPopUp.showFailureSnackBar(fallbackMessage: 'Server problem, come back later');
-                          } else {
-                            AppPopUp.showFailureSnackBar(fallbackMessage: AppTexts.invalidCredentials);
-                          }
+                        onError: (String errorMessage) {
+                          AppPopUp.showFailureSnackBar(fallbackMessage: errorMessage);
                         },
                       );
                     },

@@ -17,7 +17,9 @@ import '../../../../util/routing/app_router.dart';
 import '../../../../util/widgets/base/base_button_widget.dart';
 
 class UserMenuWidget extends StatefulWidget {
-  const UserMenuWidget({super.key});
+  final Function onAuth;
+
+  const UserMenuWidget({super.key, required this.onAuth});
 
   @override
   State<UserMenuWidget> createState() => _UserMenuWidgetState();
@@ -59,7 +61,6 @@ class _UserMenuWidgetState extends State<UserMenuWidget> with LoginFunctions {
                         '${userVm?.name ?? AppTexts.userLabel} ${userVm?.surname ?? ''} ',
                         style: AppTextsStyle.bold(color: Colors.white),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                         child: IntrinsicHeight(
@@ -96,14 +97,13 @@ class _UserMenuWidgetState extends State<UserMenuWidget> with LoginFunctions {
                         title: Text(AppTexts.myOrders, style: AppTextsStyle.bold()),
                         onTap: () => AppRouter.openOrdersPage(),
                       ),
-
                       LanguageDropdown(),
                       if (currentUserController.isUserLogged.value)
                         ListTile(
                           leading: const Icon(Icons.exit_to_app_rounded, color: Colors.black),
                           title: Text(AppTexts.logOut, style: AppTextsStyle.bold()),
                           onTap: () async {
-                            logOut();
+                            logOut(onAuth: widget.onAuth);
                           },
                         ),
                     ],
@@ -126,8 +126,9 @@ class _UserMenuWidgetState extends State<UserMenuWidget> with LoginFunctions {
                   child: BaseButtonWidget(
                     buttonColor: AppColors.primary,
                     textColor: Colors.white,
-                    onTap: () {
-                      AppRouter.openAuthPage();
+                    onTap: () async {
+                      await widget.onAuth.call();
+                      AppRouter.openAuthPage(goBackToPage: false, removeUntil: true);
                     },
                     title: AppTexts.logIn,
                   ),

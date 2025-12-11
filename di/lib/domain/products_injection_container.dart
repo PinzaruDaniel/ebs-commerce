@@ -1,4 +1,5 @@
 import 'package:domain/modules/products/products_repository.dart';
+import 'package:domain/modules/products/use_cases/clear_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_filtered_products_count_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_new_products_use_case.dart';
@@ -40,5 +41,8 @@ Future<void> init() async {
   );
   dataDi.registerLazySingleton<GetProductsResponseUseCase>(
     () => GetProductsResponseUseCase(productsRepository: dataDi<ProductsRepository>()),
+  );
+  dataDi.registerLazySingleton<ClearProductsUseCase>(
+    () => ClearProductsUseCase(productsRepository: dataDi<ProductsRepository>()),
   );
 }

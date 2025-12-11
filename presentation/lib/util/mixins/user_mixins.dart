@@ -20,7 +20,8 @@ mixin LoginFunctions {
         : WelcomePage();
   }
 
-  void logOut({bool isSessionExpired = false}) {
+  void logOut({bool isSessionExpired = false, Function? onAuth}) {
+    //TODO: to localizate translarte.
     isSessionExpired
         ? AppPopUp.showConfirmationDialog(
             barrierDismissible: false,
@@ -45,6 +46,7 @@ mixin LoginFunctions {
               currentUserController.deleteTokens();
               currentUserController.deleteUsers();
               AppRouter.openGreetingPage(removeUntil: true, withAnimation: false);
+              await onAuth?.call();
             },
           );
   }

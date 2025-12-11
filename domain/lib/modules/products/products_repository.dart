@@ -33,4 +33,6 @@ abstract class ProductsRepository {
   Future<void> setOrderedLocalCache(List<OrderEntity> orders, int idUser);
 
   Future<int?> getProductsResponseFromCache(int currentPage);
+
+  Future<void> clearAllProducts();
 }

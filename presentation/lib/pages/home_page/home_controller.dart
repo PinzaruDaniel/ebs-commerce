@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:common/constants/failure_class.dart';
 import 'package:common/constants/logger.dart';
+import 'package:domain/modules/products/use_cases/clear_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_products_response_use_case.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/sync_products_use_case.dart';
@@ -21,6 +22,7 @@ class HomeController extends GetxController {
   final StreamProductsUseCase streamProductsUseCase = GetIt.instance<StreamProductsUseCase>();
   final SyncProductsUseCase syncProductsUseCase = GetIt.instance<SyncProductsUseCase>();
   final GetProductsResponseUseCase getProductsResponseUseCase = GetIt.instance<GetProductsResponseUseCase>();
+  final ClearProductsUseCase clearProductsUseCase = GetIt.instance<ClearProductsUseCase>();
   RxList<BaseViewModel> items = RxList<BaseViewModel>([]);
   RxList<ProductViewModel> products = RxList([]);
   RxList<ProductViewModel> newProducts = RxList([]);
@@ -32,7 +34,7 @@ class HomeController extends GetxController {
   StreamSubscription? _streamSubscription;
 
   Future<void> initItems() async {
-    syncProducts();
+    syncProducts(refresh: true);
     getProducts();
     items.addAll([
       AdBannerViewModel(),
@@ -57,9 +59,17 @@ class HomeController extends GetxController {
     });
   }
 
-  Future<void> syncProducts() async {
+  Future<void> clearProducts() async {
+    await clearProductsUseCase.call();
+  }
+
+  Future<void> syncProducts({bool refresh = false}) async {
     if (products.isEmpty) {
       mainAppController.addPendingIds([PendingIds.getProducts]);
+    }
+    if (refresh) {
+      currentPage.value = 1;
+      currentPage.refresh();
     }
 
     await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage)); /*.then((either) {

@@ -23,6 +23,8 @@ abstract class ProductsLocalDataSource {
   Stream<List<OrderBox>> getOrders(int idUser);
 
   Future<int?> getProductsResponsePageFromCache({required int currentPage});
+
+  Future<void> clearAllProducts();
 }
 
 class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
@@ -47,8 +49,7 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
     final allProductsResponse = await productResponseBox.getAllAsync();
     if (allProductsResponse.any((e) => e.pageId == products.currentPage)) {
       return;
-    }
-    else {
+    } else {
       var productsB = products.response.map((e) => e.toBox).toList();
       await productBox.putManyAsync(productsB);
       final productResponseBoxMapped = products.toBox;
@@ -132,6 +133,19 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
       categoryBox.putManyAsync(product.category?.map((e) => e.toBox).toList() ?? []);
     }
     await productBox.putManyAsync(products.map((e) => e.toBox).toList());
+  }
+
+  @override
+  Future<void> clearAllProducts() async {
+    consoleLog('deleted allItems');
+    await productBox.removeAllAsync();
+    await productResponseBox.removeAllAsync();
+
+    var productResponses = await productResponseBox.getAllAsync();
+    var products = await productBox.getAllAsync();
+    consoleLog(
+      'total number of products response box cached: ${productResponses.length} and products : ${products.length}',
+    );
   }
 
   /*  @override

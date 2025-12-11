@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/controllers/util/error_parser.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/delivery_address_mapper.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
@@ -26,6 +27,7 @@ class AuthentificationController extends GetxController {
   RxList<BaseViewModel> allItems = RxList([]);
   RxBool isPasswordVisible = RxBool(false);
   RxBool isServerProblem = RxBool(false);
+  ErrorParser errorParser = ErrorParser();
 
   Future<void> initAllItems() async {
     allItems.value = [
@@ -63,7 +65,7 @@ class AuthentificationController extends GetxController {
     isPasswordVisible.toggle();
   }
 
-  Future<void> loginUser({required Function onSuccess, required Function(bool networkError) onError}) async {
+  Future<void> loginUser({required Function onSuccess, required Function(String errorMesage) onError}) async {
     mainAppController.addPendingIds([PendingIds.logIn]);
     String? getValueByKeyId(String keyId) {
       final item =
@@ -86,17 +88,11 @@ class AuthentificationController extends GetxController {
     await authLoginUseCase(AuthLoginParams(email: email, password: password)).then((either) {
       either.fold(
         (failure) {
-          if (failure.type == 'dio_connectionError' ||
-              failure.type == 'dio_connectionTimeout' ||
-              failure.type == 'dio_unknown') {
-            isServerProblem.value = true;
-            onError.call(isServerProblem.value);
-          } else {
-            allItems.refresh();
-            mainAppController.removePendingIds([PendingIds.logIn]);
-            consoleLog('User is not logged in, error');
-            onError.call(isServerProblem.value);
-          }
+          var error = errorParser.handleError(failure: failure);
+          onError.call(error);
+          allItems.refresh();
+          mainAppController.removePendingIds([PendingIds.logIn]);
+          consoleLog('User is not logged in, error');
         },
         (response) async {
           await syncUser(onSuccess: onSuccess);

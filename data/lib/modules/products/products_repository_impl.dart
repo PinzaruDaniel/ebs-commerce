@@ -121,4 +121,9 @@ class ProductsRepositoryImpl implements ProductsRepository {
   Future<int?> getProductsResponseFromCache(int currentPage) {
     return localDataSource.getProductsResponsePageFromCache(currentPage: currentPage);
   }
+
+  @override
+  Future<void> clearAllProducts() async {
+    return localDataSource.clearAllProducts();
+  }
 }

@@ -44,20 +44,27 @@ class AppRouter {
     SharedAxisTransitionType transitionType = SharedAxisTransitionType.horizontal,
   }) {
     if (Get.context != null) {
+      if (withAnimation && removeUntil) {
+        Navigator.of(Get.context!, rootNavigator: true).pushAndRemoveUntil(
+          createSharedAxisRoute(page: page, transitionType: transitionType),
+          (Route<dynamic> route) => false,
+        );
+        return;
+      }
       if (removeUntil) {
         Navigator.of(
           Get.context!,
           rootNavigator: true,
         ).pushAndRemoveUntil(CupertinoPageRoute(builder: (_) => page), (Route<dynamic> route) => false);
-      } else if (withAnimation) {
-        Navigator.of(Get.context!).push(createSharedAxisRoute(page: page, transitionType: transitionType)).then((_) {
-          if (onGoBack != null) {
-            onGoBack.call();
-          }
-        });
-      } else {
-        Navigator.push(Get.context!, CupertinoPageRoute(builder: (context) => page));
+        return;
       }
+      if (withAnimation) {
+        Navigator.of(Get.context!).push(createSharedAxisRoute(page: page, transitionType: transitionType)).then((_) {
+          if (onGoBack != null) onGoBack.call();
+        });
+        return;
+      }
+      Navigator.push(Get.context!, CupertinoPageRoute(builder: (_) => page));
     }
   }
 
@@ -80,6 +87,7 @@ class AppRouter {
   static void openGreetingPage({bool removeUntil = false, bool withAnimation = true}) {
     _route(page: GreetingPage(), withAnimation: withAnimation, removeUntil: removeUntil);
   }
+
   /*static void openGreetingPage({bool removeUntil = false, bool withAnimation = true}) {
     Navigator.push(
       Get.context!,
@@ -91,8 +99,12 @@ class AppRouter {
     );
   }*/
 
-  static void openAuthPage() {
-    _route(page: AuthentificationPage(), withAnimation: true);
+  static void openAuthPage({bool goBackToPage = true, bool removeUntil = false}) {
+    _route(
+      page: AuthentificationPage(goBackToPage: goBackToPage),
+      withAnimation: true,
+      removeUntil: removeUntil,
+    );
   }
 
   static void openCategoryPickerPage({required Function onSave, required Set<int> selectedIds}) {

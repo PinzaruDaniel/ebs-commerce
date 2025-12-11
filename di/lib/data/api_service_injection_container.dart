@@ -33,8 +33,8 @@ Future<void> init({required Function() onSessionExpired}) async {
   var tokenOption = BaseOptions(
     baseUrl: ApiConstants.authUrl,
     responseType: ResponseType.json,
-    receiveTimeout: Duration(seconds: 10),
-    connectTimeout: Duration(seconds: 5),
+    receiveTimeout: Duration(seconds: 60),
+    connectTimeout: Duration(seconds: 20),
   );
 
   //MAIN CLIENT//////
