@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:common/constants/failure_class.dart';
-import 'package:common/constants/logger.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 
 class ErrorParser {
