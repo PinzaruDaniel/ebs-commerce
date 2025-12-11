@@ -5,7 +5,6 @@ import 'package:data/modules/products/models/local/product_box.dart';
 import 'package:data/modules/products/models/local/product_response_box.dart';
 import 'package:data/modules/specifications/models/local/specification_box.dart';
 import 'package:domain/modules/products/models/index.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:collection/collection.dart';
 import '../../../../mapper/category_mapper.dart';
 import '../../../../mapper/product_response_mapper.dart';

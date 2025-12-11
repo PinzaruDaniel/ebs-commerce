@@ -115,8 +115,12 @@ class _AuthentificationPageState extends State<AuthentificationPage> {
                         onSuccess: () {
                           AppRouter.openHomePage(removeUntil: true);
                         },
-                        onError: () {
-                          AppPopUp.showFailureSnackBar(fallbackMessage: AppTexts.invalidCredentials);
+                        onError: (bool networkError) {
+                          if (networkError) {
+                            AppPopUp.showFailureSnackBar(fallbackMessage: 'Server problem, come back later');
+                          } else {
+                            AppPopUp.showFailureSnackBar(fallbackMessage: AppTexts.invalidCredentials);
+                          }
                         },
                       );
                     },

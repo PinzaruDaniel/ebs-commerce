@@ -25,6 +25,7 @@ class AuthentificationController extends GetxController {
 
   RxList<BaseViewModel> allItems = RxList([]);
   RxBool isPasswordVisible = RxBool(false);
+  RxBool isServerProblem = RxBool(false);
 
   Future<void> initAllItems() async {
     allItems.value = [
@@ -62,7 +63,7 @@ class AuthentificationController extends GetxController {
     isPasswordVisible.toggle();
   }
 
-  Future<void> loginUser({required Function onSuccess, required Function onError}) async {
+  Future<void> loginUser({required Function onSuccess, required Function(bool networkError) onError}) async {
     mainAppController.addPendingIds([PendingIds.logIn]);
     String? getValueByKeyId(String keyId) {
       final item =
@@ -85,10 +86,17 @@ class AuthentificationController extends GetxController {
     await authLoginUseCase(AuthLoginParams(email: email, password: password)).then((either) {
       either.fold(
         (failure) {
-          allItems.refresh();
-          mainAppController.removePendingIds([PendingIds.logIn]);
-          consoleLog('User is not logged in, error');
-          onError.call();
+          if (failure.type == 'dio_connectionError' ||
+              failure.type == 'dio_connectionTimeout' ||
+              failure.type == 'dio_unknown') {
+            isServerProblem.value = true;
+            onError.call(isServerProblem.value);
+          } else {
+            allItems.refresh();
+            mainAppController.removePendingIds([PendingIds.logIn]);
+            consoleLog('User is not logged in, error');
+            onError.call(isServerProblem.value);
+          }
         },
         (response) async {
           await syncUser(onSuccess: onSuccess);

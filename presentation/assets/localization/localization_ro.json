@@ -126,7 +126,9 @@
   "backOnline": "Ești din nou online!",
   "error": "Eroare",
   "invalidCredentials": "Email sau parola este incorectă",
-  "goToCart": "Mergi la coș"
+  "goToCart": "Mergi la coș",
+  "serverError": "Problemă la server, reveniți mai târziu"
+
 
 
 }
