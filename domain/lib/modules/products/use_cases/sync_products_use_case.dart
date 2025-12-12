@@ -18,8 +18,6 @@ class SyncProductsUseCase extends UseCase<void, SyncProductsParams> {
           return Left(failure);
         },
         (productsApi) async {
-          consoleLog('productsAPi.length: ${productsApi.response.length}');
-          consoleLog('productsResponse page: ${productsApi.currentPage}');
           //await productsRepository.setProductsLocalCache(productsApi);
           return Right(productsRepository.setProductsLocalCache(productsApi));
         },

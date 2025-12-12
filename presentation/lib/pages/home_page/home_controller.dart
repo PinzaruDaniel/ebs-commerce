@@ -83,7 +83,6 @@ class HomeController extends GetxController {
           if (currentPage.value == maxPage.value) {
             currentPage.value = maxPage.value;
           } else {}
-          //currentPage.value++;
         },
       );
     });
@@ -94,7 +93,6 @@ class HomeController extends GetxController {
     if (loadMore) {
       currentPage.value++;
       await syncProducts();
-      consoleLog('current page value after sync products: ${currentPage.value}');
     }
     _streamSubscription?.cancel();
     if (!(currentPage.value == maxPage.value)) {
@@ -106,7 +104,6 @@ class HomeController extends GetxController {
             products.addAll(mappedProducts);
             products.refresh();
             await addNewSaleProduct();
-            consoleLog('is connected value log: ${!internetController.isConnected.value}');
             if (!internetController.isConnected.value) {
               getPageFromCache();
               if (currentPage.value == maxPage.value) {

@@ -86,7 +86,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
             _refreshController.loadComplete();
           },
           child: SingleChildScrollView(
-            child: ProductsListDisplayWidget(title: widget.title, products: productsDisplayController.products),
+            child: ProductsListDisplayWidget(title: widget.title, products: productsDisplayController.products, showHeaderTitle: false,),
           ),
         );
       },

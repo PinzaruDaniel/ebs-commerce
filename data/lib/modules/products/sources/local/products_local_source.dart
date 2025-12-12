@@ -1,11 +1,9 @@
-import 'package:common/constants/logger.dart';
 import 'package:data/mapper/product_mapper.dart';
 import 'package:data/modules/products/models/local/ordered_product_box.dart';
 import 'package:data/modules/products/models/local/product_box.dart';
 import 'package:data/modules/products/models/local/product_response_box.dart';
 import 'package:data/modules/specifications/models/local/specification_box.dart';
 import 'package:domain/modules/products/models/index.dart';
-import 'package:collection/collection.dart';
 import '../../../../mapper/category_mapper.dart';
 import '../../../../mapper/product_response_mapper.dart';
 import '../../../../mapper/specification_mapper.dart';
@@ -55,16 +53,11 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
       final productResponseBoxMapped = products.toBox;
       productResponseBoxMapped.products.addAll(productsB);
       await productResponseBox.putAsync(productResponseBoxMapped);
-      var res = await productResponseBox.getAllAsync();
-      consoleLog(
-        'currentPage is first where ${products.currentPage} | ${res.firstWhereOrNull((e) => e.pageId == products.currentPage)?.products.length} ',
-      );
     }
   }
 
   @override
   Stream<List<ProductBox>> getProducts({required int currentPage}) async* {
-    consoleLog('current page in getProducts: $currentPage');
     final productsFromCache = productResponseBox
         .query(ProductResponseBox_.pageId.equals(currentPage))
         .watch(triggerImmediately: true)
@@ -137,15 +130,8 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
 
   @override
   Future<void> clearAllProducts() async {
-    consoleLog('deleted allItems');
     await productBox.removeAllAsync();
     await productResponseBox.removeAllAsync();
-
-    var productResponses = await productResponseBox.getAllAsync();
-    var products = await productBox.getAllAsync();
-    consoleLog(
-      'total number of products response box cached: ${productResponses.length} and products : ${products.length}',
-    );
   }
 
   /*  @override
