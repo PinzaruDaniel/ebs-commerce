@@ -86,12 +86,12 @@ class HomeController extends GetxController {
         },
       );
     });
-    mainAppController.removePendingIds([PendingIds.getProducts]);
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
     if (loadMore) {
       currentPage.value++;
+
       await syncProducts();
     }
     _streamSubscription?.cancel();
