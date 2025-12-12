@@ -1,3 +1,4 @@
+import 'package:common/constants/logger.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/add_to_cart_controller.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_back_icon_glass_widget.dart';
@@ -24,7 +25,7 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  ScrollController get scrollController => ScrollController();
+  late final ScrollController scrollController;
   bool isCollapsed = false;
 
   AddToCartController get addCartController => Get.find();
@@ -34,6 +35,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   void initState() {
     super.initState();
+    scrollController=ScrollController();
     Get.put(AddToCartController());
     _initData();
   }
@@ -43,21 +45,25 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     isItemInCart = mainAppController.isItemInCart(addCartController.cartItem.value!);
     scrollController.addListener(_scrollListener);
     itemIndex = mainAppController.cartItems.indexWhere((element) => element.id == widget.item!.id);
-    setState(() {});
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 
   void _scrollListener() {
     final collapsed = scrollController.hasClients && scrollController.offset > 200;
     if (collapsed != isCollapsed) {
-      setState(() => isCollapsed = collapsed);
+      setState(() {
+        isCollapsed = collapsed;
+      });
     }
   }
 
   @override
   void dispose() {
-    super.dispose();
     scrollController.removeListener(_scrollListener);
     scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -72,16 +78,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             expandedHeight: 300,
             collapsedHeight: 60,
             pinned: true,
-            centerTitle: false,
+            centerTitle: true,
             title: AnimatedOpacity(
               curve: Curves.easeIn,
               opacity: isCollapsed ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 500),
-              child: isCollapsed ? ProductDetailCollapsedAppBarWidget(item: widget.item!) : const SizedBox.shrink(),
+              child: isCollapsed
+                  ? ProductDetailCollapsedAppBarWidget(item: widget.item!)
+                  : SizedBox.shrink(),
             ),
-            backgroundColor: isCollapsed ? Colors.white : Colors.transparent,
-            surfaceTintColor: Colors.white,
 
+            backgroundColor: isCollapsed ? Colors.white : Colors.white,
+            surfaceTintColor: Colors.white,
             leading: ProductDetailBackIconGlassWidget(),
             actions: [AppBarIconShoppingCartWidget(showLiquid: true)],
             flexibleSpace: FlexibleSpaceBar(background: ProductDetailExpandedAppBar(item: widget.item!)),

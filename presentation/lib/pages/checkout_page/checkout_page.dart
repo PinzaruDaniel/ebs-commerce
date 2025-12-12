@@ -80,7 +80,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           AppRouter.openContactInformationPage(
                             userViewModel: currentUserController.userVM.value,
                             onSave: (UserViewModel? userVM) {
-                              consoleLog('User image: ${userVM?.imageUrl}');
                               checkoutController.updateCheckoutInfoItem(
                                 keyId: CheckoutWidgetsType.userContactInfo,
                                 titleKey: '${userVM?.name} ${userVM?.surname}',

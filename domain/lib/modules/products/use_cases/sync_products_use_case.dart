@@ -18,7 +18,6 @@ class SyncProductsUseCase extends UseCase<void, SyncProductsParams> {
           return Left(failure);
         },
         (productsApi) async {
-          //await productsRepository.setProductsLocalCache(productsApi);
           return Right(productsRepository.setProductsLocalCache(productsApi));
         },
       );

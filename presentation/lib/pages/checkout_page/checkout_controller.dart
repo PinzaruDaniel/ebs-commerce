@@ -89,11 +89,6 @@ class CheckoutController extends GetxController {
       );
       selectedPaymentMethod.value = cachedPaymentMethod?.toModel;
     }
-    consoleLog('cachedUser ${currentUserController.userVM.value?.name ?? 'null'}  ${currentUserController.userVM.value?.idUser??'no id'}');
-    consoleLog(
-      'cachedDeliveryAddress ${deliveryModel.value?.deliveryType ?? 'null'} ${deliveryModel.value?.country ?? 'null'}',
-    );
-    consoleLog('cachedPaymentMethod ${selectedPaymentMethod.value?.titleKey ?? 'null'}');
   }
 
   Future<void> initAllItems() async {

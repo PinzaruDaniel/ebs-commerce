@@ -33,7 +33,6 @@ class OrdersController extends GetxController {
           .listen(
             (list) {
               orders.value = list.map((e) {
-                consoleLog('got newOrder: ${e.dateTime} ${e.products.length}');
                 return e.toModel;
               }).toList();
 

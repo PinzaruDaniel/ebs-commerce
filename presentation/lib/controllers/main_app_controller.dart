@@ -33,7 +33,6 @@ class MainAppController extends GetxController {
     if (index != -1) {
       return;
     } else {
-      consoleLog('item id: ${item.id}  quantity: ${item.quantity}');
       cartItems.add(item);
     }
   }
@@ -81,7 +80,6 @@ class MainAppController extends GetxController {
     );
 
     orders.add(newOrder);
-    consoleLog('added newOrder: ${newOrder.dateTime}  ${newOrder.products.length}  ');
     setOrdersUseCase.call(SetOrdersParams(idUser: idUser, orders: orders.value.map((e) => e.toEntity).toList()));
   }
 
@@ -95,14 +93,12 @@ class MainAppController extends GetxController {
   void addPendingIds(List<String> pendingIds) {
     this.pendingIds.value.addAll(pendingIds);
     this.pendingIds.refresh();
-    consoleLog('pendingIds ${this.pendingIds.value[0]}');
   }
 
   void removePendingIds(List<String> pendingIds) {
     this.pendingIds.value.removeWhere((item) => pendingIds.contains(item));
     this.pendingIds.refresh();
   }
-
 
 
   ///////////PENDING FUNCTIONS////////////
