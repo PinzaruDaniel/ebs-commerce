@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:common/constants/logger.dart';
-import 'package:domain/modules/delivery_address/models/index.dart';
 import 'package:domain/modules/delivery_address/use_cases/cities/get_cities_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/countries/get_countries_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/states/get_states_use_case.dart';
@@ -26,7 +25,6 @@ import 'package:presentation/view/city_view_model.dart';
 import 'package:presentation/view/country_view_model.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 import 'package:presentation/view/state_view_model.dart';
-import 'package:snackify/enums/snack_enums.dart';
 
 import '../../util/enum/enums.dart';
 import '../../util/routing/app_pop_up.dart';

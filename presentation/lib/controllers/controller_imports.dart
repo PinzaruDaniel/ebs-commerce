@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:presentation/controllers/current_user_controller.dart';
 import 'package:presentation/controllers/internet_controller.dart';
 import 'package:presentation/controllers/nomenclature_controller.dart';
-import 'package:presentation/pages/products_display_page/products_display_controller.dart';
 
 import 'main_app_controller.dart';
 final CurrentUserController currentUserController=Get.find();

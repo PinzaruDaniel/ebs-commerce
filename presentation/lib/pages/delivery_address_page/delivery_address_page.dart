@@ -11,7 +11,6 @@ import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/base/base_page.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
-import 'package:presentation/util/widgets/loading_overlay_widget.dart';
 import 'package:presentation/util/widgets/selection_widget.dart';
 import 'package:presentation/view/delivery_address_view_model.dart';
 
@@ -41,7 +40,6 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
       deliveryAddressController.initItems(widget.deliveryAddressVM);
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return BasePage(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/pages/greeting_page/greeting_page.dart';
 import 'package:presentation/pages/home_page/widgets/user_menu/widgets/delivery_address_widget.dart';
 import 'package:presentation/pages/home_page/widgets/user_menu/widgets/user_info_widget.dart';
 import 'package:presentation/util/mixins/user_mixins.dart';
@@ -12,7 +11,6 @@ import '../../../../controllers/controller_imports.dart';
 import '../../../../util/resources/app_colors.dart';
 import '../../../../util/resources/app_text_styles.dart';
 import '../../../../util/resources/app_texts.dart';
-import '../../../../util/routing/app_pop_up.dart';
 import '../../../../util/routing/app_router.dart';
 import '../../../../util/widgets/base/base_button_widget.dart';
 

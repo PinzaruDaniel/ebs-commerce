@@ -13,7 +13,6 @@ import '../../util/resources/app_texts.dart';
 import '../../util/routing/app_pop_up.dart';
 import '../../util/widgets/bottom_navigation_bar_widget.dart';
 import '../../util/widgets/product_input_quantity_widget.dart';
-import 'cart_controller.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   const ShoppingCartPage({super.key});

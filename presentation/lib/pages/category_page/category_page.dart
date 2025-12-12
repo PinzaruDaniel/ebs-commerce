@@ -8,7 +8,6 @@ import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/base/base_page.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
-import 'package:presentation/util/widgets/circular_progress_indicator_widget.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import '../../util/resources/app_colors.dart';
 import '../../util/resources/app_text_styles.dart';
@@ -39,7 +38,11 @@ class _CategoryPageState extends State<CategoryPage> {
       }
     });
   }
-
+  @override
+  void dispose() {
+    Get.delete<CategoryController>();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return BasePage(

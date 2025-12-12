@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/authentification_page/authentification_controller.dart';
@@ -13,7 +12,6 @@ import 'package:presentation/util/widgets/base/base_button_widget.dart';
 import 'package:presentation/util/widgets/base/base_page.dart';
 import 'package:presentation/util/widgets/text_field_widget.dart';
 
-import '../home_page/home_page.dart';
 
 class AuthentificationPage extends StatefulWidget {
   final bool goBackToPage;

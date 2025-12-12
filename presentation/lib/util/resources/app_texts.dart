@@ -264,4 +264,8 @@ class AppTexts {
   static String get goToCart => LocaleKeys.goToCart.tr();
 
   static String get serverError => LocaleKeys.serverError.tr();
+
+  static String get sessionExpired=>LocaleKeys.sessionExpired.tr();
+
+  static String get pleaseLoginAgain=>LocaleKeys.pleaseLoginAgain.tr();
 }

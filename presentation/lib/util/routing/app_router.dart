@@ -1,5 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:concentric_transition/page_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,7 +68,7 @@ class AppRouter {
   }
 
   static void openHomePage({bool removeUntil = false}) {
-    _route(page: HomePage(), removeUntil: removeUntil);
+    _route(page: HomePage(), removeUntil: removeUntil, withAnimation: true);
   }
 
   static void openProductsDetailPage(ProductViewModel item) {

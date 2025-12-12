@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
-import 'package:presentation/pages/shopping_cart_page/shopping_cart_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
 import '../resources/app_icons.dart';
 import '../routing/app_router.dart';
-import 'open_container_animation_widget.dart';
 
 class AppBarIconShoppingCartWidget extends StatelessWidget {
   final bool showLiquid;

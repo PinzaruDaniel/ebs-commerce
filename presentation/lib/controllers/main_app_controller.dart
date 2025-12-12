@@ -9,7 +9,6 @@ import 'package:get_it/get_it.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
 import '../view/cart_products_view_model.dart';
 import '../view/order_view_model.dart';
-import '../view/product_view_model.dart';
 
 class MainAppController extends GetxController {
   SetOrdersUseCase setOrdersUseCase = GetIt.instance<SetOrdersUseCase>();

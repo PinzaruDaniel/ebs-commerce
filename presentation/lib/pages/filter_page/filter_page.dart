@@ -1,4 +1,3 @@
-import 'package:common/constants/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/pages/filter_page/widgets/add_to_category_button_widget.dart';
 import 'package:presentation/pages/filter_page/widgets/price_slider_widget.dart';
@@ -6,7 +5,6 @@ import 'package:presentation/pages/filter_page/widgets/selected_category_button_
 import 'package:presentation/pages/products_display_page/products_display_page.dart';
 import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/resources/app_texts.dart';
-import 'package:presentation/util/routing/app_router.dart';
 import 'package:presentation/util/widgets/app_bar_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
 import 'package:presentation/util/widgets/header_title_widget.dart';
@@ -33,6 +31,7 @@ class _FilterPageState extends State<FilterPage> {
   void dispose() {
     filterController.everWorkers.dispose();
     filterController.resetFilters();
+    Get.delete<FilterController>();
     super.dispose();
   }
   @override

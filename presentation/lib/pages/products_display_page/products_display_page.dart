@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/products_display_page/products_display_controller.dart';
-import 'package:presentation/pages/products_display_page/widgets/products_list_container.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/resources/app_colors.dart';
@@ -14,7 +12,6 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../util/enum/enums.dart';
-import '../../util/widgets/loading_overlay_widget.dart';
 
 class ProductsDisplayPage extends StatefulWidget {
   final String title;

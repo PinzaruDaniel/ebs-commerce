@@ -127,6 +127,8 @@
   "error": "Error",
   "invalidCredentials": "Email or password is incorrect",
   "goToCart": "Go to cart",
-  "serverError": "Server problem, come back later"
+  "serverError": "Server problem, come back later",
+  "sessionExpired": "Session expired",
+  "pleaseLoginAgain": "Please, login again"
 
 }

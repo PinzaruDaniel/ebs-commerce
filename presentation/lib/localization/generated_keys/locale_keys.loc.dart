@@ -132,5 +132,7 @@ abstract class  LocaleKeys {
   static const invalidCredentials = 'invalidCredentials';
   static const goToCart = 'goToCart';
   static const serverError = 'serverError';
+  static const sessionExpired = 'sessionExpired';
+  static const pleaseLoginAgain = 'pleaseLoginAgain';
 
 }

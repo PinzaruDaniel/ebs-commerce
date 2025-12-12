@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/base_view_model.dart';
-import 'package:snackify/enums/snack_enums.dart';
 
 import '../resources/app_icons.dart';
 import '../routing/app_pop_up.dart';

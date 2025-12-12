@@ -1,11 +1,9 @@
-import 'package:common/constants/logger.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/add_to_cart_controller.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_back_icon_glass_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_collapsed_app_bar_widget.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_expanded_app_bar.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_page_body_widget.dart';
-import 'package:presentation/pages/shopping_cart_page/shopping_cart_page.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/util/widgets/app_bar_icon_shopping_cart_widget.dart';
 import 'package:presentation/util/widgets/bottom_navigation_bar_widget.dart';
