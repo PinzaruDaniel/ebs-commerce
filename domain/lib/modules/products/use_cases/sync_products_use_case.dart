@@ -6,19 +6,25 @@ import 'package:domain/core/usecase.dart';
 import 'package:domain/modules/products/models/index.dart';
 import 'package:domain/modules/products/products_repository.dart';
 
-class SyncProductsUseCase extends UseCaseNoEither<void, SyncProductsParams> {
+class SyncProductsUseCase extends UseCase<void, SyncProductsParams> {
   final ProductsRepository productsRepository;
 
   SyncProductsUseCase({required this.productsRepository});
 
   @override
-  Future<void> call(params) async {
-    await productsRepository.getProducts(params.page, params.perPage, params.marks).then((either) {
-      either.fold((failure) {}, (productsApi) async {
-        consoleLog('productsAPi.length: ${productsApi.response.length}');
-        consoleLog('productsResponse page: ${productsApi.currentPage}');
-        await productsRepository.setProductsLocalCache(productsApi);
-      });
+  Future<Either<Failure, void>> call(params) async {
+    return await productsRepository.getProducts(params.page, params.perPage, params.marks).then((either) {
+      return either.fold(
+        (failure) {
+          return Left(failure);
+        },
+        (productsApi) async {
+          consoleLog('productsAPi.length: ${productsApi.response.length}');
+          consoleLog('productsResponse page: ${productsApi.currentPage}');
+          //await productsRepository.setProductsLocalCache(productsApi);
+          return Right(productsRepository.setProductsLocalCache(productsApi));
+        },
+      );
     });
   }
 }

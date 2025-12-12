@@ -5,14 +5,12 @@ import 'package:domain/modules/products/use_cases/clear_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_products_response_use_case.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/sync_products_use_case.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/controllers/util/error_parser.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/mapper/product_mapper.dart';
-import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../../util/enum/enums.dart';
@@ -27,6 +25,7 @@ class HomeController extends GetxController {
   RxList<ProductViewModel> products = RxList([]);
   RxList<ProductViewModel> newProducts = RxList([]);
   RxList<ProductViewModel> saleProducts = RxList([]);
+  ErrorParser errorParser = ErrorParser();
   Rxn<Failure> failure = Rxn<Failure>();
   RxInt currentPage = 1.obs;
   RxInt maxPage = 100.obs;
@@ -72,20 +71,22 @@ class HomeController extends GetxController {
       currentPage.refresh();
     }
 
-    await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage)); /*.then((either) {
+    await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
       either.fold(
         (failure) {
+          var errorMessage = errorParser.handleError(failure: failure);
+          AppPopUp.showFailureSnackBar(fallbackMessage: errorMessage);
           mainAppController.removePendingIds([PendingIds.getProducts]);
         },
         (response) {
           mainAppController.removePendingIds([PendingIds.getProducts]);
-          */ /*if (currentPage.value == maxPage.value) {
+          if (currentPage.value == maxPage.value) {
             currentPage.value = maxPage.value;
-          } else {}*/ /*
+          } else {}
           //currentPage.value++;
         },
       );
-    });*/
+    });
     mainAppController.removePendingIds([PendingIds.getProducts]);
   }
 
@@ -113,11 +114,9 @@ class HomeController extends GetxController {
               }
             }
           });
-      consoleLog('products length controller: ${products.length}');
     } else {
       AppPopUp.showFailureSnackBar(fallbackMessage: '');
     }
-    consoleLog('current page value after sync products the end of getproducts: ${currentPage.value}');
   }
 
   Future<void> addNewSaleProduct() async {

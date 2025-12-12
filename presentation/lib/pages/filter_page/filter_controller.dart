@@ -6,9 +6,11 @@ import 'package:domain/modules/products/use_cases/get_filtered_products_count_us
 import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:presentation/controllers/util/error_parser.dart';
 import 'package:presentation/view/product_view_model.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
+import '../../util/routing/app_pop_up.dart';
 import '../../view/category_view_model.dart';
 
 class FilterController extends GetxController {
@@ -16,7 +18,7 @@ class FilterController extends GetxController {
       GetIt.instance<GetFilteredProductsCountUseCase>();
   final RxSet<int> selectedCategoryId = <int>{}.obs;
   final RxList<CategoryViewModel> categories = RxList([]);
-
+  ErrorParser errorParser = ErrorParser();
   final RxList<ProductViewModel> filteredProducts = RxList([]);
   RxBool isLoading = true.obs;
   final RxDouble minPrice = 1.0.obs;
@@ -33,7 +35,7 @@ class FilterController extends GetxController {
         getFilteredProductsCount(page: 1);
       });
     });
-      getFilteredProductsCount(page: 1);
+    getFilteredProductsCount(page: 1);
   }
 
   void setCategoryData({required Set<int> selectedIds, required List<CategoryViewModel> allCategories}) {
@@ -72,6 +74,9 @@ class FilterController extends GetxController {
 
     result.fold(
       (failure) {
+        var errorMessage = errorParser.handleError(failure: failure);
+        AppPopUp.showFailureSnackBar(fallbackMessage: errorMessage);
+
         filteredCount.value = 0;
         isLoading.value = false;
         isLoading.refresh();

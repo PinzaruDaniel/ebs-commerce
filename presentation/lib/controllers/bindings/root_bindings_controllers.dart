@@ -4,7 +4,7 @@ import 'package:presentation/controllers/internet_controller.dart';
 import 'package:presentation/controllers/nomenclature_controller.dart';
 
 import '../main_app_controller.dart';
-import '../products_display_controller.dart';
+import '../../pages/products_display_page/products_display_controller.dart';
 
 class RootBinding extends Bindings {
   @override
@@ -13,6 +13,5 @@ class RootBinding extends Bindings {
     await Get.putAsync<CurrentUserController>(() async => CurrentUserController(), permanent: true);
     await Get.putAsync<InternetController>(() async => InternetController(), permanent: true);
     await Get.putAsync<NomenclatureController>(() async => NomenclatureController(), permanent: true);
-    await Get.putAsync<ProductsDisplayController>(() async => ProductsDisplayController(), permanent: true);
   }
 }

@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/controllers/util/error_parser.dart';
 import 'package:presentation/pages/delivery_address_page/widgets/delivery_type_widget.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/enum/map_enums.dart';
@@ -47,6 +48,7 @@ class DeliveryAddressController extends GetxController {
   Rxn<String> address = Rxn<String>();
   Rxn<String> comments = Rxn<String>();
   Rxn<PickupLocationViewModel> pickupLocation = Rxn<PickupLocationViewModel>();
+  ErrorParser errorParser = ErrorParser();
 
   Rx<DeliveryTypeViewModel> deliveryTypeVM = (DeliveryTypeViewModel(
     options: DeliveryType.values
@@ -123,7 +125,8 @@ class DeliveryAddressController extends GetxController {
     result.fold(
       (failure) {
         mainAppController.removePendingIds([PendingIds.getCountries]);
-        AppPopUp.showFailureSnackBar(failure: failure);
+        var errorMessage = errorParser.handleError(failure: failure);
+        AppPopUp.showFailureSnackBar(fallbackMessage: errorMessage);
       },
       (list) {
         countries.value = list.map((c) => c.toViewModel).toList();
@@ -151,7 +154,8 @@ class DeliveryAddressController extends GetxController {
 
     result.fold(
       (failure) {
-        AppPopUp.showFailureSnackBar(failure: failure);
+        var errorMessage = errorParser.handleError(failure: failure);
+        AppPopUp.showFailureSnackBar(fallbackMessage: errorMessage);
       },
       (list) {
         states.value = list.map((e) => e.toViewModel).toList();
@@ -170,7 +174,8 @@ class DeliveryAddressController extends GetxController {
 
     result.fold(
       (failure) {
-        AppPopUp.showFailureSnackBar(failure: failure);
+        var errorMessage = errorParser.handleError(failure: failure);
+        AppPopUp.showFailureSnackBar(fallbackMessage: errorMessage);
       },
       (entity) {
         cities.value = entity.map((e) => e.toModel).toList();

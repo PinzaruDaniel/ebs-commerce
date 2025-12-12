@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/controllers/controller_imports.dart';
-import 'package:presentation/controllers/products_display_controller.dart';
+import 'package:presentation/pages/products_display_page/products_display_controller.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_container.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
@@ -35,6 +35,8 @@ class ProductsDisplayPage extends StatefulWidget {
 }
 
 class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
+  ProductsDisplayController get productsDisplayController => Get.find();
+
   @override
   void initState() {
     super.initState();
@@ -49,7 +51,12 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
   }
 
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
-
+@override
+  void dispose() {
+    _refreshController.dispose();
+    Get.delete<ProductsDisplayController>();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return BasePage(
@@ -82,7 +89,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
             _refreshController.loadComplete();
           },
           child: SingleChildScrollView(
-            child: ProductsListContainer(title: widget.title, context: context, productType: widget.type),
+            child: ProductsListDisplayWidget(title: widget.title, products: productsDisplayController.products),
           ),
         );
       },

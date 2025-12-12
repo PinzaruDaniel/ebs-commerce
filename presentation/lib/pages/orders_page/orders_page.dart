@@ -24,6 +24,11 @@ class _OrdersPageState extends State<OrdersPage> {
     Get.put(OrdersController());
     ordersController.initController();
   }
+  @override
+  void dispose() {
+    Get.delete<OrdersController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

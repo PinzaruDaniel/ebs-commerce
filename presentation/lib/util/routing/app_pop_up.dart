@@ -175,17 +175,16 @@ class AppPopUp {
   }
 
   static void showFailureSnackBar({
-    Failure? failure,
     String? fallbackMessage,
     String? title,
     bool isError = true,
     SnackPosition? snackPosition,
   }) {
-    final message = failure?.message ?? fallbackMessage;
+    fallbackMessage;
     if (Get.context != null) {
       Get.snackbar(
         title ?? AppTexts.error,
-        message!,
+        fallbackMessage??'',
         backgroundColor: isError ? AppColors.red : AppColors.primary,
         colorText: Colors.white,
         snackPosition: snackPosition ?? SnackPosition.BOTTOM,

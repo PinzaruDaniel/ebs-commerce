@@ -24,7 +24,7 @@ class ProductsListContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<ProductViewModel> products = [];
-    products = productsDisplayController.products;
+    //products = productsDisplayController.products;
     /*if (productType case ProductListType.newProducts) {
       products = productsDisplayController.products;
     } else if (productType case ProductListType.saleProducts) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presentation/controllers/products_display_controller.dart';
+import 'package:presentation/pages/products_display_page/products_display_controller.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../../../util/widgets/header_title_widget.dart';
 import '../../home_page/widgets/home_products_item_widget.dart';
