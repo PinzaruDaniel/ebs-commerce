@@ -46,6 +46,11 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   @override
   Future<void> setProducts({required ProductResponseEntity products}) async {
     final allProductsResponse = await productResponseBox.getAllAsync();
+    consoleLog('currentPage from products= ${products.currentPage}');
+
+    for (var p in allProductsResponse) {
+      consoleLog('the id in allProductsResponse: ${p.pageId}');
+    }
     if (allProductsResponse.any((e) => e.pageId == products.currentPage)) {
       return;
     } else {
@@ -59,17 +64,13 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
 
   @override
   Stream<List<ProductBox>> getProducts({required int currentPage}) {
-    consoleLog('currentPage value in getProductsLocalSource: $currentPage');
-    final productsFromCache = productResponseBox
-        .query(ProductResponseBox_.pageId.equals(currentPage))
-        .watch(triggerImmediately: true)
-        .map((query) {
-          final responseBoxList = query.find();
-          final productsBoxList = responseBoxList.expand((e) => e.products).toList();
-          return productsBoxList;
-        });
-    return productsFromCache;
-    //yield* productsFromCache;
+    return productResponseBox.query(ProductResponseBox_.pageId.equals(currentPage)).watch(triggerImmediately: true).map(
+      (query) {
+        final responses = query.find();
+
+        return responses.expand((r) => r.products).toList();
+      },
+    );
   }
 
   @override

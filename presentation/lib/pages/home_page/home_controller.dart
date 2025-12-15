@@ -33,7 +33,7 @@ class HomeController extends GetxController {
   StreamSubscription? _streamSubscription;
 
   Future<void> initItems() async {
-    getProducts(loadMore: true, refresh: true);
+    getProducts(loadMore: true);
     items.addAll([
       AdBannerViewModel(),
       HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
@@ -48,12 +48,9 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  void getPageFromCache() {
-    getProductsResponseUseCase.call(GetProductsResponseParams(currentPage: currentPage.value)).then((response) {
-      if (response != null) {
-        maxPage.value = response;
-        maxPage.refresh();
-      } else {}
+  Future<void> getPageFromCache() async {
+    await getProductsResponseUseCase.call(GetProductsResponseParams(currentPage: currentPage.value)).then((response) {
+      maxPage.value = response ?? 1;
     });
   }
 
@@ -61,30 +58,39 @@ class HomeController extends GetxController {
     await clearProductsUseCase.call();
   }
 
-  Future<void> syncProducts({bool refresh = false}) async {
+  Future<void> refreshProducts() async {
+    currentPage.value = 1;
+    products.clear();
+    products.refresh();
+    await getProducts(loadMore: true);
+  }
+
+  Future<void> syncProducts() async {
     if (products.isEmpty) {
       mainAppController.addPendingIds([PendingIds.getProducts]);
     }
-    if (refresh) {
-      currentPage.value = 1;
-      currentPage.refresh();
-    }
-    consoleLog('current page before use case: ${currentPage.value}');
     await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
       either.fold(
-        (failure) {
+        (failure) async {
           var errorMessage = errorParser.handleError(failure: failure);
           AppPopUp.showFailureSnackBar(fallbackMessage: errorMessage);
           mainAppController.removePendingIds([PendingIds.getProducts]);
+          consoleLog('isConnectedValue= ${(!internetController.isConnected.value)}');
+          if (!internetController.isConnected.value) {
+            await getPageFromCache();
+            consoleLog('maxPageValue= ${maxPage.value}');
+            if (currentPage.value == maxPage.value) {
+              currentPage.value = maxPage.value;
+            } else {
+              currentPage.value++;
+            }
+          }
         },
         (response) async {
           if (currentPage.value == maxPage.value) {
             currentPage.value = maxPage.value;
           } else {
-            if (!refresh) {
-              //currentPage.value++;
-            }
-            consoleLog('current page in syncProducts: ${currentPage.value}');
+            currentPage.value++;
           }
           mainAppController.removePendingIds([PendingIds.getProducts]);
         },
@@ -92,31 +98,29 @@ class HomeController extends GetxController {
     });
   }
 
-  Future<void> getProducts({bool loadMore = false, bool refresh = false}) async {
-    if (loadMore) {
-      currentPage.value++;
-      await syncProducts(refresh: refresh);
-    }
-    consoleLog('get the products from cache is called with page number: ${currentPage.value}');
+  Future<void> getProducts({bool loadMore = false}) async {
     _streamSubscription?.cancel();
+
     if (!(currentPage.value == maxPage.value)) {
       _streamSubscription = streamProductsUseCase
           .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
           .distinct()
           .listen((list) async {
+            consoleLog('consoleLog getProducts controller:${currentPage.value}  ${list.map((e) => e.id)}');
             final mappedProducts = list.map((e) => e.toModel).toList();
             products.addAll(mappedProducts);
             products.refresh();
-            //await addNewSaleProduct();
-            /*if (!internetController.isConnected.value) {
-              getPageFromCache();
-              if (currentPage.value == maxPage.value) {
-                currentPage.value = maxPage.value;
-              }
-            }*/
+            await addNewSaleProduct();
           });
+
+      if (loadMore) {
+        await syncProducts();
+        await Future.delayed(Duration(milliseconds: 500));
+      }
     } else {
-      AppPopUp.showFailureSnackBar(fallbackMessage: '');
+      if (internetController.isConnected.value) {
+        maxPage.value = 100;
+      }
     }
   }
 

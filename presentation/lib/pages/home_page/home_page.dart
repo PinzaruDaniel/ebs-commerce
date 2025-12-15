@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> with LoginFunctions {
         return SmartRefresherWidget(
           controller: _refreshController,
           onRefresh: () async {
-            await homeController.syncProducts();
+            await homeController.refreshProducts();
             _refreshController.refreshCompleted();
           },
           onLoading: () async {

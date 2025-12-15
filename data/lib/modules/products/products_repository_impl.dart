@@ -1,4 +1,5 @@
 import 'package:common/constants/failure_class.dart';
+import 'package:common/constants/logger.dart';
 import 'package:data/mapper/product_mapper.dart';
 import 'package:data/mapper/product_response_mapper.dart';
 import 'package:data/modules/products/models/remote/index.dart';
@@ -104,7 +105,11 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Stream<List<ProductEntity>> getProductsLocalCache(int currentPage) async* {
-    yield* localDataSource.getProducts(currentPage: currentPage).map((e) => e.map((e) => e.toEntity).toList());
+    yield* localDataSource.getProducts(currentPage: currentPage).map((e) {
+      var mappedProducts = e.map((e) => e.toEntity).toList();
+      consoleLog('repository impl mapped products= ${mappedProducts.length}');
+      return mappedProducts;
+    });
   }
 
   @override
