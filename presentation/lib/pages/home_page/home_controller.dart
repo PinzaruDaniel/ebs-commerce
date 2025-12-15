@@ -33,8 +33,7 @@ class HomeController extends GetxController {
   StreamSubscription? _streamSubscription;
 
   Future<void> initItems() async {
-    syncProducts(refresh: true);
-    getProducts();
+    getProducts(loadMore: true, refresh: true);
     items.addAll([
       AdBannerViewModel(),
       HorizontalProductListViewModel(products: newProducts, type: ProductListType.newProducts),
@@ -70,7 +69,7 @@ class HomeController extends GetxController {
       currentPage.value = 1;
       currentPage.refresh();
     }
-
+    consoleLog('current page before use case: ${currentPage.value}');
     await syncProductsUseCase.call(SyncProductsParams(page: currentPage.value, perPage: perPage)).then((either) {
       either.fold(
         (failure) {
@@ -78,22 +77,27 @@ class HomeController extends GetxController {
           AppPopUp.showFailureSnackBar(fallbackMessage: errorMessage);
           mainAppController.removePendingIds([PendingIds.getProducts]);
         },
-        (response) {
-          mainAppController.removePendingIds([PendingIds.getProducts]);
+        (response) async {
           if (currentPage.value == maxPage.value) {
             currentPage.value = maxPage.value;
-          } else {}
+          } else {
+            if (!refresh) {
+              //currentPage.value++;
+            }
+            consoleLog('current page in syncProducts: ${currentPage.value}');
+          }
+          mainAppController.removePendingIds([PendingIds.getProducts]);
         },
       );
     });
   }
 
-  Future<void> getProducts({bool loadMore = false}) async {
+  Future<void> getProducts({bool loadMore = false, bool refresh = false}) async {
     if (loadMore) {
       currentPage.value++;
-
-      await syncProducts();
+      await syncProducts(refresh: refresh);
     }
+    consoleLog('get the products from cache is called with page number: ${currentPage.value}');
     _streamSubscription?.cancel();
     if (!(currentPage.value == maxPage.value)) {
       _streamSubscription = streamProductsUseCase
@@ -103,13 +107,13 @@ class HomeController extends GetxController {
             final mappedProducts = list.map((e) => e.toModel).toList();
             products.addAll(mappedProducts);
             products.refresh();
-            await addNewSaleProduct();
-            if (!internetController.isConnected.value) {
+            //await addNewSaleProduct();
+            /*if (!internetController.isConnected.value) {
               getPageFromCache();
               if (currentPage.value == maxPage.value) {
                 currentPage.value = maxPage.value;
               }
-            }
+            }*/
           });
     } else {
       AppPopUp.showFailureSnackBar(fallbackMessage: '');

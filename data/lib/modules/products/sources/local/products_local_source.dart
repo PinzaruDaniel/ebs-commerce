@@ -1,3 +1,4 @@
+import 'package:common/constants/logger.dart';
 import 'package:data/mapper/product_mapper.dart';
 import 'package:data/modules/products/models/local/ordered_product_box.dart';
 import 'package:data/modules/products/models/local/product_box.dart';
@@ -57,7 +58,8 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   }
 
   @override
-  Stream<List<ProductBox>> getProducts({required int currentPage}) async* {
+  Stream<List<ProductBox>> getProducts({required int currentPage}) {
+    consoleLog('currentPage value in getProductsLocalSource: $currentPage');
     final productsFromCache = productResponseBox
         .query(ProductResponseBox_.pageId.equals(currentPage))
         .watch(triggerImmediately: true)
@@ -66,8 +68,8 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
           final productsBoxList = responseBoxList.expand((e) => e.products).toList();
           return productsBoxList;
         });
-
-    yield* productsFromCache;
+    return productsFromCache;
+    //yield* productsFromCache;
   }
 
   @override
