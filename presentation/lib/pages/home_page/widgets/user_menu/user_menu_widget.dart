@@ -52,7 +52,9 @@ class _UserMenuWidgetState extends State<UserMenuWidget> with LoginFunctions {
                         padding: EdgeInsets.only(top: 24.0, bottom: 16),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: Image.network(height: 100, width: 100, userVm?.imageUrl ?? AppIcons.noProfilePicture),
+                          child: userVm?.imageUrl != null
+                              ? Image.network(height: 100, width: 100, userVm!.imageUrl!)
+                              : AppIcons.noProfilePicture,
                         ),
                       ),
                       Text(

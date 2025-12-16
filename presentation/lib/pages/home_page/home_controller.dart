@@ -51,6 +51,7 @@ class HomeController extends GetxController {
   Future<void> getPageFromCache() async {
     await getProductsResponseUseCase.call(GetProductsResponseParams(currentPage: currentPage.value)).then((response) {
       maxPage.value = response ?? 1;
+      maxPage.value++;
     });
   }
 
@@ -75,10 +76,8 @@ class HomeController extends GetxController {
           var errorMessage = errorParser.handleError(failure: failure);
           AppPopUp.showFailureSnackBar(fallbackMessage: errorMessage);
           mainAppController.removePendingIds([PendingIds.getProducts]);
-          consoleLog('isConnectedValue= ${(!internetController.isConnected.value)}');
           if (!internetController.isConnected.value) {
             await getPageFromCache();
-            consoleLog('maxPageValue= ${maxPage.value}');
             if (currentPage.value == maxPage.value) {
               currentPage.value = maxPage.value;
             } else {
@@ -87,11 +86,7 @@ class HomeController extends GetxController {
           }
         },
         (response) async {
-          if (currentPage.value == maxPage.value) {
-            currentPage.value = maxPage.value;
-          } else {
-            currentPage.value++;
-          }
+          currentPage.value++;
           mainAppController.removePendingIds([PendingIds.getProducts]);
         },
       );
@@ -99,28 +94,27 @@ class HomeController extends GetxController {
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
+    if (currentPage.value == maxPage.value && !internetController.isConnected.value) {
+      return;
+    } else if (currentPage.value == maxPage.value && internetController.isConnected.value) {
+      maxPage.value == 100;
+      maxPage.refresh();
+    }
+
     _streamSubscription?.cancel();
+    _streamSubscription = streamProductsUseCase
+        .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
+        .distinct()
+        .listen((list) async {
+          final mappedProducts = list.map((e) => e.toModel).toList();
+          products.addAll(mappedProducts);
+          products.refresh();
+          await addNewSaleProduct();
+        });
 
-    if (!(currentPage.value == maxPage.value)) {
-      _streamSubscription = streamProductsUseCase
-          .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
-          .distinct()
-          .listen((list) async {
-            consoleLog('consoleLog getProducts controller:${currentPage.value}  ${list.map((e) => e.id)}');
-            final mappedProducts = list.map((e) => e.toModel).toList();
-            products.addAll(mappedProducts);
-            products.refresh();
-            await addNewSaleProduct();
-          });
-
-      if (loadMore) {
-        await syncProducts();
-        await Future.delayed(Duration(milliseconds: 500));
-      }
-    } else {
-      if (internetController.isConnected.value) {
-        maxPage.value = 100;
-      }
+    if (loadMore) {
+      await syncProducts();
+      await Future.delayed(Duration(milliseconds: 500));
     }
   }
 

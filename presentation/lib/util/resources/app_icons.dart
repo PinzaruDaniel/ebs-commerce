@@ -5,8 +5,8 @@ import 'package:presentation/util/resources/app_colors.dart';
 class AppIcons {
   //icons
   static SvgPicture cartIcon = SvgPicture.asset('assets/icons/Cart icon.svg');
-  static SvgPicture orderIcon= SvgPicture.asset('assets/icons/icon_order.svg', height: 10, width: 10,);
-  static String noProfilePicture= 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
+  static SvgPicture orderIcon = SvgPicture.asset('assets/icons/icon_order.svg', height: 10, width: 10);
+  static SvgPicture noProfilePicture = SvgPicture.asset('assets/icons/profile_picture.svg', height: 100, width: 100);
 
   static SvgPicture countryFlag({required String iso2}) => SvgPicture.asset('assets/flags/$iso2.svg', height: 20);
 
@@ -18,7 +18,7 @@ class AppIcons {
   static SvgPicture toCartIcon = SvgPicture.asset('assets/icons/Union.svg', height: 14);
   static Image fanCourier = Image(image: AssetImage('assets/icons/fan_courier.png'));
   static Image dhl = Image(image: AssetImage('assets/icons/dhl.png'));
-  static SvgPicture ebsIcon=SvgPicture.asset('assets/icons/company_icon.svg', width: 80,);
+  static SvgPicture ebsIcon = SvgPicture.asset('assets/icons/company_icon.svg', width: 80);
 
   //default images
   static Image noImage({double? height, double? width}) =>
