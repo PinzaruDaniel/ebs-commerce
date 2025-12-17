@@ -13,7 +13,7 @@ class GetSaleProductsUseCase extends UseCase<List<ProductEntity>, GetSaleProduct
 
   @override
   Future<Either<Failure, List<ProductEntity>>> call(params)async {
-    return productsRepository.getSaleProducts(params.page, params.perPage);
+    return productsRepository.getSaleProducts(params.page, params.perPage, params.searchProduct);
   }
 
 }
@@ -21,5 +21,6 @@ class GetSaleProductsUseCase extends UseCase<List<ProductEntity>, GetSaleProduct
 class  GetSaleProductsParams{
   int page;
   int perPage;
-  GetSaleProductsParams({required this.page, required this.perPage});
+  String? searchProduct;
+  GetSaleProductsParams({required this.page, required this.perPage, this.searchProduct});
 }

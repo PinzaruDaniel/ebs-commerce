@@ -36,13 +36,14 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, int>> getFilteredProductsCount(page, priceGte, priceLte, categoriesId) async {
+  Future<Either<Failure, int>> getFilteredProductsCount(page, priceGte, priceLte, categoriesId, searchProduct) async {
     try {
       final response = await apiService.getProducts({
         'page': page,
         'price_gte': priceGte,
         'price_lte': priceLte,
         if (categoriesId != null) 'categories': categoriesId,
+        if (searchProduct != null) 'search': searchProduct,
       });
       return Right(response.count);
     } catch (e, stackTrace) {
@@ -74,9 +75,14 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getNewProducts(page, perPage) async {
+  Future<Either<Failure, List<ProductEntity>>> getNewProducts(page, perPage, searchProduct) async {
     try {
-      final Map<String, dynamic> queries = {'page': page, 'per_page': perPage, 'marks': 'new'};
+      final Map<String, dynamic> queries = {
+        'page': page,
+        'per_page': perPage,
+        'marks': 'new',
+        if (searchProduct != null) 'search': searchProduct,
+      };
       final response = await apiService.getProducts(queries);
       final entities = response.results.map((dto) => dto.toEntity()).toList();
       return Right(entities);
@@ -89,9 +95,14 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getSaleProducts(page, perPage) async {
+  Future<Either<Failure, List<ProductEntity>>> getSaleProducts(page, perPage, searchProduct) async {
     try {
-      final Map<String, dynamic> queries = {'page': page, 'per_page': perPage, 'marks': 'sale'};
+      final Map<String, dynamic> queries = {
+        'page': page,
+        'per_page': perPage,
+        'marks': 'sale',
+        if (searchProduct != null) 'search': searchProduct,
+      };
       final response = await apiService.getProducts(queries);
       final entities = response.results.map((dto) => dto.toEntity()).toList();
       return Right(entities);

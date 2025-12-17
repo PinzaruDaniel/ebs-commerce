@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/home_page/widgets/user_menu/widgets/delivery_address_widget.dart';
@@ -53,7 +54,13 @@ class _UserMenuWidgetState extends State<UserMenuWidget> with LoginFunctions {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: userVm?.imageUrl != null
-                              ? Image.network(height: 100, width: 100, userVm!.imageUrl!)
+                              ? CachedNetworkImage(
+                                  imageUrl: userVm!.imageUrl!,
+                                  errorWidget: (_, _, _) => AppIcons.noProfilePicture,
+
+                                  height: 100,
+                                  width: 100,
+                                )
                               : AppIcons.noProfilePicture,
                         ),
                       ),

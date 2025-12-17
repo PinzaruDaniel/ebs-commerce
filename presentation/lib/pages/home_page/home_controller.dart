@@ -94,11 +94,11 @@ class HomeController extends GetxController {
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
-    if (currentPage.value == maxPage.value && !internetController.isConnected.value) {
-      return;
-    } else if (currentPage.value == maxPage.value && internetController.isConnected.value) {
-      maxPage.value == 100;
-      maxPage.refresh();
+    if(currentPage.value == maxPage.value) {
+      if (internetController.isConnected.value) {
+        maxPage.value == 100;
+        maxPage.refresh();
+      }
     }
 
     _streamSubscription?.cancel();
@@ -114,7 +114,7 @@ class HomeController extends GetxController {
 
     if (loadMore) {
       await syncProducts();
-      await Future.delayed(Duration(milliseconds: 500));
+      //await Future.delayed(Duration(milliseconds: 500));
     }
   }
 

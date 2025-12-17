@@ -30,7 +30,8 @@ void main() async {
       fallbackLocale: Locale('ro'),
       startLocale: Locale('ro'),
       assetLoader: LocalizationLoader(),
-      child: EntryPage(isSessionExpired: isSessionExpired),
+      child:
+      EntryPage(isSessionExpired: isSessionExpired),
     ),
 
   );

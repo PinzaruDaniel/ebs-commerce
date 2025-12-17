@@ -30,7 +30,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       title: Text(title ?? '', style: AppTextsStyle.bold(size: 18)),
     );
   }
-
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
 }

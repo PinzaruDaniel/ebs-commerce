@@ -14,10 +14,7 @@ class RefreshInterceptor {
   final lock = Lock();
   bool successRegenerate = false;
 
-  RefreshInterceptor({
-    required this.onSessionExpired,
-
-    required this.authApiService, required this.authLocalSource});
+  RefreshInterceptor({required this.onSessionExpired, required this.authApiService, required this.authLocalSource});
 
   Future<void> regenerateAccessToken() async {
     if (!lock.locked) {
@@ -34,9 +31,7 @@ class RefreshInterceptor {
     lock.acquire();
     bool success = false;
     try {
-      //TODO: to uncomment this
-      //String? refreshToken = await authLocalSource.getRefreshToken();
-      String? refreshToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImFsaWNlLnNtaXRoQGV4YW1wbGUuY29tIiwiZnVsbF9uYW1lIjoiQWxpY2UgU21pdGgiLCJpYXQiOjE3NjQ3NjI5NjcsImV4cCI6MTc2NDc2MzI2NywiaXNzIjoiaHR0cHM6Ly9naXRodWIuY29tL2pvbmFzcm91c3NlbC9kYXJ0X2pzb253ZWJ0b2tlbiJ9.1DxfDkttmhzWg2SLLQsY9V1M4QLk9PTAX4gJx3UBrWw';
+      String? refreshToken = await authLocalSource.getRefreshToken();
       consoleLog('refreshToken: $refreshToken');
       if (refreshToken != null) {
         final response = await authApiService.refresh({'refreshToken': refreshToken});
@@ -111,9 +106,9 @@ class AuthInterceptor extends InterceptorsWrapper {
 
     try {
       if (err.response != null &&
-          err.response!.data is Map &&
-          (err.response!.data as Map).containsKey('error') &&
-          (err.response!.data as Map)['error'] == 'jwt expired' ||
+              err.response!.data is Map &&
+              (err.response!.data as Map).containsKey('error') &&
+              (err.response!.data as Map)['error'] == 'jwt expired' ||
           (err.response!.data as Map)['error'] == 'invalid signature') {
         consoleLog('Token expired, starting refresh... ${refreshInterceptor.lock.locked}');
 
