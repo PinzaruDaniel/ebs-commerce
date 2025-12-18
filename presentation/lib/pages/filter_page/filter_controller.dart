@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:common/constants/debouncer_class.dart';
 import 'package:domain/modules/products/use_cases/get_filtered_products_count_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_filtered_products_use_case.dart';
 import 'package:get/get.dart';
@@ -106,19 +107,3 @@ class FilterController extends GetxController {
   }
 }
 
-class Debouncer {
-  final int milliseconds;
-  VoidCallback? action;
-  Timer? _timer;
-
-  Debouncer({required this.milliseconds});
-
-  void run(VoidCallback action) {
-    _timer?.cancel();
-    _timer = Timer(Duration(milliseconds: milliseconds), action);
-  }
-
-  void dispose() {
-    _timer?.cancel();
-  }
-}

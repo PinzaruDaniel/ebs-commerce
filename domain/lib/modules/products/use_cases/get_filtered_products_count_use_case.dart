@@ -15,7 +15,6 @@ class GetFilteredProductsCountUseCase extends UseCase<int, GetFilteredProductsCo
       params.priceGte,
       params.priceLte,
       params.categoriesId,
-      params.searchProduct,
     );
   }
 }
@@ -25,13 +24,11 @@ class GetFilteredProductsCountParams {
   double priceGte;
   double priceLte;
   List<int>? categoriesId;
-  String? searchProduct;
 
   GetFilteredProductsCountParams({
     required this.page,
     required this.priceGte,
     required this.priceLte,
     required this.categoriesId,
-    this.searchProduct,
   });
 }

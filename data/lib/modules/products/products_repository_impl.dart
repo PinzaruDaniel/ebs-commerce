@@ -17,13 +17,15 @@ class ProductsRepositoryImpl implements ProductsRepository {
   ProductsRepositoryImpl({required this.apiService, required this.localDataSource});
 
   @override
-  Future<Either<Failure, ProductResponseEntity>> getFilteredProducts(page, priceGte, priceLte, categoriesId) async {
+  Future<Either<Failure, ProductResponseEntity>> getFilteredProducts(page, priceGte, priceLte, categoriesId, searchProduct) async {
     try {
       final response = await apiService.getProducts({
         'page': page,
         'price_gte': priceGte,
         'price_lte': priceLte,
         if (categoriesId != null) 'categories': categoriesId,
+        if (searchProduct != null) 'search': searchProduct,
+
       });
       final entities = response.map((dto) => dto.toEntity);
       return Right(entities);
@@ -36,14 +38,13 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Failure, int>> getFilteredProductsCount(page, priceGte, priceLte, categoriesId, searchProduct) async {
+  Future<Either<Failure, int>> getFilteredProductsCount(page, priceGte, priceLte, categoriesId) async {
     try {
       final response = await apiService.getProducts({
         'page': page,
         'price_gte': priceGte,
         'price_lte': priceLte,
         if (categoriesId != null) 'categories': categoriesId,
-        if (searchProduct != null) 'search': searchProduct,
       });
       return Right(response.count);
     } catch (e, stackTrace) {

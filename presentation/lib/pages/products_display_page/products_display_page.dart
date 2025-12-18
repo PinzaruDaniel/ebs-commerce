@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/products_display_page/products_display_controller.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
+import 'package:presentation/pages/products_display_page/widgets/search_app_bar_widget.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
-import 'package:presentation/util/resources/app_colors.dart';
 import 'package:presentation/util/widgets/base/base_page.dart';
 import 'package:presentation/util/widgets/smart_refresher_widget.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import '../../util/enum/enums.dart';
-import '../../util/resources/app_icons.dart';
-import '../../util/resources/app_text_styles.dart';
-import '../../util/resources/app_texts.dart';
-import '../../util/widgets/text_field_widget.dart';
 
 class ProductsDisplayPage extends StatefulWidget {
   final String title;
@@ -37,6 +33,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
 
   final ScrollController _scrollController = ScrollController();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final TextEditingController _textEditingController = TextEditingController();
 
   bool isExpanded = false;
   static const double collapsedHeight = 56;
@@ -57,12 +54,26 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
         productType: widget.type,
         selectedCategoryIds: widget.selectedCategoryIds,
         priceRange: widget.priceRange,
+        searchProduct: _textEditingController.text,
+      );
+    });
+
+    _textEditingController.addListener(() {
+      if (_textEditingController.text == '') {}
+      productsDisplayController.debouncer.run(
+        () => productsDisplayController.loadProducts(
+          productType: widget.type,
+          selectedCategoryIds: widget.selectedCategoryIds,
+          priceRange: widget.priceRange,
+          searchProduct: _textEditingController.text,
+        ),
       );
     });
   }
 
   @override
   void dispose() {
+    _textEditingController.dispose();
     _scrollController.dispose();
     _refreshController.dispose();
     Get.delete<ProductsDisplayController>();
@@ -89,6 +100,7 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
                   productType: widget.type,
                   selectedCategoryIds: widget.selectedCategoryIds,
                   priceRange: widget.priceRange,
+                  searchProduct: _textEditingController.text,
                 );
                 _refreshController.refreshCompleted();
               },
@@ -98,71 +110,27 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
                   productType: widget.type,
                   selectedCategoryIds: widget.selectedCategoryIds,
                   priceRange: widget.priceRange,
+                  searchProduct: _textEditingController.text,
                 );
                 _refreshController.loadComplete();
               },
               child: CustomScrollView(
                 slivers: [
-                  SliverAppBar(
-                    pinned: true,
-                    snap: !isExpanded,
-                    floating: !isExpanded,
-                    backgroundColor: Colors.white,
-                    surfaceTintColor: Colors.white,
-                    expandedHeight: height,
-                    collapsedHeight: height,
-                    shape: const Border(bottom: BorderSide(color: Colors.black12)),
-                    title: Text(widget.title, style: AppTextsStyle.bold(size: 18)),
-                    leading: IconButton(
-                      icon: AppIcons.backIcon(color: AppColors.primary, size: 20),
-                      onPressed: () => Get.back(),
-                    ),
-                    actions: [
-                      Opacity(
-                        opacity: 1 - progress,
-                        child: Transform.scale(
-                          scale: 1 - (0.1 * progress),
-                          child: IconButton(
-                            icon: const Icon(Icons.search),
-                            onPressed: isExpanded ? null : toggle,
-                          ),
-                        ),
-                      ),
-                    ],
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Padding(
-                        padding: const EdgeInsets.only(top: 46.0),
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Opacity(
-                            opacity: progress,
-                            child: Transform.scale(
-                              scale: 0.9 + (0.1 * progress),
-                              child: height > collapsedHeight
-                                  ? Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                child: SingleChildScrollView(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  child: TextFieldWidget(
-                                    itemViewModel: TextFieldViewModel(
-                                      hintText: AppTexts.search,
-                                      isRequiredValidation: false,
-                                    ),
-                                    suffixIcon: IconButton(icon: const Icon(Icons.close), onPressed: toggle),
-
-                                  ),
-                                ),
-                              )
-                                  : const SizedBox(),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  SearchAppBarWidget(
+                    isExpanded: isExpanded,
+                    height: height,
+                    title: widget.title,
+                    progress: progress,
+                    goBack: () {
+                      Get.back();
+                    },
+                    toggle: toggle,
+                    collapsedHeight: collapsedHeight,
+                    textEditingController: _textEditingController,
                   ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
-                          (_, i) => ProductsListDisplayWidget(
+                      (_, i) => ProductsListDisplayWidget(
                         title: widget.title,
                         products: productsDisplayController.products,
                         showHeaderTitle: false,
@@ -179,4 +147,3 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
     );
   }
 }
-

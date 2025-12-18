@@ -21,6 +21,7 @@ class HomeController extends GetxController {
   final SyncProductsUseCase syncProductsUseCase = GetIt.instance<SyncProductsUseCase>();
   final GetProductsResponseUseCase getProductsResponseUseCase = GetIt.instance<GetProductsResponseUseCase>();
   final ClearProductsUseCase clearProductsUseCase = GetIt.instance<ClearProductsUseCase>();
+  final completer = Completer<void>();
   RxList<BaseViewModel> items = RxList<BaseViewModel>([]);
   RxList<ProductViewModel> products = RxList([]);
   RxList<ProductViewModel> newProducts = RxList([]);
@@ -94,9 +95,9 @@ class HomeController extends GetxController {
   }
 
   Future<void> getProducts({bool loadMore = false}) async {
-    if(currentPage.value == maxPage.value) {
+    if (currentPage.value == maxPage.value) {
       if (internetController.isConnected.value) {
-        maxPage.value == 100;
+        maxPage.value = 100;
         maxPage.refresh();
       }
     }
@@ -110,11 +111,11 @@ class HomeController extends GetxController {
           products.addAll(mappedProducts);
           products.refresh();
           await addNewSaleProduct();
+
         });
 
     if (loadMore) {
       await syncProducts();
-      //await Future.delayed(Duration(milliseconds: 500));
     }
   }
 

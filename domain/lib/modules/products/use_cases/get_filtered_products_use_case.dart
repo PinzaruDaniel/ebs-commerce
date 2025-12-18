@@ -16,6 +16,7 @@ class GetFilteredProductsUseCase extends UseCase<ProductResponseEntity, GetFilte
       params.priceGte,
       params.priceLte,
       params.categoriesId,
+      params.searchProduct
     );
   }
 
@@ -27,5 +28,6 @@ class GetFilteredProductsUseCase extends UseCase<ProductResponseEntity, GetFilte
     double priceGte;
     double priceLte;
     List<int>? categoriesId;
-    GetFilteredProductsParams({required this.page, required this.priceGte, required this.priceLte, required this.categoriesId});
+    String? searchProduct;
+    GetFilteredProductsParams({required this.page, required this.priceGte, required this.priceLte, required this.categoriesId, this.searchProduct});
   }

@@ -9,6 +9,7 @@ abstract class ProductsRepository {
     double priceGte,
     double priceLte,
     List<int>? categoriesId,
+    String? searchProduct,
   );
 
   Future<Either<Failure, int>> getFilteredProductsCount(
@@ -16,7 +17,6 @@ abstract class ProductsRepository {
     double priceGte,
     double priceLte,
     List<int>? categoriesId,
-    String? searchProduct,
   );
 
   Future<Either<Failure, ProductResponseEntity>> getProducts(int page, int perPage, String? marks);
