@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:common/constants/failure_class.dart';
-import 'package:common/constants/logger.dart';
 import 'package:domain/modules/products/use_cases/clear_products_use_case.dart';
 import 'package:domain/modules/products/use_cases/get_products_response_use_case.dart';
 import 'package:domain/modules/products/use_cases/stream_products_use_case.dart';
@@ -15,13 +14,15 @@ import 'package:presentation/util/routing/app_pop_up.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../../util/enum/enums.dart';
 import '../../view/base_view_model.dart';
+import 'package:synchronized/synchronized.dart';
 
 class HomeController extends GetxController {
   final StreamProductsUseCase streamProductsUseCase = GetIt.instance<StreamProductsUseCase>();
   final SyncProductsUseCase syncProductsUseCase = GetIt.instance<SyncProductsUseCase>();
   final GetProductsResponseUseCase getProductsResponseUseCase = GetIt.instance<GetProductsResponseUseCase>();
   final ClearProductsUseCase clearProductsUseCase = GetIt.instance<ClearProductsUseCase>();
-  final completer = Completer<void>();
+  final lock = Lock();
+
   RxList<BaseViewModel> items = RxList<BaseViewModel>([]);
   RxList<ProductViewModel> products = RxList([]);
   RxList<ProductViewModel> newProducts = RxList([]);
@@ -107,12 +108,11 @@ class HomeController extends GetxController {
         .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
         .distinct()
         .listen((list) async {
-          final mappedProducts = list.map((e) => e.toModel).toList();
-          products.addAll(mappedProducts);
-          products.refresh();
-          await addNewSaleProduct();
-
-        });
+      final mappedProducts = list.map((e) => e.toModel).toList();
+      products.addAll(mappedProducts);
+      products.refresh();
+      await addNewSaleProduct();
+    });
 
     if (loadMore) {
       await syncProducts();

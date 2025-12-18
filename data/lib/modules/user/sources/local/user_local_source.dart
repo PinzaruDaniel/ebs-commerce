@@ -6,7 +6,6 @@ import 'package:data/modules/user/models/local/user_box.dart';
 import 'package:domain/modules/delivery_address/models/index.dart';
 import 'package:domain/modules/payment_method/index.dart';
 import 'package:domain/modules/user_information/models/index.dart';
-import 'package:objectbox/objectbox.dart';
 
 import '../../../../objectbox.g.dart';
 import '../../../delivery_address/models/local/delivery_address_box.dart';

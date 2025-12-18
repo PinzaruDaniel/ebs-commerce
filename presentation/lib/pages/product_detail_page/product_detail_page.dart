@@ -1,4 +1,5 @@
-import 'package:common/constants/logger.dart';
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:get/get.dart';
 import 'package:presentation/pages/product_detail_page/widgets/add_to_cart/add_to_cart_controller.dart';
 import 'package:presentation/pages/product_detail_page/widgets/product_detail_back_icon_glass_widget.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:common/constants/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/controllers/controller_imports.dart';

@@ -5,7 +5,6 @@ import 'package:presentation/util/resources/app_texts.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'main.dart';
 import 'util/resources/app_colors.dart';
 
 class EntryPage extends StatelessWidget with LoginFunctions {

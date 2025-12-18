@@ -1,5 +1,4 @@
 // ignore_for_file: invalid_use_of_protected_member
-import 'package:common/constants/logger.dart';
 import 'package:domain/modules/delivery_address/use_cases/get_delivery_address_cache_use_case.dart';
 import 'package:domain/modules/delivery_address/use_cases/set_delivery_address_use_case.dart';
 import 'package:domain/modules/payment_method/use_cases/get_payment_method_use_case.dart';

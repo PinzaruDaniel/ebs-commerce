@@ -38,7 +38,7 @@ class ProductsDisplayController extends GetxController {
     SfRangeValues? priceRange,
     String? searchProduct,
   }) async {
-    consoleLog('searching for: $searchProduct}');
+    consoleLog('searching for: $searchProduct and its length ${searchProduct?.length}');
     if (loadMore) {
       currentPage.value++;
     } else {

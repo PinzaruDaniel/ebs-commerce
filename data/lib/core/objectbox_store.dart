@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:data/modules/auth/models/local/auth_token_box.dart';
 import 'package:data/modules/products/models/local/order_box.dart';
 import 'package:data/modules/products/models/local/ordered_product_box.dart';

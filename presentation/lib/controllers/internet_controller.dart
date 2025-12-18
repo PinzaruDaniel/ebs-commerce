@@ -7,6 +7,7 @@ import 'package:presentation/util/routing/app_pop_up.dart';
 
 class InternetController extends GetxController {
   final RxList<ConnectivityResult> connectionStatus = <ConnectivityResult>[ConnectivityResult.none].obs;
+  // ignore: unused_field
   StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
   final Connectivity _connectivity = Connectivity();
   RxBool isConnected = RxBool(true);

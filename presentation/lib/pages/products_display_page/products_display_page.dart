@@ -59,20 +59,23 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
     });
 
     _textEditingController.addListener(() {
-      if (_textEditingController.text == '') {}
-      productsDisplayController.debouncer.run(
-        () => productsDisplayController.loadProducts(
-          productType: widget.type,
-          selectedCategoryIds: widget.selectedCategoryIds,
-          priceRange: widget.priceRange,
-          searchProduct: _textEditingController.text,
-        ),
-      );
+      if (_textEditingController.text.isEmpty) {
+        return;
+      }
+        productsDisplayController.debouncer.run(() {
+          productsDisplayController.loadProducts(
+            productType: widget.type,
+            selectedCategoryIds: widget.selectedCategoryIds,
+            priceRange: widget.priceRange,
+            searchProduct: _textEditingController.text,
+          );
+        });
     });
   }
 
   @override
   void dispose() {
+    productsDisplayController.debouncer.dispose();
     _textEditingController.dispose();
     _scrollController.dispose();
     _refreshController.dispose();
