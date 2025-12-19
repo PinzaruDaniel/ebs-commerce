@@ -44,7 +44,8 @@ class HeaderTitleWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12),
                 child: OpenContainerAnimation(
-                  openBuilder: (context, _) => ProductsDisplayPage(type: itemViewModel.type!, title: itemViewModel.title),
+                  openBuilder: (context, _) =>
+                      ProductsDisplayPage(type: itemViewModel.type!, title: itemViewModel.title),
                   closedBuilder: (context, openContainer) => InkWell(
                     child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 14, color: AppColors.primary)),
                   ),

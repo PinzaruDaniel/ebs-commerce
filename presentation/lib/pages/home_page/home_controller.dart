@@ -88,8 +88,9 @@ class HomeController extends GetxController {
           }
         },
         (response) async {
-          currentPage.value++;
           mainAppController.removePendingIds([PendingIds.getProducts]);
+
+          currentPage.value++;
         },
       );
     });
@@ -114,6 +115,7 @@ class HomeController extends GetxController {
           await addNewSaleProduct();
           if (!completer.isCompleted && mappedProducts.length == 20) {
             completer.complete();
+            mainAppController.removePendingIds([PendingIds.getProducts]);
           }
         });
 

@@ -59,20 +59,13 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
         searchProduct: _textEditingController.text,
       );
     });
-
+    /*
     _textEditingController.addListener(() {
       if (_textEditingController.text.isEmpty) {
         return;
       }
-      productsDisplayController.debouncer.run(() {
-        productsDisplayController.loadProducts(
-          productType: widget.type,
-          selectedCategoryIds: widget.selectedCategoryIds,
-          priceRange: widget.priceRange,
-          searchProduct: _textEditingController.text,
-        );
-      });
-    });
+
+    });*/
   }
 
   @override
@@ -128,6 +121,16 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
                     progress: progress,
                     goBack: () {
                       Get.back();
+                    },
+                    onChanged: (String value) {
+                      productsDisplayController.debouncer.run(() {
+                        productsDisplayController.loadProducts(
+                          productType: widget.type,
+                          selectedCategoryIds: widget.selectedCategoryIds,
+                          priceRange: widget.priceRange,
+                          searchProduct: value,
+                        );
+                      });
                     },
                     toggle: toggle,
                     collapsedHeight: collapsedHeight,

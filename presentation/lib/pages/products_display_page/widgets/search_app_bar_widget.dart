@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../util/resources/app_colors.dart';
 import '../../../util/resources/app_icons.dart';
@@ -14,6 +15,7 @@ class SearchAppBarWidget extends StatelessWidget {
   final double progress;
   final Function() goBack;
   final Function() toggle;
+  final Function(String) onChanged;
   final TextEditingController textEditingController;
 
   const SearchAppBarWidget({
@@ -25,6 +27,7 @@ class SearchAppBarWidget extends StatelessWidget {
     required this.goBack,
     required this.toggle,
     required this.collapsedHeight,
+    required this.onChanged,
     required this.textEditingController,
   });
 
@@ -66,19 +69,20 @@ class SearchAppBarWidget extends StatelessWidget {
                 scale: 0.8 + (0.2 * progress),
                 child: height > collapsedHeight
                     ? Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0 ),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: SingleChildScrollView(
                           //physics: const NeverScrollableScrollPhysics(),
-                          child:
-                          TextFieldWidget(
+                          child: TextFieldWidget(
                             itemViewModel: TextFieldViewModel(
                               hintText: AppTexts.search,
                               isRequiredValidation: false,
                               textController: textEditingController,
+                              onChanged: onChanged,
+                              filteringTextInputFormatter: FilteringTextInputFormatter.deny(RegExp(r'^ ')),
                             ),
                             suffixIcon: IconButton(icon: const Icon(Icons.close), onPressed: toggle),
                           ),
-                        ),
+                        ), //TODO: icon as rewsoucres
                       )
                     : const SizedBox(),
               ),

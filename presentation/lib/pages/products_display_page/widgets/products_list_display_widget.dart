@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:presentation/pages/products_display_page/products_display_controller.dart';
 import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
+import '../../../controllers/controller_imports.dart';
 import '../../../util/widgets/header_title_widget.dart';
 import '../../home_page/widgets/home_products_item_widget.dart';
 
@@ -19,22 +20,22 @@ class ProductsListDisplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-      return Obx(() {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if(showHeaderTitle != false)
-              Padding(
-                padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
-                child: HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: title, showDivider: true),),
-              ),
-            SizedBox(
+    return products.isNotEmpty && mainAppController.pendingIds.isEmpty ?
+    Obx(() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if(showHeaderTitle != false)
+            Padding(
+              padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
+              child: HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: title, showDivider: true),),
+            ),
+          SizedBox(
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7),
-              padding: EdgeInsets.only( top: 16),
+              padding: EdgeInsets.only(top: 16),
               itemCount: products.length,
               itemBuilder: (context, index) {
                 var itemProducts = products[index];
@@ -42,9 +43,9 @@ class ProductsListDisplayWidget extends StatelessWidget {
               },
             ),
           ),
-          ],
-        );
-      }
+        ],
       );
+    }
+    ): SizedBox();
   }
 }

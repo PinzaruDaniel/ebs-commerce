@@ -95,7 +95,8 @@ class _HomePageState extends State<HomePage> with LoginFunctions {
           },
           onLoading: () async {
             await homeController.getProducts(loadMore: true);
-            _refreshController.loadComplete();
+              _refreshController.loadComplete();
+
           },
           child: ListView.builder(
             itemCount: homeController.items.length,

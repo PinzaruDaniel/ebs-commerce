@@ -19,6 +19,8 @@ class TextFieldViewModel extends BaseViewModel {
   String placeholder;
   int? minLines;
   String? hintText;
+  final FilteringTextInputFormatter? filteringTextInputFormatter;
+  final Function(String)? onChanged;
 
   TextFieldViewModel({
     this.keyId,
@@ -30,6 +32,8 @@ class TextFieldViewModel extends BaseViewModel {
     this.textController,
     this.isRequiredValidation = true,
     this.hintText,
+    this.onChanged,
+    this.filteringTextInputFormatter,
     String initialValue = '',
 
     this.minLines,
@@ -37,7 +41,8 @@ class TextFieldViewModel extends BaseViewModel {
 }
 
 class TextFieldWidget extends StatefulWidget {
-  const TextFieldWidget({super.key, required this.itemViewModel, this.suffixIcon, this.obscureText=false});
+  const TextFieldWidget({super.key, required this.itemViewModel, this.suffixIcon, this.obscureText = false});
+
   final Widget? suffixIcon;
   final bool obscureText;
   final TextFieldViewModel itemViewModel;
@@ -60,6 +65,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     _isExternalController = widget.itemViewModel.textController != null;
     controller = widget.itemViewModel.textController ?? TextEditingController(text: widget.itemViewModel.placeholder);
     _fieldKey = GlobalKey<FormFieldState>(debugLabel: widget.itemViewModel.keyId);
+    //TODO: onTap with debounce
     controller.addListener(() {
       widget.itemViewModel.placeholder = controller.text;
     });
@@ -84,7 +90,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.itemViewModel.title != null) ...[Text(widget.itemViewModel.title!, style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade600),), const SizedBox(height: 4)],
+        if (widget.itemViewModel.title != null) ...[
+          Text(widget.itemViewModel.title!, style: AppTextsStyle.medium.copyWith(color: Colors.grey.shade600)),
+          const SizedBox(height: 4),
+        ],
         FormField(
           key: _fieldKey,
           validator: (text) {
@@ -104,12 +113,13 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
-              obscureText: widget.obscureText,
-                  inputFormatters:
-                      widget.itemViewModel.inputFormatter ??
-                      (widget.itemViewModel.textInputType == TextInputType.phone
-                          ? [FilteringTextInputFormatter.digitsOnly]
-                          : []),
+                  obscureText: widget.obscureText,
+                  inputFormatters: widget.itemViewModel.filteringTextInputFormatter == null
+                      ? widget.itemViewModel.inputFormatter ??
+                            (widget.itemViewModel.textInputType == TextInputType.phone
+                                ? [FilteringTextInputFormatter.digitsOnly]
+                                : [])
+                      : [?widget.itemViewModel.filteringTextInputFormatter],
                   controller: controller,
                   focusNode: focusNode,
                   minLines: widget.itemViewModel.minLines ?? 1,
@@ -143,25 +153,31 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                     ),
                   ),
                   onChanged: (value) {
-                    if (widget.itemViewModel.textInputType == TextInputType.phone) {
-                      if (value.startsWith('0')) {
-                        value = value.replaceFirst(RegExp(r'^0+'), '');
+                    if (widget.itemViewModel.onChanged != null) {
+                      widget.itemViewModel.onChanged?.call(value);
+                    } else {
+                      if (widget.itemViewModel.textInputType == TextInputType.phone) {
+                        if (value.startsWith('0')) {
+                          value = value.replaceFirst(RegExp(r'^0+'), '');
+                        }
+                        if (value.length > 15) {
+                          value = value.substring(0, 15);
+                        }
+                        if (value != controller.text) {
+                          controller.text = value;
+                          controller.selection = TextSelection.fromPosition(
+                            TextPosition(offset: controller.text.length),
+                          );
+                        }
                       }
-                      if (value.length > 15) {
-                        value = value.substring(0, 15);
+                      if (_fieldError != null) {
+                        setState(() {
+                          _fieldError = null;
+                        });
                       }
-                      if (value != controller.text) {
-                        controller.text = value;
-                        controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
-                      }
+                      widget.itemViewModel.placeholder = value;
+                      state.validate();
                     }
-                    if (_fieldError != null) {
-                      setState(() {
-                        _fieldError = null;
-                      });
-                    }
-                    widget.itemViewModel.placeholder = value;
-                    state.validate();
                   },
                   onFieldSubmitted: (value) async {
                     await _onFieldUnfocused(value);

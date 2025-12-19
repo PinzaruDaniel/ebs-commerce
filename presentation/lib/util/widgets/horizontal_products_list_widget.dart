@@ -25,23 +25,23 @@ class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWid
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
-          child: HeaderTitleWidget(
-            itemViewModel: HeaderTitleViewModel(
-              title: widget.type.title!,
-              showDivider: true,
-              showSeeAll: true,
-              type: widget.type,
-            ),
-          ),
-        ),
+    return widget.items.isNotEmpty && mainAppController.pendingIds.isEmpty
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 24, bottom: 8, left: 16),
+                child: HeaderTitleWidget(
+                  itemViewModel: HeaderTitleViewModel(
+                    title: widget.type.title!,
+                    showDivider: true,
+                    showSeeAll: true,
+                    type: widget.type,
+                  ),
+                ),
+              ),
 
-        widget.items.isNotEmpty
-            ? SizedBox(
+              SizedBox(
                 height: 250,
                 child: ListView.builder(
                   padding: EdgeInsets.only(top: 12, left: 8),
@@ -52,9 +52,9 @@ class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWid
                     return HomeProductsItemWidget(item: itemProduct, width: 170);
                   },
                 ),
-              )
-            : EmptyWidget(),
-      ],
-    );
+              ),
+            ],
+          )
+        : SizedBox();
   }
 }
