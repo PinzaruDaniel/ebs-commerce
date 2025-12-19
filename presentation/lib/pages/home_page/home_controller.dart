@@ -102,7 +102,6 @@ class HomeController extends GetxController {
         maxPage.refresh();
       }
     }
-
     _streamSubscription?.cancel();
     final completer = Completer();
     _streamSubscription = streamProductsUseCase
@@ -121,7 +120,6 @@ class HomeController extends GetxController {
     if (loadMore) {
       await syncProducts();
     }
-
     return completer.future;
   }
 

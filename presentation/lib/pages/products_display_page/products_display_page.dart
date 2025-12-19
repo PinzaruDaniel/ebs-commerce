@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/pages/products_display_page/products_display_controller.dart';
 import 'package:presentation/pages/products_display_page/widgets/products_list_display_widget.dart';
 import 'package:presentation/pages/products_display_page/widgets/search_app_bar_widget.dart';
 import 'package:presentation/util/constants/pending_ids.dart';
 import 'package:presentation/util/widgets/base/base_page.dart';
+import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/util/widgets/smart_refresher_widget.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -62,14 +64,14 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
       if (_textEditingController.text.isEmpty) {
         return;
       }
-        productsDisplayController.debouncer.run(() {
-          productsDisplayController.loadProducts(
-            productType: widget.type,
-            selectedCategoryIds: widget.selectedCategoryIds,
-            priceRange: widget.priceRange,
-            searchProduct: _textEditingController.text,
-          );
-        });
+      productsDisplayController.debouncer.run(() {
+        productsDisplayController.loadProducts(
+          productType: widget.type,
+          selectedCategoryIds: widget.selectedCategoryIds,
+          priceRange: widget.priceRange,
+          searchProduct: _textEditingController.text,
+        );
+      });
     });
   }
 
@@ -131,16 +133,33 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
                     collapsedHeight: collapsedHeight,
                     textEditingController: _textEditingController,
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (_, i) => ProductsListDisplayWidget(
+                  Obx(() {
+                    if (mainAppController.pendingIds.isEmpty && productsDisplayController.products.isEmpty) {
+                      return SliverFillRemaining(hasScrollBody: false, child: Center(child: EmptyWidget()));
+                    }
+                    return SliverList(
+                      delegate: SliverChildBuilderDelegate((_, i) {
+                        return ProductsListDisplayWidget(
+                          title: widget.title,
+                          products: productsDisplayController.products,
+                          showHeaderTitle: false,
+                        );
+                      }, childCount: 1),
+                    );
+                  }),
+
+                  /*SliverList(
+                    delegate: SliverChildBuilderDelegate((_, i) {
+                      if (mainAppController.pendingIds.isEmpty && productsDisplayController.products.isEmpty) {
+                        return EmptyWidget();
+                      }
+                      return ProductsListDisplayWidget(
                         title: widget.title,
                         products: productsDisplayController.products,
                         showHeaderTitle: false,
-                      ),
-                      childCount: 1,
-                    ),
-                  ),
+                      );
+                    }, childCount: 1),
+                  ),*/
                 ],
               ),
             );

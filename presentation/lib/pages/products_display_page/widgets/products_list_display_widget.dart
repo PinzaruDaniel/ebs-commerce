@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presentation/pages/products_display_page/products_display_controller.dart';
+import 'package:presentation/util/widgets/empty_widget.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../../../util/widgets/header_title_widget.dart';
 import '../../home_page/widgets/home_products_item_widget.dart';
@@ -29,18 +30,18 @@ class ProductsListDisplayWidget extends StatelessWidget {
                 child: HeaderTitleWidget(itemViewModel: HeaderTitleViewModel(title: title, showDivider: true),),
               ),
             SizedBox(
-              child: GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7),
-                padding: EdgeInsets.only( top: 16),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  var itemProducts = products[index];
-                  return HomeProductsItemWidget(item: itemProducts, height: 160, width: 160,);
-                },
-              ),
+            child: GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7),
+              padding: EdgeInsets.only( top: 16),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                var itemProducts = products[index];
+                return HomeProductsItemWidget(item: itemProducts, height: 160, width: 160,);
+              },
             ),
+          ),
           ],
         );
       }
