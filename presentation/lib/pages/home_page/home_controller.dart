@@ -104,19 +104,25 @@ class HomeController extends GetxController {
     }
 
     _streamSubscription?.cancel();
+    final completer = Completer();
     _streamSubscription = streamProductsUseCase
         .call(StreamProductsParams(page: currentPage.value, perPage: perPage))
         .distinct()
         .listen((list) async {
-      final mappedProducts = list.map((e) => e.toModel).toList();
-      products.addAll(mappedProducts);
-      products.refresh();
-      await addNewSaleProduct();
-    });
+          final mappedProducts = list.map((e) => e.toModel).toList();
+          products.addAll(mappedProducts);
+          products.refresh();
+          await addNewSaleProduct();
+          if (!completer.isCompleted && mappedProducts.length == 20) {
+            completer.complete();
+          }
+        });
 
     if (loadMore) {
       await syncProducts();
     }
+
+    return completer.future;
   }
 
   Future<void> addNewSaleProduct() async {
