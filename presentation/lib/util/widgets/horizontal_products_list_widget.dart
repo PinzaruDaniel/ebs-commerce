@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/util/enum/map_enums.dart';
 import 'package:presentation/view/product_view_model.dart';
 import '../enum/enums.dart';
@@ -52,8 +53,7 @@ class _HorizontalProductsListWidgetState extends State<HorizontalProductsListWid
                   },
                 ),
               )
-            : EmptyWidget()
-
+            : EmptyWidget(),
       ],
     );
   }

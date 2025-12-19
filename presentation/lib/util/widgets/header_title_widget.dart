@@ -8,7 +8,6 @@ import 'package:presentation/view/base_view_model.dart';
 
 import '../enum/enums.dart';
 
-
 class HeaderTitleViewModel extends BaseViewModel {
   final String title;
   final bool showDivider;
@@ -33,30 +32,31 @@ class HeaderTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(itemViewModel.title, style: AppTextsStyle.bold(size: itemViewModel.fontSize ?? 11)),
             Spacer(),
             if (itemViewModel.showSeeAll)
-              OpenContainerAnimation(
-                openBuilder: (context, _) => ProductsDisplayPage(type: itemViewModel.type!, title: itemViewModel.title),
-                closedBuilder: (context, openContainer) => TextButton(
-                  onPressed: openContainer,
-                  child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 14, color: AppColors.primary)),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12),
+                child: OpenContainerAnimation(
+                  openBuilder: (context, _) => ProductsDisplayPage(type: itemViewModel.type!, title: itemViewModel.title),
+                  closedBuilder: (context, openContainer) => InkWell(
+                    child: Text(AppTexts.seeAll, style: AppTextsStyle.bold(size: 14, color: AppColors.primary)),
+                  ),
                 ),
               ),
           ],
         ),
         if (itemViewModel.showDivider)
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Container(
-              height: 3,
-              width: 40,
-              decoration: BoxDecoration(color: AppColors.secondary, borderRadius: BorderRadius.all(Radius.circular(3))),
-            ),
+          Container(
+            height: 3,
+            width: 40,
+            decoration: BoxDecoration(color: AppColors.secondary, borderRadius: BorderRadius.all(Radius.circular(3))),
           ),
       ],
     );
