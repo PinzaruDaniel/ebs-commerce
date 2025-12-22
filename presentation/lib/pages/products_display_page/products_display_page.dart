@@ -59,13 +59,6 @@ class _ProductsDisplayPageState extends State<ProductsDisplayPage> {
         searchProduct: _textEditingController.text,
       );
     });
-    /*
-    _textEditingController.addListener(() {
-      if (_textEditingController.text.isEmpty) {
-        return;
-      }
-
-    });*/
   }
 
   @override

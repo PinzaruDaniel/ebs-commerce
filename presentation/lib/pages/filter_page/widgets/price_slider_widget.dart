@@ -32,6 +32,7 @@ class PriceSliderWidget extends StatelessWidget {
           tooltipBackgroundColor: AppColors.primary,
         ),
         child: SfRangeSlider(
+          stepSize: 1,
           min: min,
           max: max,
           activeColor: AppColors.primary,

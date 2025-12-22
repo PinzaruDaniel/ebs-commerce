@@ -54,7 +54,7 @@ class SearchAppBarWidget extends StatelessWidget {
           opacity: 1 - progress,
           child: Transform.scale(
             scale: 1 - (0.1 * progress),
-            child: IconButton(icon: const Icon(Icons.search), onPressed: isExpanded ? null : toggle),
+            child: IconButton(icon: AppIcons.searchIcon, onPressed: isExpanded ? null : toggle),
           ),
         ),
       ],
@@ -71,7 +71,6 @@ class SearchAppBarWidget extends StatelessWidget {
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: SingleChildScrollView(
-                          //physics: const NeverScrollableScrollPhysics(),
                           child: TextFieldWidget(
                             itemViewModel: TextFieldViewModel(
                               hintText: AppTexts.search,
@@ -80,9 +79,9 @@ class SearchAppBarWidget extends StatelessWidget {
                               onChanged: onChanged,
                               filteringTextInputFormatter: FilteringTextInputFormatter.deny(RegExp(r'^ ')),
                             ),
-                            suffixIcon: IconButton(icon: const Icon(Icons.close), onPressed: toggle),
+                            suffixIcon: IconButton(icon: AppIcons.closeIcon, onPressed: toggle),
                           ),
-                        ), //TODO: icon as rewsoucres
+                        ),
                       )
                     : const SizedBox(),
               ),

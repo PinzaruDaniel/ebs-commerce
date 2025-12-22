@@ -13,6 +13,8 @@ class AppIcons {
   static Icon backIcon({Color? color, double? size}) =>
       Icon(Icons.arrow_back_ios_new_rounded, color: color ?? AppColors.primary, size: size ?? 20);
   static SvgPicture filtersIcon = SvgPicture.asset('assets/icons/filters.svg');
+  static Icon closeIcon = Icon(Icons.close);
+  static Icon searchIcon = Icon(Icons.search);
 
   static Image companyIcon({double? width}) => Image(image: AssetImage('assets/icons/icon.png'), width: width ?? 16);
   static SvgPicture toCartIcon = SvgPicture.asset('assets/icons/Union.svg', height: 14);

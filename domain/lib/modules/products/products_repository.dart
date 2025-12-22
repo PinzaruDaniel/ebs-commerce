@@ -36,4 +36,5 @@ abstract class ProductsRepository {
   Future<int?> getProductsResponseFromCache(int currentPage);
 
   Future<void> clearAllProducts();
+  Stream<List<ProductEntity>> getProductsByMarks(String marks);
 }

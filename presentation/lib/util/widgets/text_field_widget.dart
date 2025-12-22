@@ -7,6 +7,8 @@ import 'package:presentation/util/resources/app_text_styles.dart';
 import 'package:presentation/util/resources/app_texts.dart';
 import 'package:presentation/view/base_view_model.dart';
 
+import '../resources/app_icons.dart';
+
 class TextFieldViewModel extends BaseViewModel {
   final String? title;
   final String? keyId;
@@ -129,7 +131,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   cursorColor: AppColors.primary,
                   decoration: InputDecoration(
                     suffixIcon: widget.suffixIcon,
-                    prefixIcon: widget.itemViewModel.hintText == AppTexts.search ? Icon(Icons.search_rounded) : null,
+                    prefixIcon: widget.itemViewModel.hintText == AppTexts.search ? AppIcons.searchIcon : null,
                     hintText: widget.itemViewModel.hintText,
                     hintStyle: AppTextsStyle.medium.copyWith(color: Colors.grey.shade500),
                     isDense: true,

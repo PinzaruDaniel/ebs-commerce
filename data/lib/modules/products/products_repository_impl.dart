@@ -17,7 +17,13 @@ class ProductsRepositoryImpl implements ProductsRepository {
   ProductsRepositoryImpl({required this.apiService, required this.localDataSource});
 
   @override
-  Future<Either<Failure, ProductResponseEntity>> getFilteredProducts(page, priceGte, priceLte, categoriesId, searchProduct) async {
+  Future<Either<Failure, ProductResponseEntity>> getFilteredProducts(
+    page,
+    priceGte,
+    priceLte,
+    categoriesId,
+    searchProduct,
+  ) async {
     try {
       final response = await apiService.getProducts({
         'page': page,
@@ -25,7 +31,6 @@ class ProductsRepositoryImpl implements ProductsRepository {
         'price_lte': priceLte,
         if (categoriesId != null) 'categories': categoriesId,
         if (searchProduct != null) 'search': searchProduct,
-
       });
       final entities = response.map((dto) => dto.toEntity);
       return Right(entities);
@@ -142,5 +147,10 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<void> clearAllProducts() async {
     return localDataSource.clearAllProducts();
+  }
+
+  @override
+  Stream<List<ProductEntity>> getProductsByMarks(String marks) {
+    return localDataSource.getProductsByMarks(marks: marks).map((boxList) => boxList.map((e) => e.toEntity).toList());
   }
 }

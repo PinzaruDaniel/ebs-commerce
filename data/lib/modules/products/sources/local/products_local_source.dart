@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:common/constants/logger.dart';
 import 'package:data/mapper/product_mapper.dart';
 import 'package:data/modules/products/models/local/ordered_product_box.dart';
@@ -24,6 +26,8 @@ abstract class ProductsLocalDataSource {
   Future<int?> getProductsResponsePageFromCache({required int currentPage});
 
   Future<void> clearAllProducts();
+
+  Stream<List<ProductBox>> getProductsByMarks({required String marks});
 }
 
 class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
@@ -46,11 +50,6 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   @override
   Future<void> setProducts({required ProductResponseEntity products}) async {
     final allProductsResponse = await productResponseBox.getAllAsync();
-    consoleLog('currentPage from products= ${products.currentPage}');
-
-    for (var p in allProductsResponse) {
-      consoleLog('the id in allProductsResponse: ${p.pageId}');
-    }
     if (allProductsResponse.any((e) => e.pageId == products.currentPage)) {
       return;
     } else {
@@ -67,10 +66,18 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
     return productResponseBox.query(ProductResponseBox_.pageId.equals(currentPage)).watch(triggerImmediately: true).map(
       (query) {
         final responses = query.find();
-
         return responses.expand((r) => r.products).toList();
       },
     );
+  }
+
+  @override
+  Stream<List<ProductBox>> getProductsByMarks({required String marks}) {
+    return productBox.query(ProductBox_.marks.equals(marks)).watch(triggerImmediately: true).asyncMap((query) {
+      final response = query.find();
+      response.map((e)=>e).toList();
+      return response;
+    });
   }
 
   @override
